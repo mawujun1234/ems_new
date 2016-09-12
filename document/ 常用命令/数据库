@@ -1,0 +1,3 @@
+drop user emsnew cascade;
+create user emsnew identified by emsnew;
+grant dba,connect,resource to emsnew;

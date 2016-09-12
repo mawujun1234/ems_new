@@ -1,0 +1,2 @@
+10:48:40.386 [localhost-startStop-1] DEBUG com.mawujun.config.DispatcherServletInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context
+10:48:44.066 [localhost-startStop-1] DEBUG com.mawujun.controller.spring.SpringContextHolder - 注入ApplicationContext到SpringContextHolder:null
