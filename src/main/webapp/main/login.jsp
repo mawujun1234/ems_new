@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
   </head>
   
-  <body style="background-image: url(bg1.jpg);background-position:center;background-repeat:no-repeat;background-attachment:fixed;">
+  <body style="background-image: url(bg.jpg);background-position:center;background-repeat:no-repeat;background-attachment:fixed;">
    
   </body>
 </html>

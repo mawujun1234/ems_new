@@ -12,6 +12,8 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 //http://hanqunfeng.iteye.com/blog/2114967
 //@Order(1)
 /**
+ * 会自动搜索到这个类的
+ *
  * 这个是必须加的，和web。xml中的下列代码是一样的：
  *  <filter>
     <filter-name>shiroFilter</filter-name>

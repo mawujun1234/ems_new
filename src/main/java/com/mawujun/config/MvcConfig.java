@@ -43,7 +43,7 @@ import com.mawujun.exception.BusinessException;
 
 
 @Configuration
-@ComponentScan(basePackages="com.youngor",
+@ComponentScan(basePackages="com.mawujun",
 	includeFilters = @Filter(type = FilterType.ANNOTATION, value = {Controller.class}))
 @EnableAspectJAutoProxy(proxyTargetClass=true)
 @EnableWebMvc

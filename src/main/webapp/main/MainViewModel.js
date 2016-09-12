@@ -44,8 +44,8 @@ Ext.define('y.main.MainViewModel', {
 
 				// 系统信息
 				system : {
-					name : '订货系统',
-					version : '1.0.0',
+					name : '宁波东望生产调度系统',
+					version : '2.0.0',
 					iconUrl : ''
 				},
 
@@ -57,12 +57,12 @@ Ext.define('y.main.MainViewModel', {
 
 				// 服务单位和服务人员信息
 				service : {
-					company : '无锡熙旺公司',
-					name : '蒋锋',
-					phonenumber : '1320528----',
-					qq : '78580822',
-					email : 'jfok1972@qq.com',
-					copyright : '熙旺公司'
+					company : 'xxx公司',
+					name : 'xxxx',
+					phonenumber : 'xxxx----',
+					qq : '16064988',
+					email : '16064988@qq.com',
+					copyright : '宁波东望'
 				},
 
 				menuType : {

@@ -29,8 +29,8 @@ import com.mawujun.permission.ShiroAuthorizingRealm;
  */
 @Configuration
 //@EnableAspectJAutoProxy(proxyTargetClass=true)
-//@ComponentScan(basePackages = "com.youngor", excludeFilters = @Filter(type = FilterType.ANNOTATION, value = { Controller.class }))
-//@MapperScan(basePackages = "com.youngor")
+//@ComponentScan(basePackages = "com.mawujun", excludeFilters = @Filter(type = FilterType.ANNOTATION, value = { Controller.class }))
+//@MapperScan(basePackages = "com.mawujun")
 //@PropertySource("classpath:config.properties")
 public class ShiroConfig {
 	@Bean

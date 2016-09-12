@@ -50,7 +50,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] { MvcConfig.class ,RepositoryConfig.class};//,ShiroConfig.class
+		return new Class<?>[] { MvcConfig.class ,RepositoryConfig.class,ShiroConfig.class};//
 	}
 
 	@Override
