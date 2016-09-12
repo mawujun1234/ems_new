@@ -11,6 +11,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	<if test="loginName!=null and loginName!=''">
     		and lower(a.loginName) like lower('%${loginName}%')
     	</if>
+    	
     	<if test="name!=null and name!=''">
     		and lower(a.name) like lower('%${name}%')
     	</if>
