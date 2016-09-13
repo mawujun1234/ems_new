@@ -1,4 +1,4 @@
-Ext.define('y.org.UserGridQuery',{
+Ext.define('y.org.PositionUserGridQuery',{
 	extend:'Ext.grid.Panel',
 	requires: [
 	     'y.permission.User',

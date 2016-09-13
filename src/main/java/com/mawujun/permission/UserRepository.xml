@@ -41,8 +41,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     </select> 
      <!-- 名称模式为：****_count,也可以不写，但如果查询叫复杂的话，自己写有助于控制查询性能-->
     <select id="queryByRole_count" resultType="int" parameterType="map">
-    	select count(b.user_id) from t_role_user b
-    	where b.role_id=#{role_id}
+    	select count(*) from t_user a,t_role_user b
+    	where a.id=b.user_id and b.role_id=#{role_id}
     	<if test="loginName!=null and loginName!=''">
     		and lower(a.loginName) like lower('%${loginName}%')
     	</if>
@@ -73,7 +73,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     		and lower(a.name) like lower('%${name}%')
     	</if>
     </select>
-    
+ 
     <!-- 登录的时候用的-->
     <select id="getByLoginName" resultType="com.mawujun.permission.UserVO" parameterType="map">
     	select * from t_user a

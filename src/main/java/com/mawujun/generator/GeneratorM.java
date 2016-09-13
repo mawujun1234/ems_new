@@ -1,4 +1,4 @@
-package com.youngor.generator;
+package com.mawujun.generator;
 
 import java.io.IOException;
 

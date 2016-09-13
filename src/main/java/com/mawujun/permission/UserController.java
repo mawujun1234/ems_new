@@ -21,6 +21,7 @@ import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -289,18 +290,61 @@ public class UserController {
 	public User load(String id) {
 		return userService.get(id);
 	}
-	
-	@RequestMapping("/user/addRole.do")
-	//@ResponseBody
-	public String addRole(String user_id,String role_id) {
-		userService.addRole(user_id,role_id);
+	/**
+	 * 把用户和角色建立关联，通过从用户中选择或者在职位中选择
+	 * @param user_id
+	 * @param role_id
+	 * @return
+	 */
+	@RequestMapping("/user/addToRole.do")
+	@ResponseBody
+	public String addToRole(String user_id,String role_id) {
+		userService.addToRole(user_id,role_id);
 		return user_id;
 	}
-	
+	@RequestMapping("/user/deleteFromRole.do")
+	@ResponseBody
+	public String deleteFromRole(String user_id,String role_id) {
+		userService.deleteFromRole(user_id,role_id);
+		return user_id;
+	}
+	/**
+	 * 把用户添加到职位上
+	 * @param user_id
+	 * @param role_id
+	 * @return
+	 */
+	@RequestMapping("/user/addToPosition.do")
+	@ResponseBody
+	public String addToPosition(String user_id,String position_id,String org_id) {
+		userService.addToPosition(user_id,position_id,org_id);
+		return user_id;
+	}
+	@RequestMapping("/user/deleteFromPosition.do")
+	@ResponseBody
+	public String deleteFromPosition(String user_id,String position_id,String org_id) {
+		userService.deleteFromPosition(user_id,position_id,org_id);
+		return user_id;
+	}
+	/**
+	 * 用于在角色，职位上新建用户的时候，同时新建用户，同时和角色，职位建立关系
+	 * @param user
+	 * @param role_id
+	 * @param position_id
+	 * @param org_id
+	 * @return
+	 */
 	@RequestMapping("/user/create.do")
-	//@ResponseBody
-	public User create(@RequestBody User user,String position_id,String orgno) {
-		userService.create(user,position_id,orgno);
+	@ResponseBody
+	public User create(@RequestBody User user,String role_id,String position_id,String org_id) {
+		if(StringUtils.hasText(position_id)){
+			userService.createByPosition(user,position_id,org_id);
+		} else if(StringUtils.hasText(role_id)){
+			userService.createByRole(user, role_id);
+		} else {
+			userService.create(user);
+		}
+		
 		return user;
 	}
 	
@@ -332,12 +376,7 @@ public class UserController {
 		return user;
 	}
 	
-	@RequestMapping("/user/deleteByRole.do")
-	//@ResponseBody
-	public String deleteByRole(String user_id,String role_id) {
-		userService.deleteByRole(user_id,role_id);
-		return user_id;
-	}
+
 	
 	
 }

@@ -51,8 +51,12 @@ Ext.define('y.permission.UserForm',{
 		{
 	        fieldLabel: 'id',
 	        name: 'id',
-            hidden:true,
-	        xtype:'textfield'
+	        xtype:'hiddenfield'
+	    }
+	    ,{
+	        fieldLabel: 'role_id',
+	        name: 'role_id',
+	        xtype:'hiddenfield'
 	    }
 	  ];   
 	  

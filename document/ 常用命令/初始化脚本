@@ -18,3 +18,6 @@ Insert into EMSNEW.T_ORG (ID,CODE,NAME,NAME_SHORT,ORGTYPE,REPORTCODE,REPORTLEVEL
 --职位类型，这是一个特殊职位，是要用到逻辑里面的
 Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK) values ('workunitgroup','作业单位小组',null);
 Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK) values ('employee','职员',null);
+
+--添加外键约束
+alter table "EMSNEW"."T_POSITION" add constraint positition_type_id foreign key("POSITIONTYPE_ID") references "T_POSITION_TYPE"("ID")

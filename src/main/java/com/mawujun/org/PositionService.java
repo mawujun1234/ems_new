@@ -22,8 +22,10 @@ public class PositionService extends AbstractService<Position, String>{
 
 	@Autowired
 	private PositionRepository positionRepository;
+	//@Autowired
+	//private PositionOrgAccessRepository positionOrgAccessRepository;
 	@Autowired
-	private PositionOrgAccessRepository positionOrgAccessRepository;
+	private PositionOrgUserRepository positionOrgUserRepository;
 	@Autowired
 	private OrgRepository orgRepository;
 	
@@ -48,7 +50,7 @@ public class PositionService extends AbstractService<Position, String>{
 	}
 	public void update(Position position,Dim dim) {
 		//先清空所有的权限，然后重新加载
-		positionOrgAccessRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgAccess.position.id, position.getId()));
+//		positionOrgAccessRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgAccess.position.id, position.getId()));
 //		if(position.getAccessRule()==AccessRule.this_org){
 //			//this_org(position,dim);
 //		} else {
@@ -104,7 +106,8 @@ public class PositionService extends AbstractService<Position, String>{
 	
 	public void delete(Position position) {
 		//先删除这个角色可以访问的Org
-		positionOrgAccessRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgAccess.position.id, position.getId()));
+		//positionOrgAccessRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgAccess.position.id, position.getId()));
+		positionOrgUserRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgUser.position.id, position.getId()));
 		super.delete(position);
 	}
 

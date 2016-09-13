@@ -6,8 +6,6 @@ public static final class Org {
 	public static final String name="name";
 	public static final String name_short="name_short";
 	public static final String orgType="orgType";
-	public static final String reportCode="reportCode";
-	public static final String level="level";
 	public static final String state="state";
 	public static final String sort="sort";
 }
@@ -21,8 +19,6 @@ public static final class OrgOrg {
 		public static final String name="parent.name";
 		public static final String name_short="parent.name_short";
 		public static final String orgType="parent.orgType";
-		public static final String reportCode="parent.reportCode";
-		public static final String level="parent.level";
 		public static final String state="parent.state";
 		public static final String sort="parent.sort";
 			
@@ -42,8 +38,6 @@ public static final class OrgOrg {
 		public static final String name="child.name";
 		public static final String name_short="child.name_short";
 		public static final String orgType="child.orgType";
-		public static final String reportCode="child.reportCode";
-		public static final String level="child.level";
 		public static final String state="child.state";
 		public static final String sort="child.sort";
 			
@@ -55,6 +49,10 @@ public static final class OrgOrg {
 	    }
 	}
 	public static final String dim="dim";
+	public static final String parent_reportCode="parent_reportCode";
+	public static final String parent_reportLevel="parent_reportLevel";
+	public static final String child_reportCode="child_reportCode";
+	public static final String child_reportLevel="child_reportLevel";
 }
 public static final class Position {
 	public static final String id="id";
@@ -90,8 +88,6 @@ public static final class PositionOrgAccess {
 		public static final String name="org.name";
 		public static final String name_short="org.name_short";
 		public static final String orgType="org.orgType";
-		public static final String reportCode="org.reportCode";
-		public static final String level="org.level";
 		public static final String state="org.state";
 		public static final String sort="org.sort";
 			
@@ -130,8 +126,6 @@ public static final class PositionOrgUser {
 		public static final String name="org.name";
 		public static final String name_short="org.name_short";
 		public static final String orgType="org.orgType";
-		public static final String reportCode="org.reportCode";
-		public static final String level="org.level";
 		public static final String state="org.state";
 		public static final String sort="org.sort";
 			
@@ -170,6 +164,7 @@ public static final class Menu {
 	public static final String code="code";
 	public static final String name="name";
 	public static final String url="url";
+	public static final String leaf="leaf";
 	public static final String menuType="menuType";
 	public static final String parent_id="parent_id";
 	public static final String sort="sort";
@@ -191,6 +186,7 @@ public static final class RoleMenu {
 		public static final String code="menu.code";
 		public static final String name="menu.name";
 		public static final String url="menu.url";
+		public static final String leaf="menu.leaf";
 		public static final String menuType="menu.menuType";
 		public static final String parent_id="menu.parent_id";
 		public static final String sort="menu.sort";

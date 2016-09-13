@@ -88,21 +88,29 @@ Ext.define('y.org.PositionUserGrid',{
 	  		xtype: 'toolbar',
 	  		dock:'top',
 		  	items:[{
+				text: '从职位添加',
+				//itemId:'create',
+				handler: function(btn){
+					me.onCreateByRole();
+				},
+				iconCls: 'icon-plus'
+			},
+			{
+				text: '选择用户',
+				//itemId:'create',
+				handler: function(btn){
+					me.onCreateByUser();
+				},
+				iconCls: 'icon-plus'
+			},{
 				text: '新增',
 				itemId:'create',
 				handler: function(btn){
 					me.onCreate();
 				},
 				iconCls: 'icon-plus'
-			},{
-			    text: '更新',
-			    itemId:'update',
-			    handler: function(){
-			    	me.onUpdate();
-					
-			    },
-			    iconCls: 'icon-edit'
-			},{
+			}
+			,{
 			    text: '删除',
 			    itemId:'destroy',
 			    handler: function(){
@@ -124,6 +132,53 @@ Ext.define('y.org.PositionUserGrid',{
        
       me.callParent();
 	},
+	onCreateByRole:function(){
+    	var me=this;
+    	
+    	var seluserWindow=Ext.create('y.org.SelPositionUserWindow',{
+    		listeners:{
+    			userdbclick:function(user){
+    				Ext.Ajax.request({
+						url:Ext.ContextPath+'/user/addToPosition.do',
+						params:{
+							user_id:user.get("id"),
+							position_id:window.selected_position.get("id"),
+							org_id:window.selected_position.get("org_id")
+						},
+						headers:{ 'Accept':'application/json;'},
+						success:function(){
+							//button.up('window').close();
+							me.getStore().reload();
+						}
+					});
+    			}
+    		}
+    	});
+    	seluserWindow.show();
+    },
+    onCreateByUser:function(){
+    	var me=this;
+    	var seluserWindow=Ext.create('y.permission.SelUserWindow',{
+    		listeners:{
+    			userdbclick:function(user){
+    				Ext.Ajax.request({
+						url:Ext.ContextPath+'/user/addToPosition.do',
+						params:{
+							user_id:user.get("id"),
+							position_id:window.selected_position.get("id"),
+							org_id:window.selected_position.get("org_id")
+						},
+						headers:{ 'Accept':'application/json;'},
+						success:function(){
+							//button.up('window').close();
+							me.getStore().reload();
+						}
+					});
+    			}
+    		}
+    	});
+    	seluserWindow.show();
+    },
 	onCreate:function(){
     	var me=this;
 		
@@ -137,7 +192,7 @@ Ext.define('y.org.PositionUserGrid',{
 		
 		formpanel.getForm().getRecord().getProxy( ).extraParams={
 			position_id:window.selected_position.get("id"),
-			orgno:window.selected_position.get("orgno")
+			org_id:window.selected_position.get("org_id")
 		}
 		
     	var win=Ext.create('Ext.window.Window',{
@@ -157,30 +212,6 @@ Ext.define('y.org.PositionUserGrid',{
     	win.show();
     },
     
-     onUpdate:function(){
-    	var me=this;
-		
-    	var form=Ext.create('y.permission.UserForm',{});
-    	
-    	var node=me.getSelectionModel( ).getLastSelected();
-    	if(node==null){
-    		Ext.Msg.alert("提醒","请选择一行数据!");
-    		return;
-    	}
-
-		form.loadRecord(node);
-
-    	var win=Ext.create('Ext.window.Window',{
-    		layout:'fit',
-    		title:'更新',
-    		modal:true,
-    		width:400,
-    		height:300,
-    		closeAction:'hide',
-    		items:[form]
-    	});
-    	win.show();
-    },
     
     onDelete:function(){
     	var me=this;
@@ -191,21 +222,21 @@ Ext.define('y.org.PositionUserGrid',{
 			return;
 		}
 		
-		node.getProxy( ).extraParams={
-			position_id:window.selected_position.get("id"),
-			orgno:window.selected_position.get("orgno")
-		}
-		
 		var parent=node.parentNode;
 		Ext.Msg.confirm("删除",'确定要删除吗?', function(btn, text){
-				if (btn == 'yes'){
-					node.erase({
-					    failure: function(record, operation) {
-			            	me.getStore().reload();
-					    },
-					    success:function(){
-					    	me.getStore().reload();
-					    }
+			if (btn == 'yes'){
+				Ext.Ajax.request({
+					url:Ext.ContextPath+'/user/deleteFromPosition.do',
+					params:{
+						user_id:node.get("id"),
+						position_id:window.selected_position.get("id"),
+						org_id:window.selected_position.get("org_id")
+					},
+					headers:{ 'Accept':'application/json;'},
+					success:function(){
+						//button.up('window').close();
+						me.getStore().reload();
+					}
 				});
 			}
 		});

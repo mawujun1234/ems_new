@@ -3,7 +3,7 @@ Ext.define('y.permission.RoleUserGrid',{
 	requires: [
 	     'y.permission.User',
 	     'y.permission.UserForm',
-	     'y.org.SelUserWindow'
+	     'y.org.SelPositionUserWindow'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -75,10 +75,10 @@ Ext.define('y.permission.RoleUserGrid',{
             	iconCls:'icon-search',
             	handler:function(btn){
             		var grid=btn.up("grid");
-	            	grid.getStore().getProxy().extraParams={
+	            	grid.getStore().getProxy().extraParams=Ext.apply(grid.getStore().getProxy().extraParams,{
 						"params['name']":grid.down("#name").getValue(),
 						"params['loginName']":grid.down("#loginName").getValue()
-	                };
+	                });
             		grid.getStore().reload();
             	}
             }
@@ -89,22 +89,30 @@ Ext.define('y.permission.RoleUserGrid',{
 	  		xtype: 'toolbar',
 	  		dock:'top',
 		  	items:[{
-				text: '添加',
-				itemId:'create',
+				text: '从职位添加',
+				//itemId:'create',
 				handler: function(btn){
-					me.onCreate();
+					me.onCreateByPosition();
 				},
 				iconCls: 'icon-plus'
 			},
-//				{
-//			    text: '更新',
-//			    itemId:'update',
-//			    handler: function(){
-//			    	me.onUpdate();
-//					
-//			    },
-//			    iconCls: 'icon-edit'
-//			},
+			{
+				text: '选择用户',
+				//itemId:'create',
+				handler: function(btn){
+					me.onCreateByUser();
+				},
+				iconCls: 'icon-plus'
+			},
+			{
+			    text: '新增',
+			    //itemId:'update',
+			    handler: function(){
+			    	me.onCreate();
+					
+			    },
+			   iconCls: 'icon-plus'
+			},
 				{
 			    text: '删除',
 			    itemId:'destroy',
@@ -127,14 +135,14 @@ Ext.define('y.permission.RoleUserGrid',{
        
       me.callParent();
 	},
-	onCreate:function(){
+	onCreateByPosition:function(){
     	var me=this;
     	
-    	var seluserWindow=Ext.create('y.org.SelUserWindow',{
+    	var seluserWindow=Ext.create('y.org.SelPositionUserWindow',{
     		listeners:{
     			userdbclick:function(user){
     				Ext.Ajax.request({
-						url:Ext.ContextPath+'/user/addRole.do',
+						url:Ext.ContextPath+'/user/addToRole.do',
 						params:{
 							user_id:user.get("id"),
 							role_id:window.selected_role.get("id")
@@ -149,60 +157,60 @@ Ext.define('y.permission.RoleUserGrid',{
     		}
     	});
     	seluserWindow.show();
-		
-//    	var formpanel=Ext.create('y.permission.UserForm',{});
-//
-//		var child=Ext.create('y.permission.User',{
-//
-//		});
-//		child.set("id",null);
-//		formpanel.loadRecord(child);
-//		
-//		formpanel.getForm().getRecord().getProxy( ).extraParams={
-//			role_id:window.selected_role.get("id")
-//		}
-//		
-//    	var win=Ext.create('Ext.window.Window',{
-//    		layout:'fit',
-//    		title:'新增',
-//    		modal:true,
-//    		width:400,
-//    		height:300,
-//    		closeAction:'hide',
-//    		items:[formpanel],
-//    		listeners:{
-//    			close:function(){
-//    				me.getStore().reload();
-//    			}
-//    		}
-//    	});
-//    	win.show();
+    },
+    onCreateByUser:function(){
+    	var me=this;
+    	var seluserWindow=Ext.create('y.permission.SelUserWindow',{
+    		listeners:{
+    			userdbclick:function(user){
+    				Ext.Ajax.request({
+						url:Ext.ContextPath+'/user/addToRole.do',
+						params:{
+							user_id:user.get("id"),
+							role_id:window.selected_role.get("id")
+						},
+						headers:{ 'Accept':'application/json;'},
+						success:function(){
+							//button.up('window').close();
+							me.getStore().reload();
+						}
+					});
+    			}
+    		}
+    	});
+    	seluserWindow.show();
     },
     
-//     onUpdate:function(){
-//    	var me=this;
-//		
-//    	var form=Ext.create('y.permission.UserForm',{});
-//    	
-//    	var node=me.getSelectionModel( ).getLastSelected();
-//    	if(node==null){
-//    		Ext.Msg.alert("提醒","请选择一行数据!");
-//    		return;
-//    	}
-//
-//		form.loadRecord(node);
-//
-//    	var win=Ext.create('Ext.window.Window',{
-//    		layout:'fit',
-//    		title:'更新',
-//    		modal:true,
-//    		width:400,
-//    		height:300,
-//    		closeAction:'hide',
-//    		items:[form]
-//    	});
-//    	win.show();
-//    },
+	onCreate:function(){
+    	var me=this;
+		var child=Ext.create('y.permission.User',{
+			role_id:window.selected_role.get("id")
+		});
+		child.set("id",null);
+		
+		var formpanel=Ext.create('y.permission.UserForm',{});
+		formpanel.loadRecord(child);
+		
+		formpanel.getForm().getRecord().getProxy( ).extraParams={
+			role_id:window.selected_role.get("id")
+		}
+		
+    	var win=Ext.create('Ext.window.Window',{
+    		layout:'fit',
+    		title:'新增',
+    		modal:true,
+    		width:400,
+    		height:300,
+    		closeAction:'hide',
+    		items:[formpanel],
+    		listeners:{
+    			close:function(){
+    				me.getStore().reload();
+    			}
+    		}
+    	});
+    	win.show();
+    },
     
     onDelete:function(){
     	var me=this;
@@ -221,7 +229,7 @@ Ext.define('y.permission.RoleUserGrid',{
 		Ext.Msg.confirm("删除",'确定要删除吗?', function(btn, text){
 			if (btn == 'yes'){
 				Ext.Ajax.request({
-					url:Ext.ContextPath+'/user/deleteByRole.do',
+					url:Ext.ContextPath+'/user/deleteFromRole.do',
 					params:{
 						user_id:node.get("id"),
 						role_id:window.selected_role.get("id")

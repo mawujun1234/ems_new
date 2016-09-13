@@ -113,7 +113,7 @@ Ext.onReady(function(){
 
 		window.selected_role=record;
 		userGrid.getStore().getProxy().extraParams=Ext.apply(userGrid.getStore().getProxy().extraParams,{
-			role_id:record.get("id")
+			"params['role_id']":record.get("id")
 		});
 		userGrid.getStore().reload();
 		

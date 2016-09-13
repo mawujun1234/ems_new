@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.org.OrgRepository;
+import com.mawujun.org.PositionOrgUser;
+import com.mawujun.org.PositionOrgUserRepository;
+import com.mawujun.org.PositionRepository;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
 import com.mawujun.utils.M;
@@ -27,12 +31,12 @@ public class UserService extends AbstractService<User, String> {
 	private UserRepository userRepository;
 	@Autowired
 	private RoleRepository roleRepository;
-//	@Autowired
-//	private PositionRepository positionRepository;
-//	@Autowired
-//	private OrgRepository orgRepository;
-//	@Autowired
-//	private PositionOrgUserRepository positionOrgUserRepository;
+	@Autowired
+	private PositionRepository positionRepository;
+	@Autowired
+	private OrgRepository orgRepository;
+	@Autowired
+	private PositionOrgUserRepository positionOrgUserRepository;
 	@Autowired
 	private RoleUserRepository userRoleRepository;
 	
@@ -42,26 +46,37 @@ public class UserService extends AbstractService<User, String> {
 		return userRepository;
 	}
 
-//	public void create(User user, String role_id) {
-//		super.create(user);
-//		RoleUser userRole = new RoleUser(user, roleRepository.get(role_id));
-//		userRoleRepository.create(userRole);
-//	}
-	
-	public void create(User user,String position_id,String orgno) {
+	public void createByRole(User user, String role_id) {
 		super.create(user);
-		//PositionOrgUser positionOrgUser = new PositionOrgUser(positionRepository.load(position_id),orgRepository.load(orgno),user);
-		//positionOrgUserRepository.create(positionOrgUser);
+		RoleUser userRole = new RoleUser(user, roleRepository.get(role_id));
+		userRoleRepository.create(userRole);
+	}
+	
+	public void createByPosition(User user,String position_id,String org_id) {
+		super.create(user);
+		PositionOrgUser positionOrgUser = new PositionOrgUser(positionRepository.load(position_id),orgRepository.load(org_id),user);
+		positionOrgUserRepository.create(positionOrgUser);
 		
 	}
-	public void addRole(String user_id,String role_id) {
+	public void addToRole(String user_id,String role_id) {
 		RoleUser userRole = new RoleUser(userRepository.load(user_id), roleRepository.load(role_id));
 		userRoleRepository.create(userRole);
 	}
-	public void deleteByRole(String user_id,String role_id) {
+	
+	
+	public void deleteFromRole(String user_id,String role_id) {
 		userRoleRepository.delete(new RoleUser(userRepository.load(user_id), roleRepository.load(role_id)));
 
 		//super.delete(user);
+	}
+	
+	public void addToPosition(String user_id,String position_id,String org_id) {
+		PositionOrgUser positionOrgUser = new PositionOrgUser(positionRepository.load(position_id),orgRepository.load(org_id),userRepository.load(user_id));
+		positionOrgUserRepository.create(positionOrgUser);
+	}
+	public void deleteFromPosition(String user_id,String position_id,String org_id) {
+		PositionOrgUser positionOrgUser = new PositionOrgUser(positionRepository.load(position_id),orgRepository.load(org_id),userRepository.load(user_id));
+		positionOrgUserRepository.delete(positionOrgUser);
 	}
 
 	public UserVO getByLoginName(String loginName) {

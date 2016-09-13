@@ -46,8 +46,8 @@ Ext.onReady(function(){
 
 		window.selected_position=record;
 		usergrid.getStore().getProxy().extraParams=Ext.apply(usergrid.getStore().getProxy().extraParams,{
-			position_id:record.get("id"),
-			orgno:record.get("orgno")
+			"params['position_id']":record.get("id"),
+			"params['org_id']":record.get("org_id")
 		});
 		usergrid.getStore().reload();
 

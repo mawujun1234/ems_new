@@ -126,6 +126,7 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
+				
 				<filtering>true</filtering>
 			</resource>
 			<resource>
@@ -135,7 +136,7 @@
 					<include>**/*.xml</include>
 				</includes>
 				<!-- 是否替换资源中的属性 -->
-				<filtering>true</filtering>
+				<filtering>false</filtering>
 			</resource>
 		</resources>
 

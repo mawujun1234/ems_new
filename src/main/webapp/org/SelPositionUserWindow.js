@@ -1,8 +1,11 @@
-Ext.define('y.org.SelUserWindow',{
+/**
+ *  co从职位上选择用户
+ */
+Ext.define('y.org.SelPositionUserWindow',{
 	extend:'Ext.window.Window',
 	requires: [
 	     'y.org.OrgTree',
-	     'y.org.UserGridQuery'
+	     'y.org.PositionUserGridQuery'
 	],
 	layout:'border',
     title:'双击选择用户',
@@ -19,7 +22,7 @@ Ext.define('y.org.SelUserWindow',{
 			collapsible : true,
 			region:'west'
 		});
-		var usergrid=Ext.create('y.org.UserGridQuery',{
+		var usergrid=Ext.create('y.org.PositionUserGridQuery',{
 			//title:'双击选择用户',
 			region:'center',
 			listeners:{
@@ -36,7 +39,7 @@ Ext.define('y.org.SelUserWindow',{
 		});
 		
 		tree.on("itemclick",function( view, record, item, index, e, eOpts ){
-			if(record.get("type")=="org" || !record.get("type")){
+			if(record.get("type")!="position" ){
 				usergrid.mask();
 				return;
 			} else {
@@ -45,8 +48,8 @@ Ext.define('y.org.SelUserWindow',{
 	
 			window.selected_position=record;
 			usergrid.getStore().getProxy().extraParams=Ext.apply(usergrid.getStore().getProxy().extraParams,{
-				position_id:record.get("id"),
-				orgno:record.get("orgno")
+				"params['position_id']":record.get("id"),
+				"params['org_id']":record.get("org_id")
 			});
 			usergrid.getStore().reload();
 	

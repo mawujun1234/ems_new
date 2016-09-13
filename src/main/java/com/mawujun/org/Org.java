@@ -41,12 +41,7 @@ public class Org {
 	@FieldDefine(title="组织类型",sort=4,showType=ShowType.combobox,hidden=false)//
 	private OrgType orgType;//
 
-	@Column(length=30,nullable=true)
-	@FieldDefine(title="汇报编码",sort=6)
-	private String reportCode;//0001.0001这种的
-	@Column(length=30,nullable=true)
-	@FieldDefine(title="层级",sort=6)
-	private Integer reportLevel;//
+
 	@Column(length=15,nullable=false)
 	@Enumerated(EnumType.STRING)
 	@FieldDefine(title="状态",sort=4,showType=ShowType.combobox,hidden=false)//
@@ -55,15 +50,7 @@ public class Org {
 	private Integer sort;
 	
 	
-	public void setReportCode(String reportCode) {
-		this.reportCode = reportCode;
-		if(reportCode!=null&&!"".equals(reportCode)){
-			String aa[]=reportCode.split(".");
-			if(aa!=null && aa.length>0){
-				this.reportLevel=aa.length;
-			}
-		}
-	}
+
 	
 	
 	
@@ -110,15 +97,7 @@ public class Org {
 	public String getName() {
 		return name;
 	}
-	public String getReportCode() {
-		return reportCode;
-	}
 
-
-
-	public Integer getReportLevel() {
-		return reportLevel;
-	}
 	
 
 	

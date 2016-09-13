@@ -280,14 +280,6 @@ Ext.define('y.org.OrgTree', {
 						me.onReload(parent);
 					}
 				});
-//					node.erase({
-//					    failure: function(record, operation) {
-//			            	me.onReload(parent);
-//					    },
-//					    success:function(){
-//					    	me.onReload(parent);
-//					    }
-//				});
 			}
 		});
     },
@@ -295,7 +287,7 @@ Ext.define('y.org.OrgTree', {
     	var me=this;
 
     	var parent=me.getSelectionModel( ).getLastSelected( )||me.getRootNode( );  
-    	if(node.get("type")=='position'){
+    	if(parent.get("type")=='position'){
     		Ext.Msg.alert("消息","职位下不能新建职位和组织单元");
     		return;
     	}
@@ -380,14 +372,18 @@ Ext.define('y.org.OrgTree', {
     	}
 		var parent=node.parentNode;
 		Ext.Msg.confirm("删除",'确定要删除吗?', function(btn, text){
-				if (btn == 'yes'){
-					node.erase({
-					    failure: function(record, operation) {
-			            	me.onReload(parent);
-					    },
-					    success:function(){
-					    	me.onReload(parent);
-					    }
+			if (btn == 'yes'){
+				Ext.Ajax.request({
+					url:Ext.ContextPath+'/org/destroy.do',
+					jsonData:node.getData(),
+					params:{
+						dim:me.getStore().getProxy().extraParams.dim
+					},
+					headers:{ 'Accept':'application/json;'},
+					success:function(){
+						//button.up('window').close();
+						me.onReload(parent);
+					}
 				});
 			}
 		});

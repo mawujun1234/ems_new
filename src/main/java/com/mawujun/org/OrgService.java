@@ -6,8 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
+import com.mawujun.utils.M;
 import com.mawujun.utils.bean.BeanUtils;
+import com.mawujun.utils.help.ReportCodeHelper;
+import com.mawujun.utils.string.StringUtils;
 
 
 /**
@@ -32,15 +36,62 @@ public class OrgService extends AbstractService<Org, String>{
 	}
 	
 	public void create(OrgVO orgVO) {
-
 		Org org=BeanUtils.copyOrCast(orgVO, Org.class);
+		//org.setReportCode(ReportCodeHelper.generate4(, false));
 		this.getRepository().create(org);
+		
+		Org parent=orgRepository.load(orgVO.getParent_id());
+		//获取当前父节点下的最大reportcode
+		String maxReportCode=(String)orgOrgRepository.queryMax(Cnd.max(M.OrgOrg.child_reportCode).andEquals(M.OrgOrg.parent.id, parent.getId()));
+		String parent_reportCode=(String)orgOrgRepository.queryMax(Cnd.max(M.OrgOrg.child_reportCode).andEquals(M.OrgOrg.child.id, parent.getId()));
+		if(!StringUtils.hasText(parent_reportCode)){
+			parent_reportCode=ReportCodeHelper.generate4(null, false);
+		}
+		String child_reportCode=null;
+		if(!StringUtils.hasText(maxReportCode)){
+			child_reportCode=ReportCodeHelper.generate4(parent_reportCode, true);
+		} else {
+			child_reportCode=ReportCodeHelper.generate4(maxReportCode, false);
+		}
+		
 		
 		OrgOrg orgorg=new OrgOrg();
 		orgorg.setChild(org);
 		orgorg.setDim(orgVO.getDim());
-		orgorg.setParent(orgRepository.load(orgVO.getParent_id()));
+		orgorg.setParent(parent);
+		orgorg.setParent_reportCode(parent_reportCode);
+		orgorg.setChild_reportCode(child_reportCode);
 		orgOrgRepository.create(orgorg);
+	}
+	/**
+	 * d当reportcode出现混乱的时候，进行初始化,出还刷reportcode和reportlevel
+	 */
+	public void initReportCode(){
+		for(Dim dim:Dim.values()){
+			//root是根节点的id
+			initReportCode("root",dim,null);
+		}
+	}
+	private void initReportCode(String parent_id,Dim dim,String parent_reportcode){
+		List<OrgOrg> rootParent=orgOrgRepository.query(Cnd.select().andEquals(M.OrgOrg.parent.id, parent_id).andEquals(M.OrgOrg.dim, dim));
+		//String 
+		if(parent_reportcode==null){
+			parent_reportcode=ReportCodeHelper.generate4(parent_reportcode, false);
+		}
+		String child_reportcode=ReportCodeHelper.generate4(parent_reportcode, true);
+		for(OrgOrg parent:rootParent){
+			parent.setParent_reportCode(parent_reportcode);
+			parent.setChild_reportCode(child_reportcode);
+
+			initReportCode(parent.getChild().getId(),dim,child_reportcode);
+			//这行要放在最后
+			child_reportcode=ReportCodeHelper.generate4(child_reportcode, false);
+		}
+	}
+	
+	public void delete(Org org,Dim dim){
+		orgOrgRepository.deleteBatch(Cnd.delete().andEquals(M.OrgOrg.child.id, org.getId()).andEquals(M.OrgOrg.dim, dim));
+		this.delete(org);
 	}
 	/**
 	 * 获取职位和组织节点

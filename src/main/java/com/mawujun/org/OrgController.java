@@ -156,10 +156,14 @@ public class OrgController {
 	
 	@RequestMapping("/org/destroy.do")
 	@ResponseBody
-	public Org destroy(@RequestBody Org org) {
-		orgService.delete(org);
+	public Org destroy(@RequestBody Org org,Dim dim) {
+		orgService.delete(org,dim);
 		return org;
 	}
-	
-	
+	@RequestMapping("/org/initReportCode.do")
+	@ResponseBody
+	public String initReportCode() {
+		orgService.initReportCode();
+		return "{success:true}";
+	}
 }

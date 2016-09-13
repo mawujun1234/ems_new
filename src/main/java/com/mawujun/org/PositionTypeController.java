@@ -7,6 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.mawujun.exception.BusinessException;
+import com.mawujun.repository.cnd.Cnd;
+import com.mawujun.utils.M;
 /**
  * @author mawujun qq:16064988 e-mail:mawujun1234@163.com 
  * @version 1.0
@@ -18,6 +22,8 @@ public class PositionTypeController {
 
 	@Resource
 	private PositionTypeService positionTypeService;
+	@Resource
+	private PositionService positionService;
 
 
 //	/**
@@ -71,6 +77,11 @@ public class PositionTypeController {
 	@RequestMapping("/positionType/destroy.do")
 	//@ResponseBody
 	public PositionType destroy(@RequestBody PositionType positionType) {
+		//判断有没有被职位引用
+		int count=positionService.queryCount(Cnd.count().andEquals(M.Position.positionType_id, positionType.getId()));
+		if(count>0){
+			throw new BusinessException("该职位类型已经被引用，不能删除!");
+		}
 		positionTypeService.delete(positionType);
 		return positionType;
 	}
