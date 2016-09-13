@@ -25,7 +25,6 @@ public class PositionOrgAccess implements Serializable{
 	Position position;
 	@Id
 	@ManyToOne
-	@JoinColumn(name="orgno")
 	Org org;
 
 	
