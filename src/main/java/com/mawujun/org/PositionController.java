@@ -60,25 +60,44 @@ public class PositionController {
 	}
 	
 	@RequestMapping("/position/update.do")
-	//@ResponseBody
+	@ResponseBody
 	public  Position update(@RequestBody Position position) {
 		positionService.update(position,Dim.base);
 		return position;
 	}
 	
 	@RequestMapping("/position/deleteById.do")
-	//@ResponseBody
+	@ResponseBody
 	public String deleteById(String id) {
 		positionService.deleteById(id);
 		return id;
 	}
 	
 	@RequestMapping("/position/destroy.do")
-	//@ResponseBody
+	@ResponseBody
 	public Position destroy(@RequestBody Position position) {
 		positionService.delete(position);
 		return position;
 	}
 	
+	@RequestMapping("/position/querySelectStores.do")
+	@ResponseBody
+	public List<PositionOrgAccessVO> querySelectStores(String position_id) {
+		
+		return positionService.querySelectStores(position_id);
+	}
+	@RequestMapping("/position/selectStore.do")
+	@ResponseBody
+	public String selectStore(PositionOrgAccessVO vo) {
+		positionService.selectStore(vo);
+		return "{success:true}";
+	}
+	
+	@RequestMapping("/position/deselectStore.do")
+	@ResponseBody
+	public String deselectStore(PositionOrgAccessVO vo) {
+		positionService.deselectStore(vo);
+		return "{success:true}";
+	}
 	
 }

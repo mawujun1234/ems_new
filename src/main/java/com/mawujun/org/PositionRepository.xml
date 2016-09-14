@@ -5,23 +5,16 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
 <mapper namespace="com.mawujun.org.PositionRepository">
-	<!-- 查询语句，会自动分页-->
-    <select id="queryPage" resultType="com.mawujun.org.Position" parameterType="map">
-    	select * from t_position
+	
+    <select id="querySelectStores" resultType="com.mawujun.org.PositionOrgAccessVO" parameterType="map">
+    	select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b
+		on a.org_id=b.id 
+		and a.position_id=#{position_id} 
+		where  b.ORGTYPE='store'
     </select> 
-     <!-- 名称模式为：****_count,也可以不写，但如果查询叫复杂的话，自己写有助于控制查询性能-->
-    <select id="queryPage_count" resultType="int" parameterType="map">
-    	select count(a.id)
-		from t_position a
-    </select>
+     
     
-    <select id="queryPositionByName" parameterType="map" resultType="com.mawujun.org.Position">
-    	select * from t_position where orgno=#{orgno} and name=#{name}
-    </select>
     
-    <!-- 在订货单位维护的时候-->
-    <delete id="delete_t_position_org_userByUser">
-    	delete t_position_org_user where user_id=#{user_id}
-    </delete>
+    
 </mapper>
 

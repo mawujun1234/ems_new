@@ -13,7 +13,9 @@ import com.mawujun.repository.IRepository;
  */
 @Repository
 public interface PositionRepository extends IRepository<Position, String>{
-	public List<Position> queryPositionByName(@Param("orgno")String orgno,@Param("name")String name);
-	public void delete_t_position_org_userByUser(@Param("user_id")String user_id);
+	//public List<Position> queryPositionByName(@Param("orgno")String orgno,@Param("name")String name);
+	//public void delete_t_position_org_userByUser(@Param("user_id")String user_id);
+	
+	public List<PositionOrgAccessVO> querySelectStores(@Param("position_id")String position_id);
 
 }

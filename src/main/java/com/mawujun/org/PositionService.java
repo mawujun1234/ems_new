@@ -22,8 +22,8 @@ public class PositionService extends AbstractService<Position, String>{
 
 	@Autowired
 	private PositionRepository positionRepository;
-	//@Autowired
-	//private PositionOrgAccessRepository positionOrgAccessRepository;
+	@Autowired
+	private PositionOrgAccessRepository positionOrgAccessRepository;
 	@Autowired
 	private PositionOrgUserRepository positionOrgUserRepository;
 	@Autowired
@@ -109,6 +109,27 @@ public class PositionService extends AbstractService<Position, String>{
 		//positionOrgAccessRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgAccess.position.id, position.getId()));
 		positionOrgUserRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgUser.position.id, position.getId()));
 		super.delete(position);
+	}
+	
+	public List<PositionOrgAccessVO> querySelectStores(String position_id) {
+		return positionRepository.querySelectStores(position_id);
+	}
+	public void selectStore(PositionOrgAccessVO vo){
+		
+		PositionOrgAccess positionOrgAccess=new PositionOrgAccess();
+		positionOrgAccess.setOrg(orgRepository.load(vo.getOrg_id()));
+		positionOrgAccess.setPosition(positionRepository.load(vo.getPosition_id()));	
+		positionOrgAccess.setLook(vo.getLook());
+		positionOrgAccess.setEdit(vo.getEdit());
+		positionOrgAccessRepository.createOrUpdate(positionOrgAccess);
+	}
+	public void deselectStore(PositionOrgAccessVO vo) {
+		PositionOrgAccess positionOrgAccess=new PositionOrgAccess();
+		positionOrgAccess.setOrg(orgRepository.load(vo.getOrg_id()));
+		positionOrgAccess.setPosition(positionRepository.load(vo.getPosition_id()));	
+		positionOrgAccess.setLook(vo.getLook());
+		positionOrgAccess.setEdit(vo.getEdit());
+		positionOrgAccessRepository.createOrUpdate(positionOrgAccess);
 	}
 
 }

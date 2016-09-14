@@ -14,13 +14,49 @@ Ext.onReady(function(){
 		region:'center'
 	});
 	
-	var orgAccessTree=Ext.create("y.org.OrgAccessTree",{
-		title:'可访问的组织单元'
+	var positionStoreGrid=Ext.create("y.org.PositionStoreGrid",{
+		title:'仓库权限',
+		listeners : {
+			storeSelect : function(record, type) {
+				var params = {
+					position_id:window.selected_position.get("id"),
+					org_id : record.get("org_id"),
+					look : record.get("look"),
+					edit : record.get("edit")
+				};
+				Ext.Ajax.request({
+					url : Ext.ContextPath + "/position/selectStore.do",
+					params : params,
+					method : 'POST',
+					success : function(response) {
+						record.commit();
+					}
+
+				});
+			},
+			storeDeselect : function(record, type) {
+				var params = {
+					position_id:window.selected_position.get("id"),
+					org_id : record.get("org_id"),
+					look : record.get("look"),
+					edit : record.get("edit")
+				};
+				Ext.Ajax.request({
+					url : Ext.ContextPath + "/position/deselectStore.do",
+					params : params,
+					method : 'POST',
+					success : function(response) {
+						record.commit();
+					}
+
+				});
+			}
+		}
 	});
 	
 	var tabpanel=Ext.create('Ext.tab.Panel',{
 		region:'center',
-		items:[usergrid,orgAccessTree],
+		items:[usergrid,positionStoreGrid],
 		listeners:{
 	    	render:function(tabpanel){
 	    		tabpanel.mask();
@@ -52,10 +88,10 @@ Ext.onReady(function(){
 		usergrid.getStore().reload();
 
 		//刷新整颗权限树
-		orgAccessTree.getStore().getProxy().extraParams=Ext.apply(orgAccessTree.getStore().getProxy().extraParams,{
+		positionStoreGrid.getStore().getProxy().extraParams=Ext.apply(positionStoreGrid.getStore().getProxy().extraParams,{
 			position_id:record.get("id")
 		});
-		orgAccessTree.getStore().reload({node:orgAccessTree.getRootNode()});
+		positionStoreGrid.getStore().reload();
 	});
 
 

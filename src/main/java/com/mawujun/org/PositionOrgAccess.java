@@ -26,6 +26,9 @@ public class PositionOrgAccess implements Serializable{
 	@Id
 	@ManyToOne
 	Org org;
+	
+	private Boolean look=false;
+	private Boolean edit=false;
 
 	
 	public PositionOrgAccess(){
@@ -51,6 +54,26 @@ public class PositionOrgAccess implements Serializable{
 	}
 	public void setOrg(Org org) {
 		this.org = org;
+	}
+
+	public Boolean getLook() {
+		return look;
+	}
+
+	public void setLook(Boolean look) {
+		this.look = look;
+	}
+
+	public Boolean getEdit() {
+		return edit;
+	}
+
+	public void setEdit(Boolean edit) {
+		this.edit = edit;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 

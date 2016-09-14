@@ -6257,3 +6257,268 @@
 14:48:52.679 [http-bio-8085-exec-10] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
 14:48:52.679 [http-bio-8085-exec-10] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: f2605c38-707f-4637-a62d-b2d082d3329b(String), base(String), f2605c38-707f-4637-a62d-b2d082d3329b(String)
 14:48:52.680 [http-bio-8085-exec-10] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 0
+08:37:30.110 [localhost-startStop-1] DEBUG com.mawujun.config.DispatcherServletInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context
+08:37:55.066 [localhost-startStop-1] DEBUG com.mawujun.controller.spring.SpringContextHolder - 注入ApplicationContext到SpringContextHolder:null
+08:39:16.539 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.getByLoginName - ==>  Preparing: select * from t_user a where lower(a.loginName)=lower(?) 
+08:39:16.555 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.getByLoginName - ==> Parameters: admin(String)
+08:39:16.584 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.getByLoginName - <==      Total: 1
+08:39:16.597 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.findPermissions - ==>  Preparing: select c.url from t_role_user a,t_role_menu b,t_menu c where a.role_id=b.role_id and b.menu_id=c.id and c.url is not null and a.user_id=? 
+08:39:16.598 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.findPermissions - ==> Parameters: admin(String)
+08:39:16.611 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.findPermissions - <==      Total: 5
+08:39:16.761 [http-bio-8085-exec-8] INFO  com.mawujun.controller.shiro.ShiroURLPermissionsFilter - 当前路径/main/index.jsp匹配 '/main/**'. 所以不进行权限验证
+08:39:16.804 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==>  Preparing: select a.* from t_menu a,t_menu b,t_role_menu c,t_role_user d where a.parent_id=b.id and a.id=c.menu_id and c.role_id=d.role_id and d.user_id=? and b.url=? 
+08:39:16.804 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==> Parameters: admin(String), /main/index.jsp(String)
+08:39:16.816 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryElement - <==      Total: 0
+08:39:17.692 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id is null and b.user_id =? order by a.sort 
+08:39:17.692 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: admin(String)
+08:39:17.701 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 1
+08:39:17.702 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+08:39:17.702 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: 1eb1d9ea-075c-43c6-baa3-d36004f4d4b7(String), admin(String)
+08:39:17.709 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 5
+08:39:17.710 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+08:39:17.710 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: 539ea37c-a286-4ae2-8a0b-cb4dab321515(String), admin(String)
+08:39:17.712 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 0
+08:39:17.713 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+08:39:17.714 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: e35d2b7f-58c2-4e61-a50d-bc6112779b4c(String), admin(String)
+08:39:17.716 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 0
+08:39:17.716 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+08:39:17.717 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: a7439ed8-ad09-452f-9860-27157c9027d9(String), admin(String)
+08:39:17.718 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 0
+08:39:17.719 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+08:39:17.719 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: a3a58507-1c50-46f4-8316-6492d3d4b10e(String), admin(String)
+08:39:17.720 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 0
+08:39:17.721 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+08:39:17.721 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: a124a5f1-70a3-4dba-a014-68385edd922b(String), admin(String)
+08:39:17.722 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 0
+08:39:20.465 [http-bio-8085-exec-4] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==>  Preparing: select a.* from t_menu a,t_menu b,t_role_menu c,t_role_user d where a.parent_id=b.id and a.id=c.menu_id and c.role_id=d.role_id and d.user_id=? and b.url=? 
+08:39:20.466 [http-bio-8085-exec-4] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==> Parameters: admin(String), /org/OrgApp.jsp(String)
+08:39:20.472 [http-bio-8085-exec-4] DEBUG com.mawujun.permission.MenuRepository.queryElement - <==      Total: 0
+08:39:20.998 [http-bio-8085-exec-3] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+08:39:20.998 [http-bio-8085-exec-3] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: root(String), base(String), root(String)
+08:39:21.010 [http-bio-8085-exec-3] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 2
+08:39:27.554 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+08:39:27.555 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String), base(String), 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String)
+08:39:27.557 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 0
+08:39:28.542 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+08:39:28.543 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 3c8430ec-ea64-4513-bcb3-fc22ae00009e(String), base(String), 3c8430ec-ea64-4513-bcb3-fc22ae00009e(String)
+08:39:28.545 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 6
+08:39:30.616 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+08:39:30.616 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 24c8b514-a899-42b4-999e-e3b7e3572e40(String), base(String), 24c8b514-a899-42b4-999e-e3b7e3572e40(String)
+08:39:30.618 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 2
+09:10:53.712 [http-bio-8085-exec-12] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+09:10:53.712 [http-bio-8085-exec-12] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: d7a3c775-8fa5-4923-ab43-da4fae0b756d(String), base(String), d7a3c775-8fa5-4923-ab43-da4fae0b756d(String)
+09:10:53.714 [http-bio-8085-exec-12] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 0
+09:52:02.730 [localhost-startStop-1] DEBUG com.mawujun.config.DispatcherServletInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context
+09:52:12.261 [localhost-startStop-1] DEBUG com.mawujun.controller.spring.SpringContextHolder - 注入ApplicationContext到SpringContextHolder:null
+09:56:29.212 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.getByLoginName - ==>  Preparing: select * from t_user a where lower(a.loginName)=lower(?) 
+09:56:29.263 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.getByLoginName - ==> Parameters: admin(String)
+09:56:29.311 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.getByLoginName - <==      Total: 1
+09:56:29.365 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.findPermissions - ==>  Preparing: select c.url from t_role_user a,t_role_menu b,t_menu c where a.role_id=b.role_id and b.menu_id=c.id and c.url is not null and a.user_id=? 
+09:56:29.366 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.findPermissions - ==> Parameters: admin(String)
+09:56:29.377 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.findPermissions - <==      Total: 5
+09:56:29.578 [http-bio-8085-exec-8] INFO  com.mawujun.controller.shiro.ShiroURLPermissionsFilter - 当前路径/main/index.jsp匹配 '/main/**'. 所以不进行权限验证
+09:56:29.685 [http-bio-8085-exec-9] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==>  Preparing: select a.* from t_menu a,t_menu b,t_role_menu c,t_role_user d where a.parent_id=b.id and a.id=c.menu_id and c.role_id=d.role_id and d.user_id=? and b.url=? 
+09:56:29.685 [http-bio-8085-exec-9] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==> Parameters: admin(String), /main/index.jsp(String)
+09:56:29.689 [http-bio-8085-exec-9] DEBUG com.mawujun.permission.MenuRepository.queryElement - <==      Total: 0
+09:56:30.445 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id is null and b.user_id =? order by a.sort 
+09:56:30.446 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: admin(String)
+09:56:30.472 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 1
+09:56:30.475 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+09:56:30.476 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: 1eb1d9ea-075c-43c6-baa3-d36004f4d4b7(String), admin(String)
+09:56:30.486 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 5
+09:56:30.488 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+09:56:30.488 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: 539ea37c-a286-4ae2-8a0b-cb4dab321515(String), admin(String)
+09:56:30.491 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 0
+09:56:30.492 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+09:56:30.492 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: e35d2b7f-58c2-4e61-a50d-bc6112779b4c(String), admin(String)
+09:56:30.494 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 0
+09:56:30.495 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+09:56:30.495 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: a7439ed8-ad09-452f-9860-27157c9027d9(String), admin(String)
+09:56:30.498 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 0
+09:56:30.499 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+09:56:30.500 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: a3a58507-1c50-46f4-8316-6492d3d4b10e(String), admin(String)
+09:56:30.502 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 0
+09:56:30.504 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==>  Preparing: select a.* from t_menu a , t_role_user b,t_role_menu c where a.menuType='menu' and b.role_id=c.role_id and c.menu_id=a.id and a.parent_id=? and b.user_id =? order by a.sort 
+09:56:30.504 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - ==> Parameters: a124a5f1-70a3-4dba-a014-68385edd922b(String), admin(String)
+09:56:30.507 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryByUser - <==      Total: 0
+09:56:33.540 [http-bio-8085-exec-4] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==>  Preparing: select a.* from t_menu a,t_menu b,t_role_menu c,t_role_user d where a.parent_id=b.id and a.id=c.menu_id and c.role_id=d.role_id and d.user_id=? and b.url=? 
+09:56:33.540 [http-bio-8085-exec-4] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==> Parameters: admin(String), /org/OrgApp.jsp(String)
+09:56:33.544 [http-bio-8085-exec-4] DEBUG com.mawujun.permission.MenuRepository.queryElement - <==      Total: 0
+09:56:34.144 [http-bio-8085-exec-1] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+09:56:34.145 [http-bio-8085-exec-1] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: root(String), base(String), root(String)
+09:56:34.154 [http-bio-8085-exec-1] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 2
+09:56:37.252 [http-bio-8085-exec-4] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+09:56:37.253 [http-bio-8085-exec-4] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String), base(String), 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String)
+09:56:37.255 [http-bio-8085-exec-4] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 0
+09:56:38.692 [http-bio-8085-exec-1] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+09:56:38.692 [http-bio-8085-exec-1] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 3c8430ec-ea64-4513-bcb3-fc22ae00009e(String), base(String), 3c8430ec-ea64-4513-bcb3-fc22ae00009e(String)
+09:56:38.695 [http-bio-8085-exec-1] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 6
+10:00:47.161 [http-bio-8085-exec-9] DEBUG com.mawujun.repository.hibernate.HibernateDao - save entity: com.mawujun.org.Position@771af8dc
+10:00:47.270 [http-bio-8085-exec-7] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:00:47.271 [http-bio-8085-exec-7] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String), base(String), 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String)
+10:00:47.272 [http-bio-8085-exec-7] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 1
+10:00:49.647 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryOrgAccess - ==>  Preparing: select X.*,decode(y.orgno,null,0,1) checked from ( select a.orgno as id,orgnm as name,a.orgno,'' as remark,a.orgty as type from t_org a,t_org_org b where a.orgno=b.child_no and b.parent_no=? and b.dim=? and a.orgst='KQ' ) x left join t_position_org_access y on x.orgno=y.orgno and y.position_id=? 
+10:00:49.648 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryOrgAccess - ==> Parameters: root(String), base(String), b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:00:49.720 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==>  Preparing: select a.* from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:00:49.720 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:00:49.732 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.queryByPosition - <==      Total: 0
+10:00:49.733 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==>  Preparing: select count(a.id) from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:00:49.733 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:00:49.736 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - <==      Total: 1
+10:00:50.041 [http-bio-8085-exec-5] DEBUG com.mawujun.controller.spring.mvc.exception.MappingExceptionResolver - Resolving exception from handler [public java.util.List<com.mawujun.org.NodeVO> com.mawujun.org.OrgController.queryOrgAccess(java.lang.String,com.mawujun.org.Dim,java.lang.String)]: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "A"."ORGST": 标识符无效
+
+### The error may exist in com/mawujun/org/OrgRepository.xml
+### The error may involve com.mawujun.org.OrgRepository.queryOrgAccess-Inline
+### The error occurred while setting parameters
+### SQL: select X.*,decode(y.orgno,null,0,1) checked from (      select a.orgno as id,orgnm as name,a.orgno,'' as remark,a.orgty as type from t_org a,t_org_org b      where a.orgno=b.child_no        and b.parent_no=?      and b.dim=? and a.orgst='KQ'      ) x left join t_position_org_access y on x.orgno=y.orgno and y.position_id=?
+### Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "A"."ORGST": 标识符无效
+
+; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: ORA-00904: "A"."ORGST": 标识符无效
+
+10:00:50.041 [http-bio-8085-exec-5] DEBUG com.mawujun.controller.spring.mvc.exception.MappingExceptionResolver - Resolving to view 'common_error' for exception of type [org.springframework.jdbc.BadSqlGrammarException], based on exception mapping [java.lang.Exception]
+10:00:50.041 [http-bio-8085-exec-5] DEBUG com.mawujun.controller.spring.mvc.exception.MappingExceptionResolver - Applying HTTP status code 503
+10:00:50.041 [http-bio-8085-exec-5] DEBUG com.mawujun.controller.spring.mvc.exception.MappingExceptionResolver - Exposing Exception as model attribute 'exception'
+10:00:50.042 [http-bio-8085-exec-5] INFO  com.mawujun.controller.spring.mvc.exception.MappingExceptionResolver - org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "A"."ORGST": 标识符无效
+
+### The error may exist in com/mawujun/org/OrgRepository.xml
+### The error may involve com.mawujun.org.OrgRepository.queryOrgAccess-Inline
+### The error occurred while setting parameters
+### SQL: select X.*,decode(y.orgno,null,0,1) checked from (      select a.orgno as id,orgnm as name,a.orgno,'' as remark,a.orgty as type from t_org a,t_org_org b      where a.orgno=b.child_no        and b.parent_no=?      and b.dim=? and a.orgst='KQ'      ) x left join t_position_org_access y on x.orgno=y.orgno and y.position_id=?
+### Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "A"."ORGST": 标识符无效
+
+; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: ORA-00904: "A"."ORGST": 标识符无效
+
+10:01:25.602 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.UserRepository.findPermissions - ==>  Preparing: select c.url from t_role_user a,t_role_menu b,t_menu c where a.role_id=b.role_id and b.menu_id=c.id and c.url is not null and a.user_id=? 
+10:01:25.602 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.UserRepository.findPermissions - ==> Parameters: admin(String)
+10:01:25.608 [http-bio-8085-exec-1] DEBUG com.mawujun.permission.UserRepository.findPermissions - <==      Total: 5
+10:01:25.624 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==>  Preparing: select a.* from t_menu a,t_menu b,t_role_menu c,t_role_user d where a.parent_id=b.id and a.id=c.menu_id and c.role_id=d.role_id and d.user_id=? and b.url=? 
+10:01:25.625 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==> Parameters: admin(String), /org/OrgApp.jsp(String)
+10:01:25.633 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.MenuRepository.queryElement - <==      Total: 0
+10:01:26.193 [http-bio-8085-exec-6] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:01:26.193 [http-bio-8085-exec-6] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: root(String), base(String), root(String)
+10:01:26.195 [http-bio-8085-exec-6] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 2
+10:01:29.666 [http-bio-8085-exec-1] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:01:29.666 [http-bio-8085-exec-1] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String), base(String), 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String)
+10:01:29.668 [http-bio-8085-exec-1] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 1
+10:01:30.860 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==>  Preparing: select a.* from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:01:30.861 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:01:30.862 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition - <==      Total: 0
+10:01:30.863 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==>  Preparing: select count(a.id) from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:01:30.863 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:01:30.864 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - <==      Total: 1
+10:01:46.596 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==>  Preparing: select a.* from t_menu a,t_menu b,t_role_menu c,t_role_user d where a.parent_id=b.id and a.id=c.menu_id and c.role_id=d.role_id and d.user_id=? and b.url=? 
+10:01:46.596 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==> Parameters: admin(String), /org/OrgApp.jsp(String)
+10:01:46.598 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.MenuRepository.queryElement - <==      Total: 0
+10:01:53.112 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:01:53.112 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: root(String), base(String), root(String)
+10:01:53.114 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 2
+10:01:55.280 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:01:55.280 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String), base(String), 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String)
+10:01:55.281 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 1
+10:01:56.412 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==>  Preparing: select a.* from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:01:56.412 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:01:56.414 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition - <==      Total: 0
+10:01:56.415 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==>  Preparing: select count(a.id) from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:01:56.415 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:01:56.416 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - <==      Total: 1
+10:04:19.700 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.UserRepository.findPermissions - ==>  Preparing: select c.url from t_role_user a,t_role_menu b,t_menu c where a.role_id=b.role_id and b.menu_id=c.id and c.url is not null and a.user_id=? 
+10:04:19.701 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.UserRepository.findPermissions - ==> Parameters: admin(String)
+10:04:19.706 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.UserRepository.findPermissions - <==      Total: 5
+10:04:19.755 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==>  Preparing: select a.* from t_menu a,t_menu b,t_role_menu c,t_role_user d where a.parent_id=b.id and a.id=c.menu_id and c.role_id=d.role_id and d.user_id=? and b.url=? 
+10:04:19.756 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==> Parameters: admin(String), /org/OrgApp.jsp(String)
+10:04:19.759 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.MenuRepository.queryElement - <==      Total: 0
+10:04:26.265 [http-bio-8085-exec-10] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:04:26.266 [http-bio-8085-exec-10] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: root(String), base(String), root(String)
+10:04:26.269 [http-bio-8085-exec-10] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 2
+10:04:27.158 [http-bio-8085-exec-4] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:04:27.168 [http-bio-8085-exec-4] DEBUG com.mawujun.controller.spring.mvc.exception.MappingExceptionResolver - Resolving exception from handler [public java.util.List<com.mawujun.org.PositionOrgAccessVO> com.mawujun.org.PositionController.querySelectStores(java.lang.String)]: org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.type.TypeException: Could not set parameters for mapping: ParameterMapping{property='position_id', mode=IN, javaType=class java.lang.Object, jdbcType=null, numericScale=null, resultMapId='null', jdbcTypeName='null', expression='null'}. Cause: org.apache.ibatis.type.TypeException: Error setting null for parameter #1 with JdbcType OTHER . Try setting a different JdbcType for this parameter or a different jdbcTypeForNull configuration property. Cause: java.sql.SQLException: 无效的列类型: 1111
+10:04:27.168 [http-bio-8085-exec-4] DEBUG com.mawujun.controller.spring.mvc.exception.MappingExceptionResolver - Resolving to view 'common_error' for exception of type [org.mybatis.spring.MyBatisSystemException], based on exception mapping [java.lang.Exception]
+10:04:27.168 [http-bio-8085-exec-4] DEBUG com.mawujun.controller.spring.mvc.exception.MappingExceptionResolver - Applying HTTP status code 503
+10:04:27.168 [http-bio-8085-exec-4] DEBUG com.mawujun.controller.spring.mvc.exception.MappingExceptionResolver - Exposing Exception as model attribute 'exception'
+10:04:27.168 [http-bio-8085-exec-4] INFO  com.mawujun.controller.spring.mvc.exception.MappingExceptionResolver - org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.type.TypeException: Could not set parameters for mapping: ParameterMapping{property='position_id', mode=IN, javaType=class java.lang.Object, jdbcType=null, numericScale=null, resultMapId='null', jdbcTypeName='null', expression='null'}. Cause: org.apache.ibatis.type.TypeException: Error setting null for parameter #1 with JdbcType OTHER . Try setting a different JdbcType for this parameter or a different jdbcTypeForNull configuration property. Cause: java.sql.SQLException: 无效的列类型: 1111
+10:04:54.142 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==>  Preparing: select a.* from t_menu a,t_menu b,t_role_menu c,t_role_user d where a.parent_id=b.id and a.id=c.menu_id and c.role_id=d.role_id and d.user_id=? and b.url=? 
+10:04:54.143 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==> Parameters: admin(String), /org/OrgApp.jsp(String)
+10:04:54.149 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.MenuRepository.queryElement - <==      Total: 0
+10:05:01.157 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:05:01.157 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: root(String), base(String), root(String)
+10:05:01.159 [http-bio-8085-exec-5] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 2
+10:05:04.223 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:05:04.224 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String), base(String), 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String)
+10:05:04.225 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 1
+10:05:05.122 [http-bio-8085-exec-6] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:05:05.123 [http-bio-8085-exec-6] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:05:05.134 [http-bio-8085-exec-6] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
+10:05:05.139 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==>  Preparing: select a.* from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:05:05.139 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:05:05.141 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.UserRepository.queryByPosition - <==      Total: 0
+10:05:05.142 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==>  Preparing: select count(a.id) from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:05:05.142 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:05:05.143 [http-bio-8085-exec-8] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - <==      Total: 1
+10:05:08.520 [http-bio-8085-exec-5] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:05:08.520 [http-bio-8085-exec-5] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:05:08.522 [http-bio-8085-exec-5] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
+10:22:58.353 [http-bio-8085-exec-6] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:22:58.355 [http-bio-8085-exec-6] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:22:58.358 [http-bio-8085-exec-6] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
+10:22:59.435 [http-bio-8085-exec-1] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:22:59.435 [http-bio-8085-exec-1] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:22:59.437 [http-bio-8085-exec-1] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
+10:28:31.424 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.findPermissions - ==>  Preparing: select c.url from t_role_user a,t_role_menu b,t_menu c where a.role_id=b.role_id and b.menu_id=c.id and c.url is not null and a.user_id=? 
+10:28:31.424 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.findPermissions - ==> Parameters: admin(String)
+10:28:31.428 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.findPermissions - <==      Total: 5
+10:28:31.482 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==>  Preparing: select a.* from t_menu a,t_menu b,t_role_menu c,t_role_user d where a.parent_id=b.id and a.id=c.menu_id and c.role_id=d.role_id and d.user_id=? and b.url=? 
+10:28:31.483 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.MenuRepository.queryElement - ==> Parameters: admin(String), /org/OrgApp.jsp(String)
+10:28:31.485 [http-bio-8085-exec-7] DEBUG com.mawujun.permission.MenuRepository.queryElement - <==      Total: 0
+10:28:39.729 [http-bio-8085-exec-9] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:28:39.730 [http-bio-8085-exec-9] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: root(String), base(String), root(String)
+10:28:39.732 [http-bio-8085-exec-9] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 2
+10:29:00.976 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:29:00.976 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String), base(String), 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String)
+10:29:00.980 [http-bio-8085-exec-8] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 1
+10:29:01.876 [http-bio-8085-exec-2] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:29:01.876 [http-bio-8085-exec-2] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:29:01.878 [http-bio-8085-exec-2] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
+10:29:01.886 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==>  Preparing: select a.* from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:29:01.886 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:29:01.888 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition - <==      Total: 0
+10:29:01.888 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==>  Preparing: select count(a.id) from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:29:01.889 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:29:01.890 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - <==      Total: 1
+10:29:08.455 [http-bio-8085-exec-9] DEBUG com.mawujun.repository.hibernate.HibernateDao - save entity: com.mawujun.org.PositionOrgAccess@1ae1f3c5
+10:29:13.086 [http-bio-8085-exec-4] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:29:13.086 [http-bio-8085-exec-4] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:29:13.093 [http-bio-8085-exec-4] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
+10:29:14.809 [http-bio-8085-exec-6] DEBUG com.mawujun.repository.hibernate.HibernateDao - save entity: com.mawujun.org.PositionOrgAccess@a823e28
+10:29:16.039 [http-bio-8085-exec-10] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:29:16.039 [http-bio-8085-exec-10] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:29:16.040 [http-bio-8085-exec-10] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
+10:29:17.621 [http-bio-8085-exec-10] DEBUG com.mawujun.repository.hibernate.HibernateDao - save entity: com.mawujun.org.PositionOrgAccess@278b2a3d
+10:29:19.310 [http-bio-8085-exec-10] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:29:19.310 [http-bio-8085-exec-10] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:29:19.312 [http-bio-8085-exec-10] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
+10:29:20.760 [http-bio-8085-exec-8] DEBUG com.mawujun.repository.hibernate.HibernateDao - save entity: com.mawujun.org.PositionOrgAccess@4949c31a
+10:29:21.998 [http-bio-8085-exec-8] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:29:21.998 [http-bio-8085-exec-8] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:29:22.000 [http-bio-8085-exec-8] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
+10:29:30.009 [http-bio-8085-exec-3] DEBUG com.mawujun.repository.hibernate.HibernateDao - save entity: com.mawujun.org.PositionOrgAccess@232ec67
+10:29:31.429 [http-bio-8085-exec-9] DEBUG com.mawujun.repository.hibernate.HibernateDao - save entity: com.mawujun.org.PositionOrgAccess@5e0e2ba8
+10:29:33.655 [http-bio-8085-exec-4] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:29:33.655 [http-bio-8085-exec-4] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:29:33.657 [http-bio-8085-exec-4] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
+10:30:17.607 [http-bio-8085-exec-6] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:30:17.607 [http-bio-8085-exec-6] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 3c8430ec-ea64-4513-bcb3-fc22ae00009e(String), base(String), 3c8430ec-ea64-4513-bcb3-fc22ae00009e(String)
+10:30:17.610 [http-bio-8085-exec-6] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 6
+10:30:57.353 [http-bio-8085-exec-7] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==>  Preparing: select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b where a.id=b.child_id and b.parent_id=? and b.dim=? and a.state='valid' union select id,name,org_id,remark,'position' as type from t_position where org_id=? 
+10:30:57.353 [http-bio-8085-exec-7] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - ==> Parameters: 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String), base(String), 2ff019c5-ab93-40ce-9acc-fc9b4d509bca(String)
+10:30:57.354 [http-bio-8085-exec-7] DEBUG com.mawujun.org.OrgRepository.queryNodeVO - <==      Total: 1
+10:30:59.165 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==>  Preparing: select a.* from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:30:59.165 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:30:59.166 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition - <==      Total: 0
+10:30:59.167 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==>  Preparing: select count(a.id) from t_user a,t_position_org_user b where a.id=b.user_id and b.position_id=? 
+10:30:59.167 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:30:59.168 [http-bio-8085-exec-3] DEBUG com.mawujun.permission.UserRepository.queryByPosition_count - <==      Total: 1
+10:30:59.174 [http-bio-8085-exec-10] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==>  Preparing: select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b on a.org_id=b.id and a.position_id=? where b.ORGTYPE='store' 
+10:30:59.174 [http-bio-8085-exec-10] DEBUG com.mawujun.org.PositionRepository.querySelectStores - ==> Parameters: b4c29984-a2e7-45c4-9bc7-023546e7f14c(String)
+10:30:59.176 [http-bio-8085-exec-10] DEBUG com.mawujun.org.PositionRepository.querySelectStores - <==      Total: 2
