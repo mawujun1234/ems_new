@@ -2,19 +2,26 @@ insert into t_role(id,name,roletype) values('admin','admin','role');
 insert into t_user(id,loginname,name,pwd) values('admin','admin','admin','admin');
 insert into t_role_user(user_id,role_id) values('admin','admin');
 --菜单
-Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL) values ('1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,'menu','基础信息',null,null,0,null);
-Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL) values ('539ea37c-a286-4ae2-8a0b-cb4dab321515',null,'menu','菜单管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/MenuApp.jsp');
-Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL) values ('e35d2b7f-58c2-4e61-a50d-bc6112779b4c',null,'menu',' 角色管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/RoleApp.jsp');
+Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,'menu','基础信息',null,null,0,null,0);
+Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('539ea37c-a286-4ae2-8a0b-cb4dab321515',null,'menu','菜单管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/MenuApp.jsp',1);
+Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('e35d2b7f-58c2-4e61-a50d-bc6112779b4c',null,'menu','角色管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/RoleApp.jsp',1);
+Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('a124a5f1-70a3-4dba-a014-68385edd922b',null,'menu','组织结构管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/org/OrgApp.jsp',1);
+Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('a3a58507-1c50-46f4-8316-6492d3d4b10e',null,'menu','职位类型','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/org/PositionTypeApp.jsp',1);
+Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('a7439ed8-ad09-452f-9860-27157c9027d9',null,'menu','用户管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/UserApp.jsp',1);
 --角色访问的基础菜单
 Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7');
 Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','539ea37c-a286-4ae2-8a0b-cb4dab321515');
+Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','a124a5f1-70a3-4dba-a014-68385edd922b');
+Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','a3a58507-1c50-46f4-8316-6492d3d4b10e');
+Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','a7439ed8-ad09-452f-9860-27157c9027d9');
 Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','e35d2b7f-58c2-4e61-a50d-bc6112779b4c');
+
 
 
 --然后就可以登录了
 
 ---组织结构根节点，以root为id
-Insert into EMSNEW.T_ORG (ID,CODE,NAME,NAME_SHORT,ORGTYPE,REPORTCODE,REPORTLEVEL,SORT,STATE) values ('root',null,'宁波东望',null,'company',null,null,null,'valid');
+Insert into EMSNEW.T_ORG (ID,CODE,NAME,NAME_SHORT,ORGTYPE,SORT,STATE) values ('root',null,'宁波东望',null,'company',null,'valid');
 --职位类型，这是一个特殊职位，是要用到逻辑里面的
 Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK) values ('workunitgroup','作业单位小组',null);
 Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK) values ('employee','职员',null);
