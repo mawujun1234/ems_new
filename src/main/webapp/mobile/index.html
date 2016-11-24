@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="./sui/css/sm.min.css">
     <link rel="stylesheet" href="./sui/css/sm-extend.min.css">
     <!--<link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.css">
-    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.css">
-     <link rel="stylesheet" href="mobile.css" >-->
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.css">-->
+     <link rel="stylesheet" href="index.css" >
 	<style>
 
 
@@ -27,12 +27,12 @@
   <body>
   	 <!-- 工具栏 -->
      <nav class="bar bar-tab" id="bottom_bar" style="z-index:6666;display:none;">
-     			<a class="tab-item external active" href="#function_page" id="bottom_bar_function_page">
+     			<a class="tab-item active" href="#function_page" id="bottom_bar_function_page">
                     <span class="icon icon-home"></span>
                     <span class="tab-label">功能</span>
                 </a>
 
-                <a class="tab-item external" href="#setting_page" id="bottom_bar_setting_page">
+                <a class="tab-item" href="#setting_page" id="bottom_bar_setting_page">
                     <span class="icon icon-settings"></span>
                     <span class="tab-label">设置</span>
                 </a>
@@ -82,8 +82,7 @@
                 </div>
             </div>
         </div> <!--#login_page -->
-        
-        
+          
         <!--#function_page  功能列表 -->
         <div class="page" id="function_page">
             <!-- 标题栏 -->
@@ -95,12 +94,22 @@
 
             <!-- 这里是页面内容区 -->
             <div class="content">
-                <div class="content-block">这里是content</div>
+                <div class="function_row">
+					<div class="function_grid"><div><span class="icon icon-app"></span>文案</div></div>
+					<div class="function_grid"><span class="icon icon-app">文案</span></div>
+					<div class="function_grid"></div>
+					<div class="function_grid"></div>
+					<div class="function_grid"></div>
+					<div class="function_grid"></div>
+					<div class="function_grid"></div>
+					<div class="function_grid"></div>
+				</div>
+                
             </div>
         </div><!--#function_page  功能列表 -->
 		
  
- 		<!--#setting_page 设置界面-->
+ 		<!-- #setting_page 设置界面 -->
         <div class="page" id="setting_page">
             <!-- 标题栏 -->
             <header class="bar bar-nav">
@@ -126,7 +135,7 @@
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='./vue/vue.js' charset='utf-8'></script>
-    <script type='text/javascript' src='./mobile.js' charset='utf-8'></script>
+    <script type='text/javascript' src='./index.js' charset='utf-8'></script>
 
     
 	

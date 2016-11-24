@@ -6563,3 +6563,6 @@
 10:35:37.216 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryPage_count - <==      Total: 1
 16:36:15.378 [localhost-startStop-1] DEBUG com.mawujun.config.DispatcherServletInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context
 16:37:02.879 [localhost-startStop-1] DEBUG com.mawujun.controller.spring.SpringContextHolder - ×¢ÈëApplicationContextµ½SpringContextHolder:null
+18:49:22.744 [localhost-startStop-1] DEBUG com.mawujun.config.DispatcherServletInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context
+18:50:47.823 [localhost-startStop-1] DEBUG com.mawujun.config.DispatcherServletInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context
+18:51:07.673 [localhost-startStop-1] DEBUG com.mawujun.controller.spring.SpringContextHolder - æ³¨å…¥ApplicationContextåˆ°SpringContextHolder:null

@@ -1,0 +1,21 @@
+.function_row {
+	width: 100%;
+	margin: 0 auto;
+}
+/*清除浮动
+.function_row:before,.function_row:after{content: " ";display: table;}
+.function_row:after{clear:both;}*/
+.function_grid {
+	box-sizing: border-box;
+	
+	display:inline-block;
+	margin:10px;
+	width: 5rem;
+	height: 5rem;
+	
+	vertical-align:middle;
+	outline: 1px solid red;
+	text-align:center;
+	
+}
+
