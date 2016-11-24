@@ -6561,3 +6561,5 @@
 10:35:37.211 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryPage_count - ==>  Preparing: select count(a.id) from t_user a where 1=1 
 10:35:37.211 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryPage_count - ==> Parameters: 
 10:35:37.216 [http-bio-8085-exec-2] DEBUG com.mawujun.permission.UserRepository.queryPage_count - <==      Total: 1
+16:36:15.378 [localhost-startStop-1] DEBUG com.mawujun.config.DispatcherServletInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context
+16:37:02.879 [localhost-startStop-1] DEBUG com.mawujun.controller.spring.SpringContextHolder - ×¢ÈëApplicationContextµ½SpringContextHolder:null
