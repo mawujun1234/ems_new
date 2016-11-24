@@ -6566,3 +6566,6 @@
 18:49:22.744 [localhost-startStop-1] DEBUG com.mawujun.config.DispatcherServletInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context
 18:50:47.823 [localhost-startStop-1] DEBUG com.mawujun.config.DispatcherServletInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context
 18:51:07.673 [localhost-startStop-1] DEBUG com.mawujun.controller.spring.SpringContextHolder - 注入ApplicationContext到SpringContextHolder:null
+20:23:19.130 [localhost-startStop-2] DEBUG com.mawujun.controller.spring.SpringContextHolder - 清除SpringContextHolder中的ApplicationContext:WebApplicationContext for namespace 'dispatcher-servlet': startup date [Thu Nov 24 18:50:48 CST 2016]; root of context hierarchy
+20:51:14.187 [localhost-startStop-1] DEBUG com.mawujun.config.DispatcherServletInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context
+20:51:35.666 [localhost-startStop-1] DEBUG com.mawujun.controller.spring.SpringContextHolder - 注入ApplicationContext到SpringContextHolder:null
