@@ -28,3 +28,21 @@ Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK) values ('employee','职员',
 
 --添加外键约束
 alter table "EMSNEW"."T_POSITION" add constraint positition_type_id foreign key("POSITIONTYPE_ID") references "T_POSITION_TYPE"("ID")
+
+--创建组织单元基础纬度的物化视图
+create materialized view log on t_org with rowid;
+create materialized view log on t_org_org with rowid;
+create materialized view t_org_base
+Refresh fast On commit
+--BUILD IMMEDIATE
+With rowid
+--Enable query rewrite 
+As
+Select a.rowid arowid,b.rowid browid,a.*,b.parent_id,b.child_reportcode,b.child_reportlevel from t_org a,t_org_org b
+where a.id=b.child_id and b.dim='base';
+CREATE UNIQUE INDEX "EMSNEW"."T_ORG_BASE_INDEX1" ON "EMSNEW"."T_ORG_BASE" ("ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--DROP MATERIALIZED VIEW t_org_base ;
