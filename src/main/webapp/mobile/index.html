@@ -135,9 +135,9 @@
 		<div class="page" id="page_taskes">
 			<!-- 标题栏 -->
 			<header class="bar bar-nav">
-				<a class="button button-link button-nav pull-left back"
-					href="#page_function"> <span class="icon icon-left"></span>返回
+				<a class="button button-link button-nav pull-left back" href="#page_function"> <span class="icon icon-left"></span>返回
 				</a>
+				<a class="icon icon-search pull-right" href="#page_search"></a>
 				<h1 class="title">任务列表</h1>
 			</header>
 
@@ -483,6 +483,51 @@
 			</div><!-- content -->
 		</div>
 		<!--#page_setting  功能列表 -->
+		
+		<!-- #page_search-->
+		<div class="page" id="page_search">
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<a class="button button-link button-nav pull-left back" href="#page_taskes"> <span class="icon icon-left"></span>返回
+				</a>
+				<h1 class="title">搜索</h1>
+			</header>
+
+
+
+			<!-- 这里是页面内容区 -->
+			<div class="content">
+			<div class="content-padded">
+			  <div class="searchbar">
+			    <div class="search-input">
+			      <label class="icon icon-search" for="search"></label>
+			      <input type="search" id='search' placeholder='输入关键字...'/>
+			    </div>
+			  </div>
+			</div>
+
+			<div class="list-block" style="margin-top:0.5rem;">
+			    <ul>
+			      <!-- Text inputs -->
+			      <li>
+			        <div class="item-content">
+			          <div class="item-media"><i class="icon icon-form-name"></i></div>
+			          <div class="item-inner">
+			            <div class="item-title label" style="width:25%;">日期</div>
+			            <div class="item-input">
+			              <input type="text" data-toggle='date'>
+			            </div>
+			          </div>
+			        </div>
+			      </li> 
+			    </ul>
+			  </div><!-- list-block -->
+			  <div class="content-block">
+			    <p><a href="#page_taskes" class="button button-big button-fill ">搜索 </a></p>
+			  </div>
+			</div><!-- content -->
+		</div>
+		<!--#page_search  功能列表 -->
 		
 		
 		<!-- #page_check_store-->
