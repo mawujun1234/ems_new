@@ -1,148 +1,531 @@
 <!DOCTYPE html>
-<html style="font-size: 40px;">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ems</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-	<!---->
-    <link rel="stylesheet" href="./sui/css/sm.min.css">
-    <link rel="stylesheet" href="./sui/css/sm-extend.min.css">
-    <!--<link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.css">
+<html style="font-size: 20px;">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>ems</title>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<!---->
+<link rel="stylesheet" href="./sui/css/sm.min.css">
+<link rel="stylesheet" href="./sui/css/sm-extend.min.css">
+<!--<link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.css">
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.css">-->
-     <link rel="stylesheet" href="index.css" >
-	<style>
+<link rel="stylesheet" href="index.css">
+<style>
+</style>
+</head>
+<body>
+	<!-- 工具栏 -->
+	<nav class="bar bar-tab" id="bottom_bar"
+		style="z-index: 6666; display: none;">
+		<a class="tab-item active" href="#page_function"
+			id="bottom_bar_page_function"> <span class="icon icon-home"></span>
+			<span class="tab-label">功能</span>
+		</a> <a class="tab-item" href="#page_setting" id="bottom_bar_page_setting">
+			<span class="icon icon-settings"></span> <span class="tab-label">设置</span>
+		</a>
+	</nav>
 
+	<div class="page-group">
+		<!--page-group -->
+		<div class="page page-current" id="page_login">
+			<header class="bar bar-nav">
+				<h1 class='title' id="page_login_title">生产调度系统</h1>
+			</header>
 
-
-	</style>
-  </head>
-  <body>
-  	 <!-- 工具栏 -->
-     <nav class="bar bar-tab" id="bottom_bar" style="z-index:6666;display:none;">
-     			<a class="tab-item active" href="#function_page" id="bottom_bar_function_page">
-                    <span class="icon icon-home"></span>
-                    <span class="tab-label">功能</span>
-                </a>
-
-                <a class="tab-item" href="#setting_page" id="bottom_bar_setting_page">
-                    <span class="icon icon-settings"></span>
-                    <span class="tab-label">设置</span>
-                </a>
-      </nav>
-      
-      <div class="page-group"><!--page-group -->
-      	<div class="page page-current" id="login_page"> 
-        	<header class="bar bar-nav">
-              <h1 class='title' id="login_page_title">生产调度系统</h1>
-            </header>
-            
-            <div class="content">
-            	<div class="list-block">
-                	<ul>
-                    	<li>
-                    	<div class="item-content">
-                          <div class="item-media"><i class="icon icon-form-name"></i></div>
-                          <div class="item-inner">
-                            <div class="item-title label">登录名:</div>
-                            <div class="item-input">
-                              <input id="login_page_username"  type="text" placeholder="输入登录名">
-                            </div>
-                          </div>
-                        </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                              <div class="item-media"><i class="icon icon-form-password"></i></div>
-                              <div class="item-inner">
-                                <div class="item-title label">密码</div>
-                                <div class="item-input">
-                                  <input id="login_page_password" type="password" placeholder="输入密码" class="">
-                                </div>
-                              </div>
-                            </div>
-                        </li>
-                        <li>
-                        	
-                        </li>
-                    </ul>
-                </div>
-                <div class="content-block">
-                	<div class="row">            
-                    	<div class="col-50"><a href="#" class="button button-big button-fill button-danger">退出</a></div>
-                        <div class="col-50"><a href="#function_page" id="login_page_login_btn" class="button button-big button-fill button-success">登录</a></div>
-                    </div>
-                </div>
-            </div>
-        </div> <!--#login_page -->
-          
-        <!--#function_page  功能列表 -->
-        <div class="page" id="function_page">
-            <!-- 标题栏 -->
-            <header class="bar bar-nav">
-                <h1 class="title">功能列表</h1>
-            </header>
-
-           
-
-            <!-- 这里是页面内容区 -->
-            <div class="content">
-                <div class="function_row">
-					<a class="function_grid"><div class="icon icon-app"></div><p class="function_grid__label">文案</p><span class="badge">12</span></a>
-					<a class="function_grid"><div class="icon icon-app"></div><p class="function_grid__label">文案</p></a>
-					<a class="function_grid"><div class="icon icon-app"></div><p class="function_grid__label">文案</p></a>
-					<a class="function_grid"><div class="icon icon-app"></div><p class="function_grid__label">文案</p></a>
-					<a class="function_grid"><div class="icon icon-app"></div><p class="function_grid__label">文案</p></a>
-					<a class="function_grid"><div class="icon icon-app"></div><p class="function_grid__label">文案</p></a>
-					<a class="function_grid"><div class="icon icon-app"></div><p class="function_grid__label">文案</p></a>
-					<a class="function_grid"><div class="icon icon-app"></div><p class="function_grid__label">文案</p></a>
-					<a class="function_grid"><div class="icon icon-app"></div><p class="function_grid__label">文案</p></a>
+			<div class="content">
+				<div class="list-block">
+					<ul>
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-name"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">登录名:</div>
+									<div class="item-input">
+										<input id="page_login_username" type="text"
+											placeholder="输入登录名">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-password"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">密码</div>
+									<div class="item-input">
+										<input id="page_login_password" type="password"
+											placeholder="输入密码" class="">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li></li>
+					</ul>
 				</div>
-                
-            </div>
-        </div><!--#function_page  功能列表 -->
+				<div class="content-block">
+					<div class="row">
+						<div class="col-50">
+							<a href="#" class="button button-big button-fill button-danger">退出</a>
+						</div>
+						<div class="col-50">
+							<a href="#page_function" id="page_login_login_btn"
+								class="button button-big button-fill button-success">登录</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--#page_login -->
+
+		<!--#page_function  功能列表 -->
+		<div class="page" id="page_function">
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<h1 class="title">功能列表</h1>
+			</header>
+
+
+
+			<!-- 这里是页面内容区 -->
+			<div class="content">
+				<div class="content-block-title" style="margin: 10px 0 10px 10px;">任务</div>
+				<div class="function_row">
+					<a class="function_grid" href="#page_taskes"><div
+							class="icon icon-edit"></div>
+						<p class="function_grid__label">维修(88)</p>
+						<span class="badge">12</span></a> <a class="function_grid"
+						href="#page_taskes"><div class="icon icon-browser"></div>
+						<p class="function_grid__label">巡检</p></a> <a class="function_grid"
+						href="#page_taskes"><div class="icon icon-remove"></div>
+						<p class="function_grid__label">取消</p></a> <a class="function_grid"
+						href="#page_taskes"><div class="icon icon-code"></div>
+						<p class="function_grid__label">盘点</p></a> <a class="function_grid"
+						href="#page_taskes"><div class="icon icon-app"></div>
+						<p class="function_grid__label">新安装</p></a>
+					<div style="clear: both;"></div>
+				</div>
+				<div class="content-block-title" style="margin: 10px 0 10px 10px;">其他</div>
+				<div class="function_row">
+					<a class="function_grid" href="#page_check_store"><div class="icon icon-code"></div><p class="function_grid__label">仓库盘点</p></a>
+					<a class="function_grid" href="#page_equip_info"><div class="icon icon-search"></div><p class="function_grid__label">设备信息</p></a>
+					<a class="function_grid" href="#page_check_store"><div class="icon icon-share"></div><p class="function_grid__label">拥有设备</p></a>
+				</div>
+			</div>
+		</div>
+		<!--#page_function  功能列表 -->
+
+
 		
- 
- 		<!-- #setting_page 设置界面 -->
-        <div class="page" id="setting_page">
-            <!-- 标题栏 -->
-            <header class="bar bar-nav">
-                <h1 class="title">设置界面</h1>
-            </header>
 
-           
 
-            <!-- 这里是页面内容区 -->
-            <div class="content">
-                <div class="content-block">这里是content</div>
-            </div>
-        </div><!--#setting_page  功能列表 -->
-    </div><!--page-group -->
+		<!-- #page_taskes-->
+		<div class="page" id="page_taskes">
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<a class="button button-link button-nav pull-left back"
+					href="#page_function"> <span class="icon icon-left"></span>返回
+				</a>
+				<h1 class="title">任务列表</h1>
+			</header>
+
+
+
+			<!-- 这里是页面内容区 -->
+			<div class="content">
+				<div class="buttons-tab fixed-tab" data-offset="45">
+					<a href="#page_taskes_all" class="tab-link active button">全部<span>(88)</span></a>
+					<a href="#page_taskes_newTask" class="tab-link button">新任务<span>(1)</span></a>
+					<a href="#page_taskes_read" class="tab-link button">已阅<span>(0)</span></a>
+					<a href="#page_taskes_handling" class="tab-link button">处理中<span>(2)</span></a>
+					<a href="#page_taskes_submited" class="tab-link button">已提交<span>(4)</span></a>
+				</div>
+
+				<div class="tabs">
+					<div id="page_taskes_all" class="tab active">
+						<div class="list-block media-list" >
+							<ul>
+								<li>
+									<a href="#page_task_info" class="item-link item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">20161114-0001</div>
+												<div class="item-after">2016-11-14 17:14</div>
+											</div>
+											<div class="item-subtitle">231003:姚江村委会</div>
+											<div class="item-text">地址:浙江省宁波市鄞州区桃江村委会后面</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="#page_task_info" class="item-link item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">20161114-0001</div>
+												<div class="item-after">2016-11-14 17:14</div>
+											</div>
+											<div class="item-subtitle">231003:姚江村委会</div>
+											<div class="item-text">地址:浙江省宁波市鄞州区桃江村委会后面</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div id="page_taskes_newTask" class="tab">
+						<div class="content-block">
+							<p>This is tab 2 content</p>
+						</div>
+					</div>
+					<div id="page_taskes_read" class="tab">
+						<div class="content-block">
+							<p>This is tab 3 content</p>
+						</div>
+					</div>
+					<div id="page_taskes_handling" class="tab">
+						<div class="content-block">
+							<p>处理中的任务</p>
+						</div>
+					</div>
+					<div id="page_taskes_submited" class="tab">
+						<p>已提交任务</p>
+						<p>已提交任务</p>
+					</div>
+				</div>
+
+			</div>
+			<!-- 这里是页面内容区 -->
+		</div>
+		<!--#page_taskes  功能列表 -->
+
+		<!-- #page_task_info-->
+		<div class="page" id="page_task_info">
+			<div id="qrcode_button" class="hi-icon-wrap hi-icon-effect-7">
+       			<a href="#"  id="page_task_info_scanQRCode_btn" class="hi-icon hi-icon-cycle external">扫一扫</a>
+			</div>  
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<a class="button button-link button-nav pull-left back" href="#"> <span class="icon icon-left"></span>返回
+				</a>
+				<h1 class="title">任务信息</h1>
+			</header>
+
+
+
+			<!-- 这里是页面内容区 -->
+			<div class="content">
+				<div class="list-block" style="margin-top:0px;">
+				    <ul>
+				      <!-- Text inputs -->
+				      <li>
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">任务编号</div>
+				            <div class="item-input">
+				              <input type="text"  disabled="true" >
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				      <li>
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">点位编号</div>
+				            <div class="item-input">
+				              <input type="text"  disabled="true" >
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				      <li>
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">点位名称</div>
+				            <div class="item-input">
+				              <input type="text"  disabled="true" >
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				      
+				      <li class="align-top">
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-comment"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">任务描述</div>
+				            <div class="item-input">
+				              <textarea>任务描述任务描述任务描述任务描述任务描述任务描述任务</textarea>
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				      <li>
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">条码</div>
+				            <div class="item-input">
+				              <input type="text" placeholder="可以手工输入条码">
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				     
+				    </ul>
+				  </div>
+				  
+				  <div class="content-block-title">设备清单:</div>
+				  <div class="list-block">
+				  	<ul id="page_task_info_equip_list">
+				  	  <li>
+				  	    <a href="#page_equip_info" class="item-link item-content">
+					        <div class="item-media"><i class="icon icon-f7"></i></div>
+					        <div class="item-inner">
+					          <div class="item-title">010109-**-1602290023</div>
+							  <div class="item-after">设备小类</div>
+					        </div>
+				        </a>
+				      </li>
+				       <li>
+				  	    <a href="#page_equip_info" class="item-link item-content">
+					        <div class="item-media"><i class="icon icon-f7"></i></div>
+					        <div class="item-inner">
+					          <div class="item-title">010109-**-1602290023</div>
+							  <div class="item-after">设备小类</div>
+					        </div>
+				        </a>
+				      </li>
+				       <li>
+				  	    <a href="#page_equip_info" class="item-link item-content">
+					        <div class="item-media"><i class="icon icon-f7"></i></div>
+					        <div class="item-inner">
+					          <div class="item-title">010109-**-1602290023</div>
+							  <div class="item-after">设备小类</div>
+					        </div>
+				        </a>
+				      </li>
+				    </ul>
+				  </div>
+				  
+				  <div class="content-block">
+				    <div class="row">
+				      <div class="col-50"><a href="#" class="button button-big button-fill button-danger back">返回</a></div>
+				      <div class="col-50"><a href="#" class="button button-big button-fill button-success">提交</a></div>
+				    </div>
+				  </div>
+			</div>
+		</div>
+		<!--#page_task_info  功能列表 -->
+		
+		<!-- #page_equip_info-->
+		<div class="page" id="page_equip_info">
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<a class="button button-link button-nav pull-left back" href="#"> <span class="icon icon-left"></span>返回
+				</a>
+				<h1 class="title">设备信息</h1>
+			</header>
+			<!-- 这里是页面内容区 -->
+			<div class="content">
+				<div class="list-block" style="margin-top:0px;">
+				    <ul>
+				      <!-- Text inputs -->
+				      <li>
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">条码</div>
+				            <div class="item-input">
+				              <input type="text"  disabled="true" >
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				      <li>
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">小类</div>
+				            <div class="item-input">
+				              <input type="text"  disabled="true" >
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				      <li>
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">品名</div>
+				            <div class="item-input">
+				              <input type="text"  disabled="true" >
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				      <li>
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">设备型号</div>
+				            <div class="item-input">
+				              <input type="text"  disabled="true" >
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				      <li>
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">品牌</div>
+				            <div class="item-input">
+				              <input type="text"  disabled="true" >
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				      <li>
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">所在位置</div>
+				            <div class="item-input">
+				              <input type="text"  disabled="true" value="1111">
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				      <li class="align-top">
+				        <div class="item-content">
+				          <div class="item-media"><i class="icon icon-form-comment"></i></div>
+				          <div class="item-inner">
+				            <div class="item-title label">规格</div>
+				            <div class="item-input">
+				              <textarea disabled="true"></textarea>
+				            </div>
+				          </div>
+				        </div>
+				      </li>
+				     
+				    </ul>
+				  </div><!-- <div class="list-block" style="margin-top:0px;"> -->
+			</div>
+		</div>
+		<!--#page_equip_info  功能列表 -->
+
+
+		<!-- #page_setting 设置界面 -->
+		<div class="page" id="page_setting">
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<h1 class="title">我的</h1>
+			</header>
+
+
+
+			<!-- 这里是页面内容区 -->
+			<div class="content">
+				<div class="list-block media-list">
+				    <ul>
+				      <li>
+				        <a href="#" class="item-link item-content">
+				          <div class="item-media"><img src="./images/workunit.gif" style='width: 4rem;'></div>
+				          <div class="item-inner">
+				            <div class="item-title-row">
+				              <div class="item-title">yinzhou1</div>
+				              <div class="item-after">*</div>
+				            </div>
+				            <div class="item-subtitle">鄞州维护组</div>
+				            <div class="item-text">2016-11-25 02:12:35</div>
+				          </div>
+				        </a>
+				      </li>
+				    </ul>
+				  </div>
+				  
+				  <div class="list-block">
+				  	<ul>
+				  	  <li>
+				  	    <a href="#" class="item-link item-content">
+					        <div class="item-media"><i class="icon icon-f7"></i></div>
+					        <div class="item-inner">
+					          <div class="item-title"><span class="icon icon-edit" style="color:red;">&nbsp;&nbsp;&nbsp;&nbsp;</span>修改密码</div>
+					        </div>
+				        </a>
+				      </li>
+				       <li>
+				  	    <a href="#" class="item-link item-content">
+					        <div class="item-media"><i class="icon icon-f7"></i></div>
+					        <div class="item-inner">
+					          <div class="item-title"><span class="icon icon-remove" style="color:#FF1493;">&nbsp;&nbsp;&nbsp;&nbsp;</span>退出</div>
+					        </div>
+				        </a>
+				      </li>
+				      
+				    </ul>
+				  </div>
+			</div><!-- content -->
+		</div>
+		<!--#page_setting  功能列表 -->
+		
+		
+		<!-- #page_check_store-->
+		<div class="page" id="page_check_store">
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<a class="button button-link button-nav pull-left back"
+					href="#page_function"> <span class="icon icon-left"></span>返回
+				</a>
+				<h1 class="title">盘点任务</h1>
+			</header>
+
+
+
+			<!-- 这里是页面内容区 -->
+			<div class="content">
+				
+			</div>
+		</div>
+		<!--#page_check_store  功能列表 -->
+	</div>
+	<!--page-group -->
 
 
 	<!--			
     <script type='text/javascript' src='./zepto/zepto.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='./sui/js/sm.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='./sui/js/sm-extend.min.js' charset='utf-8'></script>-->
-    
-    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
-    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
-    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
-    <script type='text/javascript' src='./vue/vue.js' charset='utf-8'></script>
-    <script type='text/javascript' src='./index.js' charset='utf-8'></script>
 
-    
-	
-    <script>
+	<script type='text/javascript'
+		src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+	<script type='text/javascript'
+		src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+	<script type='text/javascript'
+		src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+	<script type='text/javascript' src='./vue/vue.js' charset='utf-8'></script>
+	<script type='text/javascript' src='./index.js' charset='utf-8'></script>
+
+
+
+	<script>
 
 		
 	</script>
-  </body>
+</body>
 </html>
