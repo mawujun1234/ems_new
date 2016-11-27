@@ -35,6 +35,8 @@ public class User implements IShiroUser{
 	@FieldDefine(title="备注")
 	@Column(length=150)
 	private String remark;
+	
+	private Boolean canNotDel=false;
 //	@FieldDefine(title="备注")
 //	@Column(length=150)
 //	private Boolean isAdmin;
@@ -85,5 +87,14 @@ public class User implements IShiroUser{
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
 	}
+
+	public Boolean getCanNotDel() {
+		return canNotDel;
+	}
+
+	public void setCanNotDel(Boolean canNotDel) {
+		this.canNotDel = canNotDel;
+	}
+
 
 }

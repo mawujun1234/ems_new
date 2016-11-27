@@ -129,7 +129,7 @@ Ext.define('y.permission.UserGrid',{
 	onCreate:function(){
     	var me=this;
 		var child=Ext.create('y.permission.User',{
-
+			canNotDel:false
 		});
 		child.set("id",null);
 		

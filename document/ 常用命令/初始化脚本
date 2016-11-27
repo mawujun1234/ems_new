@@ -1,5 +1,5 @@
 insert into t_role(id,name,roletype) values('admin','admin','role');
-insert into t_user(id,loginname,name,pwd) values('admin','admin','admin','admin');
+insert into t_user(id,loginname,name,pwd,cannotdel) values('admin','admin','admin','admin',1);
 insert into t_role_user(user_id,role_id) values('admin','admin');
 --菜单
 Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,'menu','基础信息',null,null,0,null,0);
@@ -23,8 +23,8 @@ Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','e35d2b7f-58c2-
 ---组织结构根节点，以root为id
 Insert into EMSNEW.T_ORG (ID,CODE,NAME,NAME_SHORT,ORGTYPE,SORT,STATE) values ('root',null,'宁波东望',null,'company',null,'valid');
 --职位类型，这是一个特殊职位，是要用到逻辑里面的
-Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK) values ('workunitgroup','作业单位小组',null);
-Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK) values ('employee','职员',null);
+Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK,canNotDel) values ('workunitgroup','作业单位小组',null,1);
+Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK,canNotDel) values ('employee','职员',null,1);
 
 --添加外键约束
 alter table "EMSNEW"."T_POSITION" add constraint positition_type_id foreign key("POSITIONTYPE_ID") references "T_POSITION_TYPE"("ID")

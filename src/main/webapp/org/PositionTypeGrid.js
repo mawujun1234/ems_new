@@ -15,7 +15,7 @@ Ext.define('y.org.PositionTypeGrid',{
 		{dataIndex:'name',header:'职位名称'
         },
 		{dataIndex:'remark',header:'备注'
-        },
+        }
       ];
       
 
@@ -90,7 +90,7 @@ Ext.define('y.org.PositionTypeGrid',{
 	onCreate:function(){
     	var me=this;
 		var child=Ext.create('y.org.PositionType',{
-
+			canNotDel:false
 		});
 		child.set("id",null);
 		

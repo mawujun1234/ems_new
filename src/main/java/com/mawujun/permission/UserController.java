@@ -362,12 +362,12 @@ public class UserController {
 		return ShiroUtils.getUserId();
 	}
 	
-	@RequestMapping("/user/deleteById.do")
-	//@ResponseBody
-	public String deleteById(String id) {
-		userService.deleteById(id);
-		return id;
-	}
+//	@RequestMapping("/user/deleteById.do")
+//	//@ResponseBody
+//	public String deleteById(String id) {
+//		userService.deleteById(id);
+//		return id;
+//	}
 	
 	@RequestMapping("/user/destroy.do")
 	//@ResponseBody

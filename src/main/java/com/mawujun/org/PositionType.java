@@ -27,6 +27,8 @@ public class PositionType {
 	@FieldDefine(title="备注",sort=6)
 	private String remark;
 	
+	private Boolean canNotDel=false;
+	
 	public String getId() {
 		return id;
 	}
@@ -44,6 +46,12 @@ public class PositionType {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public Boolean getCanNotDel() {
+		return canNotDel;
+	}
+	public void setCanNotDel(Boolean canNotDel) {
+		this.canNotDel = canNotDel;
 	}
 
 }

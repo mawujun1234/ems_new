@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.exception.BusinessException;
+import com.mawujun.permission.User;
 import com.mawujun.service.AbstractService;
 
 
@@ -24,4 +26,11 @@ public class PositionTypeService extends AbstractService<PositionType, String>{
 		return positionTypeRepository;
 	}
 
+	@Override
+	public void delete(PositionType positionType) {
+		if(positionType.getCanNotDel()){
+			throw new BusinessException("该用户不能删除！");
+		}
+		positionTypeRepository.delete(positionType);
+	}
 }

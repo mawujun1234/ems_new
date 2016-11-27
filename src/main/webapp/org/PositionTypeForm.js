@@ -39,6 +39,10 @@ Ext.define('y.org.PositionTypeForm',{
 	        name: 'remark',
             selectOnFocus:true,
 	        xtype:'textfield'
+	    },{
+	        fieldLabel: 'canNotDel',
+	        name: 'canNotDel',
+	        xtype:'hiddenfield'
 	    }
 	  ];   
 	  

@@ -3,7 +3,8 @@ Ext.define("y.org.PositionType",{
 	fields:[
 		{name:'name',type:'string'},
 		{name:'remark',type:'string'},
-		{name:'id',type:'string'}
+		{name:'id',type:'string'},
+		{name:'canNotDel',type:'string'}
 	],
 	proxy:{
 		type:'ajax',

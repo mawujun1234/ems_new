@@ -5,7 +5,7 @@ Ext.define('y.permission.MenuGrid',{
 	],
 	columnLines :true,
 	stripeRows:true,
-
+	readOnly:false,//true表示不显示增删该查按钮
 	initComponent: function () {
       var me = this;
      var store_menuType=Ext.create('Ext.data.Store',{
@@ -48,8 +48,8 @@ Ext.define('y.permission.MenuGrid',{
 			}
 	  });
 	  me.dockedItems=[];
-	  
-	  me.dockedItems.push({
+	  if(!me.readOnly){
+	    me.dockedItems.push({
 	  		xtype: 'toolbar',
 	  		dock:'top',
 		  	items:[{
@@ -85,7 +85,7 @@ Ext.define('y.permission.MenuGrid',{
 				iconCls: 'icon-refresh'
 			}]
 		});
-	  
+	  }
 
        
       me.callParent();

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.exception.BusinessException;
 import com.mawujun.org.OrgRepository;
 import com.mawujun.org.PositionOrgUser;
 import com.mawujun.org.PositionOrgUserRepository;
@@ -104,9 +105,14 @@ public class UserService extends AbstractService<User, String> {
 		return userRepository.queryByPosition(pager);
 	}
 	@Override
-	public void delete(User user) {
-		userRoleRepository.deleteBatch(Cnd.delete().andEquals(M.RoleUser.user.id, user.getId()));
-		//positionOrgUserRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgUser.user.id, user.getId()));
+	public void delete(User user_p) {
+		
+		userRoleRepository.deleteBatch(Cnd.delete().andEquals(M.RoleUser.user.id, user_p.getId()));
+		positionOrgUserRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgUser.user.id, user_p.getId()));
+		User user=this.getRepository().get(user_p.getId());
+		if(user.getCanNotDel()==true){
+			throw new BusinessException("该用户不能删除！");
+		}
 		this.getRepository().delete(user);
 	}
 
