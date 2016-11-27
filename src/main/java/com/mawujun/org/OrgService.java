@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.exception.BusinessException;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
 import com.mawujun.utils.M;
@@ -90,6 +91,11 @@ public class OrgService extends AbstractService<Org, String>{
 	}
 	
 	public void delete(Org org,Dim dim){
+		//如果下面还有职位，就不能删除
+		int count=positionService.queryCount(Cnd.select().andEquals(M.Position.org_id, org.getId()));
+		if(count>0){
+			throw new BusinessException("该组织单元下还有职位挂着，不能删除！");
+		}
 		orgOrgRepository.deleteBatch(Cnd.delete().andEquals(M.OrgOrg.child.id, org.getId()).andEquals(M.OrgOrg.dim, dim));
 		this.delete(org);
 	}

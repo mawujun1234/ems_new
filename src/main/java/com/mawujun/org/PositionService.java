@@ -106,7 +106,7 @@ public class PositionService extends AbstractService<Position, String>{
 	
 	public void delete(Position position) {
 		//先删除这个角色可以访问的Org
-		//positionOrgAccessRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgAccess.position.id, position.getId()));
+		positionOrgAccessRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgAccess.position.id, position.getId()));
 		positionOrgUserRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgUser.position.id, position.getId()));
 		super.delete(position);
 	}

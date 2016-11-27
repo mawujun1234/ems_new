@@ -14,49 +14,49 @@ Ext.onReady(function(){
 		region:'center'
 	});
 	
-	var positionStoreGrid=Ext.create("y.org.PositionStoreGrid",{
-		title:'仓库权限',
-		listeners : {
-			storeSelect : function(record, type) {
-				var params = {
-					position_id:window.selected_position.get("id"),
-					org_id : record.get("org_id"),
-					look : record.get("look"),
-					edit : record.get("edit")
-				};
-				Ext.Ajax.request({
-					url : Ext.ContextPath + "/position/selectStore.do",
-					params : params,
-					method : 'POST',
-					success : function(response) {
-						record.commit();
-					}
-
-				});
-			},
-			storeDeselect : function(record, type) {
-				var params = {
-					position_id:window.selected_position.get("id"),
-					org_id : record.get("org_id"),
-					look : record.get("look"),
-					edit : record.get("edit")
-				};
-				Ext.Ajax.request({
-					url : Ext.ContextPath + "/position/deselectStore.do",
-					params : params,
-					method : 'POST',
-					success : function(response) {
-						record.commit();
-					}
-
-				});
-			}
-		}
-	});
+//	var positionStoreGrid=Ext.create("y.org.PositionStoreGrid",{
+//		title:'仓库权限',
+//		listeners : {
+//			storeSelect : function(record, type) {
+//				var params = {
+//					position_id:window.selected_position.get("id"),
+//					org_id : record.get("org_id"),
+//					look : record.get("look"),
+//					edit : record.get("edit")
+//				};
+//				Ext.Ajax.request({
+//					url : Ext.ContextPath + "/position/selectStore.do",
+//					params : params,
+//					method : 'POST',
+//					success : function(response) {
+//						record.commit();
+//					}
+//
+//				});
+//			},
+//			storeDeselect : function(record, type) {
+//				var params = {
+//					position_id:window.selected_position.get("id"),
+//					org_id : record.get("org_id"),
+//					look : record.get("look"),
+//					edit : record.get("edit")
+//				};
+//				Ext.Ajax.request({
+//					url : Ext.ContextPath + "/position/deselectStore.do",
+//					params : params,
+//					method : 'POST',
+//					success : function(response) {
+//						record.commit();
+//					}
+//
+//				});
+//			}
+//		}
+//	});
 	
 	var tabpanel=Ext.create('Ext.tab.Panel',{
 		region:'center',
-		items:[usergrid,positionStoreGrid],
+		items:[usergrid],
 		listeners:{
 	    	render:function(tabpanel){
 	    		tabpanel.mask();
@@ -69,10 +69,7 @@ Ext.onReady(function(){
 	});
 	
 	tree.on("itemclick",function( view, record, item, index, e, eOpts ){
-		//alert(record.get("type"));
-		if(window.selected_position==record){
-			return;
-		}
+	
 		if(record.get("type")=="position"){		
 			tabpanel.unmask();
 		} else {
@@ -86,12 +83,12 @@ Ext.onReady(function(){
 			"params['org_id']":record.get("org_id")
 		});
 		usergrid.getStore().reload();
-
-		//刷新整颗权限树
-		positionStoreGrid.getStore().getProxy().extraParams=Ext.apply(positionStoreGrid.getStore().getProxy().extraParams,{
-			position_id:record.get("id")
-		});
-		positionStoreGrid.getStore().reload();
+//
+//		//刷新整颗权限树
+//		positionStoreGrid.getStore().getProxy().extraParams=Ext.apply(positionStoreGrid.getStore().getProxy().extraParams,{
+//			position_id:record.get("id")
+//		});
+//		positionStoreGrid.getStore().reload();
 	});
 
 

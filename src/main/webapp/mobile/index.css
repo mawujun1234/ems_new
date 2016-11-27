@@ -101,7 +101,7 @@
 	width:30%;
 }
 
-/***ɨ�谴ť***/
+/***ɨ�谴ť***/
 .hi-icon-wrap {
 	text-align: center;
 	margin: 0 auto;
@@ -206,17 +206,42 @@
 	}
 }
 
-/***�豸�嵥***/
+/***�豸�嵥***/
 #page_task_info_equip_list .item-after {
 	font-size:0.5rem;
 	margin-right:0px;
 }
+#page_task_info_equip_list li {
+	display:flex;flex-flow:row;
+	overflow:hidden;
+	transition:all 0.3s linear;
+	-webkit-transition:all 0.3s linear;
+}
+#page_task_info_equip_list li a.item-link{
+	flex:1;
+}
+#page_task_info_equip_list li a.remove{
+	width:3rem;
+	line-height:230%;
+	display:block; 
+	background-color: #ff0000;
+	color: #fff;
+	text-align: center; 
+	text-decoration:none;
+	margin-right:-3rem;
+}
+#page_task_info_equip_list li.swipeLeft {
+	transform:translateX(-3rem);
+	-webkit-transform:translateX(-3rem);
+	overflow:visible;
+}
+
 #page_equip_info .content .item-title.label {
 	width:30%;
 }
 
 
-/***������Ϣ***/
+/***������Ϣ***/
 #page_setting .list-block.media-list {
 	margin:0px;
 }
@@ -229,6 +254,19 @@
 	font-size: 0.6rem;
 }
 #page_setting .list-block .item-link .item-text {
+	font-size: 0.6rem;
+	height: 2rem;
+}
+
+/*****x消息功能的样式*****/
+#page_message .list-block .item-after {
+	font-size: 0.6rem;
+	padding-top:0.2rem;	
+}
+#page_message .list-block .item-subtitle {
+	font-size: 0.6rem;
+}
+#page_message .list-block .item-text {
 	font-size: 0.6rem;
 	height: 2rem;
 }

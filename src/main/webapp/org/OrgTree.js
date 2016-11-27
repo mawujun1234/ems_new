@@ -7,6 +7,7 @@ Ext.define('y.org.OrgTree', {
     extend: 'Ext.tree.Panel',
     requires:['y.org.Org'],
     displayField:'name',
+    readOnly:false,//true表示就不能在上面进行增，删，改
     initComponent: function () {
 		var me = this;
 
@@ -38,7 +39,10 @@ Ext.define('y.org.OrgTree', {
 //				}
 //			}
 		});
-		me.initAction();
+		if(!me.readOnly){
+			me.initAction();
+		}
+		
        
 		me.callParent(arguments);
     },
@@ -294,6 +298,7 @@ Ext.define('y.org.OrgTree', {
 		
 		var child=Ext.create('y.org.Org',{
 		    'parent_id':parent.get("id"),
+		    state:'valid',
 		    'dim':me.getStore().getProxy().extraParams.dim
 		});
 		child.set("id",null);

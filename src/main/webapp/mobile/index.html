@@ -112,9 +112,15 @@
 						href="#page_taskes"><div class="icon icon-remove"></div>
 						<p class="function_grid__label">取消</p></a> <a class="function_grid"
 						href="#page_taskes"><div class="icon icon-code"></div>
-						<p class="function_grid__label">盘点</p></a> <a class="function_grid"
-						href="#page_taskes"><div class="icon icon-app"></div>
-						<p class="function_grid__label">新安装</p></a>
+						<p class="function_grid__label">盘点</p></a> 
+						<a class="function_grid" href="#page_taskes">
+							<div class="icon icon-app"></div>
+							<p class="function_grid__label">新安装</p>
+						</a>
+						<a class="function_grid" href="#page_message">
+							<div class="icon icon-message"></div>
+							<p class="function_grid__label">消息</p>
+						</a>
 					<div style="clear: both;"></div>
 				</div>
 				<div class="content-block-title" style="margin: 10px 0 10px 10px;">其他</div>
@@ -300,6 +306,7 @@
 							  <div class="item-after">设备小类</div>
 					        </div>
 				        </a>
+				        <a href="javascript:;" class="remove">删除</a>
 				      </li>
 				       <li>
 				  	    <a href="#page_equip_info" class="item-link item-content">
@@ -309,15 +316,17 @@
 							  <div class="item-after">设备小类</div>
 					        </div>
 				        </a>
+				        <a href="javascript:;" class="remove">删除</a>
 				      </li>
 				       <li>
-				  	    <a href="#page_equip_info" class="item-link item-content">
+				  	    <a href="#page_equip_info" class="item-link item-content">			  	    
 					        <div class="item-media"><i class="icon icon-f7"></i></div>
-					        <div class="item-inner">
+					        <div class="item-inner" >
 					          <div class="item-title">010109-**-1602290023</div>
-							  <div class="item-after">设备小类</div>
-					        </div>
+							  <div class="item-after">设备小类</div>		  
+					        </div>					        
 				        </a>
+				        <a href="javascript:;" class="remove">删除</a>
 				      </li>
 				    </ul>
 				  </div>
@@ -469,7 +478,21 @@
 					        </div>
 				        </a>
 				      </li>
-				       <li>
+				      <li> 
+				      <li>
+				  	    <a href="#" class="item-link item-content">
+					        <div class="item-media"><i class="icon icon-f7"></i></div>
+					        <div class="item-inner">
+					          <div class="item-title"><span class="icon icon-code" style="color:#FF1493;">&nbsp;&nbsp;&nbsp;&nbsp;</span>二维码</div>
+					        </div>
+				        </a>
+				      </li>
+				    </ul>
+				  </div>
+				  
+				  <div class="list-block">
+				  	<ul>
+				      <li>
 				  	    <a href="#" class="item-link item-content">
 					        <div class="item-media"><i class="icon icon-f7"></i></div>
 					        <div class="item-inner">
@@ -477,7 +500,6 @@
 					        </div>
 				        </a>
 				      </li>
-				      
 				    </ul>
 				  </div>
 			</div><!-- content -->
@@ -530,6 +552,40 @@
 		<!--#page_search  功能列表 -->
 		
 		
+		<!-- #page_message-->
+		<div class="page" id="page_message">
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<a class="button button-link button-nav pull-left back"
+					href="#page_function"> <span class="icon icon-left"></span>返回
+				</a>
+				<h1 class="title">消息列表</h1>
+			</header>
+
+
+
+			<!-- 这里是页面内容区 -->
+			<div class="content">
+				<div class="list-block media-list">
+				    <ul>
+				      <li>
+				        <a href="#" class="item-link item-content">
+				          <div class="item-inner">
+				            <div class="item-title-row">
+				              <div class="item-title">任务通知</div>
+				              <div class="item-after">2016-11-11 17:14</div>
+				            </div>
+				            <div class="item-subtitle">任务被领取</div>
+				            <div class="item-text">xxx点位上的任务已经被xxx领取..</div>
+				          </div>
+				        </a>
+				      </li>
+				    </ul>
+				  </div>
+			</div>
+		</div>
+		<!--#page_message  功能列表 -->
+		
 		<!-- #page_check_store-->
 		<div class="page" id="page_check_store">
 			<!-- 标题栏 -->
@@ -565,6 +621,7 @@
 		src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
 	<script type='text/javascript' src='./vue/vue.js' charset='utf-8'></script>
 	<script type='text/javascript' src='./index.js' charset='utf-8'></script>
+	<script type='text/javascript' src='./zepto/touch.js' charset='utf-8'></script>
 
 
 

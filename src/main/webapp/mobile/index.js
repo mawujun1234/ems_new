@@ -37,5 +37,13 @@ $(function(){
 	$("#page_task_info_scanQRCode_btn").click(function(){
 		alert("扫一扫");
 	});
+	
+	//扫描的设备的清单，左划，出现删除按钮
+	$("#page_task_info_equip_list li").on("swipeLeft",function(){
+		$(this).siblings().removeClass("swipeLeft");
+		$(this).addClass("swipeLeft");
+	}).on("swipeRight",function(){
+		$(this).removeClass("swipeLeft");
+	});
 });
 	
