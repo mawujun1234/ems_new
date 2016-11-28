@@ -1,7 +1,5 @@
 /**
- * 功能的扩展，添加自定义的怎，删，改
- * 添加右键菜单，增，删，改，并且增加工具栏，增，删，改。
- * 后台的类最好继承TreeNode类，这样就可以少写很多代码
+ * 包含组织和职位
  */
 Ext.define('y.org.OrgTree', {
     extend: 'Ext.tree.Panel',
@@ -42,11 +40,62 @@ Ext.define('y.org.OrgTree', {
 		if(!me.readOnly){
 			me.initAction();
 		}
-		
+		me.initTbar();
        
 		me.callParent(arguments);
     },
 
+    initTbar:function(){
+    	var me=this;
+    	//维度
+		//me.selected_dim="sale";
+		var dim_combobox=Ext.create('Ext.form.field.ComboBox',{
+			fieldLabel: '维度',
+			labelWidth:40,
+			name: 'dim',
+			queryMode: 'local',
+			editable:false,
+			forceSelection:true,
+		    displayField: 'name',
+		    valueField: 'key',
+		    store: {
+		    	autoLoad:true,
+			    fields: ['key', 'name'],
+			    proxy:{
+			    	actionMethods :{read: 'POST'},
+				    type: 'ajax',
+				    url: Ext.ContextPath+'/enum/queryDimes.do',
+				    reader: {
+				        type: 'json'
+				    }
+			    }
+			},
+			value:'base',
+            //allowBlank: false,
+            //afterLabelTextTpl: Ext.required,
+            //blankText:"菜单类型不允许为空",
+			xtype:'combobox',
+			listeners:{
+				select:function(combo, record){
+					//me.selected_dim=record.get("key");
+					me.getStore().getProxy().extraParams=Ext.apply(me.getStore().getProxy().extraParams,{
+						dim:record.get("key")
+					});
+					me.getStore().reload({node:me.getStore().getRoot()});
+				}
+			}
+		});
+		me.tbar={
+			itemId:'action_toolbar',
+			layout: {
+	               overflowHandler: 'Menu'
+	        },
+			items:[dim_combobox]
+			//,autoScroll:true		
+		};
+		me.dim_combobox=dim_combobox;
+		
+    },
     initAction:function(){
      	var me = this;
      	var actions=[];
@@ -63,7 +112,7 @@ Ext.define('y.org.OrgTree', {
 		actions.push(reload);
 		
 		var create = new Ext.Action({
-		    text: '新建',
+		    text: '新建组织',
 		    itemId:'create',
 		    handler: function(b){
 		    	me.onCreate(null,b);
@@ -74,7 +123,7 @@ Ext.define('y.org.OrgTree', {
 		actions.push(create);
 		
 		var update = new Ext.Action({
-		    text: '更新',
+		    text: '更新组织',
 		    itemId:'update',
 		    handler: function(){
 		    	me.onUpdate();
@@ -85,7 +134,7 @@ Ext.define('y.org.OrgTree', {
 		actions.push(update);
 		
 		var destroy = new Ext.Action({
-		    text: '删除',
+		    text: '删除组织',
 		    itemId:'destroy',
 		    handler: function(){
 		    	me.onDelete();    
@@ -93,7 +142,18 @@ Ext.define('y.org.OrgTree', {
 		    iconCls: 'icon-trash'
 		});
 		//me.addAction(destroy);
-		actions.push(destroy)
+		actions.push(destroy);
+		
+		var updateParentOrg = new Ext.Action({
+		    text: '组织隶属关系调整',
+		    itemId:'destroy',
+		    handler: function(){
+		    	me.updateParentOrg();    
+		    },
+		    iconCls: 'icon-trash'
+		});
+		actions.push(updateParentOrg);
+		
      	
        var createPosition = new Ext.Action({
 		    text: '新建职位',
@@ -140,52 +200,6 @@ Ext.define('y.org.OrgTree', {
 		});
 		me.contextMenu=menu;
 		
-		//维度
-		//me.selected_dim="sale";
-		var dim_combobox=Ext.create('Ext.form.field.ComboBox',{
-			fieldLabel: '维度',
-			labelWidth:40,
-			name: 'dim',
-			queryMode: 'local',
-			editable:false,
-			forceSelection:true,
-		    displayField: 'name',
-		    valueField: 'key',
-		    store: {
-		    	autoLoad:true,
-			    fields: ['key', 'name'],
-			    proxy:{
-			    	actionMethods :{read: 'POST'},
-				    type: 'ajax',
-				    url: Ext.ContextPath+'/enum/queryDimes.do',
-				    reader: {
-				        type: 'json'
-				    }
-			    }
-			},
-			value:'base',
-            //allowBlank: false,
-            //afterLabelTextTpl: Ext.required,
-            //blankText:"菜单类型不允许为空",
-			xtype:'combobox',
-			listeners:{
-				select:function(combo, record){
-					//me.selected_dim=record.get("key");
-					me.getStore().getProxy().extraParams=Ext.apply(me.getStore().getProxy().extraParams,{
-						dim:record.get("key")
-					});
-					me.getStore().reload({node:me.getStore().getRoot()});
-				}
-			}
-		});
-		me.tbar={
-			itemId:'action_toolbar',
-			layout: {
-	               overflowHandler: 'Menu'
-	        },
-			items:[dim_combobox]
-			//,autoScroll:true		
-		};
 		
     },
      onCreatePosition:function(){
@@ -402,7 +416,56 @@ Ext.define('y.org.OrgTree', {
 		    me.getStore().reload();	
 		}      
     },
-   
+	updateParentOrg:function(){
+		var me=this;
+   		var node=node||me.getSelectionModel( ).getLastSelected( );
+   		if(!node){
+		    Ext.Msg.alert("消息","请先选择节点");	
+			return;
+		}
+		if(node.isRoot()){
+			Ext.Msg.alert("消息","根节点不能更改!");	
+			return;
+		}
+		if(node.get("type")=='position'){
+			Ext.Msg.alert("消息","职位不能更改隶属关系！");
+    		return;
+    	}
+    	var orgTree=Ext.create('y.org.OrgOnlyTreeQuery',{
+    		exclude_id:node.get("id"),//这个节点，及子节点不显示，防止循环嵌套
+    		listeners:{
+    			itemdblclick:function( view , newparent , item , index , e , eOpts ) {
+    				Ext.Ajax.request({
+						url:Ext.ContextPath+'/org/updateParentOrg.do',
+						params:{
+							org_id:node.get("id"),
+							new_parent_id:newparent.get("id"),
+							old_parent_id:node.get("parent_id"),
+							dim:me.dim_combobox.getValue()
+						},
+						method:'POST',
+						headers:{ 'Accept':'application/json;'},
+						success:function(){
+							//button.up('window').close();
+							//me.onReload(parent);
+							win.close();
+							me.onReload(node.parentNode);
+						}
+					});
+    			}
+    		}
+    	});
+    	var win=Ext.create('Ext.window.Window',{
+    		title:'双击选择新的上级组织',
+    		layout:'fit',
+    		modal:true,
+    		height:500,
+    		width:300,
+    		items:[orgTree]
+    	});
+    	win.show();
+   	
+    },
     
     getContextMenu:function(){
     	return this.contextMenu;

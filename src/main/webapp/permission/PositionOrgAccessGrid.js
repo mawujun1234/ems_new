@@ -1,4 +1,4 @@
-Ext.define('y.org.PositionStoreGrid',{
+Ext.define('y.permission.PositionOrgAccessGrid',{
 	extend:'Ext.grid.Panel',
 	requires: [
 	     'y.org.Org'
@@ -25,14 +25,14 @@ Ext.define('y.org.PositionStoreGrid',{
 			checkchange:function(checkcolumn, rowIndex, checked){
 				var record=me.getStore().getAt(rowIndex);
 				if(checked){
-					me.fireEvent('storeSelect',record,'look');
+					me.fireEvent('orgSelect',record,'look');
 				} else {
 					if(record.get("edit")){
 						Ext.Msg.alert("消息","不可取消,可编辑就肯定可以看!");
 						record.set("look",true);
 						return;
 					}
-					me.fireEvent('storeDeselect',record,'look');
+					me.fireEvent('orgDeselect',record,'look');
 				}
 				
 			}
@@ -43,10 +43,10 @@ Ext.define('y.org.PositionStoreGrid',{
 				checkchange:function(checkcolumn, rowIndex, checked){
 					var record=me.getStore().getAt(rowIndex);
 					if(checked){
-						me.fireEvent('storeSelect',record,'edit');
 						record.set("look",true);
+						me.fireEvent('orgSelect',record,'edit');	
 					} else {
-						me.fireEvent('storeDeselect',record,'edit');
+						me.fireEvent('orgDeselect',record,'edit');
 					}
 				}
         	}
@@ -61,10 +61,12 @@ Ext.define('y.org.PositionStoreGrid',{
 			model: 'y.org.Org',
 			proxy:{
 				type: 'ajax',
-			    url : Ext.ContextPath+'/position/querySelectStores.do',
+			    url : Ext.ContextPath+'/position/querySelectOrgs.do',
 			    headers:{ 'Accept':'application/json;'},
 			    actionMethods: { read: 'POST' },
-			    extraParams:{limit:50},
+			    extraParams:{
+			    	limit:50
+			    },
 			    reader:{
 					type:'json',//如果没有分页，那么可以把后面三行去掉，而且后台只需要返回一个数组就行了
 					rootProperty:'root',

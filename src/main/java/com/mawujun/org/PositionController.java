@@ -79,23 +79,32 @@ public class PositionController {
 		positionService.delete(position);
 		return position;
 	}
-	
-	@RequestMapping("/position/querySelectStores.do")
+	/**
+	 * 查询这个角色可以看到的仓库或作业单位
+	 * @param position_id
+	 * @return
+	 */
+	@RequestMapping("/position/querySelectOrgs.do")
 	@ResponseBody
-	public List<PositionOrgAccessVO> querySelectStores(String position_id) {
+	public List<PositionOrgAccessVO> querySelectOrgs(String position_id,String orgType) {
 		
-		return positionService.querySelectStores(position_id);
+		return positionService.querySelectOrgs(position_id,orgType);
 	}
-	@RequestMapping("/position/selectStore.do")
+	/**
+	 * 
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping("/position/selectOrg.do")
 	@ResponseBody
-	public String selectStore(PositionOrgAccessVO vo) {
+	public String selectOrg(PositionOrgAccessVO vo) {
 		positionService.selectStore(vo);
 		return "{success:true}";
 	}
 	
-	@RequestMapping("/position/deselectStore.do")
+	@RequestMapping("/position/deselectOrg.do")
 	@ResponseBody
-	public String deselectStore(PositionOrgAccessVO vo) {
+	public String deselectOrg(PositionOrgAccessVO vo) {
 		positionService.deselectStore(vo);
 		return "{success:true}";
 	}

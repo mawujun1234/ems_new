@@ -16,6 +16,6 @@ public interface PositionRepository extends IRepository<Position, String>{
 	//public List<Position> queryPositionByName(@Param("orgno")String orgno,@Param("name")String name);
 	//public void delete_t_position_org_userByUser(@Param("user_id")String user_id);
 	
-	public List<PositionOrgAccessVO> querySelectStores(@Param("position_id")String position_id);
+	public List<PositionOrgAccessVO> querySelectOrgs(@Param("position_id")String position_id,@Param("orgType")String orgType);
 
 }

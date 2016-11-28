@@ -35,6 +35,28 @@ public class OrgService extends AbstractService<Org, String>{
 	public OrgRepository getRepository() {
 		return orgRepository;
 	}
+	/**
+	 * 获取或生成上下级的reportCode
+	 * @param parent_id
+	 * @param child_id
+	 * @return 第一个是parent的reportcode，第二个是child的reportcode
+	 */
+	private String[] queryReportCode(String parent_id,Dim dim){
+		//获取当前父节点下的最大reportcode
+				String maxReportCode=(String)orgOrgRepository.queryMax(Cnd.max(M.OrgOrg.child_reportCode).andEquals(M.OrgOrg.parent.id, parent_id).andEquals(M.OrgOrg.dim, dim));
+				//获取父节点的reportcode
+				String parent_reportCode=(String)orgOrgRepository.queryMax(Cnd.max(M.OrgOrg.child_reportCode).andEquals(M.OrgOrg.child.id, parent_id).andEquals(M.OrgOrg.dim, dim));
+				if(!StringUtils.hasText(parent_reportCode)){
+					parent_reportCode=ReportCodeHelper.generate4(null, false);
+				}
+				String child_reportCode=null;
+				if(!StringUtils.hasText(maxReportCode)){
+					child_reportCode=ReportCodeHelper.generate4(parent_reportCode, true);
+				} else {
+					child_reportCode=ReportCodeHelper.generate4(maxReportCode, false);
+				}
+				return new String[]{parent_reportCode,child_reportCode};
+	}
 	
 	public void create(OrgVO orgVO) {
 		Org org=BeanUtils.copyOrCast(orgVO, Org.class);
@@ -42,26 +64,26 @@ public class OrgService extends AbstractService<Org, String>{
 		this.getRepository().create(org);
 		
 		Org parent=orgRepository.load(orgVO.getParent_id());
-		//获取当前父节点下的最大reportcode
-		String maxReportCode=(String)orgOrgRepository.queryMax(Cnd.max(M.OrgOrg.child_reportCode).andEquals(M.OrgOrg.parent.id, parent.getId()));
-		String parent_reportCode=(String)orgOrgRepository.queryMax(Cnd.max(M.OrgOrg.child_reportCode).andEquals(M.OrgOrg.child.id, parent.getId()));
-		if(!StringUtils.hasText(parent_reportCode)){
-			parent_reportCode=ReportCodeHelper.generate4(null, false);
-		}
-		String child_reportCode=null;
-		if(!StringUtils.hasText(maxReportCode)){
-			child_reportCode=ReportCodeHelper.generate4(parent_reportCode, true);
-		} else {
-			child_reportCode=ReportCodeHelper.generate4(maxReportCode, false);
-		}
-		
+//		//获取当前父节点下的最大reportcode
+//		String maxReportCode=(String)orgOrgRepository.queryMax(Cnd.max(M.OrgOrg.child_reportCode).andEquals(M.OrgOrg.parent.id, parent.getId()));
+//		String parent_reportCode=(String)orgOrgRepository.queryMax(Cnd.max(M.OrgOrg.child_reportCode).andEquals(M.OrgOrg.child.id, parent.getId()));
+//		if(!StringUtils.hasText(parent_reportCode)){
+//			parent_reportCode=ReportCodeHelper.generate4(null, false);
+//		}
+//		String child_reportCode=null;
+//		if(!StringUtils.hasText(maxReportCode)){
+//			child_reportCode=ReportCodeHelper.generate4(parent_reportCode, true);
+//		} else {
+//			child_reportCode=ReportCodeHelper.generate4(maxReportCode, false);
+//		}
+		String[] reportcodes=queryReportCode(parent.getId(),orgVO.getDim());
 		
 		OrgOrg orgorg=new OrgOrg();
 		orgorg.setChild(org);
 		orgorg.setDim(orgVO.getDim());
 		orgorg.setParent(parent);
-		orgorg.setParent_reportCode(parent_reportCode);
-		orgorg.setChild_reportCode(child_reportCode);
+		orgorg.setParent_reportCode(reportcodes[0]);
+		orgorg.setChild_reportCode(reportcodes[1]);
 		orgOrgRepository.create(orgorg);
 	}
 	/**
@@ -109,8 +131,8 @@ public class OrgService extends AbstractService<Org, String>{
 		return orgRepository.queryNodeVO(parent_id, dim);
 	}
 
-	public List<NodeVO> queryOnlyOrg(String parent_id,Dim dim){
-		return orgRepository.queryOnlyOrg(parent_id, dim);
+	public List<NodeVO> queryOnlyOrg(String parent_id,Dim dim,String exclude_id){
+		return orgRepository.queryOnlyOrg(parent_id, dim,exclude_id);
 	}
 	
 	public List<Org> query4Combo(String parent_no,String channo,Dim dim,String user_id) {
@@ -139,6 +161,32 @@ public class OrgService extends AbstractService<Org, String>{
 			//positionService.deleteChildren(position_id, orgno, dim);
 		}
 		
+		
+	}
+	
+	public void updateParentOrg(String org_id,String old_parent_id,String new_parent_id,Dim dim) {
+		Org child=orgRepository.get(org_id);
+		Org new_parent=orgRepository.load(new_parent_id);
+		
+		//删除原有的组织上下级关系
+		OrgOrg orgorg=new OrgOrg();
+		orgorg.setChild(child);
+		orgorg.setParent(orgRepository.get(old_parent_id));
+		orgorg.setDim(dim);
+		orgOrgRepository.delete(orgorg);
+		
+		//构建新的上下级关系
+		String[] reportcodes=queryReportCode(new_parent_id,dim);
+		OrgOrg neworgorg=new OrgOrg();
+		neworgorg.setChild(child);
+		neworgorg.setParent(new_parent);
+		neworgorg.setDim(dim);
+		neworgorg.setParent_reportCode(reportcodes[0]);
+		neworgorg.setChild_reportCode(reportcodes[1]);
+		orgOrgRepository.create(neworgorg);
+		
+		//初始化reportcode
+		initReportCode(org_id, dim,reportcodes[1]);
 		
 	}
 }

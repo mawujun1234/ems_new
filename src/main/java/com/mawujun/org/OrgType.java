@@ -6,7 +6,7 @@ package com.mawujun.org;
  *
  */
 public enum OrgType {
-	company("公司","icon-home"),department("部门","icon-cog"),workunit("作业单位","truck"),store("仓库","icon-download-alt"),repaircentre("维修中心","icon-wrench")
+	company("公司","icon-home"),department("部门","icon-sitemap"),workunit("作业单位","icon-truck"),store("仓库","icon-download-alt"),repaircentre("维修中心","icon-wrench")
 	,position("职位","icon-group");
 	
 	private String name;

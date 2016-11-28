@@ -7,20 +7,23 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.mawujun.org.OrgRepository">
 	<!-- -->
     <select id="queryNodeVO" resultType="com.mawujun.org.NodeVO" parameterType="map">
-    	select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type from t_org a,t_org_org b
+    	select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type,b.parent_id from t_org a,t_org_org b
     	where a.id=b.child_id  
     	and b.parent_id=#{parent_id}
     	and b.dim=#{dim} and a.state='valid'
     	union
-    	select id,name,org_id,remark,'position' as type
+    	select id,name,org_id,remark,'position' as type,org_id as parent_id
     	from t_position where org_id=#{parent_id}
     </select> 
     
     <select id="queryOnlyOrg" resultType="com.mawujun.org.NodeVO" parameterType="map">
-    	select a.orgno as id,orgnm as name,a.orgno,'' as remark,a.orgty as type from t_org a,t_org_org b
-    	where a.orgno=b.child_no  
-    	and b.parent_no=#{parent_id}
-    	and b.dim=#{dim} and a.orgst='KQ'
+    	select a.id,a.name,a.orgtype as type,b.parent_id from t_org a,t_org_org b
+    	where a.id=b.child_id 
+    	and b.parent_id=#{parent_id}
+    	and b.dim=#{dim} and a.state='valid'
+    	<if test="exclude_id!=null and exclude_id!=''">
+    		and a.id!=#{exclude_id}
+    	</if>
     </select> 
     
 

@@ -111,8 +111,8 @@ public class PositionService extends AbstractService<Position, String>{
 		super.delete(position);
 	}
 	
-	public List<PositionOrgAccessVO> querySelectStores(String position_id) {
-		return positionRepository.querySelectStores(position_id);
+	public List<PositionOrgAccessVO> querySelectOrgs(String position_id,String orgType) {
+		return positionRepository.querySelectOrgs(position_id,orgType);
 	}
 	public void selectStore(PositionOrgAccessVO vo){
 		

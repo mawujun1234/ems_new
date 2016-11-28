@@ -42,15 +42,22 @@ public class OrgController {
 		List<NodeVO> orges=orgService.queryNodeVO(parent_id,dim);
 		return orges;
 	}
+	/**
+	 * 
+	 * @param parent_id
+	 * @param dim
+	 * @param exclude_id 这个id的组织及其自节点不会被查询，因为父节点都不显示了，子节点就显示不出来了
+	 * @return
+	 */
 	@RequestMapping("/org/queryOnlyOrg.do")
 	@ResponseBody
-	public List<NodeVO> queryOnlyOrg(String parent_id,Dim dim) {
+	public List<NodeVO> queryOnlyOrg(String parent_id,Dim dim,String exclude_id) {
 		if(dim==null){
 			dim=Dim.base;
 		}
 
 		//Cnd cnd=Cnd.select().andEquals(M.OrgOrg, "root".equals(parent_id)?null:parent_id);
-		List<NodeVO> orges=orgService.queryOnlyOrg(parent_id,dim);
+		List<NodeVO> orges=orgService.queryOnlyOrg(parent_id,dim,exclude_id);
 		return orges;
 	}
 	/**
@@ -152,7 +159,12 @@ public class OrgController {
 		orgService.update(org);
 		return org;
 	}
-	
+	@RequestMapping("/org/updateParentOrg.do")
+	@ResponseBody
+	public  String updateParentOrg(String org_id,String old_parent_id,String new_parent_id,Dim dim) {
+		orgService.updateParentOrg(org_id, old_parent_id, new_parent_id, dim);
+		return "{success:true}";
+	}
 	
 	@RequestMapping("/org/destroy.do")
 	@ResponseBody

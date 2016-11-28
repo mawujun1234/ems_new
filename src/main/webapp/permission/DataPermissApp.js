@@ -15,10 +15,10 @@ Ext.onReady(function(){
 		region:'center'
 	});
 	
-	var positionStoreGrid=Ext.create("y.org.PositionStoreGrid",{
+	var positionStoreGrid=Ext.create("y.permission.PositionOrgAccessGrid",{
 		title:'仓库权限',
 		listeners : {
-			storeSelect : function(record, type) {
+			orgSelect : function(record, type) {
 				var params = {
 					position_id:window.selected_position.get("id"),
 					org_id : record.get("org_id"),
@@ -26,7 +26,7 @@ Ext.onReady(function(){
 					edit : record.get("edit")
 				};
 				Ext.Ajax.request({
-					url : Ext.ContextPath + "/position/selectStore.do",
+					url : Ext.ContextPath + "/position/selectOrg.do",
 					params : params,
 					method : 'POST',
 					success : function(response) {
@@ -35,7 +35,7 @@ Ext.onReady(function(){
 
 				});
 			},
-			storeDeselect : function(record, type) {
+			orgDeselect : function(record, type) {
 				var params = {
 					position_id:window.selected_position.get("id"),
 					org_id : record.get("org_id"),
@@ -43,7 +43,48 @@ Ext.onReady(function(){
 					edit : record.get("edit")
 				};
 				Ext.Ajax.request({
-					url : Ext.ContextPath + "/position/deselectStore.do",
+					url : Ext.ContextPath + "/position/deselectOrg.do",
+					params : params,
+					method : 'POST',
+					success : function(response) {
+						record.commit();
+					}
+
+				});
+			}
+		}
+	});
+	
+	var positionWorkunitGrid=Ext.create("y.permission.PositionOrgAccessGrid",{
+		title:'作业单位权限',
+		
+		listeners : {
+			orgSelect : function(record, type) {
+				var params = {
+					position_id:window.selected_position.get("id"),
+					org_id : record.get("org_id"),
+					look : record.get("look"),
+					edit : record.get("edit")
+				};
+				Ext.Ajax.request({
+					url : Ext.ContextPath + "/position/selectOrg.do",
+					params : params,
+					method : 'POST',
+					success : function(response) {
+						record.commit();
+					}
+
+				});
+			},
+			orgDeselect : function(record, type) {
+				var params = {
+					position_id:window.selected_position.get("id"),
+					org_id : record.get("org_id"),
+					look : record.get("look"),
+					edit : record.get("edit")
+				};
+				Ext.Ajax.request({
+					url : Ext.ContextPath + "/position/deselectOrg.do",
 					params : params,
 					method : 'POST',
 					success : function(response) {
@@ -57,7 +98,7 @@ Ext.onReady(function(){
 	
 	var tabpanel=Ext.create('Ext.tab.Panel',{
 		region:'center',
-		items:[positionStoreGrid,usergrid],
+		items:[positionStoreGrid,positionWorkunitGrid,usergrid],
 		listeners:{
 	    	render:function(tabpanel){
 	    		tabpanel.mask();
@@ -86,7 +127,14 @@ Ext.onReady(function(){
 		usergrid.getStore().reload();
 
 		//刷新整颗权限树
+		positionWorkunitGrid.getStore().getProxy().extraParams=Ext.apply(positionWorkunitGrid.getStore().getProxy().extraParams,{
+			orgType:'workunit',
+			position_id:record.get("id")
+		});
+		positionWorkunitGrid.getStore().reload();
+		
 		positionStoreGrid.getStore().getProxy().extraParams=Ext.apply(positionStoreGrid.getStore().getProxy().extraParams,{
+			orgType:'store',
 			position_id:record.get("id")
 		});
 		positionStoreGrid.getStore().reload();

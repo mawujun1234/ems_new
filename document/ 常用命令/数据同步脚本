@@ -1,0 +1,45 @@
+1:创建dblink
+create public database link emslink connect to ems identified by ems
+　　 using '(DESCRIPTION =
+(ADDRESS_LIST =
+(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
+)
+(CONNECT_DATA =
+(SERVICE_NAME =ems)
+)
+)';
+
+2:仓库数据同步
+在执行同步前，必须先删除物化视图和物化视图的日志表，这样才不会和dblink冲突
+日志表手工进行删除 
+DROP MATERIALIZED VIEW T_ORG_BASE;
+DROP MATERIALIZED VIEW LOG ON t_org;
+DROP MATERIALIZED VIEW LOG ON t_org_org;
+--建立仓库文件夹专门存放仓库的数据
+INSERT INTO "EMSNEW"."T_ORG" (ID, NAME, ORGTYPE, SORT, STATE) VALUES ('storegroup', '仓库组', 'department', '0', 'valid');
+INSERT INTO "EMSNEW"."T_ORG_ORG" (DIM, PARENT_ID, CHILD_ID) VALUES ('base', 'root', 'storegroup');
+INSERT INTO "EMSNEW"."T_ORG" (ID, NAME, ORGTYPE, SORT, STATE) VALUES ('workunitgroup', '作业单位组', 'department', '0', 'valid');
+INSERT INTO "EMSNEW"."T_ORG_ORG" (DIM, PARENT_ID, CHILD_ID) VALUES ('base', 'root', 'workunitgroup');
+
+--插入t_org
+insert into emsnew.t_org(id,code,name,name_short,orgtype,sort,state) 
+select id,null,name,null,'store',0,'valid' from ems_store@emslink;
+insert into t_org(id,code,name,name_short,orgtype,sort,state) 
+select id,null,name,null,'workunit',0,'valid' from ems_workunit@emslink;
+--插入t_org_org
+insert into emsnew.t_org_org(dim,parent_id,child_id)
+select 'base','storegroup',id from ems_store@emslink;
+insert into emsnew.t_org_org(dim,parent_id,child_id)
+select 'base','workunitgroup',id from ems_workunit@emslink;
+
+--report_code重新生成功能
+执行http://localhost:8085/org/initReportCode.do
+--为仓库和作业单位添加职位
+insert into t_position(id,name,org_id,positionType_id) 
+select sys_guid(),'仓管'，id,'employee' from ems_store@emslink;
+insert into t_position(id,name,org_id,positionType_id) 
+select sys_guid(),'小组成员'，id,'workunitgroup' from ems_workunit@emslink;
+--把仓库和作业单位的人员导过来
+
+
+

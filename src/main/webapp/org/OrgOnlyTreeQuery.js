@@ -1,12 +1,11 @@
 /**
- * 功能的扩展，添加自定义的怎，删，改
- * 添加右键菜单，增，删，改，并且增加工具栏，增，删，改。
- * 后台的类最好继承TreeNode类，这样就可以少写很多代码
+  * 只能选择组织单元
  */
-Ext.define('y.org.OrgTreeQuery', {
+Ext.define('y.org.OrgOnlyTreeQuery', {
     extend: 'Ext.tree.Panel',
     requires:['y.org.Org'],
     displayField:'name',
+    exclude_id:null,//这个节点，及子节点不显示，防止循环嵌套
     initComponent: function () {
 		var me = this;
 
@@ -17,12 +16,15 @@ Ext.define('y.org.OrgTreeQuery', {
 	       	fields:['id','name','leaf','orgno','remark','type'],
 			root: {
 			    expanded: true,
-			    name:"雅戈尔" 
+			    name:"宁波东望" 
 			},
 			proxy:{
 				type:'ajax',
 				url:Ext.ContextPath+'/org/queryOnlyOrg.do',
 				actionMethods: { read: 'POST' },
+				extraParams:{
+					exclude_id:me.exclude_id
+				},
 				timeout :600000,
 				headers:{ 'Accept':'application/json;'}
 			
