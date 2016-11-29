@@ -1,7 +1,7 @@
-Ext.define('y.permission.UserGrid',{
+Ext.define('Ems.permission.UserGrid',{
 	extend:'Ext.grid.Panel',
 	requires: [
-	     'y.permission.User'
+	     'Ems.permission.User'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -35,7 +35,7 @@ Ext.define('y.permission.UserGrid',{
 			autoSync:false,
 			pageSize:50,
 			autoLoad:true,
-			model: 'y.permission.User',
+			model: 'Ems.permission.User',
 			proxy:{
 				type: 'ajax',
 			    url : Ext.ContextPath+'/user/queryPage.do',
@@ -136,12 +136,12 @@ Ext.define('y.permission.UserGrid',{
 	},
 	onCreate:function(){
     	var me=this;
-		var child=Ext.create('y.permission.User',{
+		var child=Ext.create('Ems.permission.User',{
 			canNotDel:false
 		});
 		child.set("id",null);
 		
-		var formpanel=Ext.create('y.permission.UserForm',{});
+		var formpanel=Ext.create('Ems.permission.UserForm',{});
 		formpanel.loadRecord(child);
 		
     	var win=Ext.create('Ext.window.Window',{
@@ -170,7 +170,7 @@ Ext.define('y.permission.UserGrid',{
     		return;
     	}
 
-		var formpanel=Ext.create('y.permission.UserForm',{});
+		var formpanel=Ext.create('Ems.permission.UserForm',{});
 		formpanel.loadRecord(node);
 		
     	var win=Ext.create('Ext.window.Window',{

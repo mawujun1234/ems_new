@@ -1,7 +1,7 @@
 /**
  * 职位可以访问的组织单元
  */
-Ext.define('y.org.OrgAccessTree', {
+Ext.define('Ems.org.OrgAccessTree', {
     extend: 'Ext.tree.Panel',
     displayField:'name',
     initComponent: function () {
@@ -10,7 +10,7 @@ Ext.define('y.org.OrgAccessTree', {
         me.store = Ext.create('Ext.data.TreeStore', {
 	       	autoLoad:false,
 	       	nodeParam :'parent_id',//传递到后台的数据，默认是node
-	       	//model:'y.org.Org',
+	       	//model:'Ems.org.Org',
 	       	fields:['id','name','leaf','orgno','remark','type'],
 			root: {
 			    expanded: true,

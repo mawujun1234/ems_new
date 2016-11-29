@@ -3,9 +3,9 @@
  * 添加右键菜单，增，删，改，并且增加工具栏，增，删，改。
  * 后台的类最好继承TreeNode类，这样就可以少写很多代码
  */
-Ext.define('y.permission.MenuTree', {
+Ext.define('Ems.permission.MenuTree', {
     extend: 'Ext.tree.Panel',
-    requires:['y.permission.Menu'],
+    requires:['Ems.permission.Menu'],
     displayField:"name",
     initComponent: function () {
 		var me = this;
@@ -13,7 +13,7 @@ Ext.define('y.permission.MenuTree', {
         me.store = Ext.create('Ext.data.TreeStore', {
 	       	autoLoad:true,
 	       	nodeParam :'parent_id',//传递到后台的数据，默认是node
-	       	model:'y.permission.Menu',
+	       	model:'Ems.permission.Menu',
 			root: {
 			    expanded: true,
 			    name:"根节点" 
@@ -86,7 +86,7 @@ Ext.define('y.permission.MenuTree', {
     onCreate:function(){
     	var me=this;
 		
-    	var form=Ext.create('y.permission.MenuForm',{});
+    	var form=Ext.create('Ems.permission.MenuForm',{});
     	
     	var parent=me.getSelectionModel( ).getLastSelected( )||me.getRootNode( );    
 
@@ -118,7 +118,7 @@ Ext.define('y.permission.MenuTree', {
      onUpdate:function(){
     	var me=this;
 		
-    	var form=Ext.create('y.permission.MenuForm',{});
+    	var form=Ext.create('Ems.permission.MenuForm',{});
     	
     	var node=me.getSelectionModel( ).getLastSelected();
     	if(node==null || node.isRoot()){

@@ -2,7 +2,7 @@
  * 折叠式(accordion)菜单，样式可以自己用css进行美化
  */
 
-Ext.define('y.main.menu.AccordionMainMenu', {
+Ext.define('Ems.main.menu.AccordionMainMenu', {
 			extend : 'Ext.panel.Panel',
 			alias : 'widget.mainmenuaccordion',
 			title : '系统菜单',

@@ -1,11 +1,11 @@
 /**
  * 系统界面的主区域,是一个tabpanel,可以有多个tab页面，用来放置各个模块。
  */
-Ext.define('y.main.region.Center', {
+Ext.define('Ems.main.region.Center', {
 	extend : 'Ext.tab.Panel',
 	alias : 'widget.maincenter',
 
-	uses : ['y.main.region.HomePage'],
+	uses : ['Ems.main.region.HomePage'],
 
 	closeAction : 'hide',
 	autoDestroy : false,

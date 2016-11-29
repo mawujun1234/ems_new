@@ -1,7 +1,7 @@
-Ext.define('y.org.OrgForm',{
+Ext.define('Ems.org.OrgForm',{
 	extend:'Ext.form.Panel',
 	requires: [
-	     'y.org.Org'
+	     'Ems.org.Org'
 	],
 	
     frame: true,

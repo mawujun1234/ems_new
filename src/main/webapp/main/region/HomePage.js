@@ -4,7 +4,7 @@
  * 
  */
 
-Ext.define('y.main.region.HomePage', {
+Ext.define('Ems.main.region.HomePage', {
 			extend : 'Ext.panel.Panel',
 			alias : 'widget.homepage',
 			layout : 'border',

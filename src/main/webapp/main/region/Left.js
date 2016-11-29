@@ -1,12 +1,12 @@
 /**
  * 左边的菜单区域，可以放树形菜单或折叠菜单
  */
-Ext.define('y.main.region.Left', {
+Ext.define('Ems.main.region.Left', {
 			extend : 'Ext.panel.Panel',
 			alias : 'widget.mainmenuregion',
 
-			uses : ['y.main.menu.MainMenuTree',
-					'y.main.menu.AccordionMainMenu'],
+			uses : ['Ems.main.menu.MainMenuTree',
+					'Ems.main.menu.AccordionMainMenu'],
 
 			layout : {
 				type : 'accordion',

@@ -1,7 +1,7 @@
-Ext.define('y.permission.MenuForm',{
+Ext.define('Ems.permission.MenuForm',{
 	extend:'Ext.form.Panel',
 	requires: [
-	     'y.permission.Menu'
+	     'Ems.permission.Menu'
 	],
 	
     frame: true,

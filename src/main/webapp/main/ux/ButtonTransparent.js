@@ -1,7 +1,7 @@
 /**
  * 定义了一个背景透明的Button类，继承于Button
  */
-Ext.define('y.main.ux.ButtonTransparent', {
+Ext.define('Ems.main.ux.ButtonTransparent', {
 			extend : 'Ext.button.Button', // 继续于Ext.button.Button
 			alias : 'widget.buttontransparent', // 此类的xtype类型为buttontransparent
 

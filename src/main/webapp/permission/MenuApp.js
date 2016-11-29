@@ -1,9 +1,9 @@
-Ext.require("y.permission.Menu");
-Ext.require("y.permission.MenuTree");
-Ext.require("y.permission.MenuGrid");
-Ext.require("y.permission.MenuForm");
+Ext.require("Ems.permission.Menu");
+Ext.require("Ems.permission.MenuTree");
+Ext.require("Ems.permission.MenuGrid");
+Ext.require("Ems.permission.MenuForm");
 Ext.onReady(function(){
-	var tree=Ext.create('y.permission.MenuTree',{
+	var tree=Ext.create('Ems.permission.MenuTree',{
 		title:'菜单树',
 		width:400,
 		split:true,
@@ -11,7 +11,7 @@ Ext.onReady(function(){
 		region:'west'
 	});
 	
-	var grid=Ext.create('y.permission.MenuGrid',{
+	var grid=Ext.create('Ems.permission.MenuGrid',{
 		region:'center',
 		title:'界面元素',
 		listeners:{

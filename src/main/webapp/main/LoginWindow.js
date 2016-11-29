@@ -3,7 +3,7 @@
  * 添加右键菜单，增，删，改，并且增加工具栏，增，删，改。
  * 后台的类最好继承TreeNode类，这样就可以少写很多代码
  */
-Ext.define('y.main.LoginWindow', {
+Ext.define('Ems.main.LoginWindow', {
     extend: 'Ext.window.Window',
     title:'登录',
     initComponent: function () {

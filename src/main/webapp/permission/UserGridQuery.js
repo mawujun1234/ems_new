@@ -1,7 +1,7 @@
-Ext.define('y.permission.UserGridQuery',{
+Ext.define('Ems.permission.UserGridQuery',{
 	extend:'Ext.grid.Panel',
 	requires: [
-	     'y.permission.User'
+	     'Ems.permission.User'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -35,7 +35,7 @@ Ext.define('y.permission.UserGridQuery',{
 			autoSync:false,
 			pageSize:50,
 			autoLoad:true,
-			model: 'y.permission.User',
+			model: 'Ems.permission.User',
 			proxy:{
 				type: 'ajax',
 			    url : Ext.ContextPath+'/user/queryPage.do',

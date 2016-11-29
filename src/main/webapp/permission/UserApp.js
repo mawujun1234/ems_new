@@ -1,8 +1,8 @@
-Ext.require("y.permission.User");
-Ext.require("y.permission.UserGrid");
-Ext.require("y.permission.UserForm");
+Ext.require("Ems.permission.User");
+Ext.require("Ems.permission.UserGrid");
+Ext.require("Ems.permission.UserForm");
 Ext.onReady(function(){
-	var grid=Ext.create('y.permission.UserGrid',{
+	var grid=Ext.create('Ems.permission.UserGrid',{
 		region:'center'
 	});
 	

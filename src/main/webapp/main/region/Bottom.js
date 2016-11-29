@@ -1,13 +1,13 @@
 /**
  * 系统主页的底部区域，主要放置用户单位信息，服务单位和服务人员信息
  */
-Ext.define('y.main.region.Bottom', {
+Ext.define('Ems.main.region.Bottom', {
 
 			extend : 'Ext.toolbar.Toolbar',
 
 			alias : 'widget.mainbottom',
 
-			uses : ['y.main.ux.ButtonTransparent'],
+			uses : ['Ems.main.ux.ButtonTransparent'],
 
 			defaults : {
 				xtype : 'buttontransparent'

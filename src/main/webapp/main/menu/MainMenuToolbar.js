@@ -1,7 +1,7 @@
 /**
  * 系统的主菜单条，根据MainModel中的数据来生成，可以切换至按钮菜单，菜单树
  */
-Ext.define('y.main.menu.MainMenuToolbar', {
+Ext.define('Ems.main.menu.MainMenuToolbar', {
 			extend : 'Ext.toolbar.Toolbar',
 			alias : 'widget.mainmenutoolbar',
 

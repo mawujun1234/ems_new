@@ -1,9 +1,9 @@
-Ext.define('y.permission.RoleUserGrid',{
+Ext.define('Ems.permission.RoleUserGrid',{
 	extend:'Ext.grid.Panel',
 	requires: [
-	     'y.permission.User',
-	     'y.permission.UserForm',
-	     'y.org.SelPositionUserWindow'
+	     'Ems.permission.User',
+	     'Ems.permission.UserForm',
+	     'Ems.org.SelPositionUserWindow'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -32,7 +32,7 @@ Ext.define('y.permission.RoleUserGrid',{
 			autoSync:false,
 			pageSize:50,
 			autoLoad:false,
-			model: 'y.permission.User',
+			model: 'Ems.permission.User',
 			proxy:{
 				type: 'ajax',
 			    url : Ext.ContextPath+'/user/queryByRole.do',
@@ -152,7 +152,7 @@ Ext.define('y.permission.RoleUserGrid',{
 	onCreateByPosition:function(){
     	var me=this;
     	
-    	var seluserWindow=Ext.create('y.org.SelPositionUserWindow',{
+    	var seluserWindow=Ext.create('Ems.org.SelPositionUserWindow',{
     		listeners:{
     			userdbclick:function(user){
     				Ext.Ajax.request({
@@ -174,7 +174,7 @@ Ext.define('y.permission.RoleUserGrid',{
     },
     onCreateByUser:function(){
     	var me=this;
-    	var seluserWindow=Ext.create('y.permission.SelUserWindow',{
+    	var seluserWindow=Ext.create('Ems.permission.SelUserWindow',{
     		listeners:{
     			userdbclick:function(user){
     				Ext.Ajax.request({
@@ -197,12 +197,12 @@ Ext.define('y.permission.RoleUserGrid',{
     
 	onCreate:function(){
     	var me=this;
-		var child=Ext.create('y.permission.User',{
+		var child=Ext.create('Ems.permission.User',{
 			role_id:window.selected_role.get("id")
 		});
 		child.set("id",null);
 		
-		var formpanel=Ext.create('y.permission.UserForm',{});
+		var formpanel=Ext.create('Ems.permission.UserForm',{});
 		formpanel.loadRecord(child);
 		
 		formpanel.getForm().getRecord().getProxy( ).extraParams={
@@ -234,7 +234,7 @@ Ext.define('y.permission.RoleUserGrid',{
     		return;
     	}
 
-		var formpanel=Ext.create('y.permission.UserForm',{});
+		var formpanel=Ext.create('Ems.permission.UserForm',{});
 		formpanel.loadRecord(node);
 		
     	var win=Ext.create('Ext.window.Window',{

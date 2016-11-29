@@ -1,7 +1,7 @@
-Ext.define('y.permission.MenuGrid',{
+Ext.define('Ems.permission.MenuGrid',{
 	extend:'Ext.grid.Panel',
 	requires: [
-	     'y.permission.Menu'
+	     'Ems.permission.Menu'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -32,7 +32,7 @@ Ext.define('y.permission.MenuGrid',{
 			autoSync:false,
 			pageSize:50,
 			autoLoad:false,
-			model: 'y.permission.Menu',
+			model: 'Ems.permission.Menu',
 			proxy:{
 				type: 'ajax',
 			    url : Ext.ContextPath+'/menu/query.do',
@@ -97,9 +97,9 @@ Ext.define('y.permission.MenuGrid',{
     		return;
     	}
 		
-    	var form=Ext.create('y.permission.MenuForm',{});
+    	var form=Ext.create('Ems.permission.MenuForm',{});
 
-		var child=Ext.create('y.permission.Menu',{
+		var child=Ext.create('Ems.permission.Menu',{
 			parent_id:me.parent_id,
 			menuType:'element'
 		});
@@ -126,7 +126,7 @@ Ext.define('y.permission.MenuGrid',{
      onUpdate:function(){
     	var me=this;
 		
-    	var form=Ext.create('y.permission.MenuForm',{});
+    	var form=Ext.create('Ems.permission.MenuForm',{});
     	
     	var node=me.getSelectionModel( ).getLastSelected();
     	if(node==null){

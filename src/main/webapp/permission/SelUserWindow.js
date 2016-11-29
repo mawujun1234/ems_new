@@ -1,7 +1,7 @@
 /**
  *  co从职位上选择用户
  */
-Ext.define('y.permission.SelUserWindow',{
+Ext.define('Ems.permission.SelUserWindow',{
 	extend:'Ext.window.Window',
 	requires: [
 
@@ -14,7 +14,7 @@ Ext.define('y.permission.SelUserWindow',{
     closeAction:'hide',
     initComponent: function () {
         var me = this;
-        var usergrid=Ext.create('y.permission.UserGridQuery',{
+        var usergrid=Ext.create('Ems.permission.UserGridQuery',{
         	listeners:{
 		    	itemdblclick:function(view, record, item, index, e, eOpts){
 		    		//usergrid.getStore().remove(record);

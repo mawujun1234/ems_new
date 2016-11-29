@@ -1,5 +1,5 @@
 
-Ext.define('y.main.UpdatePwdWindow', {
+Ext.define('Ems.main.UpdatePwdWindow', {
     extend: 'Ext.window.Window',
     title:'修改密码',
     modal:true,

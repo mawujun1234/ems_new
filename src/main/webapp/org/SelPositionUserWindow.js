@@ -1,11 +1,11 @@
 /**
  *  co从职位上选择用户
  */
-Ext.define('y.org.SelPositionUserWindow',{
+Ext.define('Ems.org.SelPositionUserWindow',{
 	extend:'Ext.window.Window',
 	requires: [
-	     'y.org.OrgTree',
-	     'y.org.PositionUserGridQuery'
+	     'Ems.org.OrgTree',
+	     'Ems.org.PositionUserGridQuery'
 	],
 	layout:'border',
     title:'双击选择用户',
@@ -15,14 +15,14 @@ Ext.define('y.org.SelPositionUserWindow',{
     closeAction:'hide',
     initComponent: function () {
         var me = this;
-        var tree=Ext.create('y.org.OrgTree',{
+        var tree=Ext.create('Ems.org.OrgTree',{
 			//title:'选择组织',
 			width:250,
 			split:true,
 			collapsible : true,
 			region:'west'
 		});
-		var usergrid=Ext.create('y.org.PositionUserGridQuery',{
+		var usergrid=Ext.create('Ems.org.PositionUserGridQuery',{
 			//title:'双击选择用户',
 			region:'center',
 			listeners:{

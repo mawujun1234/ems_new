@@ -1,8 +1,8 @@
-Ext.define('y.org.PositionUserGridQuery',{
+Ext.define('Ems.org.PositionUserGridQuery',{
 	extend:'Ext.grid.Panel',
 	requires: [
-	     'y.permission.User',
-	     'y.permission.UserForm'
+	     'Ems.permission.User',
+	     'Ems.permission.UserForm'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -33,7 +33,7 @@ Ext.define('y.org.PositionUserGridQuery',{
 			autoSync:false,
 			pageSize:50,
 			autoLoad:false,
-			model: 'y.permission.User',
+			model: 'Ems.permission.User',
 			proxy:{
 				type: 'ajax',
 			    url : Ext.ContextPath+'/user/queryByPosition.do',
@@ -135,9 +135,9 @@ Ext.define('y.org.PositionUserGridQuery',{
 	onCreate:function(){
     	var me=this;
 		
-    	var formpanel=Ext.create('y.permission.UserForm',{});
+    	var formpanel=Ext.create('Ems.permission.UserForm',{});
 
-		var child=Ext.create('y.permission.User',{
+		var child=Ext.create('Ems.permission.User',{
 
 		});
 		child.set("id",null);
@@ -168,7 +168,7 @@ Ext.define('y.org.PositionUserGridQuery',{
      onUpdate:function(){
     	var me=this;
 		
-    	var form=Ext.create('y.permission.UserForm',{});
+    	var form=Ext.create('Ems.permission.UserForm',{});
     	
     	var node=me.getSelectionModel( ).getLastSelected();
     	if(node==null){

@@ -1,4 +1,4 @@
-Ext.define("y.permission.User",{
+Ext.define("Ems.permission.User",{
 	extend:"Ext.data.Model",
 	fields:[
 		{name:'name',type:'string'},

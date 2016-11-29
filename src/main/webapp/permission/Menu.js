@@ -1,11 +1,11 @@
-Ext.define("y.permission.Menu",{
+Ext.define("Ems.permission.Menu",{
 	extend:"Ext.data.Model",
 	fields:[
 		{name:'name',type:'string'},
 		{name:'code',type:'string'},
 		{name:'menuType',type:'string'},
 		{name:'leaf',type:'string'},
-		{name:'createDate',type:'date', dateFormat: 'Y-m-d H:i:s'},
+		{name:'createDate',type:'string'},
 		{name:'url',type:'string'},
 		{name:'remark',type:'string'},
 		{name:'id',type:'string'},

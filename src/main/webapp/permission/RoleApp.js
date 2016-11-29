@@ -1,10 +1,10 @@
-Ext.require("y.permission.Role");
-Ext.require("y.permission.RoleTree");
-Ext.require("y.permission.RoleForm");
-Ext.require('y.permission.RoleUserGrid');
-Ext.require('y.permission.MenuTreeCheckbox');
+Ext.require("Ems.permission.Role");
+Ext.require("Ems.permission.RoleTree");
+Ext.require("Ems.permission.RoleForm");
+Ext.require('Ems.permission.RoleUserGrid');
+Ext.require('Ems.permission.MenuTreeCheckbox');
 Ext.onReady(function(){
-	var tree=Ext.create('y.permission.RoleTree',{
+	var tree=Ext.create('Ems.permission.RoleTree',{
 		title:'角色管理',
 		width:400,
 		split:true,
@@ -12,13 +12,13 @@ Ext.onReady(function(){
 		region:'west'
 	});
 	
-	var userGrid=Ext.create('y.permission.RoleUserGrid',{
+	var userGrid=Ext.create('Ems.permission.RoleUserGrid',{
 		
 		title:'用户选择'
 	});
 	
 	
-	var menuTreeCheckbox=Ext.create('y.permission.MenuTreeCheckbox',{
+	var menuTreeCheckbox=Ext.create('Ems.permission.MenuTreeCheckbox',{
 		title:'菜单选择'
 	});
 

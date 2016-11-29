@@ -3,7 +3,7 @@
  * 放在grid上面的查询字段，focus的时候变长
  */
 
-Ext.define('y.main.ux.GridSearchField', {
+Ext.define('Ems.main.ux.GridSearchField', {
 			extend : 'Ext.ux.form.SearchField',
 			alias : 'widget.gridsearchfield',
 			focusWidth : 120,

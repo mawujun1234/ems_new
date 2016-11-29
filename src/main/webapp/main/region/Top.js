@@ -2,14 +2,14 @@
 /**
  * 系统主页的顶部区域，主要放置系统名称，菜单，和一些快捷按钮
  */
-Ext.define('y.main.region.Top', {
+Ext.define('Ems.main.region.Top', {
 
 			extend : 'Ext.toolbar.Toolbar',
 
 			alias : 'widget.maintop', // 定义了这个组件的xtype类型为maintop
 
-			uses : ['y.main.ux.ButtonTransparent', 'y.main.menu.ButtonMainMenu',
-					'y.main.menu.SettingMenu'],
+			uses : ['Ems.main.ux.ButtonTransparent', 'Ems.main.menu.ButtonMainMenu',
+					'Ems.main.menu.SettingMenu'],
 
 			defaults : {
 				xtype : 'buttontransparent'
@@ -111,7 +111,7 @@ Ext.define('y.main.region.Top', {
 						text : '修改密码',
 						glyph : 0xf044,
 						handler:function(){
-							var win=Ext.create('y.main.UpdatePwdWindow',{});
+							var win=Ext.create('Ems.main.UpdatePwdWindow',{});
 							win.show();	
 						}
 					}, 

@@ -1,10 +1,10 @@
 /**
  * 显示在顶部的按钮菜单，可以切换至标准菜单，菜单树
  */
-Ext.define('y.main.menu.SettingMenu', {
-			extend : 'y.main.ux.ButtonTransparent',
+Ext.define('Ems.main.menu.SettingMenu', {
+			extend : 'Ems.main.ux.ButtonTransparent',
 			alias : 'widget.settingmenu',
-			uses : ['y.main.menu.Monetary'],
+			uses : ['Ems.main.menu.Monetary'],
 			text : '设置',
 			glyph : 0xf013,
 			tooltip : '偏好设置',
@@ -37,7 +37,7 @@ Ext.define('y.main.menu.SettingMenu', {
 													reference : 'monetary', // 加入了这一句，在改变数据的时候可以触发bind绑定的事件
 													defaultUI : 'default',
 													value : 'tenthousand',
-													items : y.main.menu.Monetary.getMonetaryMenu()
+													items : Ems.main.menu.Monetary.getMonetaryMenu()
 												}]
 									}, {
 										text : '金额单位位置',

@@ -19,7 +19,7 @@ public class GeneratorCode {
 		//这里弄成更加好用的方式，弄成级联的方式，例如getExtjsConfig.set。。。
 		ExtenConfig aa=new ExtenConfig();
 		aa.extjs_treeForm_model=false;
-		aa.extjs_packagePrefix="y";
+		aa.extjs_packagePrefix="Ems";
 		aa.extjs_form_layoutColumns=-1;
 		
 		aa.extjs_grid_createDelUpd_button=true;

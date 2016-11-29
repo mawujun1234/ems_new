@@ -1,8 +1,8 @@
-Ext.define('y.org.PositionUserGrid',{
+Ext.define('Ems.org.PositionUserGrid',{
 	extend:'Ext.grid.Panel',
 	requires: [
-	     'y.permission.User',
-	     'y.permission.UserForm'
+	     'Ems.permission.User',
+	     'Ems.permission.UserForm'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -33,7 +33,7 @@ Ext.define('y.org.PositionUserGrid',{
 			autoSync:false,
 			pageSize:50,
 			autoLoad:false,
-			model: 'y.permission.User',
+			model: 'Ems.permission.User',
 			proxy:{
 				type: 'ajax',
 			    url : Ext.ContextPath+'/user/queryByPosition.do',
@@ -151,7 +151,7 @@ Ext.define('y.org.PositionUserGrid',{
 	onCreateByRole:function(){
     	var me=this;
     	
-    	var seluserWindow=Ext.create('y.org.SelPositionUserWindow',{
+    	var seluserWindow=Ext.create('Ems.org.SelPositionUserWindow',{
     		listeners:{
     			userdbclick:function(user){
     				Ext.Ajax.request({
@@ -174,7 +174,7 @@ Ext.define('y.org.PositionUserGrid',{
     },
     onCreateByUser:function(){
     	var me=this;
-    	var seluserWindow=Ext.create('y.permission.SelUserWindow',{
+    	var seluserWindow=Ext.create('Ems.permission.SelUserWindow',{
     		listeners:{
     			userdbclick:function(user){
     				Ext.Ajax.request({
@@ -198,9 +198,9 @@ Ext.define('y.org.PositionUserGrid',{
 	onCreate:function(){
     	var me=this;
 		
-    	var formpanel=Ext.create('y.permission.UserForm',{});
+    	var formpanel=Ext.create('Ems.permission.UserForm',{});
 
-		var child=Ext.create('y.permission.User',{
+		var child=Ext.create('Ems.permission.User',{
 
 		});
 		child.set("id",null);
@@ -237,7 +237,7 @@ Ext.define('y.org.PositionUserGrid',{
     		return;
     	}
 
-		var formpanel=Ext.create('y.permission.UserForm',{});
+		var formpanel=Ext.create('Ems.permission.UserForm',{});
 		formpanel.loadRecord(node);
 		
     	var win=Ext.create('Ext.window.Window',{

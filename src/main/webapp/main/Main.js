@@ -6,14 +6,14 @@
  * TODO - Replace this content of this view to suite the needs of your
  * application.
  */
-Ext.define('y.main.Main', {
+Ext.define('Ems.main.Main', {
 			extend : 'Ext.container.Container',
 
 			xtype : 'app-main',
 
-			uses : ['y.main.region.Center', 'y.main.region.Top',
-					'y.main.region.Bottom', 'y.main.menu.MainMenuToolbar',
-					'y.main.region.Left' ],
+			uses : ['Ems.main.region.Center', 'Ems.main.region.Top',
+					'Ems.main.region.Bottom', 'Ems.main.menu.MainMenuToolbar',
+					'Ems.main.region.Left' ],
 
 			controller : 'main',
 			// MVVM架构的控制器的名称，会在当前路径中根据‘Main’ + Controller 来确定文件名

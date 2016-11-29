@@ -1,20 +1,20 @@
-Ext.require("y.org.Org");
-Ext.require("y.org.OrgTree");
-Ext.require("y.org.OrgForm");
+Ext.require("Ems.org.Org");
+Ext.require("Ems.org.OrgTree");
+Ext.require("Ems.org.OrgForm");
 Ext.onReady(function(){
-	var tree=Ext.create('y.org.OrgTree',{
+	var tree=Ext.create('Ems.org.OrgTree',{
 		title:'组织维护',
 		width:400,
 		split:true,
 		collapsible : true,
 		region:'west'
 	});
-	var usergrid=Ext.create('y.org.PositionUserGrid',{
+	var usergrid=Ext.create('Ems.org.PositionUserGrid',{
 		title:'用户维护',
 		region:'center'
 	});
 	
-//	var positionStoreGrid=Ext.create("y.org.PositionStoreGrid",{
+//	var positionStoreGrid=Ext.create("Ems.org.PositionStoreGrid",{
 //		title:'仓库权限',
 //		listeners : {
 //			storeSelect : function(record, type) {

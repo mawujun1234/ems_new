@@ -6,7 +6,7 @@
  * TODO - Replace this content of this view to suite the needs of your
  * application.
  */
-Ext.define('y.main.MainController', {
+Ext.define('Ems.main.MainController', {
 			extend : 'Ext.app.ViewController',
 
 			//requires : ['Ext.MessageBox', 'Ext.window.Toast'],

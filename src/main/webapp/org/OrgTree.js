@@ -1,9 +1,9 @@
 /**
  * 包含组织和职位
  */
-Ext.define('y.org.OrgTree', {
+Ext.define('Ems.org.OrgTree', {
     extend: 'Ext.tree.Panel',
-    requires:['y.org.Org'],
+    requires:['Ems.org.Org'],
     displayField:'name',
     readOnly:false,//true表示就不能在上面进行增，删，改
     initComponent: function () {
@@ -12,7 +12,7 @@ Ext.define('y.org.OrgTree', {
         me.store = Ext.create('Ext.data.TreeStore', {
 	       	autoLoad:true,
 	       	nodeParam :'parent_id',//传递到后台的数据，默认是node
-	       	//model:'y.org.Org',
+	       	//model:'Ems.org.Org',
 	       	fields:['id','name','leaf','org_id','remark','type'],
 			root: {
 			    expanded: true,
@@ -211,13 +211,13 @@ Ext.define('y.org.OrgTree', {
     		return;
     	}
 		
-		var child=Ext.create('y.org.Position',{
+		var child=Ext.create('Ems.org.Position',{
 		    'org_id':parent.get("id"),
 		    name:''
 		});
 		child.set("id",null);
 		
-		var formpanel=Ext.create('y.org.PositionForm',{});
+		var formpanel=Ext.create('Ems.org.PositionForm',{});
 		formpanel.loadRecord(child);
 		
     	var win=Ext.create('Ext.window.Window',{
@@ -249,9 +249,9 @@ Ext.define('y.org.OrgTree', {
     		return;
     	}
 //从后台获取这个职位的数据，然后在load到form中
-		var formpanel=Ext.create('y.org.PositionForm',{});
+		var formpanel=Ext.create('Ems.org.PositionForm',{});
 		
-		y.org.Position.load(node.get("id"),{
+		Ems.org.Position.load(node.get("id"),{
 			success:function(record){
 				formpanel.loadRecord(record);
 				var win=Ext.create('Ext.window.Window',{
@@ -311,14 +311,14 @@ Ext.define('y.org.OrgTree', {
     		return;
     	}
 		
-		var child=Ext.create('y.org.Org',{
+		var child=Ext.create('Ems.org.Org',{
 		    'parent_id':parent.get("id"),
 		    state:'valid',
 		    'dim':me.getStore().getProxy().extraParams.dim
 		});
 		child.set("id",null);
 		
-		var formpanel=Ext.create('y.org.OrgForm',{});
+		var formpanel=Ext.create('Ems.org.OrgForm',{});
 		formpanel.loadRecord(child);
 		
     	var win=Ext.create('Ext.window.Window',{
@@ -349,9 +349,9 @@ Ext.define('y.org.OrgTree', {
     	if(node.get("type")=='position'){
     		return;
     	}
-    	y.org.Org.load(node.get("id"), {
+    	Ems.org.Org.load(node.get("id"), {
 		    success: function(org) {
-		        var formpanel=Ext.create('y.org.OrgForm',{});
+		        var formpanel=Ext.create('Ems.org.OrgForm',{});
 				formpanel.loadRecord(org);
 				
 		    	var win=Ext.create('Ext.window.Window',{
@@ -433,7 +433,7 @@ Ext.define('y.org.OrgTree', {
 			Ext.Msg.alert("消息","职位不能更改隶属关系！");
     		return;
     	}
-    	var orgTree=Ext.create('y.org.OrgOnlyTreeQuery',{
+    	var orgTree=Ext.create('Ems.org.OrgOnlyTreeQuery',{
     		exclude_id:node.get("id"),//这个节点，及子节点不显示，防止循环嵌套
     		listeners:{
     			itemdblclick:function( view , newparent , item , index , e , eOpts ) {

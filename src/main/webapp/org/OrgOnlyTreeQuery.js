@@ -1,9 +1,9 @@
 /**
   * 只能选择组织单元
  */
-Ext.define('y.org.OrgOnlyTreeQuery', {
+Ext.define('Ems.org.OrgOnlyTreeQuery', {
     extend: 'Ext.tree.Panel',
-    requires:['y.org.Org'],
+    requires:['Ems.org.Org'],
     displayField:'name',
     exclude_id:null,//这个节点，及子节点不显示，防止循环嵌套
     initComponent: function () {
@@ -12,7 +12,7 @@ Ext.define('y.org.OrgOnlyTreeQuery', {
         me.store = Ext.create('Ext.data.TreeStore', {
 	       	autoLoad:true,
 	       	nodeParam :'parent_id',//传递到后台的数据，默认是node
-	       	//model:'y.org.Org',
+	       	//model:'Ems.org.Org',
 	       	fields:['id','name','leaf','orgno','remark','type'],
 			root: {
 			    expanded: true,

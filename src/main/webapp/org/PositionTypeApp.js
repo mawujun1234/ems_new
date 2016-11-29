@@ -1,8 +1,8 @@
-Ext.require("y.org.PositionType");
-Ext.require("y.org.PositionTypeGrid");
-Ext.require("y.org.PositionTypeForm");
+Ext.require("Ems.org.PositionType");
+Ext.require("Ems.org.PositionTypeGrid");
+Ext.require("Ems.org.PositionTypeForm");
 Ext.onReady(function(){
-	var grid=Ext.create('y.org.PositionTypeGrid',{
+	var grid=Ext.create('Ems.org.PositionTypeGrid',{
 		region:'center'
 	});
 	

@@ -1,7 +1,7 @@
-Ext.define('y.org.PositionTypeGrid',{
+Ext.define('Ems.org.PositionTypeGrid',{
 	extend:'Ext.grid.Panel',
 	requires: [
-	     'y.org.PositionType'
+	     'Ems.org.PositionType'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -23,7 +23,7 @@ Ext.define('y.org.PositionTypeGrid',{
 			autoSync:false,
 			pageSize:50,
 			autoLoad:true,
-			model: 'y.org.PositionType',
+			model: 'Ems.org.PositionType',
 			proxy:{
 				type: 'ajax',
 			    url : Ext.ContextPath+'/positionType/query.do',
@@ -89,12 +89,12 @@ Ext.define('y.org.PositionTypeGrid',{
 	},
 	onCreate:function(){
     	var me=this;
-		var child=Ext.create('y.org.PositionType',{
+		var child=Ext.create('Ems.org.PositionType',{
 			canNotDel:false
 		});
 		child.set("id",null);
 		
-		var formpanel=Ext.create('y.org.PositionTypeForm',{});
+		var formpanel=Ext.create('Ems.org.PositionTypeForm',{});
 		formpanel.loadRecord(child);
 		
     	var win=Ext.create('Ext.window.Window',{
@@ -123,7 +123,7 @@ Ext.define('y.org.PositionTypeGrid',{
     		return;
     	}
 
-		var formpanel=Ext.create('y.org.PositionTypeForm',{});
+		var formpanel=Ext.create('Ems.org.PositionTypeForm',{});
 		formpanel.loadRecord(node);
 		
     	var win=Ext.create('Ext.window.Window',{

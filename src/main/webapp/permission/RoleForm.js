@@ -1,7 +1,7 @@
-Ext.define('y.permission.RoleForm',{
+Ext.define('Ems.permission.RoleForm',{
 	extend:'Ext.form.Panel',
 	requires: [
-	     'y.permission.Role'
+	     'Ems.permission.Role'
 	],
 	
     frame: true,

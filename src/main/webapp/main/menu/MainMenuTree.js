@@ -1,7 +1,7 @@
 /**
  * 树状菜单，显示在主界面的左边
  */
-Ext.define('y.main.menu.MainMenuTree', {
+Ext.define('Ems.main.menu.MainMenuTree', {
 			extend : 'Ext.tree.Panel',
 			alias : 'widget.mainmenutree',
 			title : '系统菜单',

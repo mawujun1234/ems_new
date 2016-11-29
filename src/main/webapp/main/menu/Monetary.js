@@ -2,7 +2,7 @@
  * 金额单位的管理类
  */
 
-Ext.define('y.main.menu.Monetary', {
+Ext.define('Ems.main.menu.Monetary', {
 			statics : {
 				values : null,
 				getAllMonetary : function() {

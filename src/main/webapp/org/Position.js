@@ -1,4 +1,4 @@
-Ext.define("y.org.Position",{
+Ext.define("Ems.org.Position",{
 	extend:"Ext.data.Model",
 	fields:[
 		{name:'name',type:'string'},

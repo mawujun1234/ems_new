@@ -1,7 +1,7 @@
-Ext.define('y.permission.PositionOrgAccessGrid',{
+Ext.define('Ems.permission.PositionOrgAccessGrid',{
 	extend:'Ext.grid.Panel',
 	requires: [
-	     'y.org.Org'
+	     'Ems.org.Org'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -58,7 +58,7 @@ Ext.define('y.permission.PositionOrgAccessGrid',{
 			autoSync:false,
 			pageSize:50,
 			autoLoad:false,
-			model: 'y.org.Org',
+			model: 'Ems.org.Org',
 			proxy:{
 				type: 'ajax',
 			    url : Ext.ContextPath+'/position/querySelectOrgs.do',

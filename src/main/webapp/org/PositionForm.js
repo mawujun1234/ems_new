@@ -1,7 +1,7 @@
-Ext.define('y.org.PositionForm',{
+Ext.define('Ems.org.PositionForm',{
 	extend:'Ext.form.Panel',
 	requires: [
-	     'y.org.Position'
+	     'Ems.org.Position'
 	],
 	
     frame: true,

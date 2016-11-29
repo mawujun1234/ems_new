@@ -1,4 +1,4 @@
-Ext.define("y.permission.Role",{
+Ext.define("Ems.permission.Role",{
 	extend:"Ext.data.Model",
 	fields:[
 		{name:'roleType',type:'string'},

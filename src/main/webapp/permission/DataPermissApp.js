@@ -1,8 +1,8 @@
-Ext.require("y.org.Org");
-Ext.require("y.org.OrgTree");
-Ext.require("y.org.OrgForm");
+Ext.require("Ems.org.Org");
+Ext.require("Ems.org.OrgTree");
+Ext.require("Ems.org.OrgForm");
 Ext.onReady(function(){
-	var tree=Ext.create('y.org.OrgTree',{
+	var tree=Ext.create('Ems.org.OrgTree',{
 		title:'组织维护',
 		width:400,
 		split:true,
@@ -10,12 +10,12 @@ Ext.onReady(function(){
 		readOnly:false,
 		region:'west'
 	});
-	var usergrid=Ext.create('y.org.PositionUserGrid',{
+	var usergrid=Ext.create('Ems.org.PositionUserGrid',{
 		title:'拥有的用户',
 		region:'center'
 	});
 	
-	var positionStoreGrid=Ext.create("y.permission.PositionOrgAccessGrid",{
+	var positionStoreGrid=Ext.create("Ems.permission.PositionOrgAccessGrid",{
 		title:'仓库权限',
 		listeners : {
 			orgSelect : function(record, type) {
@@ -55,7 +55,7 @@ Ext.onReady(function(){
 		}
 	});
 	
-	var positionWorkunitGrid=Ext.create("y.permission.PositionOrgAccessGrid",{
+	var positionWorkunitGrid=Ext.create("Ems.permission.PositionOrgAccessGrid",{
 		title:'作业单位权限',
 		
 		listeners : {

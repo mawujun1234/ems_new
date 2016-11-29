@@ -1,8 +1,8 @@
 /**
  * 显示在顶部的按钮菜单，可以切换至标准菜单，菜单树
  */
-Ext.define('y.main.menu.ButtonMainMenu', {
-			extend : 'y.main.ux.ButtonTransparent',
+Ext.define('Ems.main.menu.ButtonMainMenu', {
+			extend : 'Ems.main.ux.ButtonTransparent',
 			alias : 'widget.buttonmainmenu',
 
 			text : '菜单',
