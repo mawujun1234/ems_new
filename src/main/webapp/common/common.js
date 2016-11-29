@@ -36,9 +36,9 @@ Ext.Ajax.on({
 				break;
 			default :
 				var data = Ext.decode(text);
-				if (data && data.errorMsg) {
+				if (data && data.msg) {
 					//top.Ext.MessageBox.alert("错误", "加载数据时发生错误<br/>错误码:"+ status + "<br/>错误信息:" + data.message);
-					top.Ext.MessageBox.alert("错误",  data.errorMsg);
+					top.Ext.MessageBox.alert("错误",  data.msg);
 				} else {
 					top.Ext.MessageBox.alert("错误",  "操作失败，请稍候重试!如果多次操作失败，请联系管理员!");
 				}

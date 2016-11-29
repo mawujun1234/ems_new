@@ -1,8 +1,8 @@
 insert into t_role(id,name,roletype) values('admin','admin','role');
-insert into t_user(id,loginname,name,pwd,cannotdel) values('admin','admin','admin','admin',1);
+insert into t_user(id,loginname,name,pwd,cannotdel,state) values('admin','admin','admin','admin',1,'valid');
 insert into t_role_user(user_id,role_id) values('admin','admin');
 --菜单
-Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,'menu','基础信息',null,null,0,null,0);
+Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,'menu','系统管理',null,null,0,null,0);
 Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('539ea37c-a286-4ae2-8a0b-cb4dab321515',null,'menu','菜单管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/MenuApp.jsp',1);
 Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('e35d2b7f-58c2-4e61-a50d-bc6112779b4c',null,'menu','角色管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/RoleApp.jsp',1);
 Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('a124a5f1-70a3-4dba-a014-68385edd922b',null,'menu','组织职位管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/org/OrgApp.jsp',1);

@@ -4,7 +4,7 @@ Ext.define("y.permission.Menu",{
 		{name:'name',type:'string'},
 		{name:'code',type:'string'},
 		{name:'menuType',type:'string'},
-		{name:'leaf',type:'bool'},
+		{name:'leaf',type:'string'},
 		{name:'createDate',type:'date', dateFormat: 'Y-m-d H:i:s'},
 		{name:'url',type:'string'},
 		{name:'remark',type:'string'},

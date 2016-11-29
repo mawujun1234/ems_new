@@ -16,9 +16,9 @@ Ext.define('y.permission.PositionOrgAccessGrid',{
       var me = this;
       me.columns=[
       	{xtype: 'rownumberer'},
-		{dataIndex:'org_code',header:'仓库编码'
+		{dataIndex:'org_code',header:'编码'
         },
-		{dataIndex:'org_name',header:'仓库名称'
+		{dataIndex:'org_name',header:'名称'
         },
         { xtype: 'checkcolumn', text: '查看', dataIndex: 'look' ,
         	listeners:{

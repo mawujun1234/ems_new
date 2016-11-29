@@ -5,6 +5,7 @@ import java.util.Date;
 public class UserVO extends User {
 	
 	private Date loginDate;
+	private String ipAddr;//登录的IP地址
 	
 	//private List<PubCode> brandes;//可访问的品牌
 	//private List<String> classes;//可访问的大类
@@ -50,6 +51,14 @@ public class UserVO extends User {
 
 	public void setLoginDate(Date loginDate) {
 		this.loginDate = loginDate;
+	}
+
+	public String getIpAddr() {
+		return ipAddr;
+	}
+
+	public void setIpAddr(String ipAddr) {
+		this.ipAddr = ipAddr;
 	}
 
 }

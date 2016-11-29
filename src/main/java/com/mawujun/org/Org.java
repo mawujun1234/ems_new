@@ -49,7 +49,12 @@ public class Org {
 	@FieldDefine(title="排序",sort=4,hidden=true)	
 	private Integer sort;
 	
-	
+	public String getState_name() {
+		if(state==null){
+			return "";
+		}
+		return state.getName();
+	}
 
 	
 	

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.baseinfo.EquipmentProdRepository">
+
+	<select id="queryProdGrid" resultType="com.mawujun.baseinfo.EquipmentProdVO" parameterType="map">
+    	SELECT a.*,b.name as brand_name
+	    FROM ems_equipmentprod a,ems_brand b 
+		where a.brand_id=b.id
+		<if test="style!=null and style !=''">
+		and a.style  like #{style}
+		</if>
+		<if test="status!=null">
+		and a.status=#{status}
+		</if>
+		<if test="subtype_id!=null">
+		and a.subtype_id=#{subtype_id}
+		</if>
+		<if test="parent_id!=null">
+		and a.parent_id=#{parent_id}
+		</if>
+		<if test="parent_id==null">
+		and a.parent_id is null
+		</if>
+		order by a.id
+    </select>
+    
+    <!-- 在答应条码的时候获取 套件下面的零件 -->
+    <select id="queryProd_tj_children" resultType="com.mawujun.baseinfo.EquipmentProd" >
+    	SELECT a.*
+	    FROM ems_equipmentprod a
+	    where a.parent_id=#{parent_id}
+	    order by a.id
+    </select>
+    
+    <!-- 判断品名是否已经在设备中被使用了，如果被使用了表明被打印了，而且如果型号变了，这样就不能修改型号了
+    <select id="checkProd_used_in_equipment" resultType="String">
+    	select distinct style from ems_equipment
+    	where prod_id=#{prod_id}
+    </select>
+    -->
+    <!-- 当更新品名的嘶吼，如果发现型号不一致了，就不准更新 -->
+    <select id="get_style_by_prod_id" resultType="String">
+    	select style from ems_equipmentprod
+    	where id=#{prod_id}
+    </select>
+    <!-- 当设备入库的时候，就把该设备所在的品名的型号锁定，表示该品名的型号不能修改了 -->
+    <update id="update_lock_style" >
+    	update ems_equipmentprod set lock_style=#{lock_style} where id=#{prod_id}
+    </update>
+    
+    <select id="getEquipmentProdVO" resultType="com.mawujun.baseinfo.EquipmentProdVO">
+    	select a.*,b.name as subtype_name,c.name as brand_name from ems_equipmentprod a,ems_equipmentsubtype b,ems_brand c
+        where a.subtype_id=b.id and a.brand_id=c.id  and a.id=#{prod_id}
+    </select>
+  
+</mapper>
+

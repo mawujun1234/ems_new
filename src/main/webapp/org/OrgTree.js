@@ -146,11 +146,11 @@ Ext.define('y.org.OrgTree', {
 		
 		var updateParentOrg = new Ext.Action({
 		    text: '组织隶属关系调整',
-		    itemId:'destroy',
+		    itemId:'updateParentOrg',
 		    handler: function(){
 		    	me.updateParentOrg();    
 		    },
-		    iconCls: 'icon-trash'
+		    iconCls: 'icon-random'
 		});
 		actions.push(updateParentOrg);
 		
@@ -280,6 +280,7 @@ Ext.define('y.org.OrgTree', {
 			return;
 		}
 		if(node.get("type")!='position'){
+			Ext.Msg.alert("消息","职位不能通过这个功能删除!");
     		return;
     	}
 		if(node.isRoot()){
@@ -387,6 +388,7 @@ Ext.define('y.org.OrgTree', {
 			return;
 		}
 		if(node.get("type")=='position'){
+			Ext.Msg.alert("消息","组织单元不能通过这个功能删除!");
     		return;
     	}
 		var parent=node.parentNode;

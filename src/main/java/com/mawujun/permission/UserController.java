@@ -81,7 +81,7 @@ public class UserController {
             	 successUrl="/main/index.jsp";
              }
              model.addAttribute("success", true);
-            //ShiroUtils.getAuthenticationInfo().setIpAddr(getIpAddr(request));
+             ShiroUtils.getAuthenticationInfo().setIpAddr(getIpAddr(request));
              
              
              //显示调用这个，来初始化ShiroAuthorizingRealm中的doGetAuthorizationInfo方法，来获取用户可以访问的资源,否则将不会调用doGetAuthorizationInfo
@@ -300,13 +300,13 @@ public class UserController {
 	@ResponseBody
 	public String addToRole(String user_id,String role_id) {
 		userService.addToRole(user_id,role_id);
-		return user_id;
+		return "{success:true}";
 	}
 	@RequestMapping("/user/deleteFromRole.do")
 	@ResponseBody
 	public String deleteFromRole(String user_id,String role_id) {
 		userService.deleteFromRole(user_id,role_id);
-		return user_id;
+		return "{success:true}";
 	}
 	/**
 	 * 把用户添加到职位上
@@ -318,13 +318,13 @@ public class UserController {
 	@ResponseBody
 	public String addToPosition(String user_id,String position_id,String org_id) {
 		userService.addToPosition(user_id,position_id,org_id);
-		return user_id;
+		return "{success:true}";
 	}
 	@RequestMapping("/user/deleteFromPosition.do")
 	@ResponseBody
 	public String deleteFromPosition(String user_id,String position_id,String org_id) {
 		userService.deleteFromPosition(user_id,position_id,org_id);
-		return user_id;
+		return "{success:true}";
 	}
 	/**
 	 * 用于在角色，职位上新建用户的时候，同时新建用户，同时和角色，职位建立关系

@@ -43,6 +43,21 @@ Ext.define('y.permission.UserForm',{
             blankText:"不允许为空",
 	        xtype:'textfield'
 	    },
+	    {
+	        fieldLabel: '电话',
+	        name: 'phone',
+	        xtype:'textfield'
+	    },
+	    {
+	        fieldLabel: '手机',
+	        name: 'mobile',
+	        xtype:'textfield'
+	    },
+	    {
+	        fieldLabel: '邮件',
+	        name: 'email',
+	        xtype:'textfield'
+	    },
 		{
 	        fieldLabel: '备注',
 	        name: 'remark',
@@ -51,6 +66,11 @@ Ext.define('y.permission.UserForm',{
 		{
 	        fieldLabel: 'id',
 	        name: 'id',
+	        xtype:'hiddenfield'
+	    },
+	    {
+	        fieldLabel: 'state',
+	        name: 'state',
 	        xtype:'hiddenfield'
 	    }
 	    ,{

@@ -15,7 +15,9 @@ public class GeneratorM {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		GeneratorMT generatorMT=new GeneratorMT();
-		generatorMT.generateM("com.mawujun","/Users/mawujun/Documents/workspace_module/ems_new/src/main/java","com.mawujun.utils");
+		//System.out.println(generatorMT.getClass().getResource("/").getPath());
+		generatorMT.generateM("com.mawujun",generatorMT.getClass().getResource("/").getPath()+"../../src/main/java","com.mawujun.utils");
+		//generatorMT.generateM("com.mawujun","/Users/mawujun/Documents/workspace_module/ems_new/src/main/java","com.mawujun.utils");
 	}
 
 }

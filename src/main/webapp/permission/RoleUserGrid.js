@@ -16,7 +16,13 @@ Ext.define('y.permission.RoleUserGrid',{
         },
 		{dataIndex:'loginName',header:'登录名'
         },
-		{dataIndex:'pwd',header:'密码'
+		{dataIndex:'state_name',header:'状态'
+        },
+        {dataIndex:'phone',header:'电话'
+        },
+        {dataIndex:'mobile',header:'手机'
+        },
+        {dataIndex:'email',header:'邮件'
         },
 		{dataIndex:'remark',header:'备注'
         }
@@ -112,6 +118,14 @@ Ext.define('y.permission.RoleUserGrid',{
 					
 			    },
 			   iconCls: 'icon-plus'
+			},{
+			    text: '更新',
+			    itemId:'update',
+			    handler: function(){
+			    	me.onUpdate();
+					
+			    },
+			    iconCls: 'icon-edit'
 			},
 				{
 			    text: '删除',
@@ -211,7 +225,29 @@ Ext.define('y.permission.RoleUserGrid',{
     	});
     	win.show();
     },
-    
+    onUpdate:function(){
+    	var me=this;
+
+    	var node=me.getSelectionModel( ).getLastSelected();
+    	if(node==null){
+    		Ext.Msg.alert("提醒","请选择一行数据!");
+    		return;
+    	}
+
+		var formpanel=Ext.create('y.permission.UserForm',{});
+		formpanel.loadRecord(node);
+		
+    	var win=Ext.create('Ext.window.Window',{
+    		layout:'fit',
+    		title:'更新',
+    		modal:true,
+    		width:400,
+    		height:300,
+    		closeAction:'hide',
+    		items:[formpanel]
+    	});
+    	win.show();
+    },
     onDelete:function(){
     	var me=this;
     	var node=me.getSelectionModel( ).getLastSelected( );

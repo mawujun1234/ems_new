@@ -10,7 +10,7 @@ public enum State {
 	valid("有效"),invalid("无效");
 	
 	private String name;
-	State(String name){
+	State(String name) {
 		this.name=name;
 	}
 

@@ -47,7 +47,7 @@ public class MenuService extends AbstractService<Menu, String>{
 	public void delete(Menu entity) {
 		//删除菜单角色的关联关系
 		roleMenuRepository.deleteBatch(Cnd.delete().andEquals(M.RoleMenu.menu.id, entity.getId()));
-		
+		this.getRepository().delete(entity);
 		//当父节点没有子节点的时候，修改父节点为叶子节点
 		if(entity.getParent_id()!=null){
 			Integer count=menuRepository.queryCount(Cnd.count().andEquals(M.Menu.parent_id, entity.getParent_id()));
@@ -57,7 +57,7 @@ public class MenuService extends AbstractService<Menu, String>{
 				menuRepository.update(parent);
 			}
 		}
-		this.getRepository().delete(entity);
+		
 	}
 	
 	

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.baseinfo.PoleRepository">
+
+	<select id="queryPage" resultType="com.mawujun.baseinfo.PoleVO" parameterType="map">
+    	SELECT a.*,b.name as project_name
+	    FROM ems_pole a,ems_project b
+	    where a.project_id=b.id and customer_id=#{customer_id}
+	    <if test="filterContainArea==true">
+	    	and workunit_id is null
+	    </if>
+	    <if test="nameORcode!=null and nameORcode!=''">
+	    	and (lower(a.name) like lower('%${nameORcode}%') or lower(a.code) like lower('%${nameORcode}%'))
+	    </if>
+	    order by code
+    </select>
+
+    
+	<!-- 查询某个杆位下的所有设备 -->
+	<select id="queryEquipments" resultType="com.mawujun.baseinfo.EquipmentVO" >
+    	select a.*,b.name as subtype_name,c.name as prod_name,c.spec as prod_spec,d.name as brand_name,e.name as supplier_name,g.quality_month as prod_quality_month
+    	from ems_equipment a
+		inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		inner join ems_equipment_pole f on a.ecode=f.ecode
+		inner join ems_orderlist g on a.orderlist_id=g.id
+		where f.pole_id=#{id}
+    </select>
+    
+    <!-- 查询在杆位上的设备数量-->
+	<select id="query_count_equipment_in_pole" resultType="int">
+    	select count(ecode) from ems_equipment_pole where  pole_id=#{pole_id}
+    </select>
+   
+       <resultMap type="com.mawujun.baseinfo.PoleVO" id="poleMap">
+     	<id property="id" column="id"/>
+    	<result property="code" column="code"/>
+    	<result property="name" column="name"/>
+    	<result property="province" column="province"/>
+    	<result property="city" column="city"/>
+    	<result property="area" column="area"/>
+    	<result property="address" column="address"/>
+    	<result property="status" column="status"/>
+    	<result property="area_name" column="area_name"/>
+    	<result property="customer_name" column="customer_name"/>
+    	<result property="workunit_name" column="workunit_name"/>
+    	<collection property="equipments" ofType="com.mawujun.baseinfo.EquipmentVO">  
+            <id property="ecode" column="ecode"/>
+		   <result property="subtype_name" column="subtype_name"/>
+		   <result property="prod_name" column="prod_name"/>
+		   <result property="prod_spec" column="prod_spec"/>
+		   <result property="brand_name" column="brand_name"/>
+		   <result property="supplier_name" column="supplier_name"/>
+		   <result property="style" column="style"/>
+		   <result property="last_install_date" column="last_install_date"/>
+       </collection>  
+    </resultMap>
+    <!-- 查询某个客户下所有的点位 机器点位上的设备信息 -->
+    <select id="queryPolesAndEquipments" resultMap="poleMap" parameterType="string">
+    	SELECT a.*,b.ecode,b.style,b.last_install_date,c.name as subtype_name,d.name as prod_name,d.spec as prod_spec,e.name as brand_name,f.name as supplier_name
+      FROM (select a.*,b.name  as customer_name 
+           from ems_pole a,ems_customer b where a.customer_id=b.id
+              and a.customer_id=#{customer_id})a 
+      left join ems_equipment_pole g on a.id=g.pole_id
+      left join ems_equipment b on g.ecode=b.ecode  
+      left join ems_equipmentsubtype c on b.subtype_id =c.id
+      left join ems_equipmentprod d on b.prod_id=d.id
+      left join ems_brand e on b.brand_id=e.id
+      left join ems_supplier f on b.supplier_id=f.id
+		order by a.code asc
+    </select>
+    
+    
+    
+    <!-- 查询所有还没有经纬度设置过的点位，在初始化经纬度的时候用的 -->
+    <sql id="queryPoles4Map_where">
+    	<if test="customer_0or1_id!=null and customer_0or1_id!=''">
+    		and a.customer_id in (${customer_0or1_id})
+    	</if>
+    	<if test="customer_2_id!=null and customer_2_id!='' and (customer_0or1_id==null or customer_0or1_id=='')">
+    		and exists (select 1 from ems_customer c where a.customer_id=c.id and c.parent_id=#{customer_2_id})
+    	</if>
+    	<if test="workunit_id!=null and workunit_id!=''">
+    		and a.workunit_id=#{workunit_id}
+    	</if>
+    </sql>
+    <select id="queryNoLngLatPole" resultType="com.mawujun.baseinfo.Pole">
+    	select * from ems_pole a 
+    	where   (a.longitude is null or a.latitude is null)
+    	<include refid="queryPoles4Map_where"></include>
+    </select>
+     <select id="queryNoLngLatPole_count" resultType="int">
+    	select count(a.id) from ems_pole a
+    	where  (a.longitude is null or a.latitude is null)
+    	<include refid="queryPoles4Map_where"></include>
+    </select>
+    <!-- 更新点位的经纬度 -->
+    <update id="updateCoordes">
+    	update ems_pole set longitude=#{longitude} , latitude=#{latitude} where id=#{pole_id}
+    </update>
+    <!-- 获取要在地图上显示的点位 -->
+    <select id="queryPoles4Map" resultType="com.mawujun.baseinfo.Pole"  parameterType="map">
+    	select a.* from ems_pole a
+		where 1=1
+    	<include refid="queryPoles4Map_where"></include>
+    	and a.longitude is not null and a.latitude is not null
+    </select>
+    <!--在地图上查询所有损坏状态下的点位 -->
+    <select id="queryBrokenPoles" resultType="com.mawujun.baseinfo.Pole"  parameterType="map">
+    	select a.* from ems_pole a 
+		where a.status='hitch'
+    </select>
+     <!-- 获取地址,在更新pole用的，用来判断点位的地址 有没有变化 
+    <select id="geetFullAddress" resultType="com.mawujun.baseinfo.Pole">
+    	select * from ems_pole where id=#{pole_id}
+    </select>-->
+    
+    <!-- 在地图中导入excel初始化点位经纬度的时候 ,更新原始的经纬度,只更新经纬度有变化的customer_2-->
+    <update id="updateOrginLngLatByPoleCode">
+    	update ems_pole a set longitude_orgin=#{longitude},latitude_orgin=#{latitude},lngLatIsTrans='N' 
+    	where (longitude_orgin is null or longitude_orgin!=#{longitude} or latitude_orgin is null or latitude_orgin!=#{latitude}) and code=#{code}
+    	and exists (select 1 from ems_customer b where a.customer_id=b.id and b.parent_id=#{customer_2} )
+    	
+    </update>
+    <!-- 获取所有经纬度还没有转换过的点位 -->
+    <select id="queryNoTransformPoles" resultType="com.mawujun.baseinfo.Pole"  parameterType="map">
+    	select a.id,a.code,a.longitude_orgin,a.latitude_orgin from ems_pole a 
+		where lngLatIsTrans='N' and longitude_orgin is not null and latitude_orgin is not null
+    </select>
+    <!-- 把原始的经纬度转换成百度的经纬度 -->
+    <update id="updateLngLatByPoleCode">
+    	update ems_pole set longitude=#{longitude},latitude=#{latitude},lngLatIsTrans='Y' where code=#{code} 
+    </update>
+</mapper>
+

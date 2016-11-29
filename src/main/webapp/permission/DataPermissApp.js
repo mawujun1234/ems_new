@@ -7,7 +7,7 @@ Ext.onReady(function(){
 		width:400,
 		split:true,
 		collapsible : true,
-		readOnly:true,
+		readOnly:false,
 		region:'west'
 	});
 	var usergrid=Ext.create('y.org.PositionUserGrid',{

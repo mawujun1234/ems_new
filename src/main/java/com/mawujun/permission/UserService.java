@@ -110,7 +110,7 @@ public class UserService extends AbstractService<User, String> {
 		userRoleRepository.deleteBatch(Cnd.delete().andEquals(M.RoleUser.user.id, user_p.getId()));
 		positionOrgUserRepository.deleteBatch(Cnd.delete().andEquals(M.PositionOrgUser.user.id, user_p.getId()));
 		User user=this.getRepository().get(user_p.getId());
-		if(user.getCanNotDel()==true){
+		if(user.getCanNotDel()!=null && user.getCanNotDel()==true){
 			throw new BusinessException("该用户不能删除！");
 		}
 		this.getRepository().delete(user);

@@ -16,7 +16,15 @@ Ext.define('y.permission.UserGridQuery',{
         },
 		{dataIndex:'loginName',header:'登录名'
         },
-		{dataIndex:'pwd',header:'密码'
+//		{dataIndex:'pwd',header:'密码'
+//        },
+        {dataIndex:'state_name',header:'状态'
+        },
+        {dataIndex:'phone',header:'电话'
+        },
+        {dataIndex:'mobile',header:'手机'
+        },
+        {dataIndex:'email',header:'邮件'
         },
 		{dataIndex:'remark',header:'备注'
         }

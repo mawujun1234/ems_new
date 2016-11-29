@@ -6,6 +6,11 @@ Ext.define("y.permission.User",{
 		{name:'pwd',type:'string'},
 		{name:'canNotDel',type:'string'},
 		{name:'remark',type:'string'},
+		{name:'phone',type:'string'},
+		{name:'mobile',type:'string'},
+		{name:'email',type:'string'},
+		{name:'state',type:'string'},
+		{name:'state_name',type:'string'},
 		{name:'id',type:'string'}
 	],
 	proxy:{
