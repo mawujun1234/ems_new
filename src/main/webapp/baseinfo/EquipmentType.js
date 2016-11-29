@@ -4,7 +4,7 @@ Ext.define("Ems.baseinfo.EquipmentType",{
 	fields:[
 		{name:'id',type:'string'},
 		//{name:'levl',type:'int'},
-		{name:'status',type:'bool'},
+		{name:'status',type:'string'},
 		{name:'name',type:'string'},
 		{name:'text',type:'string'},
 		//{name:'unit',type:'string'},
@@ -20,7 +20,22 @@ Ext.define("Ems.baseinfo.EquipmentType",{
 		
 		{name:'status_name',type:'String'}
 		//{name:'brand_name',type:'string'}
-	],
-	associations:[
 	]
+//	proxy:{
+//		type:'ajax',
+//		actionMethods: { read: 'POST' },
+//		timeout :600000,
+//		headers:{ 'Accept':'application/json;'},
+//		writer:{
+//			type:'json',
+//			writeAllFields:true
+//		},
+//		api:{
+//			read:Ext.ContextPath+'/equipmentType/query.do',
+//			load : Ext.ContextPath+'/equipmentType/load.do',
+//			create:Ext.ContextPath+'/equipmentType/create.do',
+//			update:Ext.ContextPath+'/equipmentType/update.do',
+//			destroy:Ext.ContextPath+'/equipmentType/destroy.do'
+//		}
+//	}
 });

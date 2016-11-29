@@ -4,7 +4,7 @@
 String extjscontextPath=request.getContextPath();
 String ip=request.getRemoteAddr();
 String extjs="ext-all.js";
-if("localhost".equals(ip) ||"127.0.0.1".equals(ip)){
+if("localhost".equals(ip) ||"127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)){
 	extjs="ext-all-debug.js";
 } 
 
@@ -45,12 +45,12 @@ String aa=requestURI.replaceAll(contextPath+"/", "/");
 
 
 <script type="text/javascript">
-
+//alert('<%=ip%>');
 Ext.Loader.setConfig({
 	enabled: true,
 	paths:{
 		'Ems':'..',
-		//'y':'.',
+		//'Ems':'.',
 		'Ext.ux':'../ext6/packages/ux/classic/src'
 		//'MyDesktop':'.'
 	}

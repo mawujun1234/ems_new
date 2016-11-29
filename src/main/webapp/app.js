@@ -3,7 +3,7 @@
 //
 //    extend: 'Ext.app.Application',//'app.Application',
 //    
-//    autoCreateViewport: 'y.main.Main'
+//    autoCreateViewport: 'Ems.main.Main'
 //	
 //    //-------------------------------------------------------------------------
 //    // Most customizations should be made to app.Application. If you need to
@@ -11,17 +11,17 @@
 //    // of merge conflicts when upgrading to new versions of Sencha Cmd.
 //    //-------------------------------------------------------------------------
 //});
-Ext.require('y.main.Main');
-Ext.require('y.main.Module');
+Ext.require('Ems.main.Main');
+Ext.require('Ems.main.Module');
 Ext.require('Ext.ux.TabReorderer');
 Ext.require('Ext.ux.TabCloseMenu');
-Ext.require('y.main.MainController');
-Ext.require('y.main.MainViewModel');
+Ext.require('Ems.main.MainController');
+Ext.require('Ems.main.MainViewModel');
 Ext.onReady(function(){
 
 		
 		
-	var main=Ext.create("y.main.Main",{});
+	var main=Ext.create("Ems.main.Main",{});
 	var viewPort=Ext.create('Ext.container.Viewport',{
 		layout:'fit',
 		items:[main]
