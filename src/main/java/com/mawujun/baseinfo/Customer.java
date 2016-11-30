@@ -16,7 +16,7 @@ public class Customer extends UUIDEntity {
 	private String parent_id;
 	@Column(length=100)
 	private String memo;
-	@org.hibernate.annotations.Type(type="yes_no")
+	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean status;
 	
 	

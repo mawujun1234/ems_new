@@ -97,6 +97,16 @@ and user_id  in (select id from t_user)
 and funrole_id  in (select id from t_role);
 
 
+------------删除废弃的菜单
+--删除已经应用库房管理的角色关联
+DELETE t_role_menu where menu_id='2d512aa7-9fa4-4e0c-ae51-2258e476b89e';
+--删除库房管理菜单
+DELETE T_MENU WHERE id='2d512aa7-9fa4-4e0c-ae51-2258e476b89e';
+--删除作业单位的界面元素
+DELETE t_role_menu where menu_id='9a4359ea-8050-4f71-b433-e31f19284294';
+DELETE t_role_menu where menu_id in (select id from T_MENU where PARENT_ID='9a4359ea-8050-4f71-b433-e31f19284294');
+DELETE T_MENU WHERE pARENT_ID='9a4359ea-8050-4f71-b433-e31f19284294';
+DELETE T_MENU WHERE ID='9a4359ea-8050-4f71-b433-e31f19284294';
 
 ----------------===========================================================
 --设备类型数据同步
@@ -111,4 +121,20 @@ select id,name,unit,decode(status,'Y',1,0),spec,brand_id,style,memo,subtype_id,q
 --品牌数据同步
 insert into ems_brand(id,name,status)
 select id,name,decode(status,'Y',1,0) from ems_brand@emslink;
+--供应商数据同步
+insert into ems_supplier(id,name,sname,status,website,memo)
+select id,name,sname,decode(status,'Y',1,0),website,memo from ems_supplier@emslink;
+insert into ems_supplier_contact(id,address,contact,email,fax,mobile,phone,position,postcode,supplier_id)
+select id,address,contact,email,fax,mobile,phone,position,postcode,supplier_id from ems_supplier_contact@emslink;
+
+--客户信息数据同步
+insert into ems_customer(id,name,parent_id,status,type,memo)
+select id,name,parent_id,decode(status,'Y',1,0),type,memo from ems_customer@emslink;
+insert into ems_customer_contact(id,address,contact,email,fax,mobile,phone,position,postcode,customer_id)
+select id,address,contact,email,fax,mobile,phone,position,postcode,customer_id from ems_customer_contact@emslink;
+
+--项目数据同步
+insert into ems_project(id,name,sname,status,memo)
+select id,name,sname,decode(status,'Y',1,0),memo from ems_project@emslink;
+
 

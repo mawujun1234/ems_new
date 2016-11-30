@@ -21,7 +21,7 @@ public class Supplier implements IdEntity<String>{
 	private String website;//网址
 	@Column(length=100)
 	private String memo;
-	@org.hibernate.annotations.Type(type="yes_no")
+	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean status=true;
 	
 	public String getId() {

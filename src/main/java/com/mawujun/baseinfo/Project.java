@@ -19,7 +19,7 @@ public class Project extends UUIDEntity{
 	private String sname;//简称
 	@Column(length=100)
 	private String memo;
-	@org.hibernate.annotations.Type(type="yes_no")
+	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean status=true;
 
 	public String getName() {
