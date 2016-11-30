@@ -1,8 +1,8 @@
 Ext.require("Ems.baseinfo.EquipmentType");
-Ext.require("Ems.baseinfo.query.EquipmentProdQueryGrid");
-Ext.require("Ems.baseinfo.query.EquipmentTypeQueryTree");
+Ext.require("Ems.baseinfo.EquipmentProdQueryGrid");
+Ext.require("Ems.baseinfo.EquipmentTypeQueryTree");
 Ext.onReady(function(){
-	var grid=Ext.create('Ems.baseinfo.query.EquipmentProdQueryGrid',{
+	var grid=Ext.create('Ems.baseinfo.EquipmentProdQueryGrid',{
 		region:'center',
 		//split: true,
 		//collapsible: true,
@@ -15,7 +15,7 @@ Ext.onReady(function(){
 		}
 	});
 
-	var tree=Ext.create('Ems.baseinfo.query.EquipmentTypeQueryTree',{
+	var tree=Ext.create('Ems.baseinfo.EquipmentTypeQueryTree',{
 		title:'大类小类',
 		width:400,
 		split:true,
@@ -48,6 +48,7 @@ Ext.onReady(function(){
 	var viewPort=Ext.create('Ext.container.Viewport',{
 		layout:'border',
 		items:[grid,tree]
+		//items:[{region:'center',html:'111'}]
 	});
 
 });

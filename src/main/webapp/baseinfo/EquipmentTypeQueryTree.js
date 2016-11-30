@@ -3,7 +3,7 @@
  * 添加右键菜单，增，删，改，并且增加工具栏，增，删，改。
  * 后台的类最好继承TreeNode类，这样就可以少写很多代码
  */
-Ext.define('Ems.baseinfo.query.EquipmentTypeQueryTree', {
+Ext.define('Ems.baseinfo.EquipmentTypeQueryTree', {
     extend: 'Ext.tree.Panel',
     requires:['Ems.baseinfo.EquipmentType'],
     viewConfig: {
@@ -24,6 +24,18 @@ Ext.define('Ems.baseinfo.query.EquipmentTypeQueryTree', {
 			    status:true,
 			    text:"类型管理" 
 			},
+			proxy: {
+	            type: 'ajax',
+	            method:'POST',
+	//            reader:{
+	//				type:'json',
+	//				root:'root',
+	//				successProperty:'success',
+	//				totalProperty:'total'
+	//						
+	//			},
+	            url: Ext.ContextPath+'/equipmentType/query.do'
+	        },
 			listeners:{
 				beforeload:function(store,operation){
 					var node=operation.node;//me.getSelectionModel( ).getLastSelected( );

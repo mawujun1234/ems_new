@@ -66,6 +66,7 @@ select id,code,'element',text,navigation_id,null,1 from sys_uielement@emslink;
 
 --更新leaf，如果有子元素，leaf就改为0
 update t_menu a set leaf=(select decode(count(*),0,1,0) from t_menu b where a.id=b.parent_id);
+update t_menu set url='/baseinfo/EquipmentTypeQueryApp.jsp' where url='/baseinfo/query/EquipmentTypeQueryApp.jsp';
 
 
 --角色数据同步
