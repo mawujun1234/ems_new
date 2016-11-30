@@ -12,13 +12,6 @@ Ext.define('Ems.baseinfo.TypeCombo',{
     queryParam: 'name',
     queryMode: 'remote',
     name:'type_id',
-//    triggerAction: 'query',
-//    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-//    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-//	onTrigger1Click : function(){
-//	    var me = this;
-//	    me.setValue('');
-//	},
 	initComponent: function () {
        var me = this;
        var store=Ext.create('Ext.data.Store', {
@@ -68,13 +61,6 @@ Ext.define('Ems.baseinfo.SubtypeCombo',{
     queryParam: 'name',
     queryMode: 'remote',
     name:'subtype_id',
-//    triggerAction: 'query',
-//    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-//    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-//	onTrigger1Click : function(){
-//	    var me = this;
-//	    me.setValue('');
-//	},
 	initComponent: function () {
        var me = this;
        var store=Ext.create('Ext.data.Store', {
@@ -131,6 +117,16 @@ Ext.define('Ems.baseinfo.ProdCombo',{
 //	    var me = this;
 //	    me.setValue('');
 //	},
+    triggers:{
+    	foo:{
+	    	cls:  Ext.baseCSSPrefix + 'form-clear-trigger',
+	    	weight: -1,
+	    	handler: function() {
+	           var me = this;
+	           me.setValue('');
+	        }
+    	}
+    },
 	initComponent: function () {
        var me = this;
 	   var store=Ext.create('Ext.data.Store', {
@@ -181,12 +177,23 @@ Ext.define('Ems.baseinfo.BrandCombo',{
     queryMode: 'remote',
     name:'brand_id',
     triggerAction: 'query',
-    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-	onTrigger1Click : function(){
-	    var me = this;
-	    me.setValue('');
-	},
+    triggers:{
+    	foo:{
+	    	cls:  Ext.baseCSSPrefix + 'form-clear-trigger',
+	    	weight: -1,
+	    	handler: function() {
+	           var me = this;
+	           me.setValue('');
+	        }
+    	}
+//    	bar: {
+//            cls: Ext.baseCSSPrefix + 'form-arrow-trigger'
+////            weight: -1,
+////            handler: function() {
+////                console.log('bar trigger clicked');
+////            }
+//        }
+    },
 	initComponent: function () {
        var me = this;
 	   var store=Ext.create('Ext.data.Store', {
@@ -236,12 +243,29 @@ Ext.define('Ems.baseinfo.SupplierCombo',{
     queryMode: 'remote',
     name:'supplier_id',
     triggerAction: 'query',
-    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-    //trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-	onTrigger1Click : function(){
-	    var me = this;
-	    me.setValue('');
-	},
+//    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
+//    //trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
+//	onTrigger1Click : function(){
+//	    var me = this;
+//	    me.setValue('');
+//	},
+    triggers:{
+    	foo:{
+	    	cls:  Ext.baseCSSPrefix + 'form-clear-trigger',
+	    	weight: -1,
+	    	handler: function() {
+	           var me = this;
+	           me.setValue('');
+	        }
+    	}
+//    	bar: {
+//            cls: Ext.baseCSSPrefix + 'form-arrow-trigger'
+////            weight: -1,
+////            handler: function() {
+////                console.log('bar trigger clicked');
+////            }
+//        }
+    },
 	initComponent: function () {
        var me = this;
 	   var store=Ext.create('Ext.data.Store', {       		
@@ -292,11 +316,29 @@ Ext.define('Ems.baseinfo.ProjectCombo',{
     		queryMode: 'remote',
     		triggerAction: 'query',
     		minChars:-1,
-		    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-		    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-			onTrigger1Click : function(){
-			    var me = this;
-			    me.setValue('');
+			// trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
+			// trigger2Cls: Ext.baseCSSPrefix +
+			// 'form-arrow-trigger',//'form-search-trigger',
+			// onTrigger1Click : function(){
+			// var me = this;
+			// me.setValue('');
+			// },
+			triggers : {
+				foo : {
+					cls : Ext.baseCSSPrefix + 'form-clear-trigger',
+					weight : -1,
+					handler : function() {
+						var me = this;
+						me.setValue('');
+					}
+				}
+				// bar: {
+				// cls: Ext.baseCSSPrefix + 'form-arrow-trigger'
+				// // weight: -1,
+				// // handler: function() {
+				// // console.log('bar trigger clicked');
+				// // }
+				//        }
 			},
 			initComponent: function () {
        			var me = this;
