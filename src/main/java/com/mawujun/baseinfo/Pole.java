@@ -40,7 +40,7 @@ public class Pole extends UUIDEntity {
 	private String longitude_orgin;//经度,原始的导过来的经纬度
 	@Column(length=25)
 	private String latitude_orgin;//纬度,原始的导过来的经纬度
-	@org.hibernate.annotations.Type(type="yes_no")
+	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean lngLatIsTrans=false;//经纬度是否已经转换过了
 	
 	@Column(length=36)
