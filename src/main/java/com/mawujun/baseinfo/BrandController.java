@@ -66,12 +66,12 @@ public class BrandController {
 		return brandService.get(id);
 	}
 	
-//	@RequestMapping("/brand/create.do")
-//	@ResponseBody
-//	public Brand create(@RequestBody Brand brand) {
-//		brandService.create(brand);
-//		return brand;
-//	}
+	@RequestMapping("/brand/create.do")
+	@ResponseBody
+	public Brand create(@RequestBody Brand brand) {
+		brandService.create(brand);
+		return brand;
+	}
 	
 	@RequestMapping("/brand/update.do")
 	@ResponseBody

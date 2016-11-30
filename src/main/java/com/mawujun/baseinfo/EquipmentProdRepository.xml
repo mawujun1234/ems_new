@@ -11,20 +11,23 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	    FROM ems_equipmentprod a,ems_brand b 
 		where a.brand_id=b.id
 		<if test="style!=null and style !=''">
-		and a.style  like #{style}
+			and a.style  like #{style}
 		</if>
 		<if test="status!=null">
-		and a.status=#{status}
+			and a.status=#{status}
+		</if>
+		<if test="status==null">
+			and a.status=1
 		</if>
 		<if test="subtype_id!=null">
-		and a.subtype_id=#{subtype_id}
+			and a.subtype_id=#{subtype_id}
 		</if>
-		<if test="parent_id!=null">
+		<!--<if test="parent_id!=null">
 		and a.parent_id=#{parent_id}
 		</if>
 		<if test="parent_id==null">
 		and a.parent_id is null
-		</if>
+		</if>-->
 		order by a.id
     </select>
     

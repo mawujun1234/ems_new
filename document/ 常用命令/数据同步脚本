@@ -33,7 +33,7 @@ insert into emsnew.t_org_org(dim,parent_id,child_id)
 select 'base','workunitgroup',id from ems_workunit@emslink;
 
 --report_code重新生成功能
-执行http://localhost:8085/org/initReportCode.do
+	http://localhost:8085/org/initReportCode.do
 --为仓库和作业单位添加职位
 insert into t_position(id,name,org_id,positionType_id) 
 select sys_guid(),'仓管'，id,'employee' from ems_store@emslink;
@@ -45,7 +45,7 @@ select sys_guid(),'小组成员'，id,'workunitgroup' from ems_workunit@emslink;
 --同步用户数据
 insert into t_user(id,loginname,name,pwd,cannotdel,phone,state)
 select id,username,name,password,0,phone,decode(status,'Y','valid','invalid') from sys_user@emslink
-where username!='admin' and name is NOT NULL
+where username!='admin' and name is NOT NULL;
 
 --把作业单位的账号密码提取出来，作为用户
 insert into t_user(id,loginname,name,pwd,cannotdel,phone,state，temp_workunit)
@@ -53,7 +53,7 @@ select sys_guid(),loginname,name,password,0,null,'valid',id from ems_workunit@em
 --同时插入到作业单位组织单元下面的职位中
 insert into t_position_org_user(user_id,position_id,org_id)
 select b.id,a.id,a.org_id from t_position a,t_user b
-where a.org_id=b.temp_workunit and a.positiontype_id='workunitgroup'
+where a.org_id=b.temp_workunit and a.positiontype_id='workunitgroup';
 
 
 --菜单数据同步
@@ -62,15 +62,15 @@ insert into t_menu(id,code,menutype,name,parent_id,url,leaf)
 select id,null,'menu',text,parentid,link,decode(leaf,'Y',1,0) from sys_navigation@emslink
 where id!='ba44722c-adb9-4136-b460-12ef480419c9' or parentid!='ba44722c-adb9-4136-b460-12ef480419c9'
 union all
-select id,code,'element',text,navigation_id,null,1 from sys_uielement@emslink
+select id,code,'element',text,navigation_id,null,1 from sys_uielement@emslink;
 
 --更新leaf，如果有子元素，leaf就改为0
-update t_menu a set leaf=(select decode(count(*),0,1,0) from t_menu b where a.id=b.parent_id)
+update t_menu a set leaf=(select decode(count(*),0,1,0) from t_menu b where a.id=b.parent_id);
 
 
 --角色数据同步
 insert into t_role(id,name,roletype)
-select id,text,'role' from sys_funrole@emslink
+select id,text,'role' from sys_funrole@emslink;
 
 --角色可访问的菜单数据同步
 --排除系统管理的菜单数据还有是排除错误的数据
@@ -80,17 +80,34 @@ where navigation_id!='ba44722c-adb9-4136-b460-12ef480419c9'
     and navigation_id not in (select id from sys_navigation@emslink where parentid='ba44722c-adb9-4136-b460-12ef480419c9')
     and navigation_id  in (select id from sys_navigation@emslink)
 union all
-select funrole_id,uielement_id from sys_uielement_funrole@emslink
+select funrole_id,uielement_id from sys_uielement_funrole@emslink;
 
 --同时插入已有菜单的父元素，因为现在是整个菜单树都授权
 insert into t_role_menu(role_id,menu_id)
 select distinct funrole_id,b.parentid from sys_navigation_funrole@emslink a,sys_navigation@emslink b
 where a.navigation_id=b.id and a.navigation_id!='ba44722c-adb9-4136-b460-12ef480419c9' 
     and a.navigation_id not in (select id from sys_navigation@emslink where parentid='ba44722c-adb9-4136-b460-12ef480419c9')
-    and a.navigation_id  in (select id from sys_navigation@emslink)
+    and a.navigation_id  in (select id from sys_navigation@emslink);
     
 --用户角色对照关系同步
 insert into t_role_user(user_id,role_id)
 select distinct user_id,funrole_id from sys_funrole_user@emslink where user_id!='admin'
 and user_id  in (select id from t_user)
-and funrole_id  in (select id from t_role)
+and funrole_id  in (select id from t_role);
+
+
+
+----------------===========================================================
+--设备类型数据同步
+insert into ems_equipmenttype(id,name,parent_id,status,memo)
+select id,name,parent_id,decode(status,'Y',1,0),memo from ems_equipmenttype@emslink;
+--小类
+insert into ems_equipmentsubtype(id,name,parent_id,status,memo)
+select id,name,parent_id,decode(status,'Y',1,0),memo from ems_equipmentsubtype@emslink;
+--品名
+insert into ems_equipmentprod(id,name,unit,status,spec,brand_id,style,memo,subtype_id,quality_month,lock_style,depreci_year)
+select id,name,unit,decode(status,'Y',1,0),spec,brand_id,style,memo,subtype_id,quality_month,decode(lock_style,'Y',1,0),depreci_year from ems_equipmentprod@emslink;
+--品牌数据同步
+insert into ems_brand(id,name,status)
+select id,name,decode(status,'Y',1,0) from ems_brand@emslink;
+

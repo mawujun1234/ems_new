@@ -8,11 +8,11 @@ import javax.persistence.Transient;
 public class EquipmentTypeAbstract {
 
 	@Id
-	@Column(length=3)
+	@Column(length=4)
 	private String id;
 	@Column(length=30)
 	private String name;
-	@org.hibernate.annotations.Type(type="yes_no")
+	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean status=true;
 	
 //	@Column(updatable=false)

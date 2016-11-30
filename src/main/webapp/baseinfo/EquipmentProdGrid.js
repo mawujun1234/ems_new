@@ -31,14 +31,14 @@ Ext.define('Ems.baseinfo.EquipmentProdGrid',{
 //		{dataIndex:'subtype_name',text:'类型',renderer:function(){
 //			return me.subtype_name;
 //		}},
-		{dataIndex:'name',text:'名称',flex:1},
-		{dataIndex:'style',text:'型号',flex:1},
+		{dataIndex:'name',text:'名称',width:180},
+		{dataIndex:'style',text:'型号',width:150},
 		{dataIndex:'quality_month',text:'质保(月)',width:50},
 		{dataIndex:'depreci_year',text:'折旧年限',width:60},
 		{dataIndex:'memo',text:'描述'},
 		{dataIndex:'unit',text:'单位',width:60},
 		{dataIndex:'brand_name',text:'品牌',width:100},
-		{dataIndex:'spec',text:'规格',flex:1,renderer:function(value,metadata,record){
+		{dataIndex:'spec',text:'规格',width:180,renderer:function(value,metadata,record){
 								metadata.tdAttr = "data-qtip='" + value+ "'";
 							    return value;
 							}},
@@ -57,28 +57,30 @@ Ext.define('Ems.baseinfo.EquipmentProdGrid',{
 //			model: 'Ems.baseinfo.EquipmentProd',
 //			autoLoad:false
 //	  });
-      me.store= new Ext.data.TreeStore({
+      
+      me.store= Ext.create('Ext.data.TreeStore',{
       	autoLoad:false,
       	nodeParam :'parent_id',
-                model: 'Ems.baseinfo.EquipmentProd',
-                proxy: {
-                    type: 'ajax',
-                    method:'POST',
-                    reader:{
-						type:'json',
-						root:'root',
-						successProperty:'success',
-						totalProperty:'total'
-						
-					},
-                    url: Ext.ContextPath+'/equipmentType/queryProds.do'
-                },
-                root: {
-				    expanded: true,
-				    text: "根节点"
-				}
+        model: 'Ems.baseinfo.EquipmentProd',
+        proxy: {
+            type: 'ajax',
+            method:'POST',
+//            reader:{
+//				type:'json',
+//				root:'root',
+//				successProperty:'success',
+//				totalProperty:'total'
+//						
+//			},
+            url: Ext.ContextPath+'/equipmentType/queryProds.do'
+        },
+        root: {
+			expanded: true,
+			text: "根节点"
+		}
                 //folderSort: true
       });
+       
 	  //me.store.getProxy().extraParams ={isGrid:true,status:true}
 	  
 //	  me.tbar=	[{
@@ -92,7 +94,7 @@ Ext.define('Ems.baseinfo.EquipmentProdGrid',{
 //			iconCls: 'form-reload-button'
 //		}]
        
-	  me.initAction();
+	 me.initAction();
       me.callParent();
 	},
 	initAction:function(){
@@ -165,6 +167,7 @@ Ext.define('Ems.baseinfo.EquipmentProdGrid',{
             	}
             }
 		});
+		me.status_checkbox=checkbox;
 		actions.push(checkbox);
 		
 		actions.push('-');
@@ -207,6 +210,7 @@ Ext.define('Ems.baseinfo.EquipmentProdGrid',{
 		actions.push(reload);
 		
 		me.tbar={
+
 			itemId:'action_toolbar',
 			layout: {
 	               overflowHandler: 'Menu'
@@ -230,6 +234,7 @@ Ext.define('Ems.baseinfo.EquipmentProdGrid',{
 		var initValue={
 		    'subtype_id':subtype_id,
 		    status:1,
+		    depreci_year:5,
 		    text:''
 		};
 		//if(parent.get("levl")){
@@ -242,7 +247,7 @@ Ext.define('Ems.baseinfo.EquipmentProdGrid',{
 
     	values=Ext.applyIf(values,initValue);
 
-		var child=Ext.createModel("Ems.baseinfo.EquipmentProd",values);
+		var child=Ext.create("Ems.baseinfo.EquipmentProd",values);
 		var form=Ext.create('Ems.baseinfo.EquipmentProdForm',{
 			//isprod:true,
 			//parent_id:parent_id,
@@ -270,73 +275,73 @@ Ext.define('Ems.baseinfo.EquipmentProdGrid',{
 		win.show();
 
     },
-    createTJ:function(){
-    	var me=this;
-    	var parent=me.getSelectionModel( ).getLastSelected( );
-		if(!parent){
-			alert("请先选择一个套件品名!");
-		    return;
-		} 
-		//alert(parent.get("parent_id"));
-		if(parent.get("parent_id")){
-			alert("不能再进行拆分了");
-			return;
-		} 
-		var unit=parent.get("unit");
-		if(unit!="套" && unit!="对"){
-			alert("你选的品名单位不是'套'或'对',请确认有没有选错.");
-		}
-		
-		
-		
-		var child=Ext.createModel('Ems.baseinfo.EquipmentProd',{
-			parent_id:parent.get("id"),
-			brand_id:parent.get("brand_id"),
-			status:true,
-			subtype_id:parent.get("subtype_id")
-		});
-		//套件的form
-		var form=Ext.create('Ems.baseinfo.EquipmentProdForm',{
-			//isprod:true,
-			//parent_id:parent.get("id"),
-			isUpdate:false,
-			url:Ext.ContextPath+"/equipmentType/createProdTJ.do",
-			//isType:initValue.levl==1?true:false,
-			listeners:{
-				saved:function(){
-					win.close();
-					parent.set("leaf",false);
-					me.getStore().reload({node:parent});
-					//me.tree.getStore().reload({node:parent});
-				}
-			}
-		});
-		form.getForm().loadRecord(child);
-		
-		var subtype_id=form.getForm().findField("subtype_id");
-		subtype_id.hide();
-		var parent_id=form.getForm().findField("parent_id");
-		parent_id.show();
-		var brand_id=form.getForm().findField("brand_id");
-		//brand_id.setValue(parent.get("brand_id"));
-		//brand_id.getStore().load();
-		var project_model= brand_id.getStore().createModel({id:parent.get("brand_id"),name:parent.get("brand_name")});
-		brand_id.setValue(project_model);
-
-		
-		var win=new Ext.window.Window({
-			items:[form],
-			layout:'fit',
-			title:'增加套件',
-			closeAction:'destroy',
-			width:300,
-			height:400,
-			modal:true
-		});
-		//form.win=win
-		win.show();
-		
-    },
+//    createTJ:function(){
+//    	var me=this;
+//    	var parent=me.getSelectionModel( ).getLastSelected( );
+//		if(!parent){
+//			alert("请先选择一个套件品名!");
+//		    return;
+//		} 
+//		//alert(parent.get("parent_id"));
+//		if(parent.get("parent_id")){
+//			alert("不能再进行拆分了");
+//			return;
+//		} 
+//		var unit=parent.get("unit");
+//		if(unit!="套" && unit!="对"){
+//			alert("你选的品名单位不是'套'或'对',请确认有没有选错.");
+//		}
+//		
+//		
+//		
+//		var child=Ext.create('Ems.baseinfo.EquipmentProd',{
+//			parent_id:parent.get("id"),
+//			brand_id:parent.get("brand_id"),
+//			status:true,
+//			subtype_id:parent.get("subtype_id")
+//		});
+//		//套件的form
+//		var form=Ext.create('Ems.baseinfo.EquipmentProdForm',{
+//			//isprod:true,
+//			//parent_id:parent.get("id"),
+//			isUpdate:false,
+//			url:Ext.ContextPath+"/equipmentType/createProdTJ.do",
+//			//isType:initValue.levl==1?true:false,
+//			listeners:{
+//				saved:function(){
+//					win.close();
+//					parent.set("leaf",false);
+//					me.getStore().reload({node:parent});
+//					//me.tree.getStore().reload({node:parent});
+//				}
+//			}
+//		});
+//		form.getForm().loadRecord(child);
+//		
+//		var subtype_id=form.getForm().findField("subtype_id");
+//		subtype_id.hide();
+//		var parent_id=form.getForm().findField("parent_id");
+//		parent_id.show();
+//		var brand_id=form.getForm().findField("brand_id");
+//		//brand_id.setValue(parent.get("brand_id"));
+//		//brand_id.getStore().load();
+//		var project_model= brand_id.getStore().create({id:parent.get("brand_id"),name:parent.get("brand_name")});
+//		brand_id.setValue(project_model);
+//
+//		
+//		var win=new Ext.window.Window({
+//			items:[form],
+//			layout:'fit',
+//			title:'增加套件',
+//			closeAction:'destroy',
+//			width:300,
+//			height:400,
+//			modal:true
+//		});
+//		//form.win=win
+//		win.show();
+//		
+//    },
     onUpdate:function(){
     	var me=this;
     	var record=me.getSelectionModel().getLastSelected( );

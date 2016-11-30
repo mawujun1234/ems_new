@@ -22,44 +22,42 @@ Ext.define('Ems.baseinfo.EquipmentTypeForm',{
        var maxLength=2;//me.parent_id.length+2;//me.isType?2:3;
        
 	
-       me.items= [
-       {
+       me.items = [{
 							xtype : 'fieldcontainer',
 							fieldLabel : '编码',
-							afterLabelTextTpl: Ext.required,
-							//labelStyle : 'font-weight:bold;padding:0;',
+							afterLabelTextTpl : Ext.required,
+							// labelStyle : 'font-weight:bold;padding:0;',
 							layout : 'hbox',
 							defaultType : 'textfield',
 							fieldDefaults : {
-				// labelAlign: 'top'
 							},
 
 							items : [{
 								width : 35,
-								//fieldLabel : '父编码',
+								// fieldLabel : '父编码',
 								// afterLabelTextTpl: Ext.required,
-								margin:'0 5 0 0',
+								margin : '0 5 0 0',
 								name : 'parent_id',
-								readOnly:true
+								readOnly : true
 									// xtype:'hidden',
 									// allowBlank: false
 								}, {
-									flex:1,
-	        //fieldLabel: '编码',
-	        name: 'id',
-	        minLength:maxLength,
-	        maxLength:maxLength,
-	        length:maxLength,
-	        xtype:'textfield',
-	        allowBlank: false,
-	        listeners:{
-	        	change:function(field,newValue,oldValue){
-		        	if(maxLength<newValue.length){
-		        		field.setValue(oldValue);
-		        	}
-		        }
-	        }
-	    }]
+								flex : 1,
+								// fieldLabel: '编码',
+								name : 'end_id',
+								minLength : maxLength,
+								maxLength : maxLength,
+								length : maxLength,
+								xtype : 'textfield',
+								allowBlank : false,
+								listeners : {
+									change : function(field, newValue, oldValue) {
+										if (maxLength < newValue.length) {
+											field.setValue(oldValue);
+										}
+									}
+								}
+							}]
 		},       	
 	    {
 	        fieldLabel: '名称',
@@ -84,6 +82,12 @@ Ext.define('Ems.baseinfo.EquipmentTypeForm',{
 	        //afterLabelTextTpl: Ext.required,
 	        name: 'status',
 	        xtype:'hidden'
+	    },
+	    {
+	        fieldLabel: 'id',
+	        //afterLabelTextTpl: Ext.required,
+	        name: 'id',
+	        xtype:'hidden'
 	    }
 	  ];   
 	  
@@ -97,7 +101,7 @@ Ext.define('Ems.baseinfo.EquipmentTypeForm',{
                 if(!form.getForm().isValid()) {
                 	return;
                 }
-               // form.getForm().findField("id").setValue(form.getForm().findField("parent_id").getValue()+form.getForm().findField("end_id").getValue());
+                form.getForm().findField("id").setValue(form.getForm().findField("parent_id").getValue()+form.getForm().findField("end_id").getValue());
                 Ext.Msg.confirm("消息","确定要保存吗?",function(btn){
                 	if(btn=='yes'){
                 		form.getForm().updateRecord();
@@ -119,7 +123,7 @@ Ext.define('Ems.baseinfo.EquipmentTypeForm',{
 	  me.buttons=[saveButton];
 
 	
-      me.addEvents("saved");
+      //me.addEvents("saved");
       me.callParent();
 	},
 	/**

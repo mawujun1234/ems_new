@@ -49,7 +49,7 @@ String aa=requestURI.replaceAll(contextPath+"/", "/");
 Ext.Loader.setConfig({
 	enabled: true,
 	paths:{
-		'Ems':'..',
+		'Ems':'../',
 		//'Ems':'.',
 		'Ext.ux':'../ext6/packages/ux/classic/src'
 		//'MyDesktop':'.'

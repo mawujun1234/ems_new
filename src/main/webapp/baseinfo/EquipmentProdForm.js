@@ -232,7 +232,7 @@ Ext.define('Ems.baseinfo.EquipmentProdForm',{
 	  me.buttons=[saveButton];
 
 	
-      me.addEvents("saved");
+     // me.addEvents("saved");
       me.callParent();
 	},
 	/**

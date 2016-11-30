@@ -20,7 +20,7 @@ public class EquipmentProd  implements
 	private String id;
 	@Column(length=30)
 	private String name;
-	@org.hibernate.annotations.Type(type="yes_no")
+	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean status=true;
 
 //	@Column(length=12)
@@ -47,7 +47,7 @@ public class EquipmentProd  implements
 //	private String type_parent_id;//当被拆分后的parent_id
 	
 	private Integer quality_month;//质保时间长度，以月为单位
-	@org.hibernate.annotations.Type(type="yes_no")
+	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean lock_style=false;//true表示锁定这个品名的型号，这个型号就不能修改了
 	
 	@Transient

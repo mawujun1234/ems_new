@@ -24,6 +24,18 @@ Ext.define('Ems.baseinfo.EquipmentTypeTree', {
 			    status:true,
 			    text:"类型管理" 
 			},
+			proxy: {
+	            type: 'ajax',
+	            method:'POST',
+	//            reader:{
+	//				type:'json',
+	//				root:'root',
+	//				successProperty:'success',
+	//				totalProperty:'total'
+	//						
+	//			},
+	            url: Ext.ContextPath+'/equipmentType/query.do'
+	        },
 			listeners:{
 				beforeload:function(store,operation){
 					var node=operation.node;//me.getSelectionModel( ).getLastSelected( );
@@ -116,17 +128,9 @@ Ext.define('Ems.baseinfo.EquipmentTypeTree', {
 		//me.addAction(destroy);
 		actions.push(destroy)
 		
-		var reload = new Ext.Action({
-		    text: '刷新',
-		    itemId:'reload',
-		    handler: function(){
-		    	me.onReload();
-		    },
-		    iconCls: 'form-reload-button'
-		});
-		//me.addAction(reload);
-		actions.push(reload);
+		
 
+		var actions1=[];
 		var checkbox=Ext.create('Ext.form.field.Checkbox',{
 			boxLabel  : '只有在用',
             name      : 'status',
@@ -143,15 +147,34 @@ Ext.define('Ems.baseinfo.EquipmentTypeTree', {
             	}
             }
 		});
-		actions.push(checkbox);
+		actions1.push(checkbox);
+		var reload = new Ext.Action({
+		    text: '刷新',
+		    itemId:'reload',
+		    handler: function(){
+		    	me.onReload();
+		    },
+		    iconCls: 'form-reload-button'
+		});
+		//me.addAction(reload);
+		actions1.push(reload);
 		
 		me.tbar={
-			itemId:'action_toolbar',
-			layout: {
-	               overflowHandler: 'Menu'
-	        },
-			items:actions
-			//,autoScroll:true		
+			xtype: 'container',
+			  layout: 'anchor',
+			  defaults: {anchor: '0'},
+			  defaultType: 'toolbar',
+			  items: [{
+			    items:actions1 // toolbar 1
+			  }, {
+			    items: actions // toolbar 2
+			  }]
+//			itemId:'action_toolbar',
+//			layout: {
+//	               overflowHandler: 'Menu'
+//	        },
+//			items:actions
+//			//,autoScroll:true		
 		};
 
     },
@@ -160,7 +183,7 @@ Ext.define('Ems.baseinfo.EquipmentTypeTree', {
 
     	var values={};
 
-    	var parent=me.getSelectionModel( ).getLastSelected( )||me.tree.getRootNode( );    
+    	var parent=me.getSelectionModel( ).getLastSelected( )||me.getRootNode( );    
     	if(parent.get("parent_id") ){//&&　parent.get("parent_id")!='root'
     		alert("小类下面不能再添加了，品名请在左边的表格里面新建!");
     		return;
@@ -187,7 +210,7 @@ Ext.define('Ems.baseinfo.EquipmentTypeTree', {
     	values=Ext.applyIf(values,initValue);
 
     	//values.id=parent_id=="root"?"":parent_id;//用于初始化id的前半段
-		var child=Ext.createModel('Ems.baseinfo.EquipmentType',values);
+		var child=Ext.create('Ems.baseinfo.EquipmentType',values);
 		var form=new Ems.baseinfo.EquipmentTypeForm({
 			//parent_id:parent_id=="root"?"":parent_id,
 			url:Ext.ContextPath+"/equipmentType/create.do",
@@ -234,10 +257,18 @@ Ext.define('Ems.baseinfo.EquipmentTypeTree', {
 				}
 			}
 		});
+		//alert(record.get("id"));
 		form.getForm().loadRecord(record);
-		//var ids=record.get("id").split("_");
-		//form.getForm().findField("id").setValue(ids[0]);
-		form.getForm().findField("id").setReadOnly(true);
+		if(record.get("id").length==2){
+			var ids=record.get("id");
+			form.getForm().findField("end_id").setValue(ids);
+			form.getForm().findField("end_id").setReadOnly(true);
+		} else {
+			var ids=record.get("id").substr(2);
+			form.getForm().findField("end_id").setValue(ids);
+			form.getForm().findField("end_id").setReadOnly(true);
+		}
+		
 		
 		var win=new Ext.window.Window({
 			items:[form],
