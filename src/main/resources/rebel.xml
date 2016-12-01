@@ -6,7 +6,7 @@
 		</dir>
 	</classpath>
 
-	<web>
+	<!--<web>
 		<link target="/">
 			<dir name="${reble.web-resources.dir}">
 				<exclude name="/"/>
@@ -17,5 +17,5 @@
 			</dir>
 		</link>
 	</web>
-
+	-->
 </application>

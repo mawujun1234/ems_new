@@ -155,10 +155,60 @@ public static final class Pole {
 	public static final String latitude_orgin="latitude_orgin";
 	public static final String lngLatIsTrans="lngLatIsTrans";
 	public static final String customer_id="customer_id";
-	public static final String workunit_id="workunit_id";
+	public static final String workunit_id_old="workunit_id_old";
 	public static final String project_id="project_id";
 	public static final String status="status";
 	public static final String id="id";
+}
+public static final class PoleWorkunit {
+	 /**
+	 * 返回关联对象的属性，，以对象关联的方式(a.b这种形式)，只有一些基本属性，层级不再往下了
+	 */
+	public static final class pole {
+		public static final String code="pole.code";
+		public static final String name="pole.name";
+		public static final String province="pole.province";
+		public static final String city="pole.city";
+		public static final String area="pole.area";
+		public static final String address="pole.address";
+		public static final String poleType="pole.poleType";
+		public static final String longitude="pole.longitude";
+		public static final String latitude="pole.latitude";
+		public static final String longitude_orgin="pole.longitude_orgin";
+		public static final String latitude_orgin="pole.latitude_orgin";
+		public static final String lngLatIsTrans="pole.lngLatIsTrans";
+		public static final String customer_id="pole.customer_id";
+		public static final String workunit_id_old="pole.workunit_id_old";
+		public static final String project_id="pole.project_id";
+		public static final String status="pole.status";
+		public static final String id="pole.id";
+			
+	    /**
+	    * 返回的是关联类的属性名称，主要用于属性过滤的时候
+	    */
+	    public static String name(){ 
+		    return "pole";
+	    }
+	}
+	 /**
+	 * 返回关联对象的属性，，以对象关联的方式(a.b这种形式)，只有一些基本属性，层级不再往下了
+	 */
+	public static final class workunit {
+		public static final String id="workunit.id";
+		public static final String code="workunit.code";
+		public static final String name="workunit.name";
+		public static final String name_short="workunit.name_short";
+		public static final String orgType="workunit.orgType";
+		public static final String state="workunit.state";
+		public static final String sort="workunit.sort";
+			
+	    /**
+	    * 返回的是关联类的属性名称，主要用于属性过滤的时候
+	    */
+	    public static String name(){ 
+		    return "workunit";
+	    }
+	}
 }
 public static final class Project {
 	public static final String name="name";

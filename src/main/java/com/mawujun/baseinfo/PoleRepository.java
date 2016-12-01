@@ -33,6 +33,12 @@ public interface PoleRepository extends IRepository<Pole, String>{
 	
 	public List<Pole> queryEquipments(@Param("id")String id);
 	
+	public Pager<Pole> queryPolesByWorkunit(Pager<Pole> params);
+	public void addWorkunit(@Param("workunit_id")String workunit_id,@Param("pole_id")String pole_id);
+	public void removeWorkunit(@Param("workunit_id")String workunit_id,@Param("pole_id")String pole_id);
+	
+	public Pager<Pole> queryPageFilteContain(Pager<Pole> params);
+	
 	public List<PoleVO> queryPolesAndEquipments(@Param("customer_id")String customer_id);
 	public int query_count_equipment_in_pole(@Param("pole_id")String pole_id);
 	

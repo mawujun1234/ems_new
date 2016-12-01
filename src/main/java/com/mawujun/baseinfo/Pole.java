@@ -49,7 +49,7 @@ public class Pole extends UUIDEntity {
 //	@Column(length=36)
 //	private String area_id;
 	@Column(length=36)
-	private String workunit_id;
+	private String workunit_id_old;//升级时，变为多对多后的历史数据
 	@Column(length=36)
 	private String project_id;
 	
@@ -195,12 +195,12 @@ public class Pole extends UUIDEntity {
 		this.lngLatIsTrans = lngLatIsTrans;
 	}
 
-	public String getWorkunit_id() {
-		return workunit_id;
+	public String getWorkunit_id_old() {
+		return workunit_id_old;
 	}
 
-	public void setWorkunit_id(String workunit_id) {
-		this.workunit_id = workunit_id;
+	public void setWorkunit_id_old(String workunit_id) {
+		this.workunit_id_old = workunit_id;
 	}
 
 

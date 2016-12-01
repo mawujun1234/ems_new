@@ -138,8 +138,10 @@ insert into ems_project(id,name,sname,status,memo)
 select id,name,sname,decode(status,'Y',1,0),memo from ems_project@emslink;
 
 --客户的点位数据同步
-insert into ems_pole(id,address,area,city,code,customer_id,latitude,latitude_orgin,lnglatistrans,longitude,longitude_orgin,name,poletype,project_id,province,status,workunit_id)
-select id,address,area,city,code,customer_id,latitude,latitude_orgin,decode(lnglatistrans,'Y',1,0),longitude,longitude_orgin,name,poletype,project_id,province,status,workunit_id from ems_pole@emslink
-
+insert into ems_pole(id,address,area,city,code,customer_id,latitude,latitude_orgin,lnglatistrans,longitude,longitude_orgin,name,poletype,project_id,province,status,workunit_id_old)
+select id,address,area,city,code,customer_id,latitude,latitude_orgin,decode(lnglatistrans,'Y',1,0),longitude,longitude_orgin,name,poletype,project_id,province,status,workunit_id from ems_pole@emslink;
+--插入到中间表,一对一变成多对多
+insert into ems_pole_workunit(workunit_id,pole_id)
+select distinct workunit_id,id from ems_pole@emslink;
 
 

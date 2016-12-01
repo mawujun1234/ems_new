@@ -5,6 +5,7 @@ Ext.define('Ems.baseinfo.CustomerTreeGrid',{
 	],
 	columnLines :true,
 	stripeRows:true,
+	readOnly:false,
 //	viewConfig:{
 //		stripeRows:true,
 //		listeners:{
@@ -26,7 +27,7 @@ Ext.define('Ems.baseinfo.CustomerTreeGrid',{
       me.columns=[
 		//{dataIndex:'id',text:'id'},
 		
-		{xtype:'treecolumn',dataIndex:'name',text:'名称',flex:1},
+		{xtype:'treecolumn',dataIndex:'name',text:'名称',width:150},
 		{dataIndex:'status',text:'状态',renderer:function(value){
 			if(value){
 				return "有效";
@@ -86,7 +87,10 @@ Ext.define('Ems.baseinfo.CustomerTreeGrid',{
 //			},
 //			iconCls: 'form-reload-button'
 //		}]
-      me.initAction(); 
+      if(!me.readOnly){
+      	me.initAction(); 
+      }
+      
       me.callParent();
 	},
 	initAction:function(){

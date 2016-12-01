@@ -1,8 +1,6 @@
 package com.mawujun.org;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -12,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mawujun.permission.ShiroUtils;
+import com.mawujun.repository.cnd.Cnd;
+import com.mawujun.utils.M;
 /**
  * @author mawujun qq:16064988 e-mail:mawujun1234@163.com 
  * @version 1.0
@@ -86,6 +86,17 @@ public class OrgController {
 			blank.setName("所有");
 			orges.add(0, blank);
 		}
+		return orges;
+	}
+	/*
+	 * 查询所有的作业单位
+	 * @return
+	 */
+	@RequestMapping("/org/queryWorkunit.do")
+	@ResponseBody
+	public List<Org> queryWorkunit() {
+		Cnd cnd=Cnd.select().andEquals(M.Org.orgType, OrgType.workunit);
+		List<Org> orges=orgService.query(cnd);
 		return orges;
 	}
 

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mawujun.service.AbstractService;
+import com.mawujun.utils.page.Pager;
 
 
 /**
@@ -88,7 +89,28 @@ public class PoleService extends AbstractService<Pole, String>{
 		return poleRepository.queryEquipments(id);
 	}
 	
+	public Pager<Pole> queryPolesByWorkunit(Pager<Pole> params){
+		return poleRepository.queryPolesByWorkunit(params);
+	}
+	
 	public List<PoleVO> queryPolesAndEquipments(String customer_id) {
 		return poleRepository.queryPolesAndEquipments(customer_id);
+	}
+	
+	public Pager<Pole> queryPageFilteContain(Pager<Pole> params) {
+		return poleRepository.queryPageFilteContain(params);
+	}
+	
+	public void addWorkunit(String workunit_id,String[] pole_ids) {	
+		for(String pole_id:pole_ids){
+			poleRepository.addWorkunit(workunit_id, pole_id);
+		}
+	}
+	
+
+	public void removeWorkunit(String workunit_id,String[] pole_ids) {	
+		for(String pole_id:pole_ids){
+			poleRepository.removeWorkunit(workunit_id, pole_id);
+		}
 	}
 }

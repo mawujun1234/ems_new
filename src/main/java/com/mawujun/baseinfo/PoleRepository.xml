@@ -9,15 +9,38 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="queryPage" resultType="com.mawujun.baseinfo.PoleVO" parameterType="map">
     	SELECT a.*,b.name as project_name
 	    FROM ems_pole a,ems_project b
-	    where a.project_id=b.id and customer_id=#{customer_id}
-	    <if test="filterContainArea==true">
-	    	and workunit_id is null
-	    </if>
+	    where a.project_id=b.id and customer_id=#{customer_id
 	    <if test="nameORcode!=null and nameORcode!=''">
 	    	and (lower(a.name) like lower('%${nameORcode}%') or lower(a.code) like lower('%${nameORcode}%'))
 	    </if>
 	    order by code
     </select>
+    <!-- 过滤掉已经被选择过的点位-->
+    <select id="queryPageFilteContain" resultType="com.mawujun.baseinfo.PoleVO" parameterType="map">
+    	SELECT a.*,b.name as project_name
+	    FROM ems_pole a,ems_project b
+	    where a.project_id=b.id and  a.customer_id=#{customer_id}
+	     and not exists (select 1 from ems_pole_workunit c where a.id=c.pole_id and c.workunit_id=#{workunit_id})
+	    order by code
+    </select>
+    
+    <select id="queryPolesByWorkunit"  resultType="com.mawujun.baseinfo.Pole" parameterType="map">
+    	select a.* from ems_pole a,ems_pole_workunit b
+		where a.id=b.pole_id and b.workunit_id=#{workunit_id}
+		<if test="customer_id!=null and customer_id!=''">
+			 and a.customer_id=#{customer_id}
+		</if>
+		<if test="nameORcode!=null and nameORcode!=''">
+	    	and (lower(a.name) like lower('%${nameORcode}%') or lower(a.code) like lower('%${nameORcode}%'))
+	    </if>
+		order by a.code asc
+    </select>
+    <insert  id="addWorkunit"  parameterType="map">
+    	insert into ems_pole_workunit(workunit_id,pole_id) values(#{workunit_id},#{pole_id})
+    </insert>
+    <insert  id="removeWorkunit"  parameterType="map">
+    	delete ems_pole_workunit where  workunit_id=#{workunit_id} and pole_id=#{pole_id}
+    </insert>
 
     
 	<!-- 查询某个杆位下的所有设备 -->

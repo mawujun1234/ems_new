@@ -65,18 +65,29 @@ public class PoleController {
 	 */
 	@RequestMapping("/pole/query.do")
 	@ResponseBody
-	public Pager<Pole> query(Integer start,Integer limit,String sampleName,String customer_id,String nameORcode,Boolean filterContainArea){
+	public Pager<Pole> query(Integer start,Integer limit,String sampleName,String customer_id,String nameORcode){
 		Pager<Pole> page=new Pager<Pole>();
 		page.setStart(start);
 		page.setLimit(limit);
 		page.addParam(M.Pole.customer_id, customer_id);//.addParam(M.Pole.sampleName, "%"+sampleName+"%");
 		page.addParam("nameORcode", nameORcode);
-		if(filterContainArea!=null && filterContainArea==true){
-			//filterContainArea=true表示过滤掉已经选择了片区的杆位,主要用在为area选择杆位的时候
-			page.addParam("filterContainArea", true);
-			
-		}
+//		if(filterContainArea!=null && filterContainArea==true){
+//			//filterContainArea=true表示过滤掉已经选择了片区的杆位,主要用在为area选择杆位的时候
+//			page.addParam("filterContainArea", true);
+//			
+//		}
 		return poleService.queryPage(page);
+	}
+	@RequestMapping("/pole/queryPageFilteContain.do")
+	@ResponseBody
+	public Pager<Pole> queryPageFilteContain(Integer start,Integer limit,String customer_id,String workunit_id) {
+		Pager<Pole> page=new Pager<Pole>();
+		page.setStart(start);
+		page.setLimit(limit);
+		page.addParam(M.Pole.customer_id, customer_id);
+		page.addParam("workunit_id", workunit_id);
+		
+		return poleService.queryPageFilteContain(page);
 	}
 
 //	@RequestMapping("/pole/query.do")
@@ -126,6 +137,51 @@ public class PoleController {
 	@ResponseBody
 	public List<Pole> queryEquipments(String id){		
 		return poleService.queryEquipments(id);
+	}
+	
+	/**
+	 * 查询某个作业下的杆位
+	 * @author mawujun email:160649888@163.com qq:16064988
+	 * @param start
+	 * @param limit
+	 * @param area_id
+	 * @return
+	 */
+	@RequestMapping("/pole/queryPolesByWorkunit.do")
+	@ResponseBody
+	public Pager<Pole> queryPolesByWorkunit(Integer start,Integer limit,String workunit_id,String customer_id,String nameORcode) {	
+		Pager<Pole> page=new Pager<Pole>();
+		page.setStart(start);
+		page.setLimit(limit);
+		page.addParam("workunit_id", workunit_id);
+		page.addParam("nameORcode", nameORcode);
+		page.addParam(M.Pole.customer_id, customer_id);
+		//先建立Pole和Workunit的多对多关系
+		
+		return poleService.queryPolesByWorkunit(page);
+		
+//		List<Pole> poles=poleService.query(Cnd.where().andEquals(M.Pole.area_id, area_id).asc(M.Pole.code));
+//		return poles;
+	}
+	
+	@RequestMapping("/pole/addWorkunit.do")
+	@ResponseBody
+	public String addWorkunit(String workunit_id,String[] pole_ids) {	
+		if(pole_ids==null){
+			return "{success:true}";
+		}
+		poleService.addWorkunit(workunit_id, pole_ids);
+		return "{success:true}";
+	}
+	
+	@RequestMapping("/pole/removeWorkunit.do")
+	@ResponseBody
+	public String removeWorkunit(String workunit_id,String[] pole_ids) {	
+		if(pole_ids==null){
+			return "{success:true}";
+		}
+		poleService.removeWorkunit(workunit_id, pole_ids);
+		return "{success:true}";
 	}
 	
 	//==============================================================================================================
