@@ -37,7 +37,7 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 		   return record.get("status_name");
 		 }
 		},
-		{dataIndex:'code',text:'编号',width:60},
+		{dataIndex:'code',text:'编号',width:80},
       	{dataIndex:'name',text:'点位名称',width:160},
       	{dataIndex:'poleType_name',text:'点位类型',width:160},
       	{dataIndex:'project_name',text:'所属项目',width:160},

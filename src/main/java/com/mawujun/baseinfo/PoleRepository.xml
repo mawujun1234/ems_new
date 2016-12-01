@@ -9,7 +9,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="queryPage" resultType="com.mawujun.baseinfo.PoleVO" parameterType="map">
     	SELECT a.*,b.name as project_name
 	    FROM ems_pole a,ems_project b
-	    where a.project_id=b.id and customer_id=#{customer_id
+	    where a.project_id=b.id and customer_id=#{customer_id}
 	    <if test="nameORcode!=null and nameORcode!=''">
 	    	and (lower(a.name) like lower('%${nameORcode}%') or lower(a.code) like lower('%${nameORcode}%'))
 	    </if>
