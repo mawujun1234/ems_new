@@ -518,4 +518,70 @@ public static final class User {
 	public static final String canNotDel="canNotDel";
 	public static final String temp_workunit="temp_workunit";
 }
+public static final class Barcode {
+	public static final String ecode="ecode";
+	public static final String orderlist_id="orderlist_id";
+	public static final String ymd="ymd";
+	public static final String type_id="type_id";
+	public static final String subtype_id="subtype_id";
+	public static final String prod_id="prod_id";
+	public static final String brand_id="brand_id";
+	public static final String supplier_id="supplier_id";
+	public static final String store_id="store_id";
+	public static final String isnew="isnew";
+	public static final String randomStr="randomStr";
+	public static final String createDate="createDate";
+	public static final String status="status";
+}
+public static final class Barcode_MaxNum {
+	public static final String subtype_id="subtype_id";
+	public static final String prod_id="prod_id";
+	public static final String brand_id="brand_id";
+	public static final String supplier_id="supplier_id";
+	public static final String ymd="ymd";
+	public static final String num="num";
+	public static final String id="id";
+}
+public static final class InStore {
+	public static final String id="id";
+	public static final String store_id="store_id";
+	public static final String operater="operater";
+	public static final String operateDate="operateDate";
+	public static final String memo="memo";
+}
+public static final class InStoreList {
+	public static final String inStore_id="inStore_id";
+	public static final String ecode="ecode";
+	public static final String isnew="isnew";
+	public static final String orderlist_id="orderlist_id";
+	public static final String id="id";
+}
+public static final class Order {
+	public static final String orderNo="orderNo";
+	public static final String store_id="store_id";
+	public static final String orderDate="orderDate";
+	public static final String operater="operater";
+	public static final String status="status";
+	public static final String project_id="project_id";
+	public static final String createDate="createDate";
+	public static final String supplier_id="supplier_id";
+	public static final String orderType="orderType";
+	public static final String id="id";
+}
+public static final class OrderList {
+	public static final String order_id="order_id";
+	public static final String type_id="type_id";
+	public static final String subtype_id="subtype_id";
+	public static final String prod_id="prod_id";
+	public static final String brand_id="brand_id";
+	public static final String unitPrice="unitPrice";
+	public static final String quality_month="quality_month";
+	public static final String orderNum="orderNum";
+	public static final String totalNum="totalNum";
+	public static final String depreci_year="depreci_year";
+	public static final String depreci_month="depreci_month";
+	public static final String depreci_day="depreci_day";
+	public static final String printNum="printNum";
+	public static final String id="id";
+}
 }

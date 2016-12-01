@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.store.OrderRepository">
+	<select id="queryMain" resultType="com.mawujun.store.OrderVO" parameterType="map">
+    	select a.*,b.name as project_name,c.name as operater_name,e.name as supplier_name,f.name as store_name from 
+    	ems_Order a left join ems_project b on a.project_id=b.id
+    	left join sys_user c on a.operater=c.id
+    	left join ems_supplier e on a.supplier_id=e.id
+    	left join t_org on f a.store_id=f.id
+    	<where>
+    		and a.store_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.look='Y')这里权限要修改成新的权限
+    		<if test="store_id!=null and store_id!=''">
+    			and a.store_id=#{store_id}
+    		</if>
+    		<if test="date_start!=null and  date_start!=''">
+    			and to_char(a.orderDate,'yyyy-mm-dd') &gt;=#{date_start}
+    		</if>
+    		<if test="date_end!=null and date_end!=''">
+    			and to_char(a.orderDate,'yyyy-mm-dd') &lt;=#{date_end}
+    		</if>
+    		<if test="orderNo!=null and orderNo!=''">
+    			and a.orderNo like #{orderNo}
+    		</if>
+    		<if test="project_id!=null and project_id!=''">
+	    		and a.project_id = #{project_id}
+	    	</if>
+	    	<if test="supplier_id!=null and supplier_id!=''">
+	    		and a.supplier_id = #{supplier_id}
+	    	</if>
+	    	<if test="status!=null and status!=''">
+	    		and a.status = #{status}
+	    	</if>
+	    	<if test="orderType!=null and orderType!=''">
+	    		and a.orderType = #{orderType}
+	    	</if>
+	    	<if test="(instore_date_start!=null and instore_date_start!='') or (instore_date_end!=null and instore_date_end!='')">
+	    		and exists (
+	    			select 1 from ems_instore a1,ems_instorelist b1,ems_orderlist c1
+					where a1.id=b1.instore_id and b1.orderlist_id=c1.id
+					and a.id=c1.order_id
+					<if test="instore_date_start!=null and instore_date_start!=''">
+						and to_char(a1.operatedate,'yyyy-mm-dd') &gt;=#{instore_date_start}
+					</if>
+					<if test="instore_date_end!=null and instore_date_end!=''">
+						and to_char(a1.operatedate,'yyyy-mm-dd') &lt;=#{instore_date_end}
+					</if>
+					)
+	    	</if>
+    	</where>
+    	order by a.orderDate desc
+    </select>
+    <select id="queryMain_count" resultType="int" parameterType="map">
+    	select count(a.id) from ems_Order a 
+    	<where>
+    		and a.store_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.look='Y')
+    		<if test="store_id!=null and store_id!=''">
+    			and a.store_id=#{store_id}
+    		</if>
+    		<if test="date_start!=null and  date_start!=''">
+    			and to_char(a.orderDate,'yyyy-mm-dd') &gt;=#{date_start}
+    		</if>
+    		<if test="date_end!=null and date_end!=''">
+    			and to_char(a.orderDate,'yyyy-mm-dd') &lt;=#{date_end}
+    		</if>
+    		<if test="orderNo!=null and orderNo!=''">
+    			and a.orderNo like #{orderNo}
+    		</if>
+    		<if test="project_id!=null and project_id!=''">
+	    		and a.project_id = #{project_id}
+	    	</if>
+	    	<if test="supplier_id!=null and supplier_id!=''">
+	    		and a.supplier_id = #{supplier_id}
+	    	</if>
+	    	<if test="status!=null and status!=''">
+	    		and a.status = #{status}
+	    	</if>
+	    	<if test="orderType!=null and orderType!=''">
+	    		and a.orderType = #{orderType}
+	    	</if>
+	    	<if test="(instore_date_start!=null and instore_date_start!='') or (instore_date_end!=null and instore_date_end!='')">
+	    		and exists (
+	    			select 1 from ems_instore a1,ems_instorelist b1,ems_orderlist c1
+					where a1.id=b1.instore_id and b1.orderlist_id=c1.id
+					and a.id=c1.order_id
+					<if test="instore_date_start!=null and instore_date_start!=''">
+						and to_char(a1.operatedate,'yyyy-mm-dd') &gt;=#{instore_date_start}
+					</if>
+					<if test="instore_date_end!=null and instore_date_end!=''">
+						and to_char(a1.operatedate,'yyyy-mm-dd') &lt;=#{instore_date_end}
+					</if>
+					)
+	    	</if>
+    	</where>
+    	order by a.orderDate desc
+    </select>
+    <select id="queryList" resultType="com.mawujun.store.OrderListVO" parameterType="map">
+    	SELECT a.*,e.name as type_name,b.name as subtype_name,c.name as prod_name,c.style as prod_style,c.spec as prod_spec,c.memo as prod_memo,c.unit as prod_unit,d.name as brand_name
+	    FROM ems_orderlist a
+	    inner join ems_equipmentsubtype b on a.subtype_id=b.id
+	    inner join ems_equipmenttype e on b.parent_id=e.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		where a.order_id=#{order_id}   
+    </select>
+    <!--  
+    <select id="queryList_count" resultType="int" parameterType="map">
+    	select count(a.id) from ems_Orderlist a
+    	where a.order_id=#{order_id}
+    </select>
+    -->
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- 
+	<select id="queryMain" resultType="com.mawujun.store.OrderVO" parameterType="map">
+    	select a.*,b.name as project_name,c.name as operater_name from 
+    	(
+    		select a.* from ems_Order a,ems_orderlist b
+    		where a.id=b.order_id
+    		<if test="project_id!=null and project_id!=''">
+	    		and a.project_id = #{project_id}
+	    	</if>
+	    	<if test="supplier_id!=null and supplier_id!=''">
+	    		and b.supplier_id = #{supplier_id}
+	    	</if>
+    	) a left join ems_project b on a.project_id=b.id
+    	left join sys_user c on a.operater=c.id
+    	<where>
+    		and a.store_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.look='Y')
+    		<if test="store_id!=null and store_id!=''">
+    			and a.store_id=#{store_id}
+    		</if>
+    		<if test="date_start!=null">
+    			and a.orderDate &gt;=#{date_start}
+    		</if>
+    		<if test="date_end!=null">
+    			and a.orderDate &lt;=#{date_end}
+    		</if>
+    		<if test="orderNo!=null and orderNo!=''">
+    			and a.orderNo like #{orderNo}
+    		</if>
+    	</where>
+    	order by a.orderDate desc
+    </select>
+     
+    <select id="queryList" resultType="com.mawujun.store.OrderListVO" parameterType="map">
+    	SELECT a.*,b.name as subtype_name,c.name as prod_name,c.spec as prod_spec,c.memo as prod_memo,c.unit as prod_unit,d.name as brand_name,e.name as supplier_name
+	    FROM ems_orderlist a
+	    inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		where a.order_id=#{order_id}   
+    </select>
+    <select id="queryList_count" resultType="int" parameterType="map">
+    	select count(a.id) from ems_Orderlist a
+    	where a.order_id=#{order_id}
+    </select>
+    -->
+    <!-- 条码打印的时候，查询订单明细的数据-
+    <select id="queryList4Barcode" resultType="com.mawujun.store.OrderListVO" parameterType="map">
+    	SELECT a.*,b.name as subtype_name,c.id as prod_id,c.name as prod_name,c.spec as prod_spec,c.memo as prod_memo,c.unit as prod_unit,c.type as prod_type,d.name as brand_name,e.name as supplier_name
+	    FROM ems_orderlist a
+	    inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		where a.order_id=#{order_id}
+		<if test="parent_id!=null and parent_id!=''">
+			and c.parent_id=#{parent_id}
+		</if>
+		<if test="parent_id ==null">
+			and c.parent_id is null
+		</if>
+    </select>
+    -->
+    <!-- 更新条码表中的store_id,就是当更新订单的时候，会更新仓库(有时候会输错了) -->
+    <update id="updateBarcodeStore_id">
+    	update ems_barcode set store_id=#{store_id}
+		where orderlist_id in(
+		      select id from ems_orderlist where order_id=#{order_id}
+		)
+    </update>
+    <!-- 条码打印的时候，查询订单明细的数据-->
+    <select id="queryList4Barcode" resultType="com.mawujun.store.OrderListVO" parameterType="map">
+    	SELECT a.*
+    	,b.name as subtype_name,c.id as prod_id,c.name as prod_name,c.style as prod_style,c.spec as prod_spec,c.memo as prod_memo,c.unit as prod_unit,c.type as prod_type,d.name as brand_name
+	    FROM ems_orderlist a
+	    inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		where a.order_id=#{order_id}
+		<if test="parent_id!=null and parent_id!=''">
+			and c.parent_id=#{parent_id}
+		</if>
+		<if test="parent_id ==null">
+			and c.parent_id is null
+		</if>
+    </select>
+    <!-- 查询套件下面的明细
+    <select id="queryList4Barcode_tj_children" resultType="com.mawujun.store.OrderListVO" parameterType="map">
+    	SELECT a.style as prod_style,a.id as prod_id,a.name as prod_name,a.spec as prod_spec,a.memo as prod_memo,a.unit as prod_unit,a.type as prod_type,b.name as brand_name,c.name as subtype_name
+    	,'Y' as noedit 
+	    FROM ems_equipmentprod a
+	    inner join ems_brand b on a.brand_id=b.id
+	    inner join ems_equipmentsubtype c on a.subtype_id=c.id
+		where  a.parent_id=#{parent_id}
+    </select>
+     -->
+    <!-- 在条码导出的时候，查询还没有完成的订单 -->
+    <select id="queryUncompleteOrderno" resultType="com.mawujun.store.Order" >
+    	SELECT distinct a.id,a.orderNo
+	    FROM ems_order a,sys_userstore b
+		where a.store_id=b.store_id and b.user_id=#{user_id} and b.edit='Y' 
+		and a.status='editover'
+		<if test="orderNo!=null and orderNo!=''">
+			and	a.orderNo like #{orderNo}
+		</if>
+		<if test="project_id!=null and project_id!=''">
+			and	a.project_id = #{project_id}
+		</if>
+    </select>
+	<!-- <select id="queryUncompleteOrderno" resultType="string" parameterType="String">
+    	SELECT distinct a.orderNo,a.orderDate
+	    FROM ems_order a,sys_userstore b
+		where a.store_id=b.store_id and b.user_id=#{user_id} and b.edit='Y' and a.ordernum!=a.totalnum
+		order by a.orderDate desc
+    </select>-->
+    
+    <!-- 获取某个订单的状态 -->
+    <select id="queryStatus" resultType="string" parameterType="String">
+    	SELECT a.status
+	    FROM ems_order a
+		where a.id=#{id}
+    </select>
+    
+   
+
+	<select id="getEquipFromBarcode" resultType="com.mawujun.baseinfo.EquipmentVO" parameterType="String">
+    	select a.ecode,a.orderlist_id, decode(a.status,0,'no_storage','in_storage') as status,
+    	a.store_id,
+		a.brand_id,
+		a.prod_id,
+		c.style,
+		a.subtype_id,
+		a.supplier_id,
+		a.type_id,
+		a.isnew,
+		b.name as subtype_name,c.name as prod_name,c.spec as prod_spec,d.name as brand_name,e.name as supplier_name
+		from ems_barcode a 
+		inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		where a.ecode=#{ecode}  
+    </select>
+	<!--更新订单明细中，已经入库的数量 
+	<update id="updateTotalNum">
+    	update ems_orderlist 
+    	set totalNum=${totalNum}
+    	where id=#{orderlist_id}
+    </update> 
+    -->
+    
+    
+<!--  使用父级的型号
+    <select id="getBarcodesRange" resultType="com.mawujun.store.BarcodeVO" parameterType="map">
+    	SELECT a.*,b.name as subtype_name,c.name as prod_name,d.name as brand_name,f.ecode,e.name as supplier_name
+	    FROM ems_orderlist a
+	    inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_order g on a.order_id=g.id
+		inner join ems_supplier e on g.supplier_id=e.id
+		inner join ems_Barcode f on a.id=f.orderlist_id and f.randomStr= #{randomStr}
+		where a.id=#{orderlist_id}   
+		order by f.ecode
+    </select>
+    -->
+ 	<select id="getBarcodesRange" resultType="com.mawujun.store.BarcodeVO" parameterType="map">
+    	SELECT a.*,b.name as subtype_name,c.name as prod_name,c.style as prod_style,d.name as brand_name,e.name as supplier_name
+	    FROM ems_Barcode a
+	    inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		where a.orderlist_id=#{orderlist_id}   and a.randomStr= #{randomStr}
+		order by a.ecode
+    </select>
+    
+    <delete id="deleteBarcodeWhenAllin">
+    	delete ems_barcode where orderlist_id=#{orderlist_id} and status=0 and 1=(
+			select decode(totalnum,ordernum,1,0) from ems_orderlist where  id=#{orderlist_id}
+		)
+    </delete>
+    <!-- 在删除订单的时候，清除该订单中所有条码 -->
+     <delete id="deleteBarcodeByOrder">
+    	delete ems_barcode where orderlist_id in (
+    		select id from ems_orderlist where order_id=#{order_id}
+    	)
+    </delete>
+    <!-- 获取某个订单明细的入库数量，更新订单明细的时候 -->
+    <select id="getTotalNumByOrderList_id" resultType="int">
+    	select count(ecode) from ems_equipment where orderlist_id=#{orderlist_id}
+    </select>
+    <!-- 判断某个订单是否有设备入库了 ，删除订单的时候-->
+    <select id="getTotalNumByOrder_id" resultType="int">
+    	select count(ecode) from ems_equipment a,ems_orderlist b where a.orderlist_id=b.id and b.order_id=#{order_id}
+    </select>
+</mapper>
+
