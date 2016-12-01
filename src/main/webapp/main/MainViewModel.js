@@ -44,7 +44,7 @@ Ext.define('Ems.main.MainViewModel', {
 
 				// 系统信息
 				system : {
-					name : '宁波东望生产调度系统',
+					name : '宁波东望固定资产管理及生产调度系统',
 					version : '2.0.0',
 					iconUrl : ''
 				},
