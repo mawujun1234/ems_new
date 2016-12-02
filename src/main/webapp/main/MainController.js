@@ -66,8 +66,8 @@ Ext.define('Ems.main.MainController', {
 					menu_id:menuitem.get("id"),
 					title:menuitem.get("name"),
 					url:url,
-					closable : true,
-					reorderable : true
+					closable : true
+					//reorderable : true
 				}));
 			},
 

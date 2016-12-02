@@ -115,10 +115,6 @@
             return;
         }
 
-        if (hasOption('no-toolbar') || /no-toolbar/.test(document.cookie)) {
-            return;
-        }
-
         setTimeout(function() {
             toolbar = Ext.widget({
                 xtype: 'toolbar',
@@ -127,6 +123,8 @@
                 id: 'options-toolbar',
                 floating: true,
                 fixed: true,
+                defaultAlign: Ext.optionsToolbarAlign || 'tr-tr',
+                alignOffset: [-(Ext.getScrollbarSize().width + 5), 0],
                 preventFocusOnActivate: true,
                 draggable: {
                     constrain: true
@@ -152,7 +150,7 @@
                             { value: 'crisp-touch', name: 'Crisp Touch' },
                             { value: 'classic', name: 'Classic' },
                             { value: 'gray', name: 'Gray' },
-                            { value: 'triton', name: 'Triton' }
+                            { value: 'aria', name: 'ARIA' }
                         ]
                     }),
                     value: theme,
@@ -172,7 +170,7 @@
                      * Only visible in repoDevMode and on QA sites
                      */
                     xtype: 'button',
-                    hidden: !(Ext.repoDevMode || location.href.indexOf('qa.sencha.com') !== -1),
+                    hidden: !(Ext.devMode === 2 || location.href.indexOf('qa.sencha.com') !== -1),
                     enableToggle: true,
                     pressed: rtl,
                     text: 'RTL',
@@ -192,20 +190,9 @@
                     handler: function() {
                         toolbar.destroy();
                     }
-                }],
-
-                // Extra constraint margins within default constrain region of parentNode
-                constraintInsets: '0 -' + (Ext.getScrollbarSize().width + 5) + ' 0 0'
+                }]
             });
             toolbar.show();
-            toolbar.anchorTo(
-                document.body,
-                Ext.optionsToolbarAlign || 'tr-tr',
-                [-(Ext.getScrollbarSize().width + 5), 0],  //adjust for scrollbar offsets
-                false,                                     //anim
-                true                                       //monitor scroll
-            );
-
         }, 100);
 
     });

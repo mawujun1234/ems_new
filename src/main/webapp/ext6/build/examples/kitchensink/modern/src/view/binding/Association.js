@@ -3,7 +3,7 @@ Ext.define('KitchenSink.view.binding.Association', {
 
     viewModel: 'binding-association',
 
-    //<example>
+    // <example>
     otherContent: [{
         type: 'ViewModel',
         path: 'modern/src/view/binding/AssociationModel.js'
@@ -11,7 +11,7 @@ Ext.define('KitchenSink.view.binding.Association', {
         type: 'Model',
         path: 'modern/src/model/Person.js'
     }],
-    //</example>
+    // </example>
 
     referenceHolder: true,
     layout: {
@@ -19,16 +19,18 @@ Ext.define('KitchenSink.view.binding.Association', {
         align: 'stretch'
     },
 
+    shadow: true,
+    cls: 'demo-solid-background',
     items: [{
         xtype: 'list',
-        flex: 1,
+        flex: 2,
         title: 'People',
         itemTpl: '{firstName} {lastName}',
         reference: 'peopleList',
         bind: '{people}'
     }, {
         xtype: 'list',
-        flex: 1,
+        flex: 3,
         itemTpl: 'Created: {created:date("Y-m-d")}, Key: {accountKey}',
         items: [{
             xtype: 'titlebar',

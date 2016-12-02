@@ -1,33 +1,32 @@
 /**
- * This is an example of using the Ext JS grid to show very large datasets
- * without overloading the DOM. It also uses locking columns, and incorporates the
- * GroupSummary feature. Filtering is enabled on certain columns using the FilterFeature.
+ * This is an example of using the Ext JS grid to show very large
+ * datasets without overloading the DOM. It also uses locking
+ * columns, and incorporates the GroupSummary feature. Filtering
+ * is enabled on certain columns using the FilterFeature.
  *
- * As an illustration of the ability of grid columns to act as containers, the Title
- * column has a filter text field built in which filters as you type.
+ * As an illustration of the ability of grid columns to act as
+ * containers, the Title column has a filter text field built in
+ * which filters as you type.
  *
  * The grid is editable using the RowEditing plugin.
  *
- * The `multiColumnSort` config is used to allow multiple columns to have sorters.
+ * The `multiColumnSort` config is used to allow multiple columns
+ * to have sorters.
  *
- * It is also possible to export the grid data to Excel. This feature is available in Ext JS Premium.
+ * It is also possible to export the grid data to Excel. This
+ * feature is available in Ext JS Premium.
  */
 Ext.define('KitchenSink.view.grid.BigData', {
     extend: 'Ext.grid.Panel',
+    xtype: 'big-data-grid',
+    controller: 'bigdata',
+
     requires: [
         'Ext.grid.filters.Filters',
         'Ext.grid.plugin.Exporter'
     ],
-    xtype: 'big-data-grid',
-    store: 'BigData',
-    columnLines: true,
-    height: 400,
-    width: 910,
-    title: 'Editable Big Data Grid',
-    multiColumnSort: true,
 
     //<example>
-    exampleTitle: 'Editable Big Data Grid',
     otherContent: [{
         type: 'Controller',
         path: 'classic/samples/view/grid/BigDataController.js'
@@ -38,16 +37,18 @@ Ext.define('KitchenSink.view.grid.BigData', {
         type: 'Model',
         path: 'classic/samples/model/grid/Employee.js'
     }],
-    exampleDescription: [
-        '<p>This example uses locking columns, and incorporates the GroupSummary feature.</p>' +
-        '<p>Filtering is enabled on certain columns using the FilterFeature UX.</p>' +
-        '<p>As an illustration of the ability of grid columns to act as containers, the ' +
-        'Title column has a filter text field built in which filters as you type.</p>' +
-        '<p>The grid is editable using the RowEditing plugin.</p>',
-        '<p>The <code>multiColumnSort</code> config is used to allow multiple columns to have sorters.</p>'
-    ].join(''),
     //</example>
-    controller: 'bigdata',
+
+    title: 'Editable Big Data Grid',
+    width: 910,
+    height: 400,
+
+    store: 'BigData',
+    columnLines: true,
+    multiColumnSort: true,
+
+    // We do not need automatic height synching.
+    syncRowHeight: false,
 
     features: [{
         ftype : 'groupingsummary',
@@ -59,13 +60,28 @@ Ext.define('KitchenSink.view.grid.BigData', {
         dock: 'bottom'
     }],
 
+    layout: 'border',
+    split: true,
+    
+    lockedGridConfig: {
+        title: 'Employees',
+        header: false,
+        collapsible: true,
+        width: 325,
+        minWidth: 290,
+        forceFit: true
+    },
+
     selModel: {
         type: 'checkboxmodel',
         checkOnly: true
     },
     
     listeners: {
-        headermenucreate: 'onHeaderMenuCreate'
+        headermenucreate: 'onHeaderMenuCreate',
+        // this event notifies us when the document was saved
+        documentsave: 'onDocumentSave',
+        beforedocumentsave: 'onBeforeDocumentSave'
     },
 
     columns:[{
@@ -83,19 +99,24 @@ Ext.define('KitchenSink.view.grid.BigData', {
         editRenderer: 'bold'
     }, {
         text: 'Name (Filter)',
-        sortable: true,
         dataIndex: 'name',
-        groupable: false,
+        sortable: true,
+        sorter: {
+            sorterFn: 'nameSorter' // set controller
+        },
+
         width: 140,
+        groupable: false,
+
         layout: 'hbox',
         locked: true,
         renderer: 'concatNames',
         editor: {
             xtype: 'textfield'
         },
-        items    : {
+        items: {
             xtype: 'textfield',
-            reference: 'nameFilterField',  // So that the Controller can access it easily
+            reference: 'nameFilterField',
             flex : 1,
             margin: 2,
             enableKeyEvents: true,
@@ -125,6 +146,12 @@ Ext.define('KitchenSink.view.grid.BigData', {
         },
         editor: {
             xtype: 'datefield'
+        },
+        exportStyle: {
+            alignment: {
+                horizontal: 'Right'
+            },
+            format: 'Long Date'
         }
     }, {
         text: 'Join date',
@@ -137,6 +164,12 @@ Ext.define('KitchenSink.view.grid.BigData', {
         },
         editor: {
             xtype: 'datefield'
+        },
+        exportStyle: {
+            alignment: {
+                horizontal: 'Right'
+            },
+            format: 'Long Date'
         }
     }, {
         text: 'Notice<br>period',
@@ -148,24 +181,19 @@ Ext.define('KitchenSink.view.grid.BigData', {
         },
         editor: {
             xtype: 'combobox',
-            initComponent: function() {
-                this.store = this.column.up('tablepanel').store.collect(this.column.dataIndex, false, true);
-                Ext.form.field.ComboBox.prototype.initComponent.apply(this, arguments);
+            listeners: {
+                beforerender: 'onBeforeRenderNoticeEditor'
             }
         }
     }, {
         text: 'Email address',
         dataIndex: 'email',
+
         width: 200,
         groupable: false,
-        renderer: function(v) {
-            return '<a href="mailto:' + v + '">' + v + '</a>';
-        },
+        renderer: 'renderMailto',
         editor: {
             xtype: 'textfield'
-        },
-        filter: {
-
         }
     }, {
         text: 'Department',
@@ -177,6 +205,7 @@ Ext.define('KitchenSink.view.grid.BigData', {
         }
     }, {
         text: 'Absences',
+        shrinkWrap: true,
         columns: [{
             text: 'Illness',
             dataIndex: 'sickDays',
@@ -194,8 +223,7 @@ Ext.define('KitchenSink.view.grid.BigData', {
         }, {
             text: 'Holidays',
             dataIndex: 'holidayDays',
-            // Size column to title text
-            width: null,
+            width: null, // Size column to title text
             groupable: false,
             summaryType: 'sum',
             summaryFormatter: 'number("0")',
@@ -209,9 +237,11 @@ Ext.define('KitchenSink.view.grid.BigData', {
         }, {
             text: 'Holiday Allowance',
             dataIndex: 'holidayAllowance',
-            // Size column to title text
-            width: null,
+            width: null, // Size column to title text
             groupable: false,
+            summaryType: 'sum',
+            summaryFormatter: 'number("0.00")',
+            formatter: 'number("0.00")',
             filter: {
 
             },
@@ -236,6 +266,12 @@ Ext.define('KitchenSink.view.grid.BigData', {
         editor: {
             xtype: 'numberfield',
             decimalPrecision: 2
+        },
+        exportStyle: {
+            alignment: {
+                horizontal: 'Right'
+            },
+            format: 'Currency'
         }
     }],
 
@@ -248,8 +284,25 @@ Ext.define('KitchenSink.view.grid.BigData', {
         items: [{
             ui: 'default-toolbar',
             xtype: 'button',
-            text: 'Export to Excel',
-            handler: 'exportToExcel'
+            text: 'Export to ...',
+            menu: {
+                items: [{
+                    text:   'Excel xlsx',
+                    handler: 'exportToXlsx'
+                },{
+                    text: 'Excel xml',
+                    handler: 'exportToXml'
+                },{
+                    text:   'CSV',
+                    handler: 'exportToCSV'
+                },{
+                    text:   'TSV',
+                    handler: 'exportToTSV'
+                },{
+                    text:   'HTML',
+                    handler: 'exportToHtml'
+                }]
+            }
         }]
     },
 
@@ -261,7 +314,7 @@ Ext.define('KitchenSink.view.grid.BigData', {
         // dblclick invokes the row editor
         expandOnDblClick: false,
         rowBodyTpl: '<img src="{avatar}" height="100px" style="float:left;margin:0 10px 5px 0"><b>{name}<br></b>{dob:date}'
-    },{
+    }, {
         ptype: 'gridexporter'
     }]
 });
