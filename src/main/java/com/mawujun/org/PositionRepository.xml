@@ -6,11 +6,18 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 <!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
 <mapper namespace="com.mawujun.org.PositionRepository">
 	
+	<!-- 为职位授权的时候-->
     <select id="querySelectOrgs" resultType="com.mawujun.org.PositionOrgAccessVO" parameterType="map">
     	select a.position_id,a.look,a.edit,b.id as org_id,b.code as org_code,b.name as org_name from T_POSITION_ORG_ACCESS a right join T_ORG b
 		on a.org_id=b.id 
 		and a.position_id=#{position_id} 
-		where  b.ORGTYPE=#{orgType}
+		where  
+		<if test="orgType=='workunit'" >
+			b.ORGTYPE=#{orgType}
+		</if>
+		<if test="orgType=='store'" >
+			b.ORGTYPE in ('store_build','store_prepare')
+		</if>
     </select> 
      
     

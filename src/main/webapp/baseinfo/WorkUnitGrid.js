@@ -36,7 +36,7 @@ Ext.define('Ems.baseinfo.WorkUnitGrid',{
 			autoLoad:true,
 			proxy:{
 				type: 'ajax',
-			    url : Ext.ContextPath+'/org/queryWorkunit.do',
+			    url : Ext.ContextPath+'/org/queryWorkunits.do',
 			    headers:{ 'Accept':'application/json;'},
 			    actionMethods: { read: 'POST' },
 			    extraParams:{limit:50},

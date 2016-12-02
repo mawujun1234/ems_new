@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mawujun.exception.BusinessException;
+import com.mawujun.permission.ShiroUtils;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
 import com.mawujun.utils.M;
@@ -188,5 +189,15 @@ public class OrgService extends AbstractService<Org, String>{
 		//初始化reportcode
 		initReportCode(org_id, dim,reportcodes[1]);
 		
+	}
+	
+	public List<Org> queryStores4Combo(Boolean look,Boolean edit) {
+		return orgRepository.queryStores4Combo(look, edit,ShiroUtils.getUserId());
+	}
+	public List<Org> queryWorkunits4Combo(Boolean look,Boolean edit) {
+		return orgRepository.queryWorkunits4Combo(look, edit,ShiroUtils.getUserId());
+	}
+	public List<Org> queryRepaircenter4Combo(Boolean look,Boolean edit) {
+		return orgRepository.queryRepaircenter4Combo(look, edit,ShiroUtils.getUserId());
 	}
 }

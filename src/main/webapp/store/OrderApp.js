@@ -58,61 +58,28 @@ Ext.onReady(function() {
 					}
 				}
 			});
-	var store_combox = Ext.create('Ext.form.field.ComboBox', {
-				fieldLabel : '入库仓库',
-				labelAlign : 'right',
-				labelWidth : 60,
-				// xtype:'combobox',
-				// afterLabelTextTpl: Ext.required,
-				name : 'store_id',
-				displayField : 'name',
-				valueField : 'id',
-				// queryParam: 'name',
-				// queryMode: 'remote',
-				// triggerAction: 'query',
-				// minChars:-1,
-				// trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-				// trigger2Cls: Ext.baseCSSPrefix +
-				// 'form-arrow-trigger',//'form-search-trigger',
-				// onTrigger1Click : function(){
-				// var me = this;
-				// me.setValue('');
-				// },
-				allowBlank : false,
-				store : Ext.create('Ext.data.Store', {
-							fields : ['id', 'name'],
-							proxy : {
-								type : 'ajax',
-								extraParams : {
-									type : [1, 3],
-									look : true
-								},
-								url : Ext.ContextPath + "/store/queryCombo.do",
-								reader : {
-									type : 'json',
-									root : 'root'
-								}
-							}
-						})
-			});
+	var store_combox=Ext.create('Ems.baseinfo.StoreCombo',{
+		look:true,
+		fieldLabel : '入库仓库'
+	});
 
-//	var orderDate = Ext.create('Ext.form.field.Date', {
-//				fieldLabel : '订购日期',
-//				labelWidth : 60,
-//				name : 'orderDate',
-//				format : 'Y-m-d',
-//				value : new Date()
-//			});
-//	var operater = Ext.create('Ext.form.field.Text', {
-//				labelAlign : 'right',
-//				labelWidth : 55,
-//				fieldLabel : '经办人',
-//				name : 'operater',
-//				readOnly : true,
-//				allowBlank : false,
-//				value : loginName
-//			});
-//	//
+	var orderDate = Ext.create('Ext.form.field.Date', {
+				fieldLabel : '订购日期',
+				labelWidth : 60,
+				name : 'orderDate',
+				format : 'Y-m-d',
+				value : new Date()
+			});
+	var operater = Ext.create('Ext.form.field.Text', {
+				labelAlign : 'right',
+				labelWidth : 55,
+				fieldLabel : '经办人',
+				name : 'operater',
+				readOnly : true,
+				allowBlank : false,
+				value : loginName
+			});
+	//
 //	// var project_id=Ext.create('Ext.form.field.Hidden',{
 //	// labelAlign:'right',
 //	// labelWidth:40,
@@ -878,7 +845,7 @@ Ext.onReady(function() {
 	var viewPort = Ext.create('Ext.container.Viewport', {
 				layout : 'fit',
 				//items : [step1]
-				items:[{layout:'center',html:'111'}]
+				items:[{layout:'center',items:[store_combox]}]
 			});
 
 });

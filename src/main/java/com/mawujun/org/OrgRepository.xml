@@ -80,6 +80,50 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	) x left join t_position_org_access y on x.orgno=y.orgno and y.position_id=#{position_id}
     </select> 
 
-	
+	<select id="queryStores4Combo" resultType="com.mawujun.org.Org" parameterType="map" >
+    	select a.* from t_org a,t_position_org_access b,t_position_org_user c 
+    	where a.id=b.org_id and b.position_id=c.position_id and c.user_id=#{user_id} 
+    	and a.orgtype in ('store_build','store_prepare')
+    	<if test="look==true">
+    		and b.look=1
+    	</if>
+    	<if test="edit==true">
+    		and b.edit=1
+    	</if>
+    	<if test="edit!=true and look!=true">
+    		and 1!=1
+    	</if>
+    	 
+    </select>
+    <select id="queryWorkunits4Combo" resultType="com.mawujun.org.Org" parameterType="map" >
+    	select a.* from t_org a,t_position_org_access b,t_position_org_user c 
+    	where a.id=b.org_id and b.position_id=c.position_id and c.user_id=#{user_id} 
+    	and a.orgtype ='workunit'
+    	<if test="look==true">
+    		and b.look=1
+    	</if>
+    	<if test="edit==true">
+    		and b.edit=1
+    	</if>
+    	<if test="edit!=true and look!=true">
+    		and 1!=1
+    	</if>
+    	 
+    </select>
+     <select id="queryRepaircenter4Combo" resultType="com.mawujun.org.Org" parameterType="map" >
+    	select a.* from t_org a,t_position_org_access b,t_position_org_user c 
+    	where a.id=b.org_id and b.position_id=c.position_id and c.user_id=#{user_id} 
+    	and a.orgtype ='repair_centre'
+    	<if test="look==true">
+    		and b.look=1
+    	</if>
+    	<if test="edit==true">
+    		and b.edit=1
+    	</if>
+    	<if test="edit!=true and look!=true">
+    		and 1!=1
+    	</if>
+    	 
+    </select>
 </mapper>
 

@@ -92,12 +92,46 @@ public class OrgController {
 	 * 查询所有的作业单位
 	 * @return
 	 */
-	@RequestMapping("/org/queryWorkunit.do")
+	@RequestMapping("/org/queryWorkunits.do")
 	@ResponseBody
 	public List<Org> queryWorkunit() {
 		Cnd cnd=Cnd.select().andEquals(M.Org.orgType, OrgType.workunit);
 		List<Org> orges=orgService.query(cnd);
 		return orges;
+	}
+	
+	/**
+	 * 
+	 * @author mawujun email:160649888@163.com qq:16064988
+	 * @param type 
+	 * @return
+	 */
+	@RequestMapping("/org/queryStores4Combo.do")
+	@ResponseBody
+	public List<Org> queryStores4Combo(Boolean look,Boolean edit) {	
+		return orgService.queryStores4Combo(look, edit);
+	}
+	/**
+	 * 
+	 * @author mawujun email:160649888@163.com qq:16064988
+	 * @param type 
+	 * @return
+	 */
+	@RequestMapping("/org/queryRepaircenter4Combo.do")
+	@ResponseBody
+	public List<Org> queryRepaircenter4Combo(Boolean look,Boolean edit) {	
+		return orgService.queryRepaircenter4Combo(look, edit);
+	}
+	/**
+	 * 
+	 * @author mawujun email:160649888@163.com qq:16064988
+	 * @param type 
+	 * @return
+	 */
+	@RequestMapping("/org/queryWorkunits4Combo.do")
+	@ResponseBody
+	public List<Org> queryWorkunits4Combo(Boolean look,Boolean edit) {	
+		return orgService.queryWorkunits4Combo(look, edit);
 	}
 
 	/**
