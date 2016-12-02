@@ -21,9 +21,10 @@ INSERT INTO "EMSNEW"."T_ORG_ORG" (DIM, PARENT_ID, CHILD_ID) VALUES ('base', 'roo
 INSERT INTO "EMSNEW"."T_ORG" (ID, NAME, ORGTYPE, SORT, STATE) VALUES ('workunitgroup', '作业单位组', 'department', '0', 'valid');
 INSERT INTO "EMSNEW"."T_ORG_ORG" (DIM, PARENT_ID, CHILD_ID) VALUES ('base', 'root', 'workunitgroup');
 
---插入t_org
-insert into emsnew.t_org(id,code,name,name_short,orgtype,sort,state) 
-select id,null,name,null,'store',0,'valid' from ems_store@emslink;
+--插入t_org,同步仓库数据
+insert into t_org(id,code,name,name_short,orgtype,sort,state) 
+select id,null,name,null,decode(type,1,'store_build',2,'repair_centre',3,'store_prepare','department'),0,'valid' from ems_store@emslink;
+--插入t_org,同步作业单位数据
 insert into t_org(id,code,name,name_short,orgtype,sort,state) 
 select id,null,name,null,'workunit',0,'valid' from ems_workunit@emslink;
 --插入t_org_org
@@ -36,7 +37,9 @@ select 'base','workunitgroup',id from ems_workunit@emslink;
 	http://localhost:8085/org/initReportCode.do
 --为仓库和作业单位添加职位
 insert into t_position(id,name,org_id,positionType_id) 
-select sys_guid(),'仓管'，id,'employee' from ems_store@emslink;
+select sys_guid(),'仓管'，id,'employee' from ems_store@emslink where type in (1,3);
+insert into t_position(id,name,org_id,positionType_id) 
+select sys_guid(),'维修成员'，id,'employee' from ems_store@emslink where type in (2);;
 insert into t_position(id,name,org_id,positionType_id) 
 select sys_guid(),'小组成员'，id,'workunitgroup' from ems_workunit@emslink;
 --把仓库和作业单位的人员导过来

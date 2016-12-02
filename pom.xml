@@ -18,6 +18,7 @@
 		<druid.version>1.0.20</druid.version>
 		<oracle.version>11.2</oracle.version>
 		<poi.version>3.12</poi.version>
+		<echcahe.version>2.10.3</echcahe.version>
 	</properties>
 
 	<profiles>
@@ -79,6 +80,11 @@
 	</profiles>
 
 	<dependencies>
+		<dependency>
+		    <groupId>net.sf.ehcache</groupId>
+		    <artifactId>ehcache</artifactId>
+		    <version>${echcahe.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>

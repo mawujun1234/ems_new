@@ -6,8 +6,10 @@ package com.mawujun.org;
  *
  */
 public enum OrgType {
-	company("公司","icon-home"),department("部门","icon-sitemap"),workunit("作业单位","icon-truck"),store("仓库","icon-download-alt"),repaircentre("维修中心","icon-wrench")
-	,position("职位","icon-group");
+	company("公司","icon-home"),department("部门","icon-sitemap"),workunit("作业单位","icon-truck")
+	,store_build("在建仓库","icon-download-alt")
+	,store_prepare("备品备件仓库","icon-download-alt")
+	,repair_centre("维修中心","icon-wrench");
 	
 	private String name;
 	private String iconCls;

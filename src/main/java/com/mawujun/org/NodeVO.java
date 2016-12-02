@@ -5,19 +5,26 @@ public class NodeVO {
 	private String id;//职位id或者orgno
 	private String name;
 	//private Boolean leaf;
-	private OrgType type;//节点类型，是组织节点和职位
+	private String type;//节点类型，是组织节点和职位
 	private String remark;
 	
 	private String org_id;//所在节点的组织单元，如果是组织单元就是自身的orgno
 	private String parent_id;
 	
 	private Boolean checked;//在查看职位可以访问的组织单元的时候用的
-	
+	//,position("职位","icon-group")
 	public String getIconCls(){
 		if(type==null){
 			return "";
 		}
-		return type.getIconCls();
+		if("position".equals(this.getType())){
+			return "icon-group";
+		}
+		OrgType aa=OrgType.valueOf(this.getType());
+		if(aa==null){
+			return "";
+		}
+		return aa.getIconCls();
 //		if("position".equals(this.getType())){
 //			return "icon-group";
 //		} else {
@@ -26,7 +33,7 @@ public class NodeVO {
 	}
 	
 	public Boolean getLeaf(){
-		if(OrgType.position==this.getType()){
+		if("position".equals(this.getType())){
 			return true;
 		} else {
 			return false;
@@ -69,11 +76,11 @@ public class NodeVO {
 		this.org_id = org_id;
 	}
 
-	public OrgType getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(OrgType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 

@@ -233,7 +233,7 @@ Ext.define('Ems.store.OrderForm',{
             }
       });
       me.buttons=[saveButton];
-      me.addEvents("saved");
+     // me.addEvents("saved");
 		me.callParent();
 	}
 });

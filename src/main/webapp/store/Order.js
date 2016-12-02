@@ -1,4 +1,4 @@
-Ext.defineModel("Ems.store.Order",{
+Ext.define("Ems.store.Order",{
 	extend:"Ext.data.Model",
 	idProperty:'id',
 	fields:[
@@ -40,6 +40,27 @@ Ext.defineModel("Ems.store.Order",{
 		{name:'operater_name',type:'string'},
 		{name:'status_name',type:'string'}
 	],
-	associations:[
-	]
+	proxy:{
+		type:'ajax',
+		actionMethods: { read: 'POST' },
+		timeout :600000,
+		headers:{ 'Accept':'application/json;'},
+		writer:{
+			type:'json',
+			writeRecordId:true,
+			writeAllFields:true
+		},
+		reader:{
+			type:'json'
+			///rootProperty:'root',
+			//successProperty:'success',
+			//totalProperty:'total'		
+		},
+		api:{
+			read:Ext.ContextPath+'/order/load.do',
+			create:Ext.ContextPath+'/order/create.do',
+			update:Ext.ContextPath+'/order/update.do',
+			destroy:Ext.ContextPath+'/order/destroy.do'
+		}
+	}
 });

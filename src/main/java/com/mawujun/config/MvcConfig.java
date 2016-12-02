@@ -8,12 +8,17 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -183,6 +188,14 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements SchedulingConf
      @Bean(destroyMethod="shutdown")
      public Executor taskScheduler() {
          return Executors.newScheduledThreadPool(10);
+     }
+     @Autowired
+     ShiroConfig shiroConfig;
+     @Bean(name="cacheManager")
+     public EhCacheCacheManager cacheCacheManager(){
+    	 EhCacheCacheManager ehCacheCacheManager=new EhCacheCacheManager();
+    	 ehCacheCacheManager.setCacheManager(shiroConfig.ehCacheManagerFactoryBean().getObject());
+    	 return ehCacheCacheManager;
      }
 
 }

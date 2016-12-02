@@ -15,8 +15,11 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import com.mawujun.controller.shiro.ShiroFormAuthenticationFilter;
 import com.mawujun.controller.shiro.ShiroKickoutSessionControlFilter;
@@ -33,6 +36,7 @@ import com.mawujun.permission.ShiroAuthorizingRealm;
 //@MapperScan(basePackages = "com.mawujun")
 //@PropertySource("classpath:config.properties")
 public class ShiroConfig {
+	
 	@Bean
 	public ShiroApplicationListener ShiroApplicationListener(){
 		ShiroApplicationListener shiroApplicationListener= new ShiroApplicationListener();
@@ -50,7 +54,7 @@ public class ShiroConfig {
 	public Realm shiroRealm(){
 		ShiroAuthorizingRealm shiroRealm=new ShiroAuthorizingRealm();
 
-		shiroRealm.setCacheManager(ehcacheManager());
+		shiroRealm.setCacheManager(shiroCacheManager());
 		
 		return shiroRealm;
 	}
@@ -103,7 +107,7 @@ public class ShiroConfig {
 		shiroKickoutSessionControlFilter.setKickoutUrl("/main/login.jsp");
 		//shiroKickoutSessionControlFilter.setMaxSession(1);
 		shiroKickoutSessionControlFilter.setKickoutAfter(false);
-		shiroKickoutSessionControlFilter.setCacheManager(ehcacheManager());
+		shiroKickoutSessionControlFilter.setCacheManager(shiroCacheManager());
 		shiroKickoutSessionControlFilter.setSessionManager(sessionManager());
 
 		shiroFilter.getFilters().put("kickout", shiroKickoutSessionControlFilter);
@@ -153,10 +157,32 @@ public class ShiroConfig {
 	
 
 	
+//	@Bean
+//    public EhCacheManager cacheManager() {  
+//        EhCacheManager em = new EhCacheManager();  
+//        //em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
+//        em.setCacheManagerConfigFile("classpath:ehcache.xml");  
+//        return em;  
+//    } 
+	
+//	@Resource(name="cacheManagerFactory")
+//	EhCacheManagerFactoryBean ehCacheManagerFactoryBean;
+	
+	
+	@Bean(name = "cacheManagerFactory")
+	public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
+		EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();
+		Resource resource = new ClassPathResource("ehcache.xml");
+		ehCacheManagerFactoryBean.setConfigLocation(resource);
+		ehCacheManagerFactoryBean.setShared(true);
+		return ehCacheManagerFactoryBean;
+	}
 	@Bean
-    public EhCacheManager ehcacheManager() {  
+    public EhCacheManager shiroCacheManager() {  
         EhCacheManager em = new EhCacheManager();  
-        em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");  
+        //em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
+        //em.setCacheManagerConfigFile("classpath:ehcache.xml"); 
+        em.setCacheManager(ehCacheManagerFactoryBean().getObject());
         return em;  
     } 
 	
