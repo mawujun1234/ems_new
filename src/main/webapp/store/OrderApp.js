@@ -70,6 +70,7 @@ Ext.onReady(function() {
 				format : 'Y-m-d',
 				value : new Date()
 			});
+
 	var operater = Ext.create('Ext.form.field.Text', {
 				labelAlign : 'right',
 				labelWidth : 55,
@@ -77,7 +78,7 @@ Ext.onReady(function() {
 				name : 'operater',
 				readOnly : true,
 				allowBlank : false,
-				value : loginName
+				value : Ext.util.Cookies.get("username")
 			});
 	//
 //	// var project_id=Ext.create('Ext.form.field.Hidden',{

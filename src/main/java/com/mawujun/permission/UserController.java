@@ -2,11 +2,10 @@ package com.mawujun.permission;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mawujun.controller.spring.mvc.json.JsonConfigHolder;
-import com.mawujun.exception.BusinessException;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.utils.M;
 import com.mawujun.utils.page.Pager;
@@ -48,7 +46,7 @@ public class UserController {
 
 	@RequestMapping("/user/login.do")
 	//@ResponseBody
-	public String login(HttpServletRequest request,String username,String password,Model model) {
+	public String login(HttpServletRequest request,HttpServletResponse response,String username,String password,Model model) {
 		Subject subject = SecurityUtils.getSubject(); 
 		
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password); 
@@ -82,6 +80,14 @@ public class UserController {
              }
              model.addAttribute("success", true);
              ShiroUtils.getAuthenticationInfo().setIpAddr(getIpAddr(request));
+             
+             //
+             Cookie cookie = new Cookie("loginName",ShiroUtils.getLoginName());
+             cookie.setPath("/");
+             response.addCookie(cookie);
+             Cookie cookie_username = new Cookie("username",ShiroUtils.getUserName());
+             cookie_username.setPath("/");
+             response.addCookie(cookie_username);
              
              
              //显示调用这个，来初始化ShiroAuthorizingRealm中的doGetAuthorizationInfo方法，来获取用户可以访问的资源,否则将不会调用doGetAuthorizationInfo
