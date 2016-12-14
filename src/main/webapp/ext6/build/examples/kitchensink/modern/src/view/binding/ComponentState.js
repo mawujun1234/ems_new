@@ -1,14 +1,16 @@
 Ext.define('KitchenSink.view.binding.ComponentState', {
     extend: 'Ext.form.Panel',
 
-    //<example>
+    // <example>
     requires: [
         'Ext.app.ViewModel'
     ],
-    //</example>
+    // </example>
 
     viewModel: true,
-    scrollable: false,
+
+    shadow: true,
+    cls: 'demo-solid-background',
 
     items: {
         xtype: 'fieldset',
@@ -34,6 +36,7 @@ Ext.define('KitchenSink.view.binding.ComponentState', {
         }, {
             xtype: 'textfield',
             label: 'High Priority Code',
+            hidden: true,
             bind: {
                 hidden: '{!priority.value}'
             }

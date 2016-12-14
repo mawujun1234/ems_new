@@ -1,7 +1,7 @@
 Ext.define('KitchenSink.view.binding.ChainedStore', {
     extend: 'Ext.Container',
 
-    //<example>
+    // <example>
     requires: ['Ext.grid.Grid'],
     otherContent: [{
         type: 'ViewModel',
@@ -10,12 +10,16 @@ Ext.define('KitchenSink.view.binding.ChainedStore', {
         type: 'Model',
         path: 'modern/src/model/Person.js'
     }],
-    //</example>
+    // </example>
 
     layout: {
         type: 'vbox',
         align: 'stretch'
     },
+    scrollable: true,
+
+    shadow: true,
+    cls: 'demo-solid-background',
 
     referenceHolder: true,
 
@@ -23,7 +27,8 @@ Ext.define('KitchenSink.view.binding.ChainedStore', {
 
     items: [{
         xtype: 'grid',
-        flex: 1,
+        minHeight: 225,
+        flex: 3,
         title: 'All People',
         bind: '{everyone}',
         columns: [{
@@ -41,7 +46,8 @@ Ext.define('KitchenSink.view.binding.ChainedStore', {
         }]
     }, {
         xtype: 'grid',
-        flex: 1,
+        minHeight: 300,
+        flex: 4,
         bind: '{ageFiltered}',
         titleBar: null,
         items: [{

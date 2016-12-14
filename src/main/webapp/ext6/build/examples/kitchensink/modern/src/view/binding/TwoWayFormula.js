@@ -1,15 +1,17 @@
 Ext.define('KitchenSink.view.binding.TwoWayFormula', {
     extend: 'Ext.form.Panel',
 
-    //<example>
+    // <example>
     otherContent: [{
         type: 'ViewModel',
         path: 'modern/src/view/binding/TwoWayFormulaModel.js'
     }],
-    //</example>
+    // </example>
 
     viewModel: 'binding-twowayformula',
-    scrollable: false,
+
+    shadow: true,
+    cls: 'demo-solid-background',
 
     items: {
         xtype: 'fieldset',

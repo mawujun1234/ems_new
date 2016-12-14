@@ -248,6 +248,7 @@ Ext.define('Ems.baseinfo.SupplierCombo', {
 			requires : [
 			// 'Ems.baseinfo.Brand'
 			],
+			emptyText:'请输入关键词进行过滤',
 			fieldLabel : '供应商',
 			displayField : 'name',
 			valueField : 'id',
@@ -321,6 +322,7 @@ Ext.define('Ems.baseinfo.ProjectCombo', {
 			// flex:1,
 			// xtype:'combobox',
 			// afterLabelTextTpl: Ext.required,
+			emptyText:'可以输入关键词进行过滤',
 			name : 'project_id',
 			displayField : 'name',
 			valueField : 'id',
