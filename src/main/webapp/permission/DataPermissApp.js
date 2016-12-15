@@ -1,6 +1,8 @@
 Ext.require("Ems.org.Org");
 Ext.require("Ems.org.OrgTree");
 Ext.require("Ems.org.OrgForm");
+Ext.require('Ems.permission.PositionOrgAccessGrid');
+Ext.require('Ems.org.PositionUserGrid');
 Ext.onReady(function(){
 	var tree=Ext.create('Ems.org.OrgTree',{
 		title:'组织维护',

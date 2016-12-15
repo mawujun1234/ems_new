@@ -12,29 +12,9 @@ Ext.onReady(function() {
 				allowBlank : false,
 				labelAlign : 'right'
 			});
-	var orderType = Ext.create('Ext.form.field.ComboBox', {
-				fieldLabel : '订单类型',
-				labelAlign : 'right',
-				labelWidth : 60,
-				editable : false,
-				// xtype : 'combobox',
-				// afterLabelTextTpl: Ext.required,
-				name : 'orderType',
-				displayField : 'name',
-				valueField : 'id',
-				// value:"1",
-				allowBlank : false,
-				store : Ext.create('Ext.data.Store', {
-							fields : ['id', 'name'],
-							data : [{
-										id : "old_equipment",
-										name : "旧品订单"
-									}, {
-										id : "new_equipment",
-										name : "新品订单"
-									}]
-						}),
-				listeners : {
+	var orderType = Ext.create('Ems.baseinfo.OrderTypeCombo',{
+		allowBlank : false,
+		listeners : {
 					change : function(field, newValue, oldValue) {
 						if ("new_equipment" == newValue) {
 							var depreci_container = step1.child("form")
@@ -56,12 +36,60 @@ Ext.onReady(function() {
 							equip_grid.down('#depreci_day').show();
 						}
 					}
-				}
-			});
-	var store_combox=Ext.create('Ems.baseinfo.StoreCombo',{
-		look:true,
-		fieldLabel : '入库仓库'
+			}
+		
 	});
+//	var orderType = Ext.create('Ext.form.field.ComboBox', {
+//				fieldLabel : '订单类型',
+//				labelAlign : 'right',
+//				labelWidth : 60,
+//				editable : false,
+//				// xtype : 'combobox',
+//				// afterLabelTextTpl: Ext.required,
+//				name : 'orderType',
+//				displayField : 'name',
+//				valueField : 'id',
+//				// value:"1",
+//				allowBlank : false,
+//				store : Ext.create('Ext.data.Store', {
+//							fields : ['id', 'name'],
+//							data : [{
+//										id : "old_equipment",
+//										name : "旧品订单"
+//									}, {
+//										id : "new_equipment",
+//										name : "新品订单"
+//									}]
+//						}),
+//				listeners : {
+//					change : function(field, newValue, oldValue) {
+//						if ("new_equipment" == newValue) {
+//							var depreci_container = step1.child("form")
+//									.getComponent("depreci_container");
+//							if (depreci_container) {
+//								depreci_container.hide();
+//							}
+//							equip_grid.down('#depreci_year').hide();
+//							equip_grid.down('#depreci_month').hide();
+//							equip_grid.down('#depreci_day').hide();
+//						} else {
+//							var depreci_container = step1.child("form")
+//									.getComponent("depreci_container");
+//							if (depreci_container) {
+//								depreci_container.show();
+//							}
+//							equip_grid.down('#depreci_year').show();
+//							equip_grid.down('#depreci_month').show();
+//							equip_grid.down('#depreci_day').show();
+//						}
+//					}
+//				}
+//			});
+	var store_combox = Ext.create('Ems.baseinfo.StoreCombo', {
+				edit : true,
+				allowBlank : false,
+				fieldLabel : '入库仓库'
+			});
 
 	var orderDate = Ext.create('Ext.form.field.Date', {
 				fieldLabel : '订购日期',
@@ -78,97 +106,97 @@ Ext.onReady(function() {
 				name : 'operater',
 				readOnly : true,
 				allowBlank : false,
-				value : Ext.util.Cookies.get("username")
+				value : Ext.util.Cookies.get("usernName")
 			});
 	//
-//	// var project_id=Ext.create('Ext.form.field.Hidden',{
-//	// labelAlign:'right',
-//	// labelWidth:40,
-//	// fieldLabel: '项目',
-//	// name:'project_id',
-//	// readOnly:true,
-//	// emptyText:"不可编辑",
-//	// allowBlank:false
-//	// });
-//	// var project_name=Ext.create('Ext.form.field.Text',{
-//	// labelAlign:'right',
-//	// labelWidth:40,
-//	// fieldLabel: '项目',
-//	// name:'project_name',
-//	// readOnly:true,
-//	// emptyText:"不可编辑",
-//	// allowBlank:false
-//	// });
-//	// var project_button=Ext.create('Ext.button.Button',{
-//	// text:'选择项目',
-//	// margin:'0 0 0 5',
-//	// handler:function(){
-//	// var projectGrid=Ext.create('Ems.baseinfo.ProjectQueryGrid',{
-//	// listeners:{
-//	// itemdblclick:function(view,record,item){
-//	// project_id.setValue(record.get("id"));
-//	// project_name.setValue(record.get("name"));
-//	// win.close();
-//	// }
-//	// }
-//	// });
-//	// var win=Ext.create('Ext.window.Window',{
-//	// title:'双击选择项目',
-//	// items:[projectGrid],
-//	// layout:'fit',
-//	// modal:true,
-//	// width:700,
-//	// height:300
-//	// });
-//	// win.show();
-//	// }
-//	// });
-//
-//	// var project_combox=Ext.create('Ext.form.field.ComboBox',{
-//	// fieldLabel: '项目',
-//	// labelAlign:'right',
-//	// labelWidth:40,
-//	// flex:1,
-//	// //xtype:'combobox',
-//	// //afterLabelTextTpl: Ext.required,
-//	// name: 'project_id',
-//	// displayField: 'name',
-//	// valueField: 'id',
-//	// queryParam: 'name',
-//	// queryMode: 'remote',
-//	// triggerAction: 'query',
-//	// minChars:-1,
-//	// trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-//	// trigger2Cls: Ext.baseCSSPrefix +
-//	// 'form-arrow-trigger',//'form-search-trigger',
-//	// onTrigger1Click : function(){
-//	// var me = this;
-//	// me.setValue('');
-//	// },
-//	// allowBlank: false,
-//	// store:Ext.create('Ext.data.Store', {
-//	// fields: ['id', 'name'],
-//	// proxy:{
-//	// type:'ajax',
-//	// actionMethods: {
-//	// create : 'POST',
-//	// read : 'POST',
-//	// update : 'POST',
-//	// destroy: 'POST'
-//	// },
-//	// //extraParams:{type:[1,3],look:true},
-//	// url:Ext.ContextPath+"/project/query.do",
-//	// reader:{
-//	// type:'json',
-//	// root:'root'
-//	// }
-//	// }
-//	// })
-//	// });
+	// // var project_id=Ext.create('Ext.form.field.Hidden',{
+	// // labelAlign:'right',
+	// // labelWidth:40,
+	// // fieldLabel: '项目',
+	// // name:'project_id',
+	// // readOnly:true,
+	// // emptyText:"不可编辑",
+	// // allowBlank:false
+	// // });
+	// // var project_name=Ext.create('Ext.form.field.Text',{
+	// // labelAlign:'right',
+	// // labelWidth:40,
+	// // fieldLabel: '项目',
+	// // name:'project_name',
+	// // readOnly:true,
+	// // emptyText:"不可编辑",
+	// // allowBlank:false
+	// // });
+	// // var project_button=Ext.create('Ext.button.Button',{
+	// // text:'选择项目',
+	// // margin:'0 0 0 5',
+	// // handler:function(){
+	// // var projectGrid=Ext.create('Ems.baseinfo.ProjectQueryGrid',{
+	// // listeners:{
+	// // itemdblclick:function(view,record,item){
+	// // project_id.setValue(record.get("id"));
+	// // project_name.setValue(record.get("name"));
+	// // win.close();
+	// // }
+	// // }
+	// // });
+	// // var win=Ext.create('Ext.window.Window',{
+	// // title:'双击选择项目',
+	// // items:[projectGrid],
+	// // layout:'fit',
+	// // modal:true,
+	// // width:700,
+	// // height:300
+	// // });
+	// // win.show();
+	// // }
+	// // });
+	//
+	// // var project_combox=Ext.create('Ext.form.field.ComboBox',{
+	// // fieldLabel: '项目',
+	// // labelAlign:'right',
+	// // labelWidth:40,
+	// // flex:1,
+	// // //xtype:'combobox',
+	// // //afterLabelTextTpl: Ext.required,
+	// // name: 'project_id',
+	// // displayField: 'name',
+	// // valueField: 'id',
+	// // queryParam: 'name',
+	// // queryMode: 'remote',
+	// // triggerAction: 'query',
+	// // minChars:-1,
+	// // trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
+	// // trigger2Cls: Ext.baseCSSPrefix +
+	// // 'form-arrow-trigger',//'form-search-trigger',
+	// // onTrigger1Click : function(){
+	// // var me = this;
+	// // me.setValue('');
+	// // },
+	// // allowBlank: false,
+	// // store:Ext.create('Ext.data.Store', {
+	// // fields: ['id', 'name'],
+	// // proxy:{
+	// // type:'ajax',
+	// // actionMethods: {
+	// // create : 'POST',
+	// // read : 'POST',
+	// // update : 'POST',
+	// // destroy: 'POST'
+	// // },
+	// // //extraParams:{type:[1,3],look:true},
+	// // url:Ext.ContextPath+"/project/query.do",
+	// // reader:{
+	// // type:'json',
+	// // root:'root'
+	// // }
+	// // }
+	// // })
+	// // });
 
 	var project_combox = Ext.create('Ems.baseinfo.ProjectCombo', {
 				flex : 1,
-				padding:'0 10 0 0',
+				padding : '0 10 0 0',
 				allowBlank : false
 			});
 	var type_combox = Ext.create('Ems.baseinfo.TypeCombo', {
@@ -236,7 +264,7 @@ Ext.onReady(function() {
 				fieldLabel : '单位',
 				labelWidth : 40,
 				width : 80,
-				padding:'0 5 0 0',
+				padding : '0 5 0 0',
 				labelAlign : 'right',
 				allowBlank : false,
 				readOnly : true,
@@ -260,12 +288,9 @@ Ext.onReady(function() {
 										prod_name.setValue(record.get("name"));
 										prod_spec.setValue(record.get("spec"));
 										prod_unit.setValue(record.get("unit"));
-										quality_month_field.setValue(record
-												.get("quality_month"));
-										brand_id.setValue(record
-												.get("brand_id"));
-										brand_name.setValue(record
-												.get("brand_name"));
+										quality_month_field.setValue(record.get("quality_month"));
+										brand_id.setValue(record.get("brand_id"));
+										brand_name.setValue(record.get("brand_name"));
 
 										style.setValue(record.get("style"));
 
@@ -331,7 +356,7 @@ Ext.onReady(function() {
 				labelAlign : 'right',
 				labelWidth : 50,
 				flex : 1,
-				padding:'0 10 0 0',
+				padding : '0 10 0 0',
 				allowBlank : true
 			});
 	var quality_month_field = Ext.create('Ext.form.field.Number', {
@@ -370,7 +395,7 @@ Ext.onReady(function() {
 				listeners : {
 					change : countTotal
 				},
-				
+
 				allowBlank : true,
 				labelAlign : 'right'
 			});
@@ -597,7 +622,7 @@ Ext.onReady(function() {
 				depreci_month : depreci_month.getValue(),
 				depreci_day : depreci_day.getValue()
 					// orderDate:orderDate.getValue(),
-					// operater:loginUserId
+					// operater:Ext.util.Cookies.get("usernId")
 				});
 			equipStore.add(record);
 			// 订单号和仓库变味不可编辑
@@ -698,13 +723,11 @@ Ext.onReady(function() {
 				xtype : 'fieldcontainer',
 				layout : 'hbox',
 				items : [order_no, orderType, store_combox, orderDate, operater]
-			},
-			{
+			}, {
 				xtype : 'fieldcontainer',
 				layout : 'hbox',
-				items : [operater,project_combox]
-			},
-			{
+				items : [operater, project_combox]
+			}, {
 				xtype : 'fieldcontainer',
 				layout : 'hbox',
 				items : [supplier_combox]
@@ -781,7 +804,7 @@ Ext.onReady(function() {
 					// store_id:store_combox.getValue(),
 					// store_name:store_combox.getRawValue(),
 					// orderDate:orderDate.getValue(),
-					// operater:loginUserId
+					// operater:Ext.util.Cookies.get("usernId")
 					//		            
 					// });
 					var order = {
@@ -792,7 +815,7 @@ Ext.onReady(function() {
 						project_id : project_combox.getValue(),
 						supplier_id : supplier_combox.getValue(),
 						supplier_name : supplier_combox.getRawValue(),
-						operater : loginUserId,
+						operater : Ext.util.Cookies.get("usernId"),
 						orderType : orderType.getValue()
 
 					};
@@ -811,7 +834,7 @@ Ext.onReady(function() {
 								jsonData : barcodes,// {order:order,orderLists:barcodes},
 								params : order,
 								method : "POST",
-								//params:{jsonStr:Ext.encode(equiplist)},
+								// params:{jsonStr:Ext.encode(equiplist)},
 								success : function(response) {
 									var obj = Ext.decode(response.responseText);
 									if (obj.success) {
@@ -822,8 +845,8 @@ Ext.onReady(function() {
 												'Ems.store.OrderList', {
 
 												});
-										//order_no.enable();
-										//store_combox.enable();
+										// order_no.enable();
+										// store_combox.enable();
 										var equipform = step1.down('form');
 										equipform.getForm().loadRecord(record);
 
@@ -852,9 +875,9 @@ Ext.onReady(function() {
 	});
 
 	var viewPort = Ext.create('Ext.container.Viewport', {
-				layout : 'fit',
-				items : [step1]
-				//items:[{layout:'center',items:[store_combox]}]
-			});
+		layout : 'fit',
+		items : [step1]
+			// items:[{layout:'center',items:[store_combox]}]
+		});
 
 });

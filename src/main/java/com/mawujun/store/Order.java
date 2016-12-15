@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mawujun.repository.idEntity.UUIDEntity;
 
 @Entity
@@ -22,6 +23,7 @@ public class Order extends UUIDEntity {
 	private String orderNo;//订单号
 	@Column(length=36)
 	private String store_id;
+	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
 	private Date orderDate;//订购日期
 	@Column(length=36)
 	private String operater;//操作人的id

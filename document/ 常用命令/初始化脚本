@@ -1,3 +1,9 @@
+alter table "EMSNEW"."EMS_EQUIPMENTSUBTYPE" add constraint fk_parent_id foreign key("PARENT_ID") references "EMS_EQUIPMENTTYPE"("ID");
+alter table "EMSNEW"."EMS_EQUIPMENTPROD" add constraint fk_subtype_id foreign key("SUBTYPE_ID") references "EMS_EQUIPMENTSUBTYPE"("ID")
+alter table "EMSNEW"."EMS_EQUIPMENTPROD" add constraint fk_brand_id foreign key("BRAND_ID") references "EMS_BRAND"("ID")
+alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_order_id foreign key("ORDER_ID") references "EMS_ORDER"("ID")
+
+
 insert into t_role(id,name,roletype) values('admin','admin','role');
 insert into t_user(id,loginname,name,pwd,cannotdel,state) values('admin','admin','admin','admin',1,'valid');
 insert into t_role_user(user_id,role_id) values('admin','admin');

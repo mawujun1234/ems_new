@@ -62,7 +62,7 @@ Ext.define('Ems.baseinfo.BrandGrid',{
 				var grid=btn.up("grid");
 				grid.getStore().reload();
 			},
-			iconCls: 'form-reload-button'
+			iconCls: 'icon-refresh'
 		}]
        
       me.callParent();

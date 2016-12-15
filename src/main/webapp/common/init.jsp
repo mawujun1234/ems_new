@@ -28,7 +28,7 @@ String aa=requestURI.replaceAll(contextPath+"/", "/");
          <script type="text/javascript" src="<%=request.getContextPath()%>/ext6/build/classic/theme-crisp/theme-crisp.js"></script>
          <script type="text/javascript" src="<%=request.getContextPath()%>/ext6/build/classic/locale/locale-zh_CN.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/common/common.js"></script>
-	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/css/font-awesome.css">
+	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/font_css/font-awesome.css">
 	
 	<!--
 <script type="text/javascript" src="<%=request.getContextPath()%>/common/DatetimePicker.js"></script>

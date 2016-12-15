@@ -105,7 +105,7 @@ Ext.define('Ems.baseinfo.CustomerTreeGrid',{
 		    handler: function(b){
 		    	me.onCreate(null,b);
 		    },
-		    iconCls: 'form-add-button'
+		    iconCls: 'icon-plus'
 		});
 		//me.addAction(create);
 		actions.push(create);
@@ -117,7 +117,7 @@ Ext.define('Ems.baseinfo.CustomerTreeGrid',{
 		    handler: function(b){
 		    	me.onUpdate(null,b);
 		    },
-		    iconCls: 'form-update-button'
+		    iconCls: 'icon-edit'
 		});
 		//me.addAction(create);
 		actions.push(update);
@@ -130,7 +130,7 @@ Ext.define('Ems.baseinfo.CustomerTreeGrid',{
 		    handler: function(){
 		    	me.onDelete();    
 		    },
-		    iconCls: 'form-delete-button'
+		    iconCls: 'icon-trash'
 		});
 		//me.addAction(destroy);
 		actions.push(destroy)
@@ -141,7 +141,7 @@ Ext.define('Ems.baseinfo.CustomerTreeGrid',{
 		    handler: function(){
 		    	me.onReload();
 		    },
-		    iconCls: 'form-reload-button'
+		    iconCls: 'icon-refresh'
 		});
 		//me.addAction(reload);
 		actions.push(reload);

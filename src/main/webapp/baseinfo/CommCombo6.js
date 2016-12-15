@@ -7,7 +7,7 @@ Ext.define('Ems.baseinfo.TypeCombo', {
 			fieldLabel : '大类',
 			displayField : 'name',
 			valueField : 'id',
-
+			editable:false,
 			forceSelection : true,
 			queryParam : 'name',
 			queryMode : 'remote',
@@ -58,6 +58,7 @@ Ext.define('Ems.baseinfo.SubtypeCombo', {
 			displayField : 'name',
 			valueField : 'id',
 
+			editable:false,
 			forceSelection : true,
 			queryParam : 'name',
 			queryMode : 'remote',
@@ -505,3 +506,29 @@ Ext.define('Ems.baseinfo.RepaircenterCombo', {
 				me.callParent();
 			}
 		});
+//Ext.create('Ext.form.field.ComboBox', {
+Ext.define('Ems.baseinfo.OrderTypeCombo', {
+	extend : 'Ext.form.field.ComboBox',
+			xtype : 'ordertype',
+				fieldLabel : '订单类型',
+				labelAlign : 'right',
+				labelWidth:60,
+				editable : false,
+				//xtype : 'combobox',
+				// afterLabelTextTpl: Ext.required,
+				name : 'orderType',
+				displayField : 'name',
+				valueField : 'id',
+				// value:"1",
+				//allowBlank: false,
+				store : Ext.create('Ext.data.Store', {
+							fields : ['id', 'name'],
+							data : [{
+										id : "old_equipment",
+										name : "旧品订单"
+									}, {
+										id : "new_equipment",
+										name : "新品订单"
+									}]
+						})
+	});

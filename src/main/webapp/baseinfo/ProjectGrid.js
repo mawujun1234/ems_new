@@ -81,7 +81,7 @@ Ext.define('Ems.baseinfo.ProjectGrid',{
 				//grid.getStore().reload();
 				grid.getStore().loadPage(1);
 			},
-			iconCls: 'form-reload-button'
+			iconCls: 'icon-refresh'
 		}]
        
       me.callParent();

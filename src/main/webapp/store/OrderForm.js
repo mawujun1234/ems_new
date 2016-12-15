@@ -34,7 +34,7 @@ Ext.define('Ems.store.OrderForm',{
 	var status=Ext.create('Ext.form.field.Hidden',{
 		fieldLabel:'status',
 		name:'status',
-		labelWidth:50,
+		labelWidth:60,
 		allowBlank:false,
 		labelAlign:'right'
 	});
@@ -55,43 +55,49 @@ Ext.define('Ems.store.OrderForm',{
        var order_no=Ext.create('Ext.form.field.Text',{
 			fieldLabel:'订单号',
 			name:'orderNo',
-			labelWidth:50,
+			labelWidth:60,
 			allowBlank:false,
 			labelAlign:'right'
 		});
-		var store_combox=Ext.create('Ext.form.field.ComboBox',{
-		        fieldLabel: '入库仓库',
-		        labelAlign:'right',
-	            labelWidth:60,
-		        //xtype:'combobox',
-		        //afterLabelTextTpl: Ext.required,
-		        name: 'store_id',
-			    displayField: 'name',
-			    valueField: 'id',
-			    //queryParam: 'name',
-	    		//queryMode: 'remote',
-	    		//triggerAction: 'query',
-	    		//minChars:-1,
-			    //trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-			    //trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-				//onTrigger1Click : function(){
-				//    var me = this;
-				//    me.setValue('');
-				//},
-		        allowBlank: false,
-		        store:Ext.create('Ext.data.Store', {
-			    	fields: ['id', 'name'],
-				    proxy:{
-				    	type:'ajax',
-				    	extraParams:{type:[1,3],look:true},
-				    	url:Ext.ContextPath+"/store/queryCombo.do",
-				    	reader:{
-				    		type:'json',
-				    		root:'root'
-				    	}
-				    }
-			   })
-		});	
+		var store_combox = Ext.create('Ems.baseinfo.StoreCombo', {
+			labelWidth:60,
+			look : true,
+			name: 'store_id',
+			fieldLabel : '入库仓库'
+		});
+//		var store_combox=Ext.create('Ext.form.field.ComboBox',{
+//		        fieldLabel: '入库仓库',
+//		        labelAlign:'right',
+//	            labelWidth:60,
+//		        //xtype:'combobox',
+//		        //afterLabelTextTpl: Ext.required,
+//		        name: 'store_id',
+//			    displayField: 'name',
+//			    valueField: 'id',
+//			    //queryParam: 'name',
+//	    		//queryMode: 'remote',
+//	    		//triggerAction: 'query',
+//	    		//minChars:-1,
+//			    //trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
+//			    //trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
+//				//onTrigger1Click : function(){
+//				//    var me = this;
+//				//    me.setValue('');
+//				//},
+//		        allowBlank: false,
+//		        store:Ext.create('Ext.data.Store', {
+//			    	fields: ['id', 'name'],
+//				    proxy:{
+//				    	type:'ajax',
+//				    	extraParams:{type:[1,3],look:true},
+//				    	url:Ext.ContextPath+"/store/queryCombo.do",
+//				    	reader:{
+//				    		type:'json',
+//				    		root:'root'
+//				    	}
+//				    }
+//			   })
+//		});	
 		
 		var orderDate=Ext.create('Ext.form.field.Date',{
 			fieldLabel: '订购日期',
@@ -102,7 +108,7 @@ Ext.define('Ems.store.OrderForm',{
 		});
 		var operater=Ext.create('Ext.form.field.Hidden',{
 			labelAlign:'right',
-			labelWidth:55,
+			labelWidth:60,
 			fieldLabel: '经办人',
 			name:'operater',
 			readOnly:true,
@@ -110,7 +116,7 @@ Ext.define('Ems.store.OrderForm',{
 		});
 		var operater_name=Ext.create('Ext.form.field.Text',{
 			labelAlign:'right',
-			labelWidth:55,
+			labelWidth:60,
 			fieldLabel: '经办人',
 			name:'operater_name',
 			readOnly:true,
@@ -200,11 +206,12 @@ Ext.define('Ems.store.OrderForm',{
 //	});	
 	var project_combox=Ext.create('Ems.baseinfo.ProjectCombo',{
 		flex:1,
+		labelWidth:60,
 		allowBlank: false
 	});
 	var supplier_combox=Ext.create('Ems.baseinfo.SupplierCombo',{
 		labelAlign:'right',
-		labelWidth:40,
+		labelWidth:60,
 		flex:1,
 		minWidth:150,
 		allowBlank: true
@@ -215,7 +222,7 @@ Ext.define('Ems.store.OrderForm',{
 		
 		var saveButton=Ext.create('Ext.button.Button',{
             text: '保存',
-            iconCls:'form-save-button',
+            iconCls: 'icon-save',
             //formBind: true,当设置这个值得时候，当表单里面有内容后，就自动会变成可执行
             //hidden :true,
             itemId:'save',

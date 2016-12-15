@@ -1,0 +1,4 @@
+1:获取登录的用户名和账号
+	Ext.util.Cookies.get("usernId");
+	Ext.util.Cookies.get("usernName");
+	Ext.util.Cookies.get("loginName");

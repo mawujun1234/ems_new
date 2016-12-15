@@ -242,7 +242,9 @@ public class EquipmentTypeController {
 	/**
 	 * 用于combobox
 	 * @author mawujun email:160649888@163.com qq:16064988
-	 * @param name
+	 * @param equipmentType_id 上级id
+	 * @param name 按名称过滤
+	 * @param containAll 是否显示‘所有’选项
 	 * @return
 	 */
 	@RequestMapping("/equipmentType/querySubtypeCombo.do")

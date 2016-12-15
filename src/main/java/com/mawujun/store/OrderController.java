@@ -166,34 +166,34 @@ public class OrderController {
 	@ResponseBody
 	public String create(Order order,@RequestBody OrderList[] orderLists) throws  IOException{
 		orderService.create(order,orderLists);
-		return "success";
+		return "{success:true}";
 	}
 	
 	@RequestMapping("/order/update.do")
 	@ResponseBody
 	public String update(Order order) throws  IOException{
 		orderService.update(order);
-		return "success";
+		return "{success:true}";
 	}
 	
 	@RequestMapping("/order/editover.do")
 	@ResponseBody
 	public String editover(String id) throws  IOException{
 		orderService.editover(id);
-		return "success";
+		return "{success:true}";
 	}
 	
 	@RequestMapping("/order/delete.do")
 	@ResponseBody
 	public String delete(String id) throws  IOException{
 		orderService.delete(id);
-		return "success";
+		return "{success:true}";
 	}
 	@RequestMapping("/order/forceBack.do")
 	@ResponseBody
 	public String forceBack(String id) throws  IOException{
 		orderService.forceBack(id);
-		return "success";
+		return "{success:true}";
 	}
 	
 	
@@ -346,7 +346,7 @@ public class OrderController {
 	@ResponseBody
 	public String addList(OrderList orderList) throws  IOException{
 		orderService.addList(orderList);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -360,7 +360,7 @@ public class OrderController {
 	@ResponseBody
 	public String updateList(OrderList orderList) throws  IOException{
 		orderService.updateList(orderList);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -374,7 +374,7 @@ public class OrderController {
 	@ResponseBody
 	public String deleteList(String id) throws  IOException{
 		orderService.deleteList(id);
-		return "success";
+		return "{success:true}";
 	}
 	
 

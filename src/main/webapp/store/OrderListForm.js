@@ -354,7 +354,7 @@ Ext.define('Ems.store.OrderListForm', {
 
 		var saveButton = Ext.create('Ext.button.Button', {
 					text : '保存',
-					iconCls : 'form-save-button',
+					iconCls: 'icon-save',
 					// formBind: true,当设置这个值得时候，当表单里面有内容后，就自动会变成可执行
 					// hidden :true,
 					itemId : 'save',

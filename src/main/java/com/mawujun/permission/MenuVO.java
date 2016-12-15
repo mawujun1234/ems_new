@@ -12,8 +12,10 @@ public class MenuVO extends Menu{
 	public String getIconCls(){
 		if(super.getMenuType()==MenuType.element){
 			return "icon-cog";
+			//return "fa fa-cog";
 		}
 		return "icon-cogs";
+		//return "fa fa-cogs";
 	}
 	
 

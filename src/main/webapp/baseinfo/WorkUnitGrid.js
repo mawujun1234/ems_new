@@ -65,7 +65,7 @@ Ext.define('Ems.baseinfo.WorkUnitGrid',{
 				var grid=btn.up("grid");
 				grid.getStore().reload();
 			},
-			iconCls: 'form-reload-button'
+			iconCls: 'icon-refresh'
 		}]
        
       me.callParent();

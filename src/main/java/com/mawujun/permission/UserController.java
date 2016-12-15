@@ -82,10 +82,13 @@ public class UserController {
              ShiroUtils.getAuthenticationInfo().setIpAddr(getIpAddr(request));
              
              //
+             Cookie cookie_usernId = new Cookie("usernId",ShiroUtils.getUserName());
+             cookie_usernId.setPath("/");
+             response.addCookie(cookie_usernId);
              Cookie cookie = new Cookie("loginName",ShiroUtils.getLoginName());
              cookie.setPath("/");
              response.addCookie(cookie);
-             Cookie cookie_username = new Cookie("username",ShiroUtils.getUserName());
+             Cookie cookie_username = new Cookie("usernName",ShiroUtils.getUserName());
              cookie_username.setPath("/");
              response.addCookie(cookie_username);
              

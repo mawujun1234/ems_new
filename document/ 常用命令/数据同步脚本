@@ -1,3 +1,7 @@
+01020W，030212 中品名的品牌是中文
+
+
+
 1:创建dblink
 create public database link emslink connect to ems identified by ems
 　　 using '(DESCRIPTION =
@@ -146,5 +150,13 @@ select id,address,area,city,code,customer_id,latitude,latitude_orgin,decode(lngl
 --插入到中间表,一对一变成多对多
 insert into ems_pole_workunit(workunit_id,pole_id)
 select distinct workunit_id,id from ems_pole@emslink;
+
+--------------------------------=============================================
+--订单数据同步
+insert into ems_Order(id,orderNo,store_id,orderDate,operater,status,project_id,createDate,supplier_id,orderType)
+select id,orderNo,store_id,orderDate,operater,status,project_id,createDate,supplier_id,orderType from ems_Order@emslink;
+
+insert into ems_Orderlist(id,order_id,type_id,subtype_id,prod_id,brand_id,unitPrice,quality_month,orderNum,totalNum,depreci_year,depreci_month,depreci_day)
+select id,order_id,type_id,subtype_id,prod_id,brand_id,unitPrice,quality_month,orderNum,totalNum,depreci_year,depreci_month,depreci_day from ems_Orderlist@emslink;
 
 

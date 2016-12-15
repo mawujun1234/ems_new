@@ -85,7 +85,7 @@ Ext.define('Ems.baseinfo.SupplierForm',{
 	  
 	  var saveButton=Ext.create('Ext.button.Button',{
             text: '保存',
-            iconCls:'form-save-button',
+            iconCls: 'icon-save',
             //formBind: true,当设置这个值得时候，当表单里面有内容后，就自动会变成可执行
             hidden :true,
             itemId:'save',
@@ -138,7 +138,7 @@ Ext.define('Ems.baseinfo.SupplierForm',{
       
       var cancelButton=Ext.create('Ext.button.Button',{
       	text: '取消',
-      	iconCls:'form-cancel-button',
+      	iconCls: 'icon-remove',
       	hidden :true,
       	itemId:'cancel',
       	handler: function(btn) {
@@ -174,7 +174,7 @@ Ext.define('Ems.baseinfo.SupplierForm',{
 				}
 				
 			},
-			iconCls: 'form-add-button'
+			iconCls: 'icon-plus'
 		},{
 			text: '更新',
 			itemId:'update',
@@ -193,7 +193,7 @@ Ext.define('Ems.baseinfo.SupplierForm',{
 					buttons[i].hide();
 				}
 			},
-			iconCls: 'form-update-button'
+			iconCls: 'icon-edit'
 		},{
 			text: '删除',
 			itemId:'destroy',
@@ -219,7 +219,7 @@ Ext.define('Ems.baseinfo.SupplierForm',{
 					}
 				});
 			},
-			iconCls: 'form-delete-button'
+			iconCls: 'icon-trash'
 		}];
 
 	

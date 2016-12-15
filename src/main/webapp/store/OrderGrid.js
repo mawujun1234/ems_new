@@ -19,13 +19,13 @@ Ext.define('Ems.store.OrderGrid',{
       me.columns=[
       	{xtype: 'rownumberer'},
 		{dataIndex:'orderNo',text:'订单号',width:150},
-		{dataIndex:'store_name',text:'入库仓库',flex:1},
+		{dataIndex:'store_name',text:'入库仓库',width:150},
 		{dataIndex: 'status_name',text: '状态',width:70},
-		{dataIndex: 'orderType_name',text: '订单类型',width:70},
-		{dataIndex: 'project_name',text: '项目',width:70},
+		{dataIndex: 'orderType_name',text: '订单类型',width:80},
+		{dataIndex: 'project_name',text: '项目',width:150},
 		{dataIndex:'operater_name',text:'操作者',width:70},
-		{header: '供应商', dataIndex: 'supplier_name'},
-		{dataIndex:'orderDate',text:'订购日期',xtype: 'datecolumn',   format:'Y-m-d',width:80}
+		{header: '供应商', dataIndex: 'supplier_name',width:150},
+		{dataIndex:'orderDate',text:'订购日期',width:90}
     	//{dataIndex: 'operater',text: '经办人'}
       ];
       
@@ -40,7 +40,7 @@ Ext.define('Ems.store.OrderGrid',{
 				url:Ext.ContextPath+'/order/queryMain.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });
@@ -52,67 +52,74 @@ Ext.define('Ems.store.OrderGrid',{
 	        displayInfo: true
 	  }];
 	  
-	  var store_combox=Ext.create('Ext.form.field.ComboBox',{
-	        fieldLabel: '入库仓库',
-	        labelAlign:'right',
-            labelWidth:60,
-	        //xtype:'combobox',
-	        //afterLabelTextTpl: Ext.required,
-	        name: 'store_id',
-		    displayField: 'name',
-		    valueField: 'id',
-	        //allowBlank: false,
-	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    proxy:{
-			    	type:'ajax',
-			    	extraParams:{type:[1,3],look:true},
-			    	url:Ext.ContextPath+"/store/queryCombo.do",
-			    	reader:{
-			    		type:'json',
-			    		root:'root'
-			    	}
-			    }
-		   })
-	  }); 
+	  var store_combox=Ext.create('Ems.baseinfo.StoreCombo', {
+				look : true,
+				fieldLabel : '入库仓库'
+			});
+	  
+//	  var store_combox=Ext.create('Ext.form.field.ComboBox',{
+//	        fieldLabel: '入库仓库',
+//	        labelAlign:'right',
+//            labelWidth:60,
+//	        //xtype:'combobox',
+//	        //afterLabelTextTpl: Ext.required,
+//	        name: 'store_id',
+//		    displayField: 'name',
+//		    valueField: 'id',
+//	        //allowBlank: false,
+//	        store:Ext.create('Ext.data.Store', {
+//		    	fields: ['id', 'name'],
+//			    proxy:{
+//			    	type:'ajax',
+//			    	extraParams:{type:[1,3],look:true},
+//			    	url:Ext.ContextPath+"/store/queryCombo.do",
+//			    	reader:{
+//			    		type:'json',
+//			    		rootProperty:'root'
+//			    	}
+//			    }
+//		   })
+//	  }); 
 	  
 
 	var project_combox=Ext.create('Ems.baseinfo.ProjectCombo',{
 		flex:1,
 		allowBlank: true
 	});
-	  var supplier_combox=Ext.create('Ems.baseinfo.SupplierCombo',{
+	var supplier_combox=Ext.create('Ems.baseinfo.SupplierCombo',{
 		labelAlign:'right',
-		labelWidth:40,
+		labelWidth:50,
 		flex:1,
 		allowBlank: true
 	});
-	var orderType = Ext.create('Ext.form.field.ComboBox', {
-				fieldLabel : '订单类型',
-				labelAlign : 'right',
-				labelWidth:60,
-				//xtype : 'combobox',
-				// afterLabelTextTpl: Ext.required,
-				name : 'orderType',
-				displayField : 'name',
-				valueField : 'id',
-				// value:"1",
-				allowBlank: false,
-				store : Ext.create('Ext.data.Store', {
-							fields : ['id', 'name'],
-							data : [{
-										id : "old_equipment",
-										name : "旧品订单"
-									}, {
-										id : "new_equipment",
-										name : "新品订单"
-									}]
-						})
-	});
+	var orderType = Ext.create('Ems.baseinfo.OrderTypeCombo',{});
+//	var orderType =Ext.create('Ext.form.field.ComboBox', {
+//				fieldLabel : '订单类型',
+//				labelAlign : 'right',
+//				labelWidth:60,
+//				//xtype : 'combobox',
+//				// afterLabelTextTpl: Ext.required,
+//				name : 'orderType',
+//				displayField : 'name',
+//				valueField : 'id',
+//				// value:"1",
+//				allowBlank: false,
+//				store : Ext.create('Ext.data.Store', {
+//							fields : ['id', 'name'],
+//							data : [{
+//										id : "old_equipment",
+//										name : "旧品订单"
+//									}, {
+//										id : "new_equipment",
+//										name : "新品订单"
+//									}]
+//						})
+//	});
 	 var status_combox=Ext.create('Ext.form.field.ComboBox',{
 	        fieldLabel: '状态',
 	        labelAlign:'right',
             labelWidth:40,
+            width:120,
 	        //xtype:'combobox',
 	        //afterLabelTextTpl: Ext.required,
 	        name: 'status',
@@ -128,7 +135,8 @@ Ext.define('Ems.store.OrderGrid',{
 	  var date_start=Ext.create('Ext.form.field.Date',{
 	  	fieldLabel: '订购日期',
 	  	labelWidth:60,
-	  	width:160,
+	  	//width:160,
+	  	flex:1,
 	  	format:'Y-m-d'
         //name: 'date_start',
         //value:  Ext.Date.add(new Date(), Ext.Date.DAY, -7)
@@ -137,7 +145,8 @@ Ext.define('Ems.store.OrderGrid',{
 	  	fieldLabel: '到',
 	  	format:'Y-m-d',
 	  	labelWidth:15,
-	  	width:115,
+	  	//width:115,
+	  	flex:1,
         //name: 'date_end',
         value: new Date()
 	  });
@@ -145,7 +154,7 @@ Ext.define('Ems.store.OrderGrid',{
 	 var order_no=Ext.create('Ext.form.field.Text',{
 		fieldLabel:'订单号',
 		name:'orderNo',
-		labelWidth:40,
+		labelWidth:50,
 		flex:1,
 		allowBlank:true,
 		labelAlign:'right'
@@ -154,7 +163,8 @@ Ext.define('Ems.store.OrderGrid',{
 	var instore_date_start=Ext.create('Ext.form.field.Date',{
 	  	fieldLabel: '入库日期',
 	  	labelWidth:60,
-	  	width:160,
+	  	//width:160,
+	  	flex:1,
 	  	format:'Y-m-d'
         //name: 'date_start',
         //value:  Ext.Date.add(new Date(), Ext.Date.DAY, -7)
@@ -163,7 +173,8 @@ Ext.define('Ems.store.OrderGrid',{
 	  	fieldLabel: '到',
 	  	format:'Y-m-d',
 	  	labelWidth:15,
-	  	width:115
+	  	//width:115
+	  	flex:1
         //name: 'date_end',
         //value: new Date()
 	  });
@@ -188,7 +199,7 @@ Ext.define('Ems.store.OrderGrid',{
 		defaults: {anchor: '0'},
 		defaultType: 'toolbar',
 		items: [{
-			items: [store_combox,date_start,date_end] // toolbar 1
+			items: [date_start,date_end] // toolbar 1
 		},{
 			items: [instore_date_start,instore_date_end] // toolbar 1
 		},{
@@ -196,11 +207,11 @@ Ext.define('Ems.store.OrderGrid',{
 		},{
 			items: [project_combox] // toolbar 1
 		},{
-			items: [orderType] // toolbar 1
+			items: [orderType,store_combox] // toolbar 1
 		}, {
 			items: [status_combox,order_no,{
 			text: '查询',
-			iconCls:'form-search-button',
+			iconCls:'icon-search',
 			handler: function(btn){
 				me.store.loadPage(1);
 			}
@@ -209,8 +220,8 @@ Ext.define('Ems.store.OrderGrid',{
 			hidden:me.onlyRead,
 			items:[{
 			text: '确认',
-			icon:'../icons/cog.png',
-			//iconCls:'form-search-button',
+			
+			iconCls:'icon-cog',
 			handler: function(btn){
 				Ext.Msg.confirm("提醒","确认后,该订单将不可再修改!",function(btn){
 					if(btn=='yes'){
@@ -234,8 +245,7 @@ Ext.define('Ems.store.OrderGrid',{
 			}
 		  },{
 			text: '修改',
-			iconCls: 'form-update-button',
-			icon:'../icons/action_delete.gif',
+			iconCls: 'icon-edit',
 			handler: function(btn){
 				var record=me.getSelectionModel().getLastSelected();
 				if(record.get("status")=='editover'){
@@ -247,7 +257,7 @@ Ext.define('Ems.store.OrderGrid',{
 			}
 		  },{
 			text: '删除',
-			iconCls: 'form-delete-button',
+			iconCls: 'icon-trash',
 			handler: function(btn){
 				Ext.Msg.confirm("提醒","确认要删除吗?",function(btn){
 					if(btn=='yes'){
@@ -271,7 +281,7 @@ Ext.define('Ems.store.OrderGrid',{
 		  },{
 			text: '强制退回',
 			//iconCls: 'form-delete-button',
-			icon:'../icons/arrow_undo.png',
+			iconCls:'icon-reply',
 			handler: function(btn){
 				Ext.Msg.confirm("提醒","确认要强制退回吗?",function(btn){
 					if(btn=='yes'){

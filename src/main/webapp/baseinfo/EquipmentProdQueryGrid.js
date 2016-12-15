@@ -1,5 +1,5 @@
 Ext.define('Ems.baseinfo.EquipmentProdQueryGrid',{
-	extend:'Ext.tree.Panel',
+	extend:'Ext.grid.Panel',
 	requires: [
 	     'Ems.baseinfo.EquipmentProd'
 	     //'Ems.baseinfo.EquipmentProdForm'
@@ -17,8 +17,8 @@ Ext.define('Ems.baseinfo.EquipmentProdQueryGrid',{
 	initComponent: function () {
       var me = this;
       me.columns=[
-      	//{xtype:'rownumberer',text:'序号'},
-		{xtype:'treecolumn',dataIndex:'id',text:'编码',width:120},
+      	{xtype:'rownumberer',text:'序号'},
+		{dataIndex:'id',text:'编码',width:120},
 
 //		{dataIndex:'subtype_name',text:'类型',renderer:function(){
 //			return me.subtype_name;
@@ -48,20 +48,20 @@ Ext.define('Ems.baseinfo.EquipmentProdQueryGrid',{
 //			model: 'Ems.baseinfo.EquipmentProd',
 //			autoLoad:false
 //	  });
-      me.store = new Ext.data.TreeStore({
+      me.store = new Ext.data.Store({
 			autoLoad : false,
-			nodeParam : 'parent_id',
+			//nodeParam : 'parent_id',
 			model : 'Ems.baseinfo.EquipmentProd',
 			proxy : {
 				type : 'ajax',
 				method : 'POST',
-				// reader:{
-				// type:'json',
-				// rootProperty:'root',
-				// successProperty:'success',
-				// totalProperty:'total'
-				//						
-				// },
+//				reader:{
+//				 type:'json',
+//				 rootProperty:'root',
+//				 successProperty:'success',
+//				 totalProperty:'total'
+//										
+//				},
 				url : Ext.ContextPath + '/equipmentType/queryProds.do'
 			},
 			root : {
@@ -125,7 +125,7 @@ Ext.define('Ems.baseinfo.EquipmentProdQueryGrid',{
 						style:style.getValue()
 				});
 		    },
-		    iconCls: 'form-reload-button'
+		    iconCls:'icon-search'
 		});
 		//me.addAction(reload);
 		actions.push(reload);
@@ -141,15 +141,9 @@ Ext.define('Ems.baseinfo.EquipmentProdQueryGrid',{
 
     },
   
-    onReload:function(node,params){
+    onReload:function(subtype_id){
     	var me=this;
-    	var parent=node||me.getSelectionModel( ).getLastSelected( );
-		if(parent){
-			//走展开子节点的
-		    me.getStore().reload({node:parent});
-		} else {
-		    me.getStore().reload({params:params});	
-		}      
+    	me.getStore().reload({params:{subtype_id:subtype_id}});	   
     },
     /**
      * 当点击左边的树的时候，清空型号和全部型号的关键字

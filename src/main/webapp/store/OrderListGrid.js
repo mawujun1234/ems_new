@@ -51,7 +51,7 @@ Ext.define('Ems.store.OrderListGrid',{
 				url:Ext.ContextPath+'/order/queryList.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });
@@ -72,7 +72,7 @@ Ext.define('Ems.store.OrderListGrid',{
 				var grid=btn.up("grid");
 				grid.getStore().reload();
 			},
-			iconCls: 'form-reload-button'
+			iconCls: 'icon-refresh'
 		},{
 			text: '新增',
 			//itemId:'reload',
@@ -80,7 +80,7 @@ Ext.define('Ems.store.OrderListGrid',{
 			handler: function(btn){
 				me.addList();
 			},
-			iconCls: 'form-add-button'
+			iconCls: 'icon-plus'
 		},{
 			text: '修改',
 			//itemId:'reload',
@@ -88,7 +88,7 @@ Ext.define('Ems.store.OrderListGrid',{
 			handler: function(btn){
 				me.updateList();
 			},
-			iconCls: 'form-update-button'
+			iconCls: 'icon-edit'
 		},{
 			text: '删除',
 			//itemId:'reload',
@@ -96,7 +96,7 @@ Ext.define('Ems.store.OrderListGrid',{
 			handler: function(btn){
 				me.deleteList();
 			},
-			iconCls: 'form-delete-button'
+			iconCls: 'icon-trash'
 		}]
 	}
 	

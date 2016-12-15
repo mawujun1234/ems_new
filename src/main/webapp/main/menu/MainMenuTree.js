@@ -15,7 +15,8 @@ Ext.define('Ems.main.menu.MainMenuTree', {
 				itemclick:'onMainMenuTree_itemclick'
 			},
 			displayField:'name',
-			glyph : 0xf0c9,
+			//glyph : 0xf0c9,
+			iconCls:"icon-list",
 			initComponent : function() {
 				this.store = Ext.create('Ext.data.TreeStore', {
 							root : {

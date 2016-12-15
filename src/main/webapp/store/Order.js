@@ -6,7 +6,7 @@ Ext.define("Ems.store.Order",{
 		{name:'orderNo',type:'string'},
 		{name:'brand_id',type:'string'},
 		{name:'operater',type:'string'},
-		{name:'orderDate',type:'date', dateFormat: 'Y-m-d'},
+		{name:'orderDate',type:'string'},
 		{name:'createDate',type:'date', dateFormat: 'Y-m-d'},
 		{name:'supplier_id',type:'string'},
 		{name:'project_id',type:'string'},
