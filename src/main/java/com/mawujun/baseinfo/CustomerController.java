@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mawujun.controller.spring.mvc.json.JsonConfigHolder;
 import com.mawujun.utils.string.StringUtils;
 /**
  * @author mawujun qq:16064988 e-mail:16064988@qq.com 
@@ -63,7 +62,7 @@ public class CustomerController {
 			customeres=customerService.queryChildren(node,null);
 		}
 		
-		JsonConfigHolder.setAutoWrap(false);
+		//JsonConfigHolder.setAutoWrap(false);
 		return customeres;
 	}
 	/**

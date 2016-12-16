@@ -17,7 +17,7 @@ import com.mawujun.baseinfo.EquipmentVO;
 import com.mawujun.cache.CacheMgr;
 import com.mawujun.cache.EquipKey;
 import com.mawujun.cache.EquipScanType;
-import com.mawujun.controller.spring.mvc.json.JsonConfigHolder;
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.utils.M;
 import com.mawujun.utils.bean.BeanUtils;
@@ -47,13 +47,14 @@ public class InStoreController {
 	 */
 	@RequestMapping("/inStore/getEquipFromBarcode.do")
 	@ResponseBody
-	public EquipmentVO getEquipFromBarcode(String ecode,String store_id,Long checkDate) {	
+	public ResultModel getEquipFromBarcode(String ecode,String store_id,Long checkDate) {	
 		EquipKey key=EquipKey.getInstance(EquipScanType.newInStore, store_id,checkDate);
 		EquipmentVO equipmentVO=(EquipmentVO)cacheMgr.getQrcode(key, ecode);
 		if(equipmentVO!=null){
-			JsonConfigHolder.setSuccessValue(false);
-			JsonConfigHolder.setMsg("设备已经扫过!");
-			return equipmentVO;
+//			JsonConfigHolder.setSuccessValue(false);
+//			JsonConfigHolder.setMsg("设备已经扫过!");
+//			return equipmentVO;
+			return ResultModel.getInstance().setRoot(equipmentVO).setSuccess(false).setMsg("设备已经扫过!");
 		}
 		
 		if(inStoreService.checkEquipmentExist(ecode)){
@@ -77,7 +78,9 @@ public class InStoreController {
 			
 			//Integer total=cacheMgr.getQrcodesAll(key).length;
 			//JsonConfigHolder.setTotal(total);
-			return equipmentVO;
+			
+			return ResultModel.getInstance().setRoot(equipmentVO).setSuccess(true);
+			//return equipmentVO;
 		} else {
 			//return new EquipmentVO();
 			throw new BusinessException("该条码的设备不存在或者已经失效，请重新导出打印!");
@@ -88,13 +91,13 @@ public class InStoreController {
 	@ResponseBody
 	public String removeEquipFromCache(String ecode,String store_id,Long checkDate) {	
 		cacheMgr.removeQrcode(EquipKey.getInstance(EquipScanType.newInStore, store_id,checkDate),ecode);
-		return "success";
+		return "{success:true}";
 	}
 	@RequestMapping("/inStore/clearEquipFromCache.do")
 	@ResponseBody
 	public String clearEquipFromCache(String store_id,Long checkDate) {	
 		cacheMgr.clearQrcode(EquipKey.getInstance(EquipScanType.newInStore, store_id,checkDate));
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -154,7 +157,7 @@ public class InStoreController {
 		inStoreService.newInStore(equipments, inStore);
 		
 		cacheMgr.clearQrcode(key);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**

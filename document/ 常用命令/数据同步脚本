@@ -1,4 +1,4 @@
-01020W，030212 中品名的品牌是中文
+01020W，030212 在品名中的品牌是中文
 
 
 
@@ -158,5 +158,13 @@ select id,orderNo,store_id,orderDate,operater,status,project_id,createDate,suppl
 
 insert into ems_Orderlist(id,order_id,type_id,subtype_id,prod_id,brand_id,unitPrice,quality_month,orderNum,totalNum,depreci_year,depreci_month,depreci_day)
 select id,order_id,type_id,subtype_id,prod_id,brand_id,unitPrice,quality_month,orderNum,totalNum,depreci_year,depreci_month,depreci_day from ems_Orderlist@emslink;
+
+--条码数据导入
+insert into EMS_BARCODE(ecode,orderlist_id,ymd,type_id,subtype_id,prod_id,brand_id,supplier_id,store_id,isnew,randomStr,createDate,status)
+select ecode,orderlist_id,ymd,type_id,subtype_id,prod_id,brand_id,supplier_id,store_id,decode(isnew,'Y',1,0),randomStr,createDate,status 
+from EMS_BARCODE@emslink;
+insert into EMS_BARCODE_maxnum(id,subtype_id,prod_id,brand_id,supplier_id,ymd,num)
+select id,subtype_id,prod_id,brand_id,supplier_id,ymd,num from EMS_BARCODE_maxnum@emslink;
+
 
 

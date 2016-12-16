@@ -38,11 +38,21 @@ Ext.onReady(function(){
     		queryMode: 'remote',
     		triggerAction: 'query',
     		minChars:-1,
-		    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-		    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-			onTrigger1Click : function(){
-			    var me = this;
-			    me.setValue('');
+//		    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
+//		    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
+//			onTrigger1Click : function(){
+//			    var me = this;
+//			    me.setValue('');
+//			},
+    		triggers : {
+				foo : {
+					cls : Ext.baseCSSPrefix + 'form-clear-trigger',
+					weight : -1,
+					handler : function() {
+						var me = this;
+						me.setValue('');
+					}
+				}
 			},
 	        allowBlank: false,
 	        store:Ext.create('Ext.data.Store', {
@@ -53,7 +63,7 @@ Ext.onReady(function(){
 			    	url:Ext.ContextPath+"/order/queryUncomplete.do",
 			    	reader:{
 			    		type:'json',
-			    		root:'root'
+			    		rootProperty:'root'
 			    	}
 			    },
 			    listeners:{
@@ -67,7 +77,7 @@ Ext.onReady(function(){
 		   })
 	});
 	
-	var query_button=Ext.create('Ext.Button',{xtype:'button',text:'查询',handler:queryEquip,width:70,iconCls:'form-search-button',margin:'0 5px 0 5px'});
+	var query_button=Ext.create('Ext.Button',{xtype:'button',text:'查询',handler:queryEquip,width:70,iconCls:'icon-search',margin:'0 5px 0 5px'});
 	
 //	var equipStore = Ext.create('Ext.data.Store', {
 //        autoDestroy: true,
@@ -82,7 +92,8 @@ Ext.onReady(function(){
 //            }
 //        }
 //    });
-	var equipStore = Ext.create('Ext.data.TreeStore', {
+	//var equipStore = Ext.create('Ext.data.TreeStore', {
+	var equipStore = Ext.create('Ext.data.Store', {
         autoDestroy: true,
         autoLoad:false,
         model: 'Ems.store.OrderList',
@@ -92,12 +103,12 @@ Ext.onReady(function(){
             type: 'ajax',
             reader:{
             	type:'json',
-            	root:'root'
-            },
-            root: {
-				expanded: true,
-				text: "根节点"
-			}
+            	rootProperty:'root'
+            }
+//            root: {
+//				expanded: true,
+//				text: "根节点"
+//			}
         },
         listeners:{
         	beforeload:function(store, operation, eOpts){
@@ -108,7 +119,7 @@ Ext.onReady(function(){
         }
     });
     var expendItem=null;
-	var equip_grid=Ext.create('Ext.tree.Panel',{
+	var equip_grid=Ext.create('Ext.grid.Panel',{
 		flex:1,
 		columnLines:true,
 		store:equipStore,
@@ -135,8 +146,9 @@ Ext.onReady(function(){
 	    	}
 	    },
     	columns: [//Ext.create('Ext.grid.RowNumberer'),
-    			{xtype:'treecolumn',dataIndex:'prod_id',text:'编码',width:120},
-    			{dataIndex:'prod_name',text:'品名',width:80},
+    			//{xtype:'treecolumn',dataIndex:'prod_id',text:'编码',width:120},
+    			{dataIndex:'prod_id',text:'编码',width:120},
+    			{dataIndex:'prod_name',text:'品名',width:100},
     	          {header: '设备类型', dataIndex: 'subtype_name',width:120},
     	          //{header: '品名', dataIndex: 'prod_name'},
     	          {header: '品牌', dataIndex: 'brand_name',width:120},
@@ -163,7 +175,8 @@ Ext.onReady(function(){
 	                selectOnFocus:true,
 	                minValue:0,
 	                allowBlank: false
-	              },renderer:function(value,metadata,record){
+	              },renderer:function(value,metaData,record){
+	              	metaData.tdStyle = 'background-color:#98FB98;' ;
     	          	if(!record.get("noedit")){
     	          		return value;
     	          	} 
@@ -196,13 +209,15 @@ Ext.onReady(function(){
 	                    		alert("请先输入 本次入库数量!");
 	                    		return;
 	                    	}
+	                    	//alert(JSON.stringify(record.getData())); 
+	                    	//return;
 	                    	Ext.getBody().mask("正在导出......");
 	                        Ext.Ajax.request({
 								url:Ext.ContextPath+'/order/exportBarcode.do',
 								method:'POST',
 								timeout:600000000,
 								headers:{ 'Content-Type':'application/json;charset=UTF-8'},
-								jsonData:record.getData(),
+								jsonData:[record.getData()],
 								params:{orderno:order_no.getRawValue()},
 								success:function(response){
 									var obj=Ext.decode(response.responseText);

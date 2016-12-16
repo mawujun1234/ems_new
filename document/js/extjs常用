@@ -1,0 +1,20 @@
+1:获取登录的用户名和账号
+	Ext.util.Cookies.get("usernId");
+	Ext.util.Cookies.get("usernName");
+	Ext.util.Cookies.get("loginName");
+	
+2:gird单元格可以复制
+	viewConfig:{
+		enableTextSelection:true
+	},
+	
+3:单元格编辑的时候，使用绿色背景色
+	,renderer:function(value, metaData, record, rowIndex, colIndex, store){
+		metaData.tdStyle = 'background-color:#98FB98;' ;／／可编辑的绿色
+	      if(record.get("ORMTQT_TP_YXGS")!=record.get("ORMTQT_TOTAL")){
+	        	metaData.tdStyle = 'color:red;background-color:#FFFF66;' ;／／数据不一致时候的颜色
+	      } else {
+	        	metaData.tdStyle = 'background-color:#CD9B9B;' ;／／汇总
+	      }
+	      return value;
+    }

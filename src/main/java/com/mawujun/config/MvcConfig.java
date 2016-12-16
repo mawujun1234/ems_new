@@ -39,6 +39,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mawujun.controller.spring.SpringContextHolder;
@@ -54,6 +55,8 @@ import com.mawujun.exception.BusinessException;
 @EnableWebMvc
 @EnableScheduling
 public class MvcConfig extends WebMvcConfigurerAdapter implements SchedulingConfigurer{
+	//默认使用yyyy-MM-dd HH:mm:ss格式，对于特殊行yyyy-MM-dd日期格式的在，字段上加上
+	//@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")指定日期格式
 	private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
 	

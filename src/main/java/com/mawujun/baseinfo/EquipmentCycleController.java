@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mawujun.controller.spring.mvc.json.JsonConfigHolder;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.utils.M;
 /**
@@ -33,7 +32,7 @@ public class EquipmentCycleController {
 	@ResponseBody
 	public List<EquipmentCycle> query(String ecode) {
 		List<EquipmentCycle> lifeCycles=equipmentCycleService.query(Cnd.select().andEquals(M.EquipmentCycle.ecode, ecode).asc(M.EquipmentCycle.operateDate));
-		JsonConfigHolder.setDatePattern("yyyy-MM-dd HH:mm:ss");
+		//JsonConfigHolder.setDatePattern("yyyy-MM-dd HH:mm:ss");
 		return lifeCycles;
 	}
 

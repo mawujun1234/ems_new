@@ -19,6 +19,7 @@ Ext.define('Ems.store.OrderListGrid',{
       var me = this;
       me.columns=[
 		//{dataIndex:'ecode',text:'条码',width:150},
+      	{xtype: 'rownumberer'},
 		{header: '设备类型', dataIndex: 'subtype_name',width:120},
     	{header: '品名', dataIndex: 'prod_name'},
     	{header: '品牌', dataIndex: 'brand_name',width:120},

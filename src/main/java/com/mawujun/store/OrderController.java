@@ -265,7 +265,7 @@ public class OrderController {
 
 
 	    //return "/"+filePath.replace(File.separatorChar, '/');
-	    return fileName;
+	    return "{success:true,fileName:'"+fileName+"'}";
 	}
 	
 	@RequestMapping("/order/downloadBarcode.do")

@@ -1,7 +1,29 @@
-alter table "EMSNEW"."EMS_EQUIPMENTSUBTYPE" add constraint fk_parent_id foreign key("PARENT_ID") references "EMS_EQUIPMENTTYPE"("ID");
-alter table "EMSNEW"."EMS_EQUIPMENTPROD" add constraint fk_subtype_id foreign key("SUBTYPE_ID") references "EMS_EQUIPMENTSUBTYPE"("ID")
-alter table "EMSNEW"."EMS_EQUIPMENTPROD" add constraint fk_brand_id foreign key("BRAND_ID") references "EMS_BRAND"("ID")
-alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_order_id foreign key("ORDER_ID") references "EMS_ORDER"("ID")
+alter table "EMSNEW"."EMS_EQUIPMENTSUBTYPE" add constraint fk_parent_id_type foreign key("PARENT_ID") references "EMS_EQUIPMENTTYPE"("ID");
+alter table "EMSNEW"."EMS_EQUIPMENTPROD" add constraint fk_subtype_id_prod foreign key("SUBTYPE_ID") references "EMS_EQUIPMENTSUBTYPE"("ID");
+alter table "EMSNEW"."EMS_EQUIPMENTPROD" add constraint fk_brand_id_prod foreign key("BRAND_ID") references "EMS_BRAND"("ID");
+alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_order_id_orderlist foreign key("ORDER_ID") references "EMS_ORDER"("ID");
+alter table "EMSNEW"."EMS_ORDER" add constraint fk_project_id_order foreign key("PROJECT_ID") references "EMS_PROJECT"("ID");
+alter table "EMSNEW"."EMS_ORDER" add constraint fk_store_id_order foreign key("STORE_ID") references "T_ORG"("ID");
+alter table "EMSNEW"."EMS_ORDER" add constraint fk_supplier_id_order foreign key("SUPPLIER_ID") references "EMS_SUPPLIER"("ID");
+alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_brand_id_orderlist foreign key("BRAND_ID") references "EMS_BRAND"("ID");
+alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_prod_id_orderlist foreign key("PROD_ID") references "EMS_EQUIPMENTPROD"("ID");
+alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_subtype_id_orderlist foreign key("SUBTYPE_ID") references "EMS_EQUIPMENTSUBTYPE"("ID");
+alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_type_id_orderlist foreign key("TYPE_ID") references "EMS_EQUIPMENTTYPE"("ID");
+
+
+--等条码和设备信息导入的时候再加这个----已经处理过了
+delete EMS_ORDERLIST a where id in (
+   select id from EMS_ORDERLIST where prod_id not in(
+    select id from EMS_EQUIPMENTPROD 
+   )
+) and not exists (
+  select 1 from ems_barcode b where a.id=b.orderlist_id
+) and not exists (
+  select 1 from ems_equipment b where a.id=b.orderlist_id
+)
+
+
+
 
 
 insert into t_role(id,name,roletype) values('admin','admin','role');
