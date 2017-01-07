@@ -61,6 +61,7 @@ Ext.ContextPath="<%=request.getContextPath()%>";
 Ext.ariaWarn = Ext.emptyFn;
 
 Ext.ecode_length=20;
+Ext.QuickTips.init(); 
 </script>
 
 

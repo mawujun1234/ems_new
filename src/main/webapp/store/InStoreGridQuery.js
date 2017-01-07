@@ -16,10 +16,11 @@ Ext.define('Ems.store.InStoreGridQuery',{
 	initComponent: function () {
       var me = this;
       me.columns=[
-		{dataIndex:'id',text:'编号'},
-		{dataIndex:'operateDate',text:'操作时间',xtype: 'datecolumn',   format:'Y-m-d'},
+        Ext.create('Ext.grid.RowNumberer'),
+		{dataIndex:'id',text:'编号',width:140},
+		{dataIndex:'store_name',text:'仓库',width:140},
+		{dataIndex:'operateDate',text:'操作时间',width:150},
 		{dataIndex:'operater_name',text:'操作人'},
-		{dataIndex:'store_name',text:'仓库'},
 		{dataIndex:'memo',text:'备注'}
       ];
       
@@ -34,7 +35,7 @@ Ext.define('Ems.store.InStoreGridQuery',{
 				url:Ext.ContextPath+'/inStore/query.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });
@@ -54,35 +55,40 @@ Ext.define('Ems.store.InStoreGridQuery',{
 	  }];
 	  
 	  
-	  var store_combox=Ext.create('Ext.form.field.ComboBox',{
-	        fieldLabel: '入库仓库',
-	        labelAlign:'right',
-            labelWidth:60,
-	        //xtype:'combobox',
-	        //afterLabelTextTpl: Ext.required,
-	        name: 'store_id',
-		    displayField: 'name',
-		    valueField: 'id',
-	        //allowBlank: false,
-	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    proxy:{
-			    	type:'ajax',
-			    	extraParams:{type:[1,3],look:true},
-			    	url:Ext.ContextPath+"/store/queryCombo.do",
-			    	reader:{
-			    		type:'json',
-			    		root:'root'
-			    	}
-			    }
-		   })
-	  }); 
+//	  var store_combox=Ext.create('Ext.form.field.ComboBox',{
+//	        fieldLabel: '入库仓库',
+//	        labelAlign:'right',
+//            labelWidth:60,
+//	        //xtype:'combobox',
+//	        //afterLabelTextTpl: Ext.required,
+//	        name: 'store_id',
+//		    displayField: 'name',
+//		    valueField: 'id',
+//	        //allowBlank: false,
+//	        store:Ext.create('Ext.data.Store', {
+//		    	fields: ['id', 'name'],
+//			    proxy:{
+//			    	type:'ajax',
+//			    	extraParams:{type:[1,3],look:true},
+//			    	url:Ext.ContextPath+"/store/queryCombo.do",
+//			    	reader:{
+//			    		type:'json',
+//			    		root:'root'
+//			    	}
+//			    }
+//		   })
+//	  }); 
+	  var store_combox=Ext.create('Ems.baseinfo.StoreCombo', {
+				look : true,
+				//allowBlank : false,
+				fieldLabel : '入库仓库'
+			});
 	  
 	  
 	  var operateDate_start=Ext.create('Ext.form.field.Date',{
 	  	fieldLabel: '时间范围',
 	  	labelWidth:60,
-	  	width:155,
+	  	width:170,
 	  	format:'Y-m-d',
         //name: 'date_start',
         value:  Ext.Date.add(new Date(), Ext.Date.DAY, -7)
@@ -107,7 +113,7 @@ Ext.define('Ems.store.InStoreGridQuery',{
 		}, {
 			items: [store_combox,{
 			text: '查询',
-			iconCls:'form-search-button',
+			iconCls:'icon-search',
 			handler: function(btn){
 				me.store.loadPage(1);
 			}

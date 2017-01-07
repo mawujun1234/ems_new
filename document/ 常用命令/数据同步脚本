@@ -166,5 +166,33 @@ from EMS_BARCODE@emslink;
 insert into EMS_BARCODE_maxnum(id,subtype_id,prod_id,brand_id,supplier_id,ymd,num)
 select id,subtype_id,prod_id,brand_id,supplier_id,ymd,num from EMS_BARCODE_maxnum@emslink;
 
+--同步入库单数据
+insert into ems_instore(id,memo,store_id,operatedate,operater)
+select id,memo,store_id,operatedate,operater from ems_instore@emslink;
+insert into ems_instorelist(id,ecode,instore_id,orderlist_id,isnew)
+select id,ecode,instore_id,orderlist_id,decode(isnew,'Y',1,0) from ems_instorelist@emslink;
+
+--设备数据同步ems_equipment
+insert into EMS_EQUIPMENT(ecode,brand_id,isnew,memo,prod_id,style,subtype_id,supplier_id,status,fisdata,last_install_date,orderlist_id,last_installin_id,
+last_task_id,last_workunit_id,place,currt_task_id,last_borrow_id,last_pole_id,first_install_date,value_net,value_original
+)
+select ecode,brand_id,isnew,memo,prod_id,style,subtype_id,supplier_id,status,fisdata,last_install_date,orderlist_id,last_installin_id,
+last_task_id,last_workunit_id,place,currt_task_id,last_borrow_id,last_pole_id,first_install_date,value_net,value_original
+from EMS_EQUIPMENT@emslink;
+--设备所在位置数据同步
+insert into ems_equipment_pole(ecode,pole_id,from_id,indate,num,type,type_id)
+select ecode,pole_id,from_id,indate,num,type,type_id from ems_equipment_pole@emslink;
+insert into ems_equipment_repair(ecode,repair_id,from_id,indate,num,type,type_id)
+select ecode,repair_id,from_id,indate,num,type,type_id from ems_equipment_repair@emslink;
+insert into ems_equipment_store(ecode,store_id,from_id,indate,num,type,type_id)
+select ecode,store_id,from_id,indate,num,type,type_id from ems_equipment_store@emslink;
+insert into ems_equipment_workunit(ecode,workunit_id,from_id,indate,num,type,type_id,project_id)
+select ecode,workunit_id,from_id,indate,num,type,type_id,project_id from ems_equipment_workunit@emslink;
+--设备生命周期复制
+insert into ems_equipmentcycle(ecode,id,OPERATEDATE,OPERATETYPE,OPERATER_ID,OPERATER_IPADDR,OPERATER_NAME,SOURCE_ID,SOURCE_NAME,TARGETTYPE,TARGET_ID,TARGET_NAME,TYPE_ID )
+select ecode,id,OPERATEDATE,OPERATETYPE,OPERATER_ID,OPERATER_IPADDR,OPERATER_NAME,SOURCE_ID,SOURCE_NAME,TARGETTYPE,TARGET_ID,TARGET_NAME,TYPE_ID from ems_equipmentcycle@emslink
+
+
+
 
 

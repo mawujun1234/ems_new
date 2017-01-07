@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.exception.BusinessException;
 import com.mawujun.org.OrgService;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.service.AbstractService;
@@ -27,7 +28,7 @@ public class EquipmentCycleService extends AbstractService<EquipmentCycle, Strin
 //	private WorkUnitService workUnitService;
 //	@Autowired
 //	private StoreService storeService;
-	
+	@Autowired
 	private OrgService orgService;
 	@Autowired
 	private PoleService poleService;
@@ -66,6 +67,9 @@ public class EquipmentCycleService extends AbstractService<EquipmentCycle, Strin
 			cycle.setTarget_name(pole.getName()+"("+pole.getCode()+")");
 		} else if(targetType==TargetType.workunit){
 			cycle.setTarget_name(orgService.get(target_id).getName());
+		} else {
+			throw new BusinessException("指定的目标节点不存在："+target_id);
+			//cycle.setTarget_name(orgService.get(target_id).getName());
 		}
 		cycle.setTargetType(targetType);
 		

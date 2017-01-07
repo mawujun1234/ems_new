@@ -9,6 +9,7 @@ alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_brand_id_orderlist foreig
 alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_prod_id_orderlist foreign key("PROD_ID") references "EMS_EQUIPMENTPROD"("ID");
 alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_subtype_id_orderlist foreign key("SUBTYPE_ID") references "EMS_EQUIPMENTSUBTYPE"("ID");
 alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_type_id_orderlist foreign key("TYPE_ID") references "EMS_EQUIPMENTTYPE"("ID");
+alter table "EMSNEW"."EMS_INSTORE" add constraint fk_instore_store_id foreign key("STORE_ID") references "T_ORG"("ID");
 
 
 --等条码和设备信息导入的时候再加这个----已经处理过了

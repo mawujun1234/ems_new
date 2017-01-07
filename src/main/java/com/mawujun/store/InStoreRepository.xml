@@ -8,7 +8,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	
     <!-- 获取某个任务的设备清单 -->
     <select id="queryPage" resultType="com.mawujun.store.InStoreVO" parameterType="map">
-    	select a.*,b.name as store_name,c.name as operater_name from ems_instore a,ems_store b,sys_user c
+    	select a.*,b.name as store_name,c.name as operater_name from ems_instore a,t_org b,t_user c
 		where a.store_id=b.id and a.operater=c.id
 		<if test="operateDate_start!=null">
 			and to_char(a.operateDate,'yyyy-mm-dd') &gt;=#{operateDate_start}

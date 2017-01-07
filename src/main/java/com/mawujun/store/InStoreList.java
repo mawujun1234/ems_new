@@ -18,7 +18,6 @@ public class InStoreList extends UUIDEntity implements IEcodeCache{
 	@Column(length=25)
 	private String ecode;//设备编码
 	
-	@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean isnew=true;//是否是新产品,在入库的时候是新品还是旧品
 	
 	@Column(length=36)

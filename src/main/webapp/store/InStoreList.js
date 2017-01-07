@@ -1,4 +1,4 @@
-Ext.defineModel("Ems.store.InStoreList",{
+Ext.define("Ems.store.InStoreList",{
 	extend:"Ext.data.Model",
 	idProperty:'id',
 	fields:[
@@ -15,6 +15,27 @@ Ext.defineModel("Ems.store.InStoreList",{
 		{name:'style',type:'string'},
 		{name:'num',type:'int'}
 	],
-	associations:[
-	]
+	proxy:{
+		type:'ajax',
+		actionMethods: { read: 'POST' },
+		timeout :600000,
+		headers:{ 'Accept':'application/json;'},
+		writer:{
+			type:'json',
+			writeRecordId:true,
+			writeAllFields:true
+		},
+		reader:{
+			type:'json'
+			///rootProperty:'root',
+			//successProperty:'success',
+			//totalProperty:'total'		
+		},
+		api:{
+			read:Ext.ContextPath+'/inStoreList/load.do',
+			create:Ext.ContextPath+'/inStoreList/create.do',
+			update:Ext.ContextPath+'/inStoreList/update.do',
+			destroy:Ext.ContextPath+'/inStoreList/destroy.do'
+		}
+	}
 });

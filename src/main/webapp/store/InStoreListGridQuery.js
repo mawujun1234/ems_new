@@ -25,7 +25,7 @@ Ext.define('Ems.store.InStoreListGridQuery',{
       var me = this;
       me.columns=[
       	Ext.create('Ext.grid.RowNumberer'),
-		{dataIndex:'ecode',text:'条码',width:120},
+		{dataIndex:'ecode',text:'条码',width:155},
 		{header: '新/旧', dataIndex: 'isnew',width:100,renderer:function(value,metadata,record){
 						if(value){
 							return "新品";
@@ -38,7 +38,7 @@ Ext.define('Ems.store.InStoreListGridQuery',{
 		{dataIndex:'brand_name',text:'品牌'},
 		{dataIndex:'supplier_name',text:'供应商'},
 		{dataIndex:'style',text:'型号'},
-		{dataIndex:'prod_spec',text:'规格',flex:1,renderer:function(value,metadata,record){
+		{dataIndex:'prod_spec',text:'规格',width:150,renderer:function(value,metadata,record){
 			metadata.tdAttr = "data-qtip='" + value+ "'";
 		    return value;
 			}
@@ -60,7 +60,7 @@ Ext.define('Ems.store.InStoreListGridQuery',{
 				url:Ext.ContextPath+'/inStore/queryList.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });
