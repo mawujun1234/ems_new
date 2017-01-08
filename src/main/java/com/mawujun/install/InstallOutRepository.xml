@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.install.InstallOutRepository">
+<!-- 
+	<select id="getEquipmentByEcode" resultType="com.mawujun.baseinfo.EquipmentVO" >
+    	select a.*,b.name as subtype_name,c.name as prod_name,c.spec as prod_spec,d.name as brand_name,e.name as supplier_name from ems_equipment a
+		inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		where a.ecode=#{ecode} and a.workunit_id=#{workunit_id}
+    </select> 
+ -->
+ 
+ 	<select id="getInstallOutListVOByEcode" resultType="com.mawujun.install.InstallOutListVO">
+    	select a.*,b.name as subtype_name,c.name as prod_name,c.spec as prod_spec,c.unit as prod_unit,d.name as brand_name,e.name as supplier_name from 
+    	ems_equipment a
+		inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		inner join ems_equipment_store f on a.ecode=f.ecode
+		where a.ecode=#{ecode} and f.store_id=#{store_id} and a.status='in_storage'
+    </select>
+    
+    <select id="queryMain" resultType="com.mawujun.install.InstallOutVO" parameterType="map">
+    	select a.*,b.name as store_name,c.name as workUnit_name,d.name as project_name,'out' as type 
+    	from ems_installout a,t_org b,t_org c,ems_project d
+		where a.store_id=b.id and a.workunit_id=c.id and a.project_id=d.id
+		<if test="operateDate_start!=null">
+			and to_char(a.operateDate,'yyyy-mm-dd') &gt;=#{operateDate_start}
+		</if>
+		<if test="operateDate_end!=null">
+			and to_char(a.operateDate,'yyyy-mm-dd') &lt;=#{operateDate_end}
+		</if>
+		<if test="store_id!=null and store_id!=''">
+			and a.store_id =#{store_id}
+		</if>
+		<if test="workUnit_id!=null and workUnit_id!=''">
+			and a.workUnit_id =#{workUnit_id}
+		</if>
+		<if test="project_id!=null and project_id!=''">
+			and a.project_id =#{project_id}
+		</if>
+		order by a.id desc
+    </select>
+    <select id="queryMain_count" resultType="int" parameterType="map">
+    	select count(a.id) from ems_installout a
+		<where> 
+		<if test="operateDate_start!=null">
+			and to_char(a.operateDate,'yyyy-mm-dd') &gt;=#{operateDate_start}
+		</if>
+		<if test="operateDate_end!=null">
+			and to_char(a.operateDate,'yyyy-mm-dd') &lt;=#{operateDate_end}
+		</if>
+		<if test="store_id!=null and store_id!=''">
+			and a.store_id =#{store_id}
+		</if>
+		<if test="installOutType_id!=null and installOutType_id!=''">
+			and a.installOutType_id =#{installOutType_id}
+		</if>
+		<if test="workUnit_id!=null and workUnit_id!=''">
+			and a.workUnit_id =#{workUnit_id}
+		</if>
+		<if test="project_id!=null and project_id!=''">
+			and a.project_id =#{project_id}
+		</if>
+		</where>
+    </select>
+    
+    <!-- 获取InstallOutVO-->
+    <select id="getInstallOutVO" resultType="com.mawujun.install.InstallOutVO" parameterType="string">
+    	select a.*,b.name as store_name,c.name as workunit_name,d.name as project_name 
+    	from ems_installout a
+    	inner join t_org b on a.store_id=b.id
+    	inner join t_org c on a.workUnit_id=c.id
+    	inner join ems_project d on a.project_id=d.id
+    	where a.id=#{installOut_id}
+    </select>
+    <select id="queryList" resultType="com.mawujun.install.InstallOutListVO" parameterType="string">
+    	select a.*,b.name as subtype_name,c.name as prod_name,c.spec as prod_spec,c.unit as prod_unit,d.name as brand_name,e.name as supplier_name,f.name as installOutType_name from 
+    	(select f.*,a.subtype_id,a.prod_id,a.brand_id,a.supplier_id,a.style from ems_equipment a inner join ems_installoutlist f on a.ecode=f.ecode and f.installOut_id=#{installOut_id}) a
+		inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		inner join ems_installouttype f on a.installOutType_id=f.id
+    </select>
+    
+    <!-- 在任务提交的时候，发现该设备是从领用单里来的，那就把该设备修改为领用(因为默认是借用) -->
+    <update id="changeInstallOutListType2installout" >
+    	update ems_installoutlist set installOutListType=#{installOutListType}, returnDate=sysdate,pole_id=#{pole_id}  where installOut_id=#{installOut_id} and ecode=#{ecode}
+    </update>
+    
+    
+    <select id="queryEditInstallOut" resultType="com.mawujun.install.InstallOutVO" >
+    	select a.*,b.name as store_name,c.name as workUnit_name,d.name as project_name
+    	from ems_installout a,ems_store b,ems_workunit c,ems_project d
+		where a.store_id=b.id and a.workunit_id=c.id and a.project_id=d.id and a.status='edit'
+    </select>
+    
+    
+    <select id="queryDifference" resultType="com.mawujun.install.InstallOutDifferentVO" parameterType="map">
+    	select  a.type,a.operateDate,a.returnDate,a.installOut_id,a.store_id,a.ecode,a.installouttype_name,a.installouttype_content,
+	    e.id as type_id,e.name as type_name,d.id as subtype_id,d.name as subtype_name,c.id as prod_id,c.name as prod_name,c.unit as prod_unit,c.style prod_style,c.spec prod_spec,f.name as brand_name
+	    from (
+		    select '领用单' as type,b.installOut_id,a.store_id,b.ecode,c.name as installouttype_name,b.installouttype_content,b.id as installoutlist_id,a.operateDate,b.returnDate
+		    from ems_installout a,ems_installoutlist b,ems_installouttype c
+		    where a.id=b.installout_id and b.installouttype_id=c.id  and b.installoutlisttype='installout'
+		    <if test="store_id!=null and store_id!=''">
+			and a.store_id =#{store_id}
+		    </if> 
+		    <if test="returnDate_start!=null">
+				and to_char(b.returnDate,'yyyy-mm-dd') &gt;=#{returnDate_start}
+			</if>
+			<if test="returnDate_end!=null">
+				and to_char(b.returnDate,'yyyy-mm-dd') &lt;=#{returnDate_end}
+			</if>
+			<if test="operateDate_start!=null">
+				and to_char(a.operateDate,'yyyy-mm-dd') &gt;=#{operateDate_start}
+			</if>
+			<if test="operateDate_end!=null">
+				and to_char(a.operateDate,'yyyy-mm-dd') &lt;=#{operateDate_end}
+			</if>
+			<if test="workUnit_id!=null and workUnit_id!=''">
+				and a.workUnit_id =#{workUnit_id}
+			</if>
+			<if test="project_id!=null and project_id!=''">
+				and a.project_id =#{project_id}
+			</if> 
+			union all
+			select  '借用单' as type,b.borrow_id as installOut_id,a.store_id,b.ecode,c.name as installouttype_name,b.installouttype_content,b.id as installoutlist_id,a.operateDate,b.returnDate
+		    from ems_borrow a,ems_borrowlist b,ems_installouttype c
+		    where a.id=b.borrow_id and b.installouttype_id=c.id  and b.borrowListType='installout'
+			<if test="store_id!=null and store_id!=''">
+			and a.store_id =#{store_id}
+		    </if> 
+		    <if test="returnDate_start!=null">
+				and to_char(b.returnDate,'yyyy-mm-dd') &gt;=#{returnDate_start}
+			</if>
+			<if test="returnDate_end!=null">
+				and to_char(b.returnDate,'yyyy-mm-dd') &lt;=#{returnDate_end}
+			</if>
+			<if test="operateDate_start!=null">
+				and to_char(a.operateDate,'yyyy-mm-dd') &gt;=#{operateDate_start}
+			</if>
+			<if test="operateDate_end!=null">
+				and to_char(a.operateDate,'yyyy-mm-dd') &lt;=#{operateDate_end}
+			</if>
+			<if test="workUnit_id!=null and workUnit_id!=''">
+				and a.workUnit_id =#{workUnit_id}
+			</if>
+			<if test="project_id!=null and project_id!=''">
+				and a.project_id =#{project_id}
+			</if> 
+		  
+		 ) a
+	    inner join ems_equipment b on a.ecode=b.ecode
+	    inner join ems_equipmentprod c on b.prod_id=c.id
+	    inner join ems_equipmentsubtype d on c.subtype_id=d.id
+	    inner join ems_equipmenttype e on d.parent_id=e.id
+	    inner join ems_brand f on c.brand_id=f.id
+	    <where> 1=1
+	    <if test="type_id!=null and type_id!=''">
+			and e.id =#{type_id}
+		</if> 
+		<if test="subtype_id!=null and subtype_id!=''">
+			and d.id =#{subtype_id}
+		</if>
+		</where> 
+			
+	    
+    </select>
+</mapper>
+

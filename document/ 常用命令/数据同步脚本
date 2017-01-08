@@ -191,8 +191,13 @@ select ecode,workunit_id,from_id,indate,num,type,type_id,project_id from ems_equ
 --设备生命周期复制
 insert into ems_equipmentcycle(ecode,id,OPERATEDATE,OPERATETYPE,OPERATER_ID,OPERATER_IPADDR,OPERATER_NAME,SOURCE_ID,SOURCE_NAME,TARGETTYPE,TARGET_ID,TARGET_NAME,TYPE_ID )
 select ecode,id,OPERATEDATE,OPERATETYPE,OPERATER_ID,OPERATER_IPADDR,OPERATER_NAME,SOURCE_ID,SOURCE_NAME,TARGETTYPE,TARGET_ID,TARGET_NAME,TYPE_ID from ems_equipmentcycle@emslink
+--被锁定设备的数据同步
+insert into ems_lockequipment(ecode,createdate,locktype,type_id)
+select ecode,createdate,locktype,type_id from ems_lockequipment@emslink;
 
 
 
 
-
+--领用类型维护
+insert into ems_installouttype(id,memo,name)
+select id,memo,name from ems_installouttype@emslink;

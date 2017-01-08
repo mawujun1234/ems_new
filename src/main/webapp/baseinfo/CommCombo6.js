@@ -1,3 +1,12 @@
+//用于这些公用的combobox
+Ext.define("Ems.baseinfo.IdName",{
+	extend:"Ext.data.Model",
+	fields:[
+		{name:'id',type:'string'},
+		{name:'name',type:'string'},
+		{name:'text',type:'string'}
+	]
+});
 Ext.define('Ems.baseinfo.TypeCombo', {
 			extend : 'Ext.form.field.ComboBox',
 			xtype : 'typecombo',
@@ -15,7 +24,8 @@ Ext.define('Ems.baseinfo.TypeCombo', {
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
-							fields : ['id', 'name', 'text'],
+							//fields : ['id', 'name', 'text'],
+							model:'Ems.baseinfo.IdName',
 							proxy : {
 								type : 'ajax',
 								actionMethods : {
@@ -66,7 +76,8 @@ Ext.define('Ems.baseinfo.SubtypeCombo', {
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
-							fields : ['id', 'name', 'text'],
+							//fields : ['id', 'name', 'text'],
+					model:'Ems.baseinfo.IdName',
 							proxy : {
 								type : 'ajax',
 								actionMethods : {
@@ -137,7 +148,8 @@ Ext.define('Ems.baseinfo.ProdCombo', {
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
-							fields : ['id', 'text'],
+							//fields : ['id', 'text'],
+					model:'Ems.baseinfo.IdName',
 							autoLoad : false,
 							proxy : {
 								type : 'ajax',
@@ -208,7 +220,8 @@ Ext.define('Ems.baseinfo.BrandCombo', {
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
-							fields : ['id', 'name'],
+							//fields : ['id', 'name'],
+					model:'Ems.baseinfo.IdName',
 							proxy : {
 								type : 'ajax',
 								actionMethods : {
@@ -279,7 +292,8 @@ Ext.define('Ems.baseinfo.SupplierCombo', {
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
-							fields : ['id', 'name'],
+							//fields : ['id', 'name'],
+					model:'Ems.baseinfo.IdName',
 							proxy : {
 								type : 'ajax',
 								actionMethods : {
@@ -358,7 +372,8 @@ Ext.define('Ems.baseinfo.ProjectCombo', {
 			initComponent : function() {
 				var me = this;
 				me.store = Ext.create('Ext.data.Store', {
-							fields : ['id', 'name'],
+							//fields : ['id', 'name'],
+					model:'Ems.baseinfo.IdName',
 							proxy : {
 								type : 'ajax',
 								actionMethods : {
@@ -410,7 +425,8 @@ Ext.define('Ems.baseinfo.StoreCombo', {
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
-							fields : ['id', 'name'],
+							//fields : ['id', 'name'],
+					model:'Ems.baseinfo.IdName',
 							proxy : {
 								type : 'ajax',
 								extraParams : {
@@ -448,7 +464,8 @@ Ext.define('Ems.baseinfo.WorkunitCombo', {
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
-							fields : ['id', 'name'],
+							//fields : ['id', 'name'],
+					model:'Ems.baseinfo.IdName',
 							proxy : {
 								type : 'ajax',
 								extraParams : {
@@ -486,7 +503,8 @@ Ext.define('Ems.baseinfo.RepaircenterCombo', {
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
-							fields : ['id', 'name'],
+							//fields : ['id', 'name'],
+					model:'Ems.baseinfo.IdName',
 							proxy : {
 								type : 'ajax',
 								extraParams : {
@@ -522,7 +540,8 @@ Ext.define('Ems.baseinfo.OrderTypeCombo', {
 				// value:"1",
 				//allowBlank: false,
 				store : Ext.create('Ext.data.Store', {
-							fields : ['id', 'name'],
+							//fields : ['id', 'name'],
+					model:'Ems.baseinfo.IdName',
 							data : [{
 										id : "old_equipment",
 										name : "旧品订单"

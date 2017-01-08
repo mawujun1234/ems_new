@@ -258,5 +258,26 @@ public class EquipmentController {
 		out.close();
 	}
 	
+	/**
+	 * 查询仓库库存
+	 * @author mawujun 16064988@qq.com 
+	 * @param equipment
+	 * @param level //level=1:表示查询的是汇总数据
+	 * @return
+	 */
+	@RequestMapping("/equipment/queryByStore.do")
+	@ResponseBody
+	//public List<Equipment> queryEquipments(String store_id,String subtype_id,String prod_id,String brand_id,String supplier_id) {	
+	public List<EquipmentVO> queryByStore(EquipmentVO equipmentVO,Integer level,Integer start,Integer limit) {	
+		List<EquipmentVO> equipments=equipmentService.queryByStore(equipmentVO,level,start,limit);
+		return equipments;
+	}
 	
+	@RequestMapping("/equipment/queryByWorkunit.do")
+	@ResponseBody
+	public List<EquipmentVO> queryByWorkunit(EquipmentVO equipmentVO,Integer level,Integer start,Integer limit,String workUnit_id) {
+		//workUnit_id已经被包含在了equipmentVO里面
+		List<EquipmentVO> equipments=equipmentService.queryByWorkunit(equipmentVO,level,start,limit);
+		return equipments;
+	}
 }

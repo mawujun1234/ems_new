@@ -237,6 +237,88 @@ public static final class SupplierContact {
 	public static final String supplier_id="supplier_id";
 	public static final String id="id";
 }
+public static final class B2INotify {
+	public static final String ecode="ecode";
+	public static final String store_id="store_id";
+	public static final String borrow_id="borrow_id";
+	public static final String workunit_id="workunit_id";
+	public static final String pole_id="pole_id";
+	public static final String task_id="task_id";
+	public static final String createDate="createDate";
+	public static final String ishandled="ishandled";
+	public static final String id="id";
+}
+public static final class Borrow {
+	public static final String id="id";
+	public static final String store_id="store_id";
+	public static final String operater="operater";
+	public static final String operateDate="operateDate";
+	public static final String workUnit_id="workUnit_id";
+	public static final String project_id="project_id";
+	public static final String status="status";
+	public static final String memo="memo";
+}
+public static final class BorrowList {
+	public static final String borrow_id="borrow_id";
+	public static final String ecode="ecode";
+	public static final String isReturn="isReturn";
+	public static final String isnew="isnew";
+	public static final String returnDate="returnDate";
+	public static final String borrowListType="borrowListType";
+	public static final String pole_id="pole_id";
+	public static final String installOutType_id="installOutType_id";
+	public static final String installOutType_content="installOutType_content";
+	public static final String memo="memo";
+	public static final String id="id";
+}
+public static final class InstallIn {
+	public static final String id="id";
+	public static final String store_id="store_id";
+	public static final String operater="operater";
+	public static final String operateDate="operateDate";
+	public static final String workUnit_id="workUnit_id";
+	public static final String type="type";
+	public static final String memo="memo";
+}
+public static final class InstallInList {
+	public static final String installIn_id="installIn_id";
+	public static final String ecode="ecode";
+	public static final String isBad="isBad";
+	public static final String isnew="isnew";
+	public static final String installInListType="installInListType";
+	public static final String installout_id="installout_id";
+	public static final String project_id="project_id";
+	public static final String id="id";
+}
+public static final class InstallOut {
+	public static final String id="id";
+	public static final String store_id="store_id";
+	public static final String operater="operater";
+	public static final String operateDate="operateDate";
+	public static final String workUnit_id="workUnit_id";
+	public static final String project_id="project_id";
+	public static final String status="status";
+	public static final String requestnum="requestnum";
+	public static final String memo="memo";
+}
+public static final class InstallOutList {
+	public static final String installOut_id="installOut_id";
+	public static final String ecode="ecode";
+	public static final String isnew="isnew";
+	public static final String installOutListType="installOutListType";
+	public static final String pole_id="pole_id";
+	public static final String isReturn="isReturn";
+	public static final String returnDate="returnDate";
+	public static final String installOutType_id="installOutType_id";
+	public static final String installOutType_content="installOutType_content";
+	public static final String memo="memo";
+	public static final String id="id";
+}
+public static final class InstallOutType {
+	public static final String name="name";
+	public static final String memo="memo";
+	public static final String id="id";
+}
 public static final class Org {
 	public static final String id="id";
 	public static final String code="code";

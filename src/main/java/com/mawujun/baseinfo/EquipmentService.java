@@ -1,5 +1,7 @@
 package com.mawujun.baseinfo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.service.AbstractService;
+import com.mawujun.utils.page.Pager;
 
 
 
@@ -139,5 +142,60 @@ public class EquipmentService extends AbstractService<Equipment, String>{
 		return "success";
 	}
 	
+	public List<EquipmentVO> queryByStore(EquipmentVO equipmentVO,Integer level,Integer start,Integer limit) {
+		if(level==1){
+			return equipmentRepository.queryByStore_total(equipmentVO);
+		} else if(level==2 || level==3){
+			Pager<EquipmentVO> page=new Pager<EquipmentVO>();
+			page.setStart(start);
+			page.setLimit(limit);
+			page.setParams(equipmentVO);
+			Pager<EquipmentVO> result=equipmentRepository.queryByStore(page);
+			List<EquipmentVO> list= result.getRoot();
+			
+			EquipmentVO total=new EquipmentVO();
+			total.setSubtype_id("total");
+			total.setSubtype_name("<b>合计:</b>");
+			int total_num=0;
+			for(EquipmentVO equi_temp:list){
+				total_num+=equi_temp.getNum();
+			}
+			total.setNum(total_num);
 
+			list.add(total);
+			return list;
+		} else {
+			return null;
+		}
+		
+	}
+	
+	public List<EquipmentVO> queryByWorkunit(EquipmentVO equipmentVO,Integer level,Integer start,Integer limit) {
+		//return workUnitRepository.queryEquipments(workUnit_id);
+		if(level==1){
+			//返回作业单位身上所有的设备，顶级
+			return equipmentRepository.queryByWorkunit_total(equipmentVO);
+		} else if(level==2 || level==3){
+			Pager<EquipmentVO> page=new Pager<EquipmentVO>();
+			page.setStart(start);
+			page.setLimit(limit);
+			page.setParams(equipmentVO);
+			Pager<EquipmentVO> result=equipmentRepository.queryByWorkunit(page);
+			List<EquipmentVO> list= result.getRoot();
+			
+			EquipmentVO total=new EquipmentVO();
+			total.setSubtype_id("total");
+			total.setSubtype_name("<b>合计:</b>");
+			int total_num=0;
+			for(EquipmentVO equi_temp:list){
+				total_num+=equi_temp.getNum();
+			}
+			total.setNum(total_num);
+
+			list.add(total);
+			return list;
+		} else {
+			return null;
+		}
+	}
 }

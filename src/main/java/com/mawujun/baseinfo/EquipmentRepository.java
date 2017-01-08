@@ -1,9 +1,12 @@
 package com.mawujun.baseinfo;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.mawujun.repository.IRepository;
+import com.mawujun.utils.page.Pager;
 /**
  * @author mawujun qq:16064988 e-mail:16064988@qq.com 
  * @version 1.0
@@ -29,5 +32,10 @@ public interface EquipmentRepository extends IRepository<Equipment, String>{
 	public EquipmentWorkunit getBorrowEquipmentWorkunit(@Param("ecode")String ecode);
 	//public void changeStore(Map<String,Object> params);
 	
+	public List<EquipmentVO> queryByStore_total(EquipmentVO equipmentVO) ;
+	public Pager<EquipmentVO> queryByStore(Pager<EquipmentVO> page) ;
+	
+	public List<EquipmentVO> queryByWorkunit_total(EquipmentVO equipmentVO) ;
+	public Pager<EquipmentVO> queryByWorkunit(Pager<EquipmentVO> page) ;
 
 }
