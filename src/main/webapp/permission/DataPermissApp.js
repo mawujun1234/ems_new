@@ -98,9 +98,50 @@ Ext.onReady(function(){
 		}
 	});
 	
+	var positionRepairecenterGrid=Ext.create("Ems.permission.PositionOrgAccessGrid",{
+		title:'维修中心权限',
+		
+		listeners : {
+			orgSelect : function(record, type) {
+				var params = {
+					position_id:window.selected_position.get("id"),
+					org_id : record.get("org_id"),
+					look : record.get("look"),
+					edit : record.get("edit")
+				};
+				Ext.Ajax.request({
+					url : Ext.ContextPath + "/position/selectOrg.do",
+					params : params,
+					method : 'POST',
+					success : function(response) {
+						record.commit();
+					}
+
+				});
+			},
+			orgDeselect : function(record, type) {
+				var params = {
+					position_id:window.selected_position.get("id"),
+					org_id : record.get("org_id"),
+					look : record.get("look"),
+					edit : record.get("edit")
+				};
+				Ext.Ajax.request({
+					url : Ext.ContextPath + "/position/deselectOrg.do",
+					params : params,
+					method : 'POST',
+					success : function(response) {
+						record.commit();
+					}
+
+				});
+			}
+		}
+	});
+	
 	var tabpanel=Ext.create('Ext.tab.Panel',{
 		region:'center',
-		items:[positionStoreGrid,positionWorkunitGrid,usergrid],
+		items:[positionStoreGrid,positionWorkunitGrid,positionRepairecenterGrid,usergrid],
 		listeners:{
 	    	render:function(tabpanel){
 	    		tabpanel.mask();
@@ -140,6 +181,12 @@ Ext.onReady(function(){
 			position_id:record.get("id")
 		});
 		positionStoreGrid.getStore().reload();
+		
+		positionRepairecenterGrid.getStore().getProxy().extraParams=Ext.apply(positionRepairecenterGrid.getStore().getProxy().extraParams,{
+			orgType:'repair_centre',
+			position_id:record.get("id")
+		});
+		positionRepairecenterGrid.getStore().reload();
 	});
 
 

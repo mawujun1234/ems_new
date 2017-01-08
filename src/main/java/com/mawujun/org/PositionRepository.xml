@@ -12,12 +12,15 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		on a.org_id=b.id 
 		and a.position_id=#{position_id} 
 		where  
-		<if test="orgType=='workunit'" >
-			b.ORGTYPE=#{orgType}
-		</if>
-		<if test="orgType=='store'" >
-			b.ORGTYPE in ('store_build','store_prepare')
-		</if>
+
+		<choose>
+		    <when test="orgType=='store'">
+		      b.ORGTYPE in ('store_build','store_prepare')
+		    </when>
+		    <otherwise>
+		      b.ORGTYPE=#{orgType}
+		    </otherwise>
+		</choose>
     </select> 
      
     

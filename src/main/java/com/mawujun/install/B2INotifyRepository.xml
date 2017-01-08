@@ -17,7 +17,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		    inner join ems_equipmentsubtype e on d.subtype_id=e.id
 				inner join ems_equipmentprod f on d.prod_id=f.id
 				inner join ems_brand g on d.brand_id=g.id
-		where store_id in (select store_id from sys_userstore where user_id='admin' and edit='Y')
+		where 
+		exists (select 1 from t_position_org_access x,t_position_org_user y where x.position_id=y.position_id and x.org_id=a.store_id and y.user_id=#{user_id} and x.edit=1)
 		and a.ishandled='N'
 	</select>
 

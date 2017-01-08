@@ -237,6 +237,31 @@ public static final class SupplierContact {
 	public static final String supplier_id="supplier_id";
 	public static final String id="id";
 }
+public static final class Check {
+	public static final String id="id";
+	public static final String status="status";
+	public static final String creater="creater";
+	public static final String createDate="createDate";
+	public static final String completer="completer";
+	public static final String completeDate="completeDate";
+	public static final String task_id="task_id";
+}
+public static final class CheckList {
+	public static final String check_id="check_id";
+	public static final String ecode="ecode";
+}
+public static final class Trim {
+	public static final String id="id";
+	public static final String ecode="ecode";
+	public static final String orginal_id="orginal_id";
+	public static final String orginal_type="orginal_type";
+	public static final String target_id="target_id";
+	public static final String target_type="target_type";
+	public static final String check_id="check_id";
+	public static final String creater="creater";
+	public static final String createDate="createDate";
+	public static final String trimType="trimType";
+}
 public static final class B2INotify {
 	public static final String ecode="ecode";
 	public static final String store_id="store_id";
@@ -317,6 +342,69 @@ public static final class InstallOutList {
 public static final class InstallOutType {
 	public static final String name="name";
 	public static final String memo="memo";
+	public static final String id="id";
+}
+public static final class HandleMethod {
+	public static final String name="name";
+	public static final String id="id";
+}
+public static final class HitchReasonTpl {
+	public static final String id="id";
+	public static final String name="name";
+	public static final String tpl="tpl";
+	public static final String hitchType_id="hitchType_id";
+}
+public static final class HitchType {
+	public static final String id="id";
+	public static final String name="name";
+}
+public static final class LockEquipment {
+	public static final String ecode="ecode";
+	public static final String lockType="lockType";
+	public static final String type_id="type_id";
+	public static final String createDate="createDate";
+}
+public static final class Overtime {
+	public static final String id="id";
+	public static final String read="read";
+	public static final String handling="handling";
+}
+public static final class PatrolTaskType {
+	public static final String name="name";
+	public static final String id="id";
+}
+public static final class Task {
+	public static final String id="id";
+	public static final String memo="memo";
+	public static final String type="type";
+	public static final String createrType="createrType";
+	public static final String status="status";
+	public static final String pole_id="pole_id";
+	public static final String pole_name="pole_name";
+	public static final String pole_address="pole_address";
+	public static final String workunit_id="workunit_id";
+	public static final String workunit_name="workunit_name";
+	public static final String customer_id="customer_id";
+	public static final String customer_name="customer_name";
+	public static final String hitchDate="hitchDate";
+	public static final String createDate="createDate";
+	public static final String startHandDate="startHandDate";
+	public static final String submitDate="submitDate";
+	public static final String completeDate="completeDate";
+	public static final String hitchType_id="hitchType_id";
+	public static final String hitchType="hitchType";
+	public static final String hitchReasonTpl_id="hitchReasonTpl_id";
+	public static final String hitchReason="hitchReason";
+	public static final String handleMethod_id="handleMethod_id";
+	public static final String handle_contact="handle_contact";
+	public static final String patrolTaskType_id="patrolTaskType_id";
+}
+public static final class TaskEquipmentList {
+	public static final String task_id="task_id";
+	public static final String ecode="ecode";
+	public static final String scanDate="scanDate";
+	public static final String type="type";
+	public static final String installoutType="installoutType";
 	public static final String id="id";
 }
 public static final class Org {
@@ -599,6 +687,55 @@ public static final class User {
 	public static final String state="state";
 	public static final String canNotDel="canNotDel";
 	public static final String temp_workunit="temp_workunit";
+}
+public static final class Repair {
+	public static final String id="id";
+	public static final String ecode="ecode";
+	public static final String prod_id="prod_id";
+	public static final String str_out_id="str_out_id";
+	public static final String rpa_id="rpa_id";
+	public static final String str_in_id="str_in_id";
+	public static final String installIn_id="installIn_id";
+	public static final String repair_date="repair_date";
+	public static final String workunit_id="workunit_id";
+	public static final String task_id="task_id";
+	public static final String broken_memo="broken_memo";
+	public static final String str_out_oper_id="str_out_oper_id";
+	public static final String str_out_date="str_out_date";
+	public static final String rpa_user_id="rpa_user_id";
+	public static final String rpa_in_oper_id="rpa_in_oper_id";
+	public static final String rpa_in_date="rpa_in_date";
+	public static final String rpa_out_oper_id="rpa_out_oper_id";
+	public static final String rpa_out_date="rpa_out_date";
+	public static final String str_in_oper_id="str_in_oper_id";
+	public static final String str_in_date="str_in_date";
+	public static final String rpa_type="rpa_type";
+	public static final String status="status";
+	public static final String scrapDate="scrapDate";
+	public static final String broken_reson="broken_reson";
+	public static final String handler_method="handler_method";
+	public static final String memo="memo";
+	public static final String send_date="send_date";
+	public static final String sendno="sendno";
+	public static final String receive_date="receive_date";
+	public static final String repairFactory="repairFactory";
+	public static final String depreci_year="depreci_year";
+	public static final String depreci_month="depreci_month";
+	public static final String depreci_day="depreci_day";
+}
+public static final class Scrap {
+	public static final String id="id";
+	public static final String ecode="ecode";
+	public static final String reason="reason";
+	public static final String residual="residual";
+	public static final String store_id="store_id";
+	public static final String rpa_id="rpa_id";
+	public static final String scrpReqOper="scrpReqOper";
+	public static final String scrpReqDate="scrpReqDate";
+	public static final String operater="operater";
+	public static final String operateDate="operateDate";
+	public static final String repair_id="repair_id";
+	public static final String status="status";
 }
 public static final class Barcode {
 	public static final String ecode="ecode";

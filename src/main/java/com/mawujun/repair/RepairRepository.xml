@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.repair.RepairRepository">
+
+	<!--通过烧苗条码进行设备出库维修的时候，查询的数据  -->
+	<select id="getRepairVOByEcode" resultType="com.mawujun.repair.RepairVO" parameterType="java.lang.String">
+    	select a.ecode,a.style as equipment_style,a.status as equipment_status,a.prod_id,
+    	a.last_workunit_id as workunit_id,
+    	a.last_task_id as task_id,
+    	a.last_installIn_id as installIn_id,
+    	b.name as subtype_name,c.name as prod_name,c.spec as prod_spec,d.name as brand_name ,f.store_id as str_out_id,g.name as str_out_name
+    	from ems_equipment a
+		inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_equipment_store f on a.ecode=f.ecode
+		inner join ems_store g on f.store_id=g.id
+		where a.ecode=#{ecode} and f.store_id=#{store_id}
+    </select> 
+    <!--判断设备是否已经建立维修单  -->
+	<select id="checkEcodeIsInRepair" resultType="int" parameterType="java.lang.String">
+		select count(id) from ems_repair where ecode=#{ecode} and status not in ('over','scrap')
+	</select>
+    <!-- 获取已经存在的维修单-->
+    <select id="getRepairVOByEcodeStatus" resultType="com.mawujun.repair.RepairVO" parameterType="java.lang.String">
+    	select a.*,b.id as scrap_id,d.name as prod_name,d.style as equipment_style from ems_repair a 
+    	left join ems_scrap b on a.id=b.repair_id
+    	left join ems_equipmentprod d on a.prod_id=d.id
+		where a.ecode=#{ecode} and a.status=#{status}
+    </select> 
+    
+     <!-- 查询所有损坏的设备 -->
+    <select id="queryBrokenEquipment" resultType="com.mawujun.baseinfo.EquipmentVO" >
+    	select a.*,b.name as subtype_name,c.name as prod_name,c.spec as prod_spec,d.name as brand_name,e.name as supplier_name from ems_equipment a
+		inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		inner join ems_equipment_store f on a.ecode=f.ecode
+		where  f.store_id=#{store_id} and a.status='wait_for_repair'
+    </select> 
+    <!--通过仓库代码，一次性把仓库中所有的设备都变成维修单  -->
+	<select id="queryBrokenEquipment2Reapir" resultType="com.mawujun.repair.Repair" parameterType="java.lang.String">
+    	select a.ecode,a.prod_id,
+    	a.last_workunit_id as workunit_id,
+    	a.last_task_id as task_id,
+    	a.last_installIn_id as installIn_id,
+    	f.store_id as str_out_id
+    	from ems_equipment a
+    	inner join ems_equipment_store f on a.ecode=f.ecode
+		where  f.store_id=#{store_id} and a.status='wait_for_repair'
+    </select> 
+    
+    <select id="storeMgrQuery" resultType="com.mawujun.repair.RepairVO" parameterType="map">
+    	select a.*,b.id as scrap_id,d.name as prod_name,d.style as equipment_style from ems_repair a 
+    	left join ems_scrap b on a.id=b.repair_id
+    	left join ems_equipmentprod d on a.prod_id=d.id
+		<where>
+			a.str_out_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.edit='Y')
+			<if test="str_out_id!=null">
+				and a.str_out_id=#{str_out_id}
+			</if>
+			<if test="rpa_id!=null">
+				and a.rpa_id=#{rpa_id}
+			</if>
+			<if test="str_out_date_start!=null ">
+				and to_char(a.str_out_date,'yyyy-mm-dd') &gt;= #{str_out_date_start}
+			</if>
+			<if test="str_out_date_end!=null">
+				and to_char(a.str_out_date,'yyyy-mm-dd') &lt;= #{str_out_date_end}
+			</if>
+			<if test="ecode!=null">
+				and a.ecode=#{ecodes}
+			</if>
+			<if test="status!=null">
+				and a.status=#{status}
+			</if>
+			<if test="only_have_scap==true">
+	    		and b.id is not null
+	    	</if>
+		</where>
+		order by a.status
+    </select>
+    <!-- 维修入库的时候，查询有哪些需要维修中心入库的维修单 -->
+    <select id="repairInQuery" resultType="com.mawujun.repair.RepairVO" parameterType="map">
+    	select a.*,d.name as prod_name,d.style as equipment_style,e.name as workunit_name  from ems_repair a
+    	left join ems_equipmentprod d on a.prod_id=d.id
+    	left join ems_workunit e on a.workunit_id=e.id
+		<where>
+			a.rpa_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.edit='Y')
+			<if test="str_out_id!=null">
+				and a.str_out_id=#{str_out_id}
+			</if>
+			<if test="rpa_id!=null">
+				and a.rpa_id=#{rpa_id}
+			</if>
+			<if test="str_out_date_start!=null ">
+				and to_char(a.str_out_date,'yyyy-mm-dd') &gt;= #{str_out_date_start}
+			</if>
+			<if test="str_out_date_end!=null">
+				and to_char(a.str_out_date,'yyyy-mm-dd') &lt;= #{str_out_date_end}
+			</if>
+			<if test="ecode!=null">
+				and a.ecode=#{ecodes}
+			</if>
+			<if test="status!=null">
+				and a.status=#{status}
+			</if>
+		</where>
+		order by a.status
+    </select>
+    
+    <select id="repairMgrQuery" resultType="com.mawujun.repair.RepairVO" parameterType="map">
+    	select a.*,b.id as scrap_id,d.name as workunit_name,e.name as rpa_user_name 
+    	 ,f.name as prod_name,f.style as equipment_style
+    	 from ems_repair a 
+    	 left join ems_scrap b on a.id=b.repair_id
+    	 left join ems_workunit d on a.workunit_id=d.id
+    	 left join sys_user e on a.rpa_user_id=e.id
+    	 left join ems_equipmentprod f on a.prod_id=f.id
+		<where>
+			a.rpa_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.edit='Y')
+			<if test="str_out_id!=null">
+				and a.str_out_id=#{str_out_id}
+			</if>
+			<if test="rpa_id!=null">
+				and a.rpa_id=#{rpa_id}
+			</if>
+			<if test="rpa_in_date_start!=null ">
+				and to_char(a.rpa_in_date,'yyyy-mm-dd') &gt;= #{rpa_in_date_start}
+			</if>
+			<if test="rpa_in_date_end!=null">
+				and to_char(a.rpa_in_date,'yyyy-mm-dd') &lt;= #{rpa_in_date_end}
+			</if>
+			<if test="ecode!=null">
+				and a.ecode=#{ecode}
+			</if>
+			<if test="status!=null">
+				and a.status=#{status}
+			</if>
+			<if test="only_have_scap==true">
+	    		and b.id is not null
+	    	</if>
+		</where>
+		order by a.id desc
+    </select>
+    
+
+</mapper>
+
