@@ -4,38 +4,43 @@ Ext.require("Ems.repair.Repair");
 //Ext.require("Ems.store.BarcodeForm");
 Ext.onReady(function(){
         
-	var store_combox=Ext.create('Ext.form.field.ComboBox',{
-	        fieldLabel: '<b>入库仓库</b>',
-	        labelAlign:'right',
-            labelWidth:55,
-	        //xtype:'combobox',
-	        //afterLabelTextTpl: Ext.required,
-	        name: 'str_out_id',
-		    displayField: 'name',
-		    valueField: 'id',
-		    //queryParam: 'name',
-    		//queryMode: 'remote',
-    		//triggerAction: 'query',
-    		//minChars:-1,
-		    //trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-		    //trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-			//onTrigger1Click : function(){
-			//    var me = this;
-			//    me.setValue('');
-			//},
-	        allowBlank: false,
-	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    proxy:{
-			    	type:'ajax',
-			    	extraParams:{type:[1,3],edit:true},
-			    	url:Ext.ContextPath+"/store/queryCombo.do",
-			    	reader:{
-			    		type:'json',
-			    		root:'root'
-			    	}
-			    }
-		   })
+//	var store_combox=Ext.create('Ext.form.field.ComboBox',{
+//	        fieldLabel: '<b>入库仓库</b>',
+//	        labelAlign:'right',
+//            labelWidth:55,
+//	        //xtype:'combobox',
+//	        //afterLabelTextTpl: Ext.required,
+//	        name: 'str_out_id',
+//		    displayField: 'name',
+//		    valueField: 'id',
+//		    //queryParam: 'name',
+//    		//queryMode: 'remote',
+//    		//triggerAction: 'query',
+//    		//minChars:-1,
+//		    //trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
+//		    //trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
+//			//onTrigger1Click : function(){
+//			//    var me = this;
+//			//    me.setValue('');
+//			//},
+//	        allowBlank: false,
+//	        store:Ext.create('Ext.data.Store', {
+//		    	fields: ['id', 'name'],
+//			    proxy:{
+//			    	type:'ajax',
+//			    	extraParams:{type:[1,3],edit:true},
+//			    	url:Ext.ContextPath+"/store/queryCombo.do",
+//			    	reader:{
+//			    		type:'json',
+//			    		root:'root'
+//			    	}
+//			    }
+//		   })
+//	});
+	var store_combox = Ext.create('Ems.baseinfo.StoreCombo', {
+				edit : true,
+				allowBlank : false,
+				fieldLabel: '<b>入库仓库</b>'
 	});
 //	var repair_combox=Ext.create('Ext.form.field.ComboBox',{
 //	        fieldLabel: '<b>维修中心</b>',
@@ -73,7 +78,7 @@ Ext.onReady(function(){
 	var ecode_textfield=Ext.create('Ext.form.field.Text',{
 		labelAlign:'right',
 		name:'ecode',
-		fieldLabel: '输入设备条码',
+		fieldLabel: '输入条码',
 		minLength:Ext.ecode_length,
 		maxLength:Ext.ecode_length,
 		length:Ext.ecode_length,
@@ -112,7 +117,7 @@ Ext.onReady(function(){
 		name:'operater',
 		readOnly:true,
 		allowBlank:false,
-		value:loginName
+		value:Ext.util.Cookies.get("loginName")
 	});
 	
 	var inDate_textfield=Ext.create('Ext.form.field.Text',{
@@ -261,7 +266,7 @@ Ext.onReady(function(){
     	          ],
         tbar:['<pan id="toolbar-title-text">当前出库记录:</span>',toolbar_title_text_num,'->',
               {text:'清空列表中设备',
-        	   iconCls:'icon-clearall',
+        	   iconCls:'icon-trash',
         	   handler:function(){
         		   Ext.MessageBox.confirm('确认', '您确认要清除所有记录吗?', function(btn){
 						if(btn=='yes'){

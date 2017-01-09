@@ -1,31 +1,23 @@
-<%@ page language="java" import="java.util.*,com.mawujun.shiro.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
-  <head>
-    
-    <title>仓库入库维修好的设备</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="UTF-8">
 
 	
-	<%@include file="../../common/init.jsp" %>
+	<%@include file="../common/init.jsp" %>
+	<script type="text/javascript" src="../baseinfo/CommCombo6.js"></script>
 	<script type="text/javascript" src="RepairStoreInApp.js"></script>
 	<script type="text/javascript">
-		var loginName='<%=ShiroUtils.getUserName()%>';
-		var loginUserId='<%=ShiroUtils.getAuthenticationInfo().getId()%>';
+		
 	</script>
   </head>
   

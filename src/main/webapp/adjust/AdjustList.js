@@ -1,0 +1,49 @@
+Ext.define("Ems.adjust.AdjustList",{
+	extend:"Ext.data.Model",
+	idProperty:'id',
+	fields:[
+		{name:'id',type:'string'},
+		{name:'adjust_id',type:'string'},
+		{name:'ecode',type:'string'},
+		{name:'in_num',type:'int'},
+		{name:'out_num',type:'int'},
+		{name:'out_num',type:'int'},
+		{name:'isnew',type:'bool'},
+		{name:'prod_id',type:'string'},
+		{name:'adjustListStatus',type:'string'},
+		{name:'isReturn',type:'bool'},
+		{name:'adjustlist_id_returnback',type:'string'},
+		{name:'ecode_returnback',type:'string'},
+		
+		{name:'adjustListStatus_name',type:'string'},
+		{name:'brand_name',type:'string'},
+		{name:'prod_name',type:'string'},
+		{name:'prod_spec',type:'string'},
+		{name:'subtype_name',type:'string'},
+		{name:'supplier_name',type:'string'},
+		{name:'prod_style',type:'string'}
+	],
+	proxy:{
+		type:'ajax',
+		actionMethods: { read: 'POST' },
+		timeout :600000,
+		headers:{ 'Accept':'application/json;'},
+		writer:{
+			type:'json',
+			writeRecordId:true,
+			writeAllFields:true
+		},
+		reader:{
+			type:'json'
+			///rootProperty:'root',
+			//successProperty:'success',
+			//totalProperty:'total'		
+		},
+		api:{
+			read:Ext.ContextPath+'/adjustList/load.do',
+			create:Ext.ContextPath+'/adjustList/create.do',
+			update:Ext.ContextPath+'/adjustList/update.do',
+			destroy:Ext.ContextPath+'/adjustList/destroy.do'
+		}
+	}
+});

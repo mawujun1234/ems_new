@@ -94,5 +94,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	select b.* from t_position_org_user a,t_org b
     	where a.org_orgno=b.orgno and a.user_id=#{user_id}
     </select> 
+    
+    <!-- 检查某个用书是否具有 编辑 仓库的去权限-->
+	<select id="check_edit_store_permission" resultType="int">
+		select count(1) from t_position_org_user a,t_position_org_access b 
+		where a.position_id=b.position_id and a.user_id=#{user_id} and b,org_id=#{store_id} and b.edit='Y'
+	</select>
 </mapper>
 

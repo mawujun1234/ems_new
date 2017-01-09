@@ -93,7 +93,7 @@ Ext.define('Ems.repair.RepairInGrid',{
 				type:'ajax',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });
@@ -108,53 +108,63 @@ Ext.define('Ems.repair.RepairInGrid',{
 	  }];
 	  
 	  
-	  var store_combox=Ext.create('Ext.form.field.ComboBox',{
-	        fieldLabel: '仓库',
-	        labelAlign:'right',
-            labelWidth:40,
-	        //xtype:'combobox',
-	        //afterLabelTextTpl: Ext.required,
-	        name: 'store_id',
-		    displayField: 'name',
-		    valueField: 'id',
-	        //allowBlank: false,
-	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    proxy:{
-			    	type:'ajax',
-			    	extraParams:{type:[1,3],look:true},
-			    	url:Ext.ContextPath+"/store/queryCombo.do",
-			    	reader:{
-			    		type:'json',
-			    		root:'root'
-			    	}
-			    }
-		   })
-	  }); 
+//	  var store_combox=Ext.create('Ext.form.field.ComboBox',{
+//	        fieldLabel: '仓库',
+//	        labelAlign:'right',
+//            labelWidth:40,
+//	        //xtype:'combobox',
+//	        //afterLabelTextTpl: Ext.required,
+//	        name: 'store_id',
+//		    displayField: 'name',
+//		    valueField: 'id',
+//	        //allowBlank: false,
+//	        store:Ext.create('Ext.data.Store', {
+//		    	fields: ['id', 'name'],
+//			    proxy:{
+//			    	type:'ajax',
+//			    	extraParams:{type:[1,3],look:true},
+//			    	url:Ext.ContextPath+"/store/queryCombo.do",
+//			    	reader:{
+//			    		type:'json',
+//			    		root:'root'
+//			    	}
+//			    }
+//		   })
+//	  }); 
+	  var store_combox = Ext.create('Ems.baseinfo.StoreCombo', {
+				look : true,
+				allowBlank : true,
+				fieldLabel: '<b>仓库</b>'
+	});
 	  
-	  var repair_combox=Ext.create('Ext.form.field.ComboBox',{
-	        fieldLabel: '维修中心',
-	        labelAlign:'right',
-            labelWidth:60,
-	        //xtype:'combobox',
-	        //afterLabelTextTpl: Ext.required,
-	        name: 'rpa_id',
-		    displayField: 'name',
-		    valueField: 'id',
-	        allowBlank: false,
-	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    proxy:{
-			    	type:'ajax',
-			    	extraParams:{type:2,edit:true},
-			    	url:Ext.ContextPath+"/store/queryCombo.do",
-			    	reader:{
-			    		type:'json',
-			    		root:'root'
-			    	}
-			    }
-		   })
-	  }); 
+//	  var repair_combox=Ext.create('Ext.form.field.ComboBox',{
+//	        fieldLabel: '维修中心',
+//	        labelAlign:'right',
+//            labelWidth:60,
+//	        //xtype:'combobox',
+//	        //afterLabelTextTpl: Ext.required,
+//	        name: 'rpa_id',
+//		    displayField: 'name',
+//		    valueField: 'id',
+//	        allowBlank: false,
+//	        store:Ext.create('Ext.data.Store', {
+//		    	fields: ['id', 'name'],
+//			    proxy:{
+//			    	type:'ajax',
+//			    	extraParams:{type:2,edit:true},
+//			    	url:Ext.ContextPath+"/store/queryCombo.do",
+//			    	reader:{
+//			    		type:'json',
+//			    		root:'root'
+//			    	}
+//			    }
+//		   })
+//	  }); 
+	var repair_combox = Ext.create('Ems.baseinfo.RepaircenterCombo', {
+				edit : true,
+				allowBlank : true,
+				fieldLabel: '<b>维修中心</b>'
+	});
 	  
 	  var str_out_date_start=Ext.create('Ext.form.field.Date',{
 	  	fieldLabel: '出仓时间',
@@ -185,7 +195,7 @@ Ext.define('Ems.repair.RepairInGrid',{
 	  var query_button=Ext.create("Ext.button.Button",{
 			text:'查询',
 			margin:'0 0 0 5',
-			iconCls:'form-search-button',
+			iconCls:'icon-search',
 			handler:function(){
 				me.store.loadPage(1);
 				

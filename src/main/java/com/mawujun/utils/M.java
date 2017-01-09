@@ -1,5 +1,32 @@
 package com.mawujun.utils;
 public final class M {
+public static final class Adjust {
+	public static final String id="id";
+	public static final String status="status";
+	public static final String returnStatus="returnStatus";
+	public static final String str_out_id="str_out_id";
+	public static final String str_out_date="str_out_date";
+	public static final String str_out_oper_id="str_out_oper_id";
+	public static final String str_in_id="str_in_id";
+	public static final String str_in_date="str_in_date";
+	public static final String str_in_oper_id="str_in_oper_id";
+	public static final String memo="memo";
+	public static final String adjustType="adjustType";
+	public static final String adjust_id_borrow="adjust_id_borrow";
+	public static final String project_id="project_id";
+}
+public static final class AdjustList {
+	public static final String adjust_id="adjust_id";
+	public static final String ecode="ecode";
+	public static final String isnew="isnew";
+	public static final String adjustListStatus="adjustListStatus";
+	public static final String indate="indate";
+	public static final String isReturn="isReturn";
+	public static final String adjustlist_id_returnback="adjustlist_id_returnback";
+	public static final String ecode_returnback="ecode_returnback";
+	public static final String prod_id="prod_id";
+	public static final String id="id";
+}
 public static final class Brand {
 	public static final String id="id";
 	public static final String name="name";
@@ -343,6 +370,10 @@ public static final class InstallOutType {
 	public static final String name="name";
 	public static final String memo="memo";
 	public static final String id="id";
+}
+public static final class MetaVersion {
+	public static final String clasName="clasName";
+	public static final String version="version";
 }
 public static final class HandleMethod {
 	public static final String name="name";

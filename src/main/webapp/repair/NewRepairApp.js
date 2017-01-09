@@ -38,7 +38,6 @@ Ext.onReady(function(){
 //		   })
 //	});
 	var store_combox = Ext.create('Ems.baseinfo.StoreCombo', {
-		name: 'str_out_id',
 				edit : true,
 				allowBlank : false,
 				fieldLabel: '<b>仓库</b>'
@@ -266,7 +265,7 @@ Ext.onReady(function(){
     	          ],
         tbar:['<pan id="toolbar-title-text">当前出库记录:</span>',toolbar_title_text_num,'->',
               {text:'清空列表中设备',
-        	   iconCls:'icon-clearall',
+        	   iconCls:'icon-trash',
         	   handler:function(){
         		   Ext.MessageBox.confirm('确认', '您确认要清除所有记录吗?', function(btn){
 						if(btn=='yes'){

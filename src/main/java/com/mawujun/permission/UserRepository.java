@@ -26,5 +26,14 @@ public interface UserRepository extends IRepository<User, String>{
 	 
 	 
 	 //public List<Org> queryCurrentOrg(@Param("user_id")String user_id);
+	 
+	 /**
+	  * 判断用户对某个仓库是否有编辑权限
+	  * @author mawujun qq:16064988 mawujun1234@163.com
+	  * @param user_id
+	  * @param store_id
+	  * @return
+	  */
+	 public int check_edit_store_permission(@Param("user_id")String user_id,@Param("store_id")String store_id);
 
 }

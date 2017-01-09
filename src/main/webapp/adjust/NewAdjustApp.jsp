@@ -15,9 +15,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<%@include file="../common/init.jsp" %>
 	<script type="text/javascript" src="../baseinfo/CommCombo6.js"></script>
-	<script type="text/javascript" src="RepairInApp.js"></script>
+	<script type="text/javascript" src="NewAdjustApp.js"></script>
 	<script type="text/javascript">
-		
+
 	</script>
   </head>
   

@@ -25,7 +25,7 @@ public class PositionOrgAccess implements Serializable{
 	Position position;
 	@Id
 	@ManyToOne
-	Org org;
+	Org org;//可以访问的组织节点
 	
 	private Boolean look=false;
 	private Boolean edit=false;

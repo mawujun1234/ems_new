@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.adjust.AdjustRepository">
+	<select id="getAdjustListVOByEcode" resultType="com.mawujun.adjust.AdjustListVO" parameterType="java.lang.String">
+    	select a.isnew,a.prod_id,a.ecode,c.style as prod_style,b.name as subtype_name,c.name as prod_name,c.spec as prod_spec,d.name as brand_name,e.name as supplier_name
+    	from ems_equipment a
+		inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		inner join ems_equipment_store f on a.ecode=f.ecode  
+		where a.ecode=#{ecode} and f.store_id=#{store_id} 
+    </select> 
+    
+	<!-- 在调拨如的时候，用来查找需要入库的调拨单-->
+	<select id="query4InStore" resultType="com.mawujun.adjust.AdjustVO" parameterType="map">
+		select a.* from ems_adjust a where (a.status='carry' or a.status='partin')
+		and a.str_in_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.edit='Y')
+	</select>
+	
+	<!--
+	 -->
+	<!-- 在调拨如的时候，获取调拨单明细-->
+	<select id="query4InStoreList" resultType="com.mawujun.adjust.AdjustListVO" parameterType="java.lang.String">
+    	select f.*,b.name as subtype_name,c.id as prod_id,c.name as prod_name,c.style as prod_style,c.spec as prod_spec,d.name as brand_name,e.name as supplier_name 
+    	from ems_equipment a
+		inner join ems_equipmentsubtype b on a.subtype_id=b.id
+		inner join ems_equipmentprod c on a.prod_id=c.id
+		inner join ems_brand d on a.brand_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		inner join ems_adjustlist f on a.ecode=f.ecode
+		where f.adjust_id=#{adjust_id}
+    </select>
+    <!-- 
+    <select id="sumInnumByadjust_id" resultType="long"  parameterType="java.lang.String">
+    	select sum(in_num) from ems_adjustlist where adjust_id=#{adjust_id}
+    </select>
+    -->
+    <select id="queryPageVO" resultType="com.mawujun.adjust.AdjustVO" parameterType="map">
+		select a.* from ems_adjust a
+		<where>
+			and a.str_out_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.look='Y')
+			<if test="str_out_id!=null">
+				and a.str_out_id=#{str_out_id}
+			</if>
+			<if test="str_in_id!=null">
+				and a.str_in_id=#{str_in_id}
+			</if>
+			<if test="str_out_date_start!=null ">
+				and to_char(a.str_out_date,'yyyy-mm-dd') &gt;= #{str_out_date_start}
+			</if>
+			<if test="str_out_date_end!=null">
+				and to_char(a.str_out_date,'yyyy-mm-dd') &lt;= #{str_out_date_end}
+			</if>
+			<if test="status!=null">
+				and a.status=#{status}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询类型为借用类型的未归还的调拨单的明细-->
+	<select id="query_borrow_in_adjustList" resultType="com.mawujun.adjust.AdjustList" parameterType="java.lang.String">
+    	select f.*,a.prod_id
+    	from ems_equipment a
+		inner join ems_adjustlist f on a.ecode=f.ecode
+		where f.adjust_id=#{adjust_id} and f.adjustListStatus='in'	
+    </select> 
+    <!-- 在设备返还，然后入库的时候，对设备进行判断，如果已经全部归还就修改主表的状态为 归还，否则为部分归还 -->
+    <update id="updateAdjustIsAllReturn" parameterType="string">
+		update ems_adjust set returnStatus=(
+		       select decode(count(id) ,sum(decode(isReturn,'Y',1,0)),'over','partreturn')  from ems_adjustlist 
+		       where adjust_id=#{adjust_id}
+		) where id=#{adjust_id}
+	</update>
+	
+	<!-- 查询所有还没有归还的调拨单，在归还单的时候，弹出框用的-->
+	<select id="queryBorrowAdjuest" resultType="com.mawujun.adjust.AdjustVO" parameterType="map">
+		select a.* from ems_adjust a where (a.returnstatus='nonereturn' or a.returnstatus='partreturn') and a.adjustType='borrow'
+		and a.str_out_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.look='Y')
+	</select>
+</mapper>
+
