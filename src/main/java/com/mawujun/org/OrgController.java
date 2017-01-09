@@ -108,8 +108,13 @@ public class OrgController {
 	 */
 	@RequestMapping("/org/queryStores4Combo.do")
 	@ResponseBody
-	public List<Org> queryStores4Combo(Boolean look,Boolean edit) {	
-		return orgService.queryStores4Combo(look, edit);
+	public List<Org> queryStores4Combo(Boolean look,Boolean edit,OrgType orgtype) {
+		if(orgtype==null){
+			return orgService.queryStores4Combo(look, edit);
+		} else {
+			return orgService.queryStores4Combo(look, edit,orgtype);
+		}
+		
 	}
 	/**
 	 * 

@@ -83,7 +83,15 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="queryStores4Combo" resultType="com.mawujun.org.Org" parameterType="map" >
     	select a.* from t_org a,t_position_org_access b,t_position_org_user c 
     	where a.id=b.org_id and b.position_id=c.position_id and c.user_id=#{user_id} 
-    	and a.orgtype in ('store_build','store_prepare')
+    	<choose>
+		    <when test="orgtype != null and orgtype!=''">
+		      AND a.orgtype = #{orgtype}
+		    </when>
+		    <otherwise>
+		      and a.orgtype in ('store_build','store_prepare')
+		    </otherwise>
+		</choose>
+    	
     	<if test="look==true">
     		and b.look=1
     	</if>

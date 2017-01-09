@@ -192,7 +192,10 @@ public class OrgService extends AbstractService<Org, String>{
 	}
 	
 	public List<Org> queryStores4Combo(Boolean look,Boolean edit) {
-		return orgRepository.queryStores4Combo(look, edit,ShiroUtils.getUserId());
+		return orgRepository.queryStores4Combo(look, edit,ShiroUtils.getUserId(),null);
+	}
+	public List<Org> queryStores4Combo(Boolean look,Boolean edit,OrgType orgtype) {
+		return orgRepository.queryStores4Combo(look, edit,ShiroUtils.getUserId(),orgtype.toString());
 	}
 	public List<Org> queryWorkunits4Combo(Boolean look,Boolean edit) {
 		return orgRepository.queryWorkunits4Combo(look, edit,ShiroUtils.getUserId());

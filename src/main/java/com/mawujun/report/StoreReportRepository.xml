@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.report.StoreReportRepository">
+	<!-- 仓库入库明细报表 -->
+    <select id="queryInstoreListReport" resultType="com.mawujun.report.InstoreListReport" parameterType="map">
+    	select a.*, d.name as subtype_name,e.name as brand_name,c.name as prod_name,c.style as prod_style,c.unit as prod_unit 
+    	from (
+    		select a.id as instore_id,d.project_id,a.store_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,'新品入库' as instoretype,a.memo
+		    from ems_instore a 
+		    inner join ems_instorelist b on a.id=b.instore_id
+		    inner join ems_orderlist c on b.orderlist_id=c.id
+		    inner join ems_order d on c.order_id=d.id
+		    where  to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
+			<if test="store_id!=null and store_id!=''">
+				and a.store_id=#{store_id}
+			</if>
+			<if test="project_id!=null and project_id!=''">
+				and d.project_id=#{project_id}
+			</if>
+		    union all
+		    select a.id as instore_id,a.project_id,a.str_in_id as store_id,to_char(b.indate,'yyyy-mm-dd') operatedate,b.ecode,'调拨入库' as instoretype,a.memo
+		    from ems_adjust a 
+		    inner join ems_adjustlist b on a.id=b.adjust_id
+		    where  b.adjustListStatus='in' 
+		     and to_char(b.indate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(b.indate,'yyyy-mm-dd') &lt;=#{date_end}
+			<if test="store_id!=null and store_id!=''">
+				and a.str_in_id=#{store_id}
+			</if>
+			<if test="project_id!=null and project_id!=''">
+				and a.project_id=#{project_id}
+			</if>
+		    union all
+		    select a.id as instore_id,b.project_id,a.store_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,'借用归还' as instoretype,a.memo
+		    from ems_installin a 
+		    inner join ems_installinlist b on a.id=b.installin_id
+		    where  b.installinlisttype='installout' 
+		    and to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
+			<if test="store_id!=null and store_id!=''">
+				and a.store_id=#{store_id}
+			</if>
+			<if test="project_id!=null and project_id!=''">
+				and a.project_id=#{project_id}
+			</if>
+		    union all
+		    select a.id as instore_id,b.project_id,a.store_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,'拆回入库' as instoretype,a.memo
+		    from ems_installin a 
+		    inner join ems_installinlist b on a.id=b.installin_id
+		    where  b.installinlisttype='takedown'
+		    and to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
+			<if test="store_id!=null and store_id!=''">
+				and a.store_id=#{store_id}
+			</if>
+			<if test="project_id!=null and project_id!=''">
+				and a.project_id=#{project_id}
+			</if>
+		    union all
+		    select a.id as instore_id,a.project_id,a.store_id,to_char(b.returndate,'yyyy-mm-dd') operatedate,b.ecode,'借用归还' as instoretype,a.memo
+		    from ems_borrow a 
+		    inner join ems_borrowlist b on a.id=b.borrow_id
+		    where  b.isreturn='Y' 
+		    and to_char(b.returndate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(b.returndate,'yyyy-mm-dd') &lt;=#{date_end}
+			<if test="store_id!=null and store_id!=''">
+				and a.store_id=#{store_id}
+			</if>
+			<if test="project_id!=null and project_id!=''">
+				and a.project_id=#{project_id}
+			</if>
+		    union all
+		    select a.id as instore_id,'修复入库' project_id,a.str_in_id as store_id,to_char(a.str_in_date,'yyyy-mm-dd') operatedate,a.ecode,'修复入库' as instoretype,a.memo
+		    from ems_repair a 
+		    where  a.status='over' 
+		    and to_char(a.str_in_date,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.str_in_date,'yyyy-mm-dd') &lt;=#{date_end}
+		    <if test="store_id!=null and store_id!=''">
+				and a.str_in_id=#{store_id}
+			</if>
+			<if test="project_id!=null and project_id!=''">
+				and a.project_id=#{project_id}
+			</if>
+    	
+    	) a,ems_equipment b,ems_equipmentprod c,ems_equipmentsubtype d,ems_brand e
+		where a.ecode=b.ecode and b.prod_id=c.id and b.subtype_id=d.id and b.brand_id=e.id
+		order by a.operatedate
+    </select>
+    
+    
+    <!-- 仓库领用明细报表 -->
+    <select id="queryInstalloutListReport" resultType="com.mawujun.report.InstalloutListReport" parameterType="map">
+    	select a.*, d.name as subtype_name,e.name as brand_name,c.name as prod_name,c.style as prod_style,c.unit as prod_unit 
+    	from (
+		select a.id as installout_id,a.project_id,a.store_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,c.name as workunit_name,d.name as pole_name,d.customer_id,'领用' as installouttype,a.memo
+		from ems_installout a 
+		inner join ems_installoutlist b on a.id=b.installout_id
+		inner join ems_workunit c on a.workunit_id=c.id
+		inner join ems_pole d on b.pole_id=d.id
+		where  b. installoutlisttype='installout' and b.isreturn='N'
+		and to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
+		<if test="store_id!=null and store_id!=''">
+			and a.store_id=#{store_id}
+		</if>
+		<if test="project_id!=null and project_id!=''">
+			and a.project_id=#{project_id}
+		</if>
+		union all
+		select a.id as installout_id,a.project_id,a.store_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,c.name as workunit_name,d.name as pole_name,d.customer_id,'借转领' as installouttype,a.memo
+		from ems_borrow a 
+		inner join ems_borrowlist b on a.id=b.borrow_id
+		inner join ems_workunit c on a.workunit_id=c.id
+		inner join ems_pole d on b.pole_id=d.id
+		where  b. borrowlisttype='installout' and b.isreturn='N'
+		and to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
+		<if test="store_id!=null and store_id!=''">
+			and a.store_id=#{store_id}
+		</if>
+		<if test="project_id!=null and project_id!=''">
+			and a.project_id=#{project_id}
+		</if>
+		union
+		select a.id as installout_id,a.project_id,a.str_out_id as store_id,to_char(a.str_out_date,'yyyy-mm-dd') as operatedate,b.ecode,c.name as workunit_name,'' as pole_name,'' as customer_id,'调拨领用' as installouttype,a.memo
+		from ems_adjust a 
+		inner join ems_adjustlist b on a.id=b.adjust_id
+		inner join ems_store c on a.str_out_id=c.id
+		where  a.adjusttype in ('installout','returnback')
+		and to_char(a.str_out_date,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.str_out_date,'yyyy-mm-dd') &lt;=#{date_end}
+		<if test="store_id!=null and store_id!=''">
+			and a.str_out_id=#{store_id}
+		</if>
+		<if test="project_id!=null and project_id!=''">
+			and a.project_id=#{project_id}
+		</if>	
+		) a,ems_equipment b,ems_equipmentprod c,ems_equipmentsubtype d,ems_brand e
+		where a.ecode=b.ecode and b.prod_id=c.id and b.subtype_id=d.id and b.brand_id=e.id
+		order by a.operatedate
+    </select>
+    
+    
+    <!-- 仓库借用明细报表 -->
+    <select id="queryBorrowListReport" resultType="com.mawujun.report.BorrowListReport" parameterType="map">
+    	select a.*, d.name as subtype_name,e.name as brand_name,c.name as prod_name,c.style as prod_style,c.unit as prod_unit 
+    	from (
+    	select a.id as borrow_id,a.project_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,a.store_id,c.name as workunit_name,decode(b.isreturn,'Y','已归还','未归还') as status,'领用' as borrowtype,a.memo
+		from ems_installout a 
+		inner join ems_installoutlist b on a.id=b.installout_id
+		inner join ems_workunit c on a.workunit_id=c.id
+		where  b.installoutlisttype='borrow' 
+		and to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
+		<if test="store_id!=null and store_id!=''">
+			and a.store_id=#{store_id}
+		</if>
+		<if test="project_id!=null and project_id!=''">
+			and a.project_id=#{project_id}
+		</if>
+		union all
+		select a.id as borrow_id,a.project_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,a.store_id,c.name as workunit_name,decode(b.isreturn,'Y','已归还','未归还') as status,'借用' as borrowtype,a.memo
+		from ems_borrow a 
+		inner join ems_borrowlist b on a.id=b.borrow_id
+		inner join ems_workunit c on a.workunit_id=c.id
+		where  b.borrowlisttype='borrow' 
+		and to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
+		<if test="store_id!=null and store_id!=''">
+			and a.store_id=#{store_id}
+		</if>
+		<if test="project_id!=null and project_id!=''">
+			and a.project_id=#{project_id}
+		</if>
+		union all
+		select a.id as borrow_id,a.project_id,to_char(a.str_out_date,'yyyy-mm-dd') operatedate,b.ecode,a.str_out_id as store_id,c.name as workunit_name,decode(b.isreturn,'Y','已归还','未归还') as status,'调拨' as borrowtype,a.memo
+		from ems_adjust a 
+		inner join ems_adjustlist b on a.id=b.adjust_id
+		inner join ems_store c on a.str_out_id=c.id
+		where  a.adjusttype='borrow'
+		and to_char(a.str_out_date,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.str_out_date,'yyyy-mm-dd') &lt;=#{date_end}
+		<if test="store_id!=null and store_id!=''">
+			and a.str_out_id=#{store_id}
+		</if>
+		<if test="project_id!=null and project_id!=''">
+			and a.project_id=#{project_id}
+		</if>
+		) a,ems_equipment b,ems_equipmentprod c,ems_equipmentsubtype d,ems_brand e
+		where a.ecode=b.ecode and b.prod_id=c.id and b.subtype_id=d.id and b.brand_id=e.id
+		order by a.operatedate
+    </select>
+    
+    <!-- 查询零星项目 领用报表 -->
+    <resultMap id="installout_report_map" type="com.mawujun.report.InstallOutReport_type" >
+     	<id property="type_id" column="type_id"/>
+    	<result property="type_name" column="type_name"/>
+    	<collection property="subtypes" ofType="com.mawujun.report.InstallOutReport_subtype">  
+    		<id property="subtype_id" column="subtype_id"/>
+		    <result property="subtype_name" column="subtype_name"/>
+		    <collection property="prodes" ofType="com.mawujun.report.InstallOutReport_prod">  
+		    	<id property="prod_id" column="prod_id"/>
+		    	<id property="installouttype_content" column="installouttype_content"/>
+		    	<result property="store_id" column="store_id"/>
+		    	<result property="installouttype_name" column="installouttype_name"/>
+		    	
+		    	<result property="prod_name" column="prod_name"/>
+		    	<result property="prod_unit" column="prod_unit"/>
+		    	<result property="prod_style" column="prod_style"/>
+		    	<result property="brand_name" column="brand_name"/>
+				
+		    	<result property="installoutnum" column="installoutnum"/>
+		    	<result property="value_net" column="value_net"/>
+		    </collection>
+       </collection>  
+    </resultMap>
+    <!-- 零星项目领用    returnDate：归还时间。领用时间(任务提交的时间)-->
+    <select id="queryInstalloutReport" resultMap="installout_report_map" parameterType="map">
+    	select  a.store_id,a.installouttype_name,a.installouttype_content,
+		e.id as type_id,e.name as type_name,d.id as subtype_id,d.name as subtype_name,c.id as prod_id,c.name as prod_name,c.unit as prod_unit,c.style prod_style,f.name as brand_name,count(a.installoutlist_id) as installoutnum 
+		,sum(g.value_net) value_net
+		from (
+	    <include refid="queryInstalloutReport_inner_sql"></include>  
+		) a
+		inner join ems_equipment b on a.ecode=b.ecode
+		inner join ems_equipmentprod c on b.prod_id=c.id
+		inner join ems_equipmentsubtype d on c.subtype_id=d.id
+		inner join ems_equipmenttype e on d.parent_id=e.id
+		inner join ems_brand f on c.brand_id=f.id
+		left join report_assetclean g on a.ecode=g.ecode
+		group by a.store_id,a.installouttype_name ,a.installouttype_content,
+		e.id,e.name ,d.id,d.name,c.id,c.name ,c.unit,c.style ,f.name
+    	order by a.installouttype_name,a.installouttype_content
+    </select>
+    <!-- 获取领用类型的一共有的一二级数据 -->
+    <select id="queryInstalloutReport_title" resultType="com.mawujun.report.InstallOutReport_title" parameterType="map">
+    	select distinct a.installouttype_name,a.installouttype_content from (
+    		<include refid="queryInstalloutReport_inner_sql"></include>  
+    	) a
+    	order by a.installouttype_name,a.installouttype_content
+    </select>
+    
+    <!-- 获取所有零星数据的合计 -->
+    <sql id="queryInstalloutReport_inner_sql">
+    	select a.store_id,b.ecode,c.name as installouttype_name,b.installouttype_content,b.id as installoutlist_id
+		from ems_installout a,ems_installoutlist b,ems_installouttype c
+		where a.id=b.installout_id and b.installouttype_id=c.id  and b.installoutlisttype='installout'
+		<if test="use_in!=null and use_in==false">
+			and a.store_id=#{store_id}  
+		</if>
+		<if test="use_in!=null and use_in==true ">
+			and a.store_id in (${store_id})  
+		</if>
+	    and to_char(b.returnDate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(b.returnDate,'yyyy-mm-dd') &lt;=#{date_end}
+		union all
+		select a.store_id,b.ecode,c.name as installouttype_name,b.installouttype_content,b.id as installoutlist_id
+		from ems_borrow a,ems_borrowlist b,ems_installouttype c
+		where a.id=b.borrow_id and b.installouttype_id=c.id and b.borrowlisttype='installout'
+		<if test="use_in!=null and use_in==false">
+			and a.store_id=#{store_id}  
+		</if>
+		<if test="use_in!=null and use_in==true ">
+			and a.store_id in (${store_id})  
+		</if>
+	    and to_char(b.returnDate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(b.returnDate,'yyyy-mm-dd') &lt;=#{date_end}
+		union all
+		select a.str_out_id store_id,b.ecode,'调拨' installouttype_name,c.name as installouttype_content,b.id as installoutlist_id
+		from ems_adjust a,ems_adjustlist b,ems_store c
+		where a.id=b.adjust_id and a.str_in_id=c.id and a.adjusttype in ('installout','returnback') 
+		<if test="use_in!=null and use_in==false">
+			and a.str_out_id=#{store_id}  
+		</if>
+		<if test="use_in!=null and use_in==true ">
+			and a.str_out_id in (${store_id})  
+		</if>
+	    and to_char(a.str_out_date,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.str_out_date,'yyyy-mm-dd') &lt;=#{date_end}
+    </sql>
+
+</mapper>
+

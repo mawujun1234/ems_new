@@ -422,6 +422,7 @@ Ext.define('Ems.baseinfo.StoreCombo', {
 			editable:false,
 			look : true,//获取只读的仓库
 			edit : false,//获取可以编辑操作的仓库，就是可以有权限入库的
+			orgtype:'',//设置取的是在建仓库还是备品备件仓库，如果没有设置，就表示取所有的仓库
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
@@ -431,6 +432,7 @@ Ext.define('Ems.baseinfo.StoreCombo', {
 								type : 'ajax',
 								extraParams : {
 									// type : [1, 3],
+									orgtype:me.orgtype,
 									look : me.look,
 									edit : me.edit
 								},

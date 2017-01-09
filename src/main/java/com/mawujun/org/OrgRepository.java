@@ -28,7 +28,7 @@ public interface OrgRepository extends IRepository<Org, String>{
 	public List<NodeVO> queryOrgAccess(@Param("parent_no")String parent_no,@Param("dim")Dim dim,@Param("position_id")String position_id);
 	
 	
-	public List<Org> queryStores4Combo(@Param("look")Boolean look,@Param("edit")Boolean edit,@Param("user_id")String user_id);
+	public List<Org> queryStores4Combo(@Param("look")Boolean look,@Param("edit")Boolean edit,@Param("user_id")String user_id,@Param("orgtype")String orgtype);
 	public List<Org> queryWorkunits4Combo(@Param("look")Boolean look,@Param("edit")Boolean edit,@Param("user_id")String user_id);
 	public List<Org> queryRepaircenter4Combo(@Param("look")Boolean look,@Param("edit")Boolean edit,@Param("user_id")String user_id);
 }
