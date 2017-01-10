@@ -60,17 +60,18 @@ Ext.define('Ems.baseinfo.EquipmentCycleGrid',{
 				var grid=btn.up("grid");
 				grid.getStore().reload();
 			},
-			iconCls: 'form-reload-button'
+			iconCls: 'icon-refresh'
 		},{
 			text: '导出重新打印',
-			icon:'../icons/page_excel.png',
+			//icon:'../icons/page_excel.png',
+			iconCls:'icon-download',
 			handler: function(btn){
 				var grid=btn.up("grid");
 				window.open(Ext.ContextPath+"/equipment/exportEcode.do?ecode="+grid.ecode, "_blank");
 			}
 		},{
 			text: '手工设置为损坏',
-			icon:'../icons/webcam_delete.png',
+			iconCls:' icon-minus-sign',
 			handler: function(btn){
 				//alert("还没有做好");
 				//return;
@@ -90,7 +91,7 @@ Ext.define('Ems.baseinfo.EquipmentCycleGrid',{
 			}
 		},{
 			text: '手工设置为旧品',
-			icon:'../icons/webcam_error.png',
+			iconCls:' icon-warning-sign',
 			handler: function(btn){
 				//alert("还没有做好");
 				//return;

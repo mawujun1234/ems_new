@@ -1,4 +1,4 @@
-Ext.defineModel("Ems.report.RepairReport",{
+Ext.define("Ems.report.RepairReport",{
 	extend:"Ext.data.Model",
 	fields:[
 		{name:'ecode',type:'string'},

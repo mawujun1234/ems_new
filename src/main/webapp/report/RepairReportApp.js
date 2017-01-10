@@ -23,7 +23,7 @@ Ext.onReady(function(){
 	var query_button=Ext.create('Ext.button.Button',{
 			text:'查询',
 			margin:'0 0 0 5',
-			iconCls:'form-search-button',
+			iconCls:'icon-search',
 			handler:function(){
 				//store.load();
 				store.loadPage(1);
@@ -62,7 +62,7 @@ Ext.onReady(function(){
 				url:Ext.ContextPath+'/report/repair/queryRepairReport.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	});

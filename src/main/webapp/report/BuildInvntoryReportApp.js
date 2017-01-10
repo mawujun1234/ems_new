@@ -88,6 +88,7 @@ Ext.onReady(function(){
 				fieldLabel: '<b>在建仓库</b>'
 			});
 	var tbar1=Ext.create('Ext.toolbar.Toolbar',{
+		 dock: 'top',
 		items:[date_start,date_end,store_combox,{
 			text:'计算当天结余',
 			icon:'../icons/atm.png',
@@ -140,6 +141,7 @@ Ext.onReady(function(){
 	})
 	
 	var tbar2=Ext.create('Ext.toolbar.Toolbar',{
+		 dock: 'top',
 		items:[
 			
 		{
@@ -186,13 +188,14 @@ Ext.onReady(function(){
 	})
 	
 	var panel=Ext.create('Ext.panel.Panel',{
-		tbar:{
-		  xtype: 'container',
-		  layout: 'anchor',
-		  defaults: {anchor: '0'},
-		  defaultType: 'toolbar',
-		  items: [tbar1, tbar2]
-		}
+//		tbar:{
+//		  xtype: 'container',
+//		  layout: 'anchor',
+//		  defaults: {anchor: '0'},
+//		  defaultType: 'toolbar',
+//		  items: [tbar1, tbar2]
+//		}
+		dockedItems:[tbar1, tbar2]
 	});
 	
 	function getParams(){

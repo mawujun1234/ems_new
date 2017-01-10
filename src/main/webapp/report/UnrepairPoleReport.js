@@ -35,33 +35,39 @@ Ext.onReady(function(){
 		   })
 	    });
 	    
-	var workunit_combox=Ext.create('Ext.form.field.ComboBox',{
-	        fieldLabel: '作业单位',
-	        labelAlign:'right',
-            labelWidth:55,
-            width:250,
-	        //xtype:'combobox',
-	        //afterLabelTextTpl: Ext.required,
-	        name: 'workunit_id',
-		    displayField: 'name',
-		    valueField: 'id',
-	        allowBlank: false,
-	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    proxy:{
-			    	type:'ajax',
-			    	//extraParams:{type:1,edit:true},
-			    	url:Ext.ContextPath+"/workUnit/queryCombo.do",
-			    	reader:{
-			    		type:'json',
-			    		rootProperty:'root'
-			    	}
-			    }
-		   })
+//	var workunit_combox=Ext.create('Ext.form.field.ComboBox',{
+//	        fieldLabel: '作业单位',
+//	        labelAlign:'right',
+//            labelWidth:55,
+//            width:250,
+//	        //xtype:'combobox',
+//	        //afterLabelTextTpl: Ext.required,
+//	        name: 'workunit_id',
+//		    displayField: 'name',
+//		    valueField: 'id',
+//	        allowBlank: false,
+//	        store:Ext.create('Ext.data.Store', {
+//		    	fields: ['id', 'name'],
+//			    proxy:{
+//			    	type:'ajax',
+//			    	//extraParams:{type:1,edit:true},
+//			    	url:Ext.ContextPath+"/workUnit/queryCombo.do",
+//			    	reader:{
+//			    		type:'json',
+//			    		rootProperty:'root'
+//			    	}
+//			    }
+//		   })
+//	});
+	var workunit_combox= Ext.create('Ems.baseinfo.WorkunitCombo', {
+		edit:true,
+		allowBlank : true,
+		fieldLabel : '作业单位'
 	});
 	var date_start=Ext.create('Ext.form.field.Date',{
 	  	fieldLabel: '开始时间',
 	  	labelWidth:60,
+	  	width:180,
 	  	hidden:false,
 	  	//editable:false,
 	  	format:'Y-m-d',
@@ -73,15 +79,16 @@ Ext.onReady(function(){
 	  	hidden:false,
 	  	format:'Y-m-d',
 	  	//editable:false,
-	  	labelWidth:15
+	  	labelWidth:15,
+	  	width:150,
         //name: 'str_out_date_end',
-        ,value: new Date()
+        value: new Date()
 	});
 	
 	var query_button=Ext.create('Ext.button.Button',{
 			text:'查询',
 			margin:'0 0 0 5',
-			iconCls:'form-search-button',
+			iconCls:'icon-search',
 			handler:function(){
 				store.loadPage(1);
 			}

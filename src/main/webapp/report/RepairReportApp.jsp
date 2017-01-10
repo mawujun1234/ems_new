@@ -5,23 +5,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
-  <head>
-    
-    <title>设备维修明细</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="UTF-8">
 
 	
-	<%@include file="../../common/init.jsp" %>
+	<%@include file="../common/init.jsp" %>
+	<script type="text/javascript" src="../baseinfo/CommCombo6.js"></script>
 	<script type="text/javascript" src="RepairReportApp.js"></script>
   </head>
   

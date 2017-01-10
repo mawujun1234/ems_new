@@ -12,7 +12,7 @@ Ext.onReady(function(){
 		maxLength:Ext.ecode_length,
 		length:Ext.ecode_length,
 		selectOnFocus:true,
-		labelWidth:80,
+		labelWidth:100,
 		width:250,
 		allowBlank:false,
 		listeners:{

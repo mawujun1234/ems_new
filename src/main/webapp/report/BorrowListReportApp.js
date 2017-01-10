@@ -4,8 +4,8 @@ Ext.onReady(function(){
 	
 	var date_start=Ext.create('Ext.form.field.Date',{
 	  	fieldLabel: '开始时间',
-	  	labelWidth:50,
-	  	width:170,
+	  	labelWidth:60,
+	  	width:185,
 	  	format:'Y-m-d',
 	  	minValue:Ext.Date.parse('2015-07-10','Y-m-d')//从7.10号开始有数据
         //value:  Ext.Date.add(new Date(), Ext.Date.DAY, -7)
@@ -14,35 +14,40 @@ Ext.onReady(function(){
 	  	fieldLabel: '到',
 	  	format:'Y-m-d',
 	  	labelWidth:15,
-	  	labelWidth:15,
+	  	width:165,
 	  	minValue:Ext.Date.parse('2015-07-10','Y-m-d'),
 	  	maxValue:new Date(),
         value: new Date()
 	  });
 	
-	var store_combox=Ext.create('Ext.form.field.ComboBox',{
-	        fieldLabel: '仓库',
-	        labelAlign:'right',
-            labelWidth:80,
-	        //xtype:'combobox',
-	        //afterLabelTextTpl: Ext.required,
-	        name: 'store_id',
-		    displayField: 'name',
-		    valueField: 'id',
-	        allowBlank: true,
-	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    proxy:{
-			    	type:'ajax',
-			    	extraParams:{type:[1,3],edit:true},
-			    	url:Ext.ContextPath+"/store/queryCombo.do",
-			    	reader:{
-			    		type:'json',
-			    		root:'root'
-			    	}
-			    }
-		   })
-	});	
+//	var store_combox=Ext.create('Ext.form.field.ComboBox',{
+//	        fieldLabel: '仓库',
+//	        labelAlign:'right',
+//            labelWidth:80,
+//	        //xtype:'combobox',
+//	        //afterLabelTextTpl: Ext.required,
+//	        name: 'store_id',
+//		    displayField: 'name',
+//		    valueField: 'id',
+//	        allowBlank: true,
+//	        store:Ext.create('Ext.data.Store', {
+//		    	fields: ['id', 'name'],
+//			    proxy:{
+//			    	type:'ajax',
+//			    	extraParams:{type:[1,3],edit:true},
+//			    	url:Ext.ContextPath+"/store/queryCombo.do",
+//			    	reader:{
+//			    		type:'json',
+//			    		root:'root'
+//			    	}
+//			    }
+//		   })
+//	});
+	  var store_combox = Ext.create('Ems.baseinfo.StoreCombo', {
+				edit : true,
+				allowBlank : true,
+				fieldLabel : '仓库'
+			});
 	
 	var tbar1=Ext.create('Ext.toolbar.Toolbar',{
 		items:[date_start,date_end,store_combox

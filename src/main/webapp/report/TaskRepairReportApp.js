@@ -7,6 +7,7 @@ Ext.onReady(function(){
 	  	hidden:false,
 	  	//editable:false,
 	  	format:'Y-m-d',
+	  	width:175,
         //name: 'str_out_date_start',
 	  	editable:false,
         value:  Ext.Date.add(new Date(), Ext.Date.DAY, -7)
@@ -17,13 +18,14 @@ Ext.onReady(function(){
 	  	format:'Y-m-d',
 	  	//editable:false,
 	  	labelWidth:15,
+	  	width:155,
 	  	editable:false,
         //name: 'str_out_date_end',
         value: new Date()
 	});
 	var pole_code=Ext.create('Ext.form.field.Text',{
 		fieldLabel: '点位号',
-		labelWidth:60,
+		labelWidth:50,
 		name: 'pole_code'
 	})
 	
@@ -49,7 +51,7 @@ Ext.onReady(function(){
 	var query_button=Ext.create('Ext.button.Button',{
 			text:'查询',
 			margin:'0 0 0 5',
-			iconCls:'form-search-button',
+			iconCls:'icon-search',
 			handler:function(){
 				//store.load();
 				store.loadPage(1);

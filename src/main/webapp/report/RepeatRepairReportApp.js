@@ -23,19 +23,20 @@ Ext.onReady(function(){
 	var repeatnum=Ext.create('Ext.form.field.Number',{
 	  	fieldLabel: '重复维修次数',
         //minValue:2,
+	  	width:160,
         value:2
 	});
 	
 	var query_button=Ext.create('Ext.button.Button',{
 			text:'查询',
 			margin:'0 0 0 5',
-			iconCls:'form-search-button',
+			iconCls:'icon-search',
 			handler:function(){
 				//store.load();
 				store.loadPage(1);
 			}
 	});
-	var exportPoles = new Ext.Action({
+	var exportPoles = Ext.create('Ext.button.Button',{
 		    text: '导出',
 		    //itemId:'reload',
 		    icon:'../icons/page_excel.png',
@@ -69,7 +70,7 @@ Ext.onReady(function(){
 				url:Ext.ContextPath+'/report/repair/queryRepeatRepairReport.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	});

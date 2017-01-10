@@ -4,6 +4,7 @@ Ext.onReady(function(){
 	var date_start=Ext.create('Ext.form.field.Date',{
 	  	fieldLabel: '开始时间',
 	  	labelWidth:60,
+	  	width:180,
 	  	hidden:false,
 	  	//editable:false,
 	  	format:'Y-m-d',
@@ -15,15 +16,16 @@ Ext.onReady(function(){
 	  	hidden:false,
 	  	format:'Y-m-d',
 	  	//editable:false,
-	  	labelWidth:15
+	  	labelWidth:15,
+	  	width:155,
         //name: 'str_out_date_end',
-        ,value: new Date()
+        value: new Date()
 	});
 	
 	var query_button=Ext.create('Ext.button.Button',{
 			text:'查询',
 			margin:'0 0 0 5',
-			iconCls:'form-search-button',
+			iconCls:'icon-search',
 			handler:function(){
 				//store.load();
 				store.loadPage(1);
