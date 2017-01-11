@@ -7,6 +7,7 @@ Ext.define('Ems.install.InstallOutGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			refresh:function(){
 				//this.select(0);
@@ -16,7 +17,7 @@ Ext.define('Ems.install.InstallOutGrid',{
 	initComponent: function () {
       var me = this;
       me.columns=[
-		{dataIndex:'id',text:'编码'},
+		{dataIndex:'id',text:'编码',width:130},
 		{dataIndex:'status_name',text:'状态'},
 		{dataIndex:'store_name',text:'仓库'},
 		{dataIndex:'workUnit_name',text:'作业单位'},

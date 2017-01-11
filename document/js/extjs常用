@@ -5,7 +5,7 @@
 	
 2:gird单元格可以复制
 	viewConfig:{
-		enableTextSelection:true
+		enableTextSelection:true,
 	},
 	
 3:单元格编辑的时候，使用绿色背景色

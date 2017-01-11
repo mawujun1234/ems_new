@@ -7,6 +7,7 @@ Ext.define('Ems.install.InstallOutListGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			refresh:function(){
 				this.select(0);
