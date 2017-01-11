@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mawujun.cache.CacheMgr;
 import com.mawujun.cache.EquipKey;
 import com.mawujun.cache.EquipScanType;
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.store.IEcodeCache;
 import com.mawujun.utils.M;
@@ -60,7 +61,7 @@ public class InstallOutController {
 	 */
 	@RequestMapping("/installOut/getEquipmentByEcode.do")
 	@ResponseBody
-	public InstallOutListVO getEquipmentByEcode(String ecode,String store_id,Long checkDate,String installOutType_content,String installOutType_id,String installOutType_name) {	
+	public ResultModel getEquipmentByEcode(String ecode,String store_id,Long checkDate,String installOutType_content,String installOutType_id,String installOutType_name) {	
 		EquipKey key=EquipKey.getInstance(EquipScanType.installout, store_id,checkDate);
 		IEcodeCache equipmentVO=cacheMgr.getQrcode(key, ecode);
 		if(equipmentVO!=null){
@@ -88,7 +89,9 @@ public class InstallOutController {
 		//equipment.setProd_spec(null);
 		//equipment.setStyle(null);
 		//System.out.println(JSON.toJSONString(equipment));
-		return equipment;
+		
+	
+		return ResultModel.getInstance().setRoot(equipment);
 	}
 //	/**
 //	 * 主要用于新品入库的时候
@@ -125,13 +128,13 @@ public class InstallOutController {
 	@ResponseBody
 	public String removeEquipFromCache(String ecode,String store_id,Long checkDate) {	
 		cacheMgr.removeQrcode(EquipKey.getInstance(EquipScanType.installout, store_id,checkDate),ecode);
-		return "success";
+		return "{success:true}";
 	}
 	@RequestMapping("/installOut/clearEquipFromCache.do")
 	@ResponseBody
 	public String clearEquipFromCache(String store_id,Long checkDate) {	
 		cacheMgr.clearQrcode(EquipKey.getInstance(EquipScanType.installout, store_id,checkDate));
-		return "success";
+		return "{success:true}";
 	}
 	
 	@RequestMapping("/installOut/updateMemoFromCache.do")
@@ -139,7 +142,7 @@ public class InstallOutController {
 	public String updateMemoFromCache(String ecode,String store_id,Long checkDate,String memo) {	
 		InstallOutListVO equipment=(InstallOutListVO)cacheMgr.getQrcode(EquipKey.getInstance(EquipScanType.installout, store_id,checkDate),ecode);
 		equipment.setMemo(memo);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -411,15 +414,16 @@ public class InstallOutController {
 	 */
 	@RequestMapping("/installOut/queryEditInstallOut.do")
 	@ResponseBody
-	public List<InstallOutVO> queryEditInstallOut() { 
-		return installOutStoreService.queryEditInstallOut();
+	public ResultModel queryEditInstallOut() { 
+		
+		return ResultModel.getInstance().setRoot(installOutStoreService.queryEditInstallOut());
 	}
 	
 	@RequestMapping("/installOut/deleteEditInstallOut.do")
 	@ResponseBody
 	public String deleteEditInstallOut(String id) { 
 		installOutStoreService.deleteEditInstallOut(id);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**

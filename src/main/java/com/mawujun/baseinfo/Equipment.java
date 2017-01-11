@@ -36,7 +36,7 @@ public class Equipment implements IdEntity<String>,IEcodeCache{
 	//private Date lastInDate;//最新一次入库时间
 	
 	
-	@org.hibernate.annotations.Type(type="yes_no")
+	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean isnew=true;//是否是新产品
 	//@org.hibernate.annotations.Type(type="yes_no")
 	//private String islocked;//在领用和借用的时候才会对这个设备进行锁定

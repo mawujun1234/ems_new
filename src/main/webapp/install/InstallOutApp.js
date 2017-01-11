@@ -159,7 +159,7 @@ Ext.onReady(function(){
 	var installOutType_combox=Ext.create('Ext.form.field.ComboBox',{
 	        fieldLabel: '领用类型',
 	        labelAlign:'right',
-            labelWidth:55,
+            labelWidth:60,
 	        //xtype:'combobox',
 	        //afterLabelTextTpl: Ext.required,
 	        name: 'installOutType_id',
@@ -187,7 +187,7 @@ Ext.onReady(function(){
 	});
 	var installOutType_content_textfield=Ext.create('Ext.form.field.Text',{
 		labelAlign:'right',
-		labelWidth:55,
+		labelWidth:80,
 		fieldLabel: '领用类型二级',
 		name:'installOutType_content',
 		readOnly:false,
@@ -202,7 +202,7 @@ Ext.onReady(function(){
 	var ecode_textfield=Ext.create('Ext.form.field.Text',{
 		labelAlign:'right',
 		name:'ecode',
-		fieldLabel: '输入设备条码',
+		fieldLabel: '输入条码',
 		minLength:Ext.ecode_length,
 		maxLength:Ext.ecode_length,
 		length:Ext.ecode_length,
@@ -305,7 +305,7 @@ Ext.onReady(function(){
 			success:function(response){
 				var obj=Ext.decode(response.responseText);
 				equipStore.removeAll();
-				equipStore.loadData(obj.root);
+				equipStore.loadData(obj);
 			}
 		})
 	}
@@ -451,7 +451,7 @@ Ext.onReady(function(){
 	                    }
 	                }]
 	            },
-    			  {header: '条码', dataIndex: 'ecode',width:150},
+    			  {header: '条码', dataIndex: 'ecode',width:160},
     			  {header: '领用类型', dataIndex: 'installOutType_name'},
     			  {header: '领用类型二级', dataIndex: 'installOutType_content'},
     	          {header: '设备类型', dataIndex: 'subtype_name',width:120},
@@ -518,7 +518,7 @@ Ext.onReady(function(){
 						params:params,
 						success:function(response){
 							var obj=Ext.decode(response.responseText);
-							equipStore.loadData( obj.root, false );
+							equipStore.loadData( obj, false );
 							toolbar_title_text_num.update(""+equipStore.getCount());
 						}
 					});

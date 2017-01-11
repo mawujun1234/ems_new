@@ -176,7 +176,7 @@ select id,ecode,instore_id,orderlist_id,decode(isnew,'Y',1,0) from ems_instoreli
 insert into EMS_EQUIPMENT(ecode,brand_id,isnew,memo,prod_id,style,subtype_id,supplier_id,status,fisdata,last_install_date,orderlist_id,last_installin_id,
 last_task_id,last_workunit_id,place,currt_task_id,last_borrow_id,last_pole_id,first_install_date,value_net,value_original
 )
-select ecode,brand_id,isnew,memo,prod_id,style,subtype_id,supplier_id,status,fisdata,last_install_date,orderlist_id,last_installin_id,
+select ecode,brand_id,decode(isnew,'Y',1,0) isnew,memo,prod_id,style,subtype_id,supplier_id,status,fisdata,last_install_date,orderlist_id,last_installin_id,
 last_task_id,last_workunit_id,place,currt_task_id,last_borrow_id,last_pole_id,first_install_date,value_net,value_original
 from EMS_EQUIPMENT@emslink;
 --设备所在位置数据同步
