@@ -23,7 +23,20 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		</choose>
     </select> 
      
-    
+    <select id="queryUsersByOrg" parameterType="map" resultType="com.mawujun.permission.User">
+    	select distinct z.* from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y,t_user z
+				where x.position_id=y.position_id and x.user_id=z.id and y.org_id=#{org_id} and z.state='valid'
+    	<if test="look==true">
+    		and y.look=1
+    	</if>
+    	<if test="edit==true">
+    		and y.edit=1
+    	</if>
+    	<if test="edit!=true and look!=true">
+    		and 1!=1
+    	</if>
+    	
+    </select>
     
     
 </mapper>

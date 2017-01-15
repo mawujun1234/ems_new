@@ -227,5 +227,16 @@ select id,adjusttype,adjust_id_borrow,memo,status,str_in_date,str_in_id,str_in_o
 insert into ems_adjustlist(id,adjustliststatus,adjust_id,ecode,ecode_returnback,indate,isnew,isreturn,adjustlist_id_returnback)
 select id,adjustliststatus,adjust_id,ecode,ecode_returnback,indate,decode(isnew,'Y',1,0) isnew,decode(isreturn,'Y',1,0) isreturn,adjustlist_id_returnback from  ems_adjustlist@emslink;
 
-
-
+//================================================================================维修中心
+--同步报废单数据
+insert into ems_scrap(id,ecode,operatedate,operater,reason,repair_id,residual,scrpreqdate,scrpreqoper,rpa_id,store_id,status)
+select id,ecode,operatedate,operater,reason,repair_id,residual,scrpreqdate,scrpreqoper,rpa_id,store_id,status from ems_scrap@emslink;
+--把名字改成为id
+update ems_scrap set operater='5b27c0c2-7d4b-4918-8161-2e2dfd9e1574' where operater='干辰';
+--同步维修单数据
+insert into ems_repair(id,ecode,rpa_id,rpa_in_date,rpa_in_oper_id,rpa_out_date,rpa_out_oper_id,rpa_type,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,
+str_out_id,str_out_oper_id,broken_memo,broken_reson,memo,installin_id,repair_date,rpa_user_id,workunit_id,task_id,scrapdate,prod_id,handler_method,receive_date,repairfactory,send_date,sendno,
+depreci_day,depreci_month,depreci_year)
+select id,ecode,rpa_id,rpa_in_date,rpa_in_oper_id,rpa_out_date,rpa_out_oper_id,rpa_type,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,
+str_out_id,str_out_oper_id,broken_memo,broken_reson,memo,installin_id,repair_date,rpa_user_id,workunit_id,task_id,scrapdate,prod_id,handler_method,receive_date,repairfactory,send_date,sendno,
+depreci_day,depreci_month,depreci_year  from ems_repair@emslink

@@ -58,6 +58,7 @@ public class ScrapService extends AbstractService<Scrap, String>{
 	 */
 	public String create(Scrap scrap) {
 		scrap.setId(ymdHmsDateFormat.format(new Date()));
+		scrap.setStatus(ScrapStatus.scrap_confirm);
 		super.create(scrap);
 		return scrap.getId();
 	}
@@ -103,7 +104,7 @@ public class ScrapService extends AbstractService<Scrap, String>{
 		
 		Date date=new Date();
 		scrap.setOperateDate(date);
-		scrap.setScrpReqOper(ShiroUtils.getAuthenticationInfo().getId());
+		scrap.setOperater(ShiroUtils.getAuthenticationInfo().getId());
 		scrapRepository.update(scrap);
 		
 		//同时结束维修单--报废

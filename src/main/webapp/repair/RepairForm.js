@@ -47,9 +47,8 @@ Ext.define('Ems.repair.RepairForm',{
                     },
                     items: [{
                         name: 'repair_date',
-                        xtype:'datefield',
+                        xtype:'textfield',
                         fieldLabel: '报修时间',
-                        format:'Y-m-d',
                         flex: 1,
                         //emptyText: 'First',
                         readOnly:true,
@@ -71,8 +70,7 @@ Ext.define('Ems.repair.RepairForm',{
                         allowBlank: true
                     },{
                         name: 'str_out_date',
-                        xtype:'datefield',
-                        format:'Y-m-d',
+                        xtype:'textfield',
                         
                         fieldLabel: '出仓时间',
                          labelWidth: 65,
@@ -110,8 +108,7 @@ Ext.define('Ems.repair.RepairForm',{
                     items: [{
                         name: 'rpa_in_date',
                         fieldLabel: '入维时间',
-                        xtype:'datefield',
-                        format:'Y-m-d',
+                        xtype:'textfield',
                         flex: 1,
                         //emptyText: 'First',
                         readOnly:true,
@@ -131,11 +128,11 @@ Ext.define('Ems.repair.RepairForm',{
 					    	fields: ['id', 'name'],
 						    proxy:{
 						    	type:'ajax',
-						    	extraParams:{store_id:me.rpa_id,edit:true},
-						    	url:Ext.ContextPath+'/store/queryRUsers.do',
+						    	extraParams:{org_id:me.rpa_id,edit:true},
+						    	url:Ext.ContextPath+'/position/queryUsersByOrg.do',
 						    	reader:{
 						    		type:'json',
-						    		root:'root'
+						    		rootProperty:'root'
 						    	}
 						    }
 					   })
@@ -397,7 +394,7 @@ Ext.define('Ems.repair.RepairForm',{
 	  
 	  var saveButton=Ext.create('Ext.button.Button',{
             text: '保存',
-            iconCls:'form-save-button',
+            iconCls:'icon-save',
             //formBind: true,当设置这个值得时候，当表单里面有内容后，就自动会变成可执行
             //hidden :true,
             handler: function(btn) {
@@ -447,7 +444,7 @@ Ext.define('Ems.repair.RepairForm',{
       });
       me.saveButton=saveButton;
       me.buttons=[saveButton];
-      me.addEvents("saved");
+      //me.addEvents("saved");
       
       me.callParent();
 	},

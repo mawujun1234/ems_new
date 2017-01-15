@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mawujun.permission.User;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.utils.M;
 /**
@@ -109,4 +110,18 @@ public class PositionController {
 		return "{success:true}";
 	}
 	
+	/**
+	 * 获取指定维修中心下的操作员名单
+	 * 反向获取可以访问当前组织节点的用户
+	 * @author mawujun 16064988@qq.com 
+	 * @param repairs
+	 * @param str_in_id
+	 * @return
+	 */
+	@RequestMapping("/position/queryUsersByOrg.do")
+	@ResponseBody
+	public List<User> queryUsersByOrg(String org_id,Boolean look,Boolean edit){
+		
+		return positionService.queryUsersByOrg(org_id,look,edit);
+	}
 }

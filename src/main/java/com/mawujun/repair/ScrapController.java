@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.utils.M;
@@ -95,14 +96,16 @@ public class ScrapController {
 //	}
 	
 	@RequestMapping("/scrap/loadByRepair_id.do")
-	public Scrap loadByRepair_id(String repair_id) {
+	@ResponseBody
+	public ResultModel loadByRepair_id(String repair_id) {
 		Scrap scrap= scrapService.queryUnique(Cnd.select().andEquals(M.Scrap.repair_id, repair_id));
 		if(scrap==null){
-			throw new BusinessException("当前维修单还没有创建报废单");
+			//throw new BusinessException("当前维修单还没有创建报废单！");
 			//JsonConfigHolder.setSuccessValue(false);
 			//JsonConfigHolder.setMsg("当前维修单还没有创建报废单");
+			return ResultModel.getInstance().setSuccess(false).setMsg("当前维修单还没有创建报废单");
 		}
-		return scrap;
+		return ResultModel.getInstance().setRoot(scrap);
 	}
 	/**
 	 * 维修中心确认报废单，开始走报废流程
@@ -111,6 +114,7 @@ public class ScrapController {
 	 * @return
 	 */
 	@RequestMapping("/scrap/scrap.do")
+	@ResponseBody
 	public Scrap scrap(Scrap scrap) {
 		return scrapService.scrap(scrap);
 	}
@@ -122,6 +126,7 @@ public class ScrapController {
 	 * @return
 	 */
 	@RequestMapping("/scrap/makeSureScrap.do")
+	@ResponseBody
 	public Scrap makeSureScrap(Scrap scrap) {
 		return scrapService.makeSureScrap(scrap.getId());
 	}

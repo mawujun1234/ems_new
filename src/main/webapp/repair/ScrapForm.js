@@ -65,7 +65,7 @@ Ext.define('Ems.repair.ScrapForm',{
 	        name: 'operater',
 	        readOnly:me.storeer?true:true,
 	        xtype:'textfield',
-	        value:loginUsername,
+	        value:Ext.util.Cookies.get("loginName"),
 	        allowBlank: false
 	    },
 	    {
@@ -103,7 +103,7 @@ Ext.define('Ems.repair.ScrapForm',{
      if(me.storeer){//当仓库人员进入的时候
      	 var makeSureScrapButton=Ext.create('Ext.button.Button',{
 	            text: '确    认',
-	            iconCls:'form-save-button',
+	            iconCls:'icon-cog',
 	            //formBind: true,当设置这个值得时候，当表单里面有内容后，就自动会变成可执行
 	            //hidden :true,
 	            handler: function(btn) {
@@ -130,13 +130,13 @@ Ext.define('Ems.repair.ScrapForm',{
 	                
 	            }
 	      });
-	      me.addEvents("makeSureScrap");
+	      //me.addEvents("makeSureScrap");
 	      me.makeSureScrapButton=makeSureScrapButton;
-	       me.buttons=[makeSureScrapButton];
+	      me.buttons=[makeSureScrapButton];
      } else {
      	var saveButton=Ext.create('Ext.button.Button',{
 	            text: '保存',
-	            iconCls:'form-save-button',
+	            iconCls:'icon-save',
 	            //formBind: true,当设置这个值得时候，当表单里面有内容后，就自动会变成可执行
 	            //hidden :true,
 	            handler: function(btn) {
@@ -156,7 +156,7 @@ Ext.define('Ems.repair.ScrapForm',{
 	      me.saveButton=saveButton;
 	       var scrapButton=Ext.create('Ext.button.Button',{
 	            text: '报废',
-	            iconCls:'form-save-button',
+	            iconCls:'icon-wrench',
 	            //formBind: true,当设置这个值得时候，当表单里面有内容后，就自动会变成可执行
 	            //hidden :true,
 	            handler: function(btn) {
@@ -186,8 +186,8 @@ Ext.define('Ems.repair.ScrapForm',{
 	     me.buttons=[scrapButton,saveButton];
      }
       
-      me.addEvents("saved");
-      me.addEvents("scraped");
+      //me.addEvents("saved");
+      //me.addEvents("scraped");
 
       me.callParent();
 	}

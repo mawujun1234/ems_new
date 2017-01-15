@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.permission.User;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
 import com.mawujun.utils.M;
@@ -130,6 +131,10 @@ public class PositionService extends AbstractService<Position, String>{
 		positionOrgAccess.setLook(vo.getLook());
 		positionOrgAccess.setEdit(vo.getEdit());
 		positionOrgAccessRepository.createOrUpdate(positionOrgAccess);
+	}
+	
+	public List<User> queryUsersByOrg(String org_id,Boolean look,Boolean edit) {
+		return positionRepository.queryUsersByOrg(org_id,look,edit);
 	}
 
 }

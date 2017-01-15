@@ -33,9 +33,9 @@ Ext.define('Ems.repair.RMgrRepairGrid',{
 	initComponent: function () {
       var me = this;
       me.columns=[
-      	{ header:'编辑',
+      	{ header:'维修',
 	        xtype: 'actioncolumn',
-	        width: 40,
+	        width: 60,
 	        items: [{
 //	             isDisabled:function(view,rowIndex ,colIndex ,item ,record ){
 //	             	//var status=record.get("status");
@@ -64,7 +64,7 @@ Ext.define('Ems.repair.RMgrRepairGrid',{
 	    },
 	    { header:'报废',
 	        xtype: 'actioncolumn',
-	        width: 40,
+	        width: 60,
 	        dataIndex:'scrap_id',
 	        items: [{ 
 	             isDisabled:function(view,rowIndex ,colIndex ,item ,record ){
@@ -473,7 +473,8 @@ Ext.define('Ems.repair.RMgrRepairGrid',{
 				} else {
 					var scrap=Ext.create('Ems.repair.Scrap',{
 						repair_id:repair.get("id"),
-						operater:loginUsername,
+						status:'scrap_confirm',
+						operater:Ext.util.Cookies.get("loginName"),
 						ecode:repair.get("ecode")
 					});
 					form.loadRecord(scrap);
