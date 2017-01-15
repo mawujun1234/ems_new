@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mawujun.baseinfo.EquipmentService;
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.utils.M;
 import com.mawujun.utils.page.Pager;
@@ -148,10 +149,11 @@ public class InstallInController {
 	 */
 	@RequestMapping("/installIn/getEquipmentByEcode.do")
 	@ResponseBody
-	public InstallInListVO getEquipmentByEcode(String ecode,String workunit_id) {
+	public ResultModel getEquipmentByEcode(String ecode,String workunit_id) {
 		InstallInListVO equipment= installInService.getEquipmentByEcode(ecode,workunit_id);
 
-		return equipment;
+		//return equipment;
+		return ResultModel.getInstance().setRoot(equipment);
 	}
 	
 	@RequestMapping("/installIn/equipmentInStore.do")
@@ -161,7 +163,7 @@ public class InstallInController {
 		//3：还有其他有备注的地方都这样修改
 		logger.info("========================{}",installin.getMemo());
 		installInService.equipmentInStore(installInLists, installin);
-		return "success";
+		return "{success:true}";
 	}
 	
 	

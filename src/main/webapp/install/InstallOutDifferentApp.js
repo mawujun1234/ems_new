@@ -107,7 +107,7 @@ Ext.onReady(function(){
 //	  });
 	var type_combox=Ext.create('Ems.baseinfo.TypeCombo',{
 		labelAlign:'right',
-		allowBlank: false,
+		allowBlank: true,
 		labelWidth:50,
 		//minChars:-1
 		listeners:{
@@ -124,7 +124,7 @@ Ext.onReady(function(){
 	
 	var subtype_combox=Ext.create('Ems.baseinfo.SubtypeCombo',{
 		labelAlign:'right',
-		allowBlank: false,
+		allowBlank: true,
 		labelWidth:50,
 		//minChars:-1，
 		listeners:{
@@ -174,13 +174,13 @@ Ext.onReady(function(){
 	      	{xtype:'rownumberer'},
 			//{dataIndex:'installIn_id',text:'installIn_id'},
 			//{dataIndex:'isBad',text:'isBad'},
-			{dataIndex:'ecode',text:'条码',width:140},
-			{dataIndex:'installOut_id',text:'单号'},
+			{dataIndex:'ecode',text:'条码',width:160},
+			{dataIndex:'installOut_id',text:'单号',width:120},
 			{dataIndex:'type',text:'借/领用单'},
 			{header: '领用类型', dataIndex: 'installOutType_name'},
 			{header: '领用类型二级', dataIndex: 'installOutType_content'},
-			{dataIndex:'operateDate',text:'出库时间'},
-			{dataIndex:'returnDate',text:'领用时间'},
+			{dataIndex:'operateDate',text:'出库时间',width:160},
+			{dataIndex:'returnDate',text:'领用时间',width:160},
 			//{dataIndex:'installIn_id',text:'installIn_id'},
 			//{dataIndex:'isBad',text:'isBad'}
 			{dataIndex:'subtype_name',text:'小类'},

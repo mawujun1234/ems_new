@@ -128,6 +128,7 @@ Ext.onReady(function(){
 	var workUnit_combox= Ext.create('Ems.baseinfo.WorkunitCombo', {
 		look:true,
 		allowBlank : false,
+		name:'workUnit_id',
 		fieldLabel : '<b>作业单位</b>'
 	});
 	var queryWorkUnitEquip_button=Ext.create('Ext.button.Button',{
@@ -290,7 +291,7 @@ Ext.onReady(function(){
 	function reloadInstallout_content(installout){
 		store_combox.getStore().load();
 		workUnit_combox.getStore().load();
-		installOutType_combox.getStore().load();
+		//installOutType_combox.getStore().load();
 		
 		var form= step1.down('form').getForm();
 		form.loadRecord(installout);

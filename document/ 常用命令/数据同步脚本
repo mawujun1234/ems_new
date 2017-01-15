@@ -208,3 +208,19 @@ from ems_installout@emslink;
 insert into ems_installoutlist(id,ecode,installout_id,installouttype_id,installoutlisttype,isnew,installouttype_content,returndate,isreturn,pole_id,memo)
 select id,ecode,installout_id,installouttype_id,installoutlisttype,decode(isnew,'Y',1,0) isnew,installouttype_content,returndate,decode(isreturn,'Y',1,0) isreturn,pole_id,memo
 from ems_installoutlist@emslink;
+--借用数据同步
+insert into ems_borrow(id,memo,operatedate,operater,project_id,store_id,workunit_id,status)
+select id,memo,operatedate,operater,project_id,store_id,workunit_id,status from ems_borrow@emslink;
+insert into ems_borrowlist(id,borrow_id,ecode,isreturn, memo,returndate,borrowlisttype,isnew,pole_id,installOutType_id,installOutType_content)
+select id,borrow_id,ecode,decode(isreturn,'Y',1,0) isreturn, memo,returndate,borrowlisttype,decode(isnew,'Y',1,0) isnew,pole_id,installOutType_id,installOutType_content from ems_borrowlist@emslink;
+--领用返库数据同步
+insert into ems_installin(id,memo,operatedate,operater,store_id,workunit_id,type)
+select id,memo,operatedate,operater,store_id,workunit_id,type from ems_installin@emslink;
+insert into ems_installinlist(id,ecode,installin_id,isbad,installout_id,installinlisttype,isnew,project_id)
+select id,ecode,installin_id,decode(isbad,'Y',1,0) isbad,installout_id,installinlisttype,decode(isnew,'Y',1,0) isnew,project_id from ems_installinlist@emslink;
+--借转领数据同步
+insert into ems_B2INotify(id,borrow_id,createdate,ecode,ishandled,pole_id,store_id,task_id,workunit_id)
+select id,borrow_id,createdate,ecode,ishandled,pole_id,store_id,task_id,workunit_id from ems_B2INotify@emslink
+
+
+

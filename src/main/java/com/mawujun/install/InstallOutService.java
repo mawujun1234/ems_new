@@ -147,7 +147,7 @@ public class InstallOutService extends AbstractService<InstallOut, String>{
 			}catch(Exception e){
 				logger.warn(inStoreList.getEcode()+"该设备已经不在仓库"+outStore.getStore_id(),e);
 				//logger.warn
-				throw new BusinessException("该设备已经不在仓库!");
+				throw new BusinessException(inStoreList.getEcode()+"该设备已经不在仓库!");
 			}
 //			equipmentStore.setNum(1);
 //			equipmentStore.setInDate(new Date());

@@ -167,7 +167,7 @@ Ext.define('Ems.install.BorrowGrid',{
 	 var status_combox=Ext.create('Ext.form.field.ComboBox',{
 	        fieldLabel: '返还状态',
 	        labelAlign:'right',
-            labelWidth:55,
+            labelWidth:60,
 	        //xtype:'combobox',
 	        //afterLabelTextTpl: Ext.required,
 	        name: 'isAllReturn_id',
