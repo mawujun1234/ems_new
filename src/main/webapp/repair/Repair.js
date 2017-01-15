@@ -8,13 +8,13 @@ Ext.define("Ems.repair.Repair",{
 		{name:'rpa_id',type:'string'},
 		
 		{name:'installIn_id',type:'string'},
-		{name:'repair_date',type:'date', dateFormat: 'Y-m-d'},
+		{name:'repair_date',type:'string', dateFormat: 'Y-m-d'},
 		{name:'workunit_id',type:'string'},
 		{name:'broken_memo',type:'string'},
 		
-		{name:'rpa_in_date',type:'date', dateFormat: 'Y-m-d'},
+		{name:'rpa_in_date',type:'string', dateFormat: 'Y-m-d'},
 		{name:'rpa_in_oper_id',type:'string'},
-		{name:'rpa_out_date',type:'date', dateFormat: 'Y-m-d'},
+		{name:'rpa_out_date',type:'string', dateFormat: 'Y-m-d'},
 		{name:'rpa_out_oper_id',type:'string'},
 		{name:'rpa_user_id',type:'string'},
 		{name:'rpa_type',type:'string'},
@@ -23,7 +23,7 @@ Ext.define("Ems.repair.Repair",{
 		{name:'str_in_id',type:'string'},
 		
 		{name:'str_in_oper_id',type:'string'},
-		{name:'str_out_date',type:'date', dateFormat: 'Y-m-d'},
+		{name:'str_out_date',type:'string', dateFormat: 'Y-m-d'},
 		{name:'str_out_id',type:'string'},
 		
 		{name:'str_out_oper_id',type:'string'},
@@ -31,9 +31,9 @@ Ext.define("Ems.repair.Repair",{
 		{name:'broken_reson',type:'string'},
 		{name:'memo',type:'string'},
 		
-		{name:'send_date',type:'date', dateFormat: 'Y-m-d'},
+		{name:'send_date',type:'string', dateFormat: 'Y-m-d'},
 		{name:'sendno',type:'string'},
-		{name:'receive_date',type:'date', dateFormat: 'Y-m-d'},
+		{name:'receive_date',type:'string', dateFormat: 'Y-m-d'},
 		{name:'repairFactory',type:'string'},
 		
 		{name:'workunit_name',type:'string'},

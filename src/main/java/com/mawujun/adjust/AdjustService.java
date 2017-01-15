@@ -77,6 +77,7 @@ public class AdjustService extends AbstractService<Adjust, String>{
 		//Adjust adjust=BeanUtils.copyOrCast(adjuestVOs[0], Adjust.class);//adjuestVOs[0];//每条记录的主单内容都是一样的
 		adjust.setId(ymdHmsDateFormat.format(new Date()));
 		adjust.setStr_out_date(new Date());
+		
 		adjust.setStatus(AdjustStatus.carry);
 		if(adjust.getAdjustType()==AdjustType.borrow){
 			adjust.setReturnStatus(AdjustReturnStatus.nonereturn);
@@ -168,7 +169,7 @@ public class AdjustService extends AbstractService<Adjust, String>{
 				//先在出借单上记录归还单的id和ecode
 				adjustListRepository.update(Cnd.update().set(M.AdjustList.adjustlist_id_returnback, adjuestList.getId())
 						.set(M.AdjustList.ecode_returnback, adjuestList.getEcode())
-						.set(M.AdjustList.isReturn, false)
+						.set(M.AdjustList.isReturn, true)
 						.andEquals(M.AdjustList.id,exists_adjustList_borrow.getId()));
 				//这里不需要了，因为在上面的newAdjuest（）方法中进行记录过了
 				//equipmentCycleService.logEquipmentCycle(adjuestList.getEcode(), OperateType.adjust_in, adjust.getId(), TargetType.store, adjust.getStr_in_id(), null);
@@ -378,7 +379,7 @@ public class AdjustService extends AbstractService<Adjust, String>{
 		}
 		
 		adjust.setAdjustType(AdjustType.installout);
-		adjust.setStatus(AdjustStatus.over);
+		//adjust.setStatus(AdjustStatus.over);
 		adjustRepository.update(adjust);
 	}
 	

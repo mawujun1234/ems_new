@@ -8,6 +8,7 @@ Ext.define('Ems.repair.MgrRepairGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			refresh:function(){
 				//this.select(0);
@@ -68,20 +69,20 @@ Ext.define('Ems.repair.MgrRepairGrid',{
 	             }
 	        }]
 	    },
-		{dataIndex:'id',text:'维修单号',width:120},
-		{dataIndex:'ecode',text:'条码',width:140},
+		{dataIndex:'id',text:'维修单号',width:160},
+		{dataIndex:'ecode',text:'条码',width:160},
 		{dataIndex:'prod_name',text:'品名',width:140},
 		{dataIndex:'equipment_style',text:'型号',width:140},
 		{dataIndex:'str_out_name',text:'发货仓库'},
 		{dataIndex:'rpa_type_name',text:'维修类型',width:60},
 		{dataIndex:'status_name',text:'状态'},
-		{dataIndex:'str_out_date',text:'出仓时间',xtype: 'datecolumn',   format:'Y-m-d'},
+		{dataIndex:'str_out_date',text:'出仓时间',width:160},
 		{dataIndex:'rpa_name',text:'维修中心'},
-		{dataIndex:'rpa_in_date',text:'入维时间',xtype: 'datecolumn',   format:'Y-m-d'},
+		{dataIndex:'rpa_in_date',text:'入维时间',width:160},
 		//{dataIndex:'rpa_in_oper_id',text:'rpa_in_oper_id'},
-		{dataIndex:'rpa_out_date',text:'出维时间',xtype: 'datecolumn',   format:'Y-m-d'},
+		{dataIndex:'rpa_out_date',text:'出维时间',width:160},
 		//{dataIndex:'rpa_out_oper_id',text:'rpa_out_oper_id'},
-		{dataIndex:'str_in_date',text:'入仓时间',xtype: 'datecolumn',   format:'Y-m-d'}
+		{dataIndex:'str_in_date',text:'入仓时间',width:160}
 		//{dataIndex:'str_in_id',text:'str_in_id'},
 		//{dataIndex:'str_in_oper_id',text:'str_in_oper_id'},
 		//{dataIndex:'str_out_oper_id',text:'str_out_oper_id'}
@@ -173,7 +174,7 @@ Ext.define('Ems.repair.MgrRepairGrid',{
 	  
 	  var str_out_date_start=Ext.create('Ext.form.field.Date',{
 	  	fieldLabel: '出仓时间',
-	  	labelWidth:50,
+	  	labelWidth:60,
 	  	width:175,
 	  	format:'Y-m-d',
         //name: 'str_out_date_start',

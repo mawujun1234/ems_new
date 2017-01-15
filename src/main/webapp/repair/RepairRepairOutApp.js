@@ -251,12 +251,12 @@ Ext.onReady(function(){
 				{dataIndex:'str_out_name',text:'发货仓库'},
 				{dataIndex:'rpa_type_name',text:'维修类型',width:60},
 				{dataIndex:'status_name',text:'状态'},
-				{dataIndex:'str_out_date',text:'出仓时间',xtype: 'datecolumn',   format:'Y-m-d'},
+				{dataIndex:'str_out_date',text:'出仓时间',width:160},
 				{dataIndex:'rpa_name',text:'维修中心'},
-				{dataIndex:'rpa_in_date',text:'入维时间',xtype: 'datecolumn',   format:'Y-m-d'},
+				{dataIndex:'rpa_in_date',text:'入维时间',width:160},
 				{dataIndex:'rpa_user_name',text:'维修人'},
 				//{dataIndex:'rpa_in_oper_id',text:'rpa_in_oper_id'},
-				{dataIndex:'rpa_out_date',text:'出维时间',xtype: 'datecolumn',   format:'Y-m-d'}
+				{dataIndex:'rpa_out_date',text:'出维时间',width:160}
 //    	          {header:'规格',dataIndex:'prod_spec',flex:1,minWidth:100,renderer:function(value,metadata,record){
 //						metadata.tdAttr = "data-qtip='" + value+ "'";
 //					    return value;

@@ -19,7 +19,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 在调拨如的时候，用来查找需要入库的调拨单-->
 	<select id="query4InStore" resultType="com.mawujun.adjust.AdjustVO" parameterType="map">
 		select a.* from ems_adjust a where (a.status='carry' or a.status='partin')
-		and a.str_in_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.edit='Y')
+		and exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
+				where x.position_id=y.position_id and a.str_in_id=y.org_id and x.user_id=#{user_id} and y.edit=1) 
 	</select>
 	
 	<!--
@@ -43,7 +44,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <select id="queryPageVO" resultType="com.mawujun.adjust.AdjustVO" parameterType="map">
 		select a.* from ems_adjust a
 		<where>
-			and a.str_out_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.look='Y')
+			exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
+				where x.position_id=y.position_id and a.str_out_id=y.org_id and x.user_id=#{user_id} and y.look=1) 
 			<if test="str_out_id!=null">
 				and a.str_out_id=#{str_out_id}
 			</if>
@@ -72,7 +74,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <!-- 在设备返还，然后入库的时候，对设备进行判断，如果已经全部归还就修改主表的状态为 归还，否则为部分归还 -->
     <update id="updateAdjustIsAllReturn" parameterType="string">
 		update ems_adjust set returnStatus=(
-		       select decode(count(id) ,sum(decode(isReturn,'Y',1,0)),'over','partreturn')  from ems_adjustlist 
+		       select decode(count(id) ,sum(isReturn),'over','partreturn')  from ems_adjustlist 
 		       where adjust_id=#{adjust_id}
 		) where id=#{adjust_id}
 	</update>
@@ -80,7 +82,10 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 查询所有还没有归还的调拨单，在归还单的时候，弹出框用的-->
 	<select id="queryBorrowAdjuest" resultType="com.mawujun.adjust.AdjustVO" parameterType="map">
 		select a.* from ems_adjust a where (a.returnstatus='nonereturn' or a.returnstatus='partreturn') and a.adjustType='borrow'
-		and a.str_out_id in (select store_id from sys_userstore c where c.user_id=#{user_id} and c.look='Y')
+		and exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
+				where x.position_id=y.position_id and a.str_out_id=y.org_id and x.user_id=#{user_id} and y.look=1) 
 	</select>
+	
+
 </mapper>
 

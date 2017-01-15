@@ -7,6 +7,7 @@ Ext.define('Ems.adjust.AdjustListInGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			refresh:function(){
 				//this.select(0);
@@ -33,7 +34,7 @@ Ext.define('Ems.adjust.AdjustListInGrid',{
       	Ext.create('Ext.grid.RowNumberer'),
 		//{dataIndex:'id',text:'id'},
 		//{dataIndex:'adjust_id',text:'adjust_id'},
-		{dataIndex:'ecode',text:'条码',width:140},
+		{dataIndex:'ecode',text:'条码',width:160},
 		{dataIndex:'adjustListStatus_name',text:'状态',width:140},
 		//{dataIndex:'in_num',text:'in_num',xtype: 'numbercolumn', format:'0.00'},
 		//{dataIndex:'out_num',text:'out_num',xtype: 'numbercolumn', format:'0.00'},
@@ -86,7 +87,7 @@ Ext.define('Ems.adjust.AdjustListInGrid',{
 		selectOnFocus:true,
 		labelWidth:60,
 		width:250,
-		allowBlank:false,
+		allowBlank:true,
 		listeners:{
 			change:function(textfield, newValue, oldValue){
 				if(newValue.length<Ext.ecode_length){
@@ -156,6 +157,7 @@ Ext.define('Ems.adjust.AdjustListInGrid',{
 					Ext.getBody().unmask();
 					me.adjustInGrid.getStore().reload();
 					me.getStore().reload();
+					
 					
 					
 				},

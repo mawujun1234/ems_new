@@ -7,6 +7,7 @@ Ext.define('Ems.adjust.AdjustInGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			refresh:function(){
 				//this.select(0);
@@ -17,12 +18,12 @@ Ext.define('Ems.adjust.AdjustInGrid',{
       var me = this;
       me.columns=[
       	Ext.create('Ext.grid.RowNumberer'),
-		{dataIndex:'id',text:'单号'},
+		{dataIndex:'id',text:'单号',width:130},
 		{dataIndex:'status_name',text:'状态',width:60},
 		{dataIndex:'adjustType_name',text:'类型',width:60},
 		{dataIndex: 'str_out_name',text: '出库仓库'},
     	{dataIndex: 'str_in_name',text: '入库仓库'},
-    	{dataIndex:'str_out_date',text:'出库时间',xtype: 'datecolumn',   format:'Y-m-d',width:80},
+    	{dataIndex:'str_out_date',text:'出库时间',width:160},
     	{dataIndex:'memo',text:'备注',flex:1}
       ];
       

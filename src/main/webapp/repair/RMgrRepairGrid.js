@@ -8,6 +8,7 @@ Ext.define('Ems.repair.RMgrRepairGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			refresh:function(){
 				//this.select(0);
@@ -97,21 +98,21 @@ Ext.define('Ems.repair.RMgrRepairGrid',{
 	             }
 	        }]
 	    },
-		{dataIndex:'id',text:'维修单号',width:130},
-		{dataIndex:'ecode',text:'条码',width:150},
+		{dataIndex:'id',text:'维修单号',width:160},
+		{dataIndex:'ecode',text:'条码',width:160},
 		{dataIndex:'prod_name',text:'品名',width:140},
 		{dataIndex:'equipment_style',text:'型号',width:140},
 		{dataIndex:'str_out_name',text:'发货仓库'},
 		{dataIndex:'rpa_type_name',text:'维修类型',width:60},
 		{dataIndex:'status_name',text:'状态'},
-		{dataIndex:'str_out_date',text:'出仓时间',xtype: 'datecolumn',   format:'Y-m-d'},
+		{dataIndex:'str_out_date',text:'出仓时间',width:160},
 		{dataIndex:'rpa_name',text:'维修中心'},
-		{dataIndex:'rpa_in_date',text:'入维时间',xtype: 'datecolumn',   format:'Y-m-d'},
+		{dataIndex:'rpa_in_date',text:'入维时间',width:160},
 		{dataIndex:'rpa_user_name',text:'维修人'},
 		//{dataIndex:'rpa_in_oper_id',text:'rpa_in_oper_id'},
-		{dataIndex:'rpa_out_date',text:'出维时间',xtype: 'datecolumn',   format:'Y-m-d'},
+		{dataIndex:'rpa_out_date',text:'出维时间',width:160},
 		//{dataIndex:'rpa_out_oper_id',text:'rpa_out_oper_id'},
-		{dataIndex:'str_in_date',text:'入仓时间',xtype: 'datecolumn',   format:'Y-m-d'}
+		{dataIndex:'str_in_date',text:'入仓时间',width:160}
       ];
       
 	  me.store=Ext.create('Ext.data.Store',{
@@ -228,12 +229,12 @@ Ext.define('Ems.repair.RMgrRepairGrid',{
 	        //afterLabelTextTpl: Ext.required,
 	        name: 'status',
 		    displayField: 'name',
-		    valueField: 'id',
+		    valueField: 'key',
 		    value:'repairing',
 	        store:Ext.create('Ext.data.Store', {
 		    	fields: ['id', 'name'],
-			    data:[{id:"",name:"所有"},{id:"to_repair",name:"发往维修中心"},{id:"repairing",name:"维修中"},{id:"back_store",name:"返库途中"}
-			    ,{id:"over",name:"完成"},{id:"scrap_confirm",name:"报废确认中"}]
+			    data:[{key:"",name:"所有"},{key:"to_repair",name:"发往维修中心"},{key:"repairing",name:"维修中"},{key:"back_store",name:"返库途中"}
+			    ,{key:"over",name:"完成"},{key:"scrap_confirm",name:"报废确认中"}]
 		   }),
 		   listeners:{
 		   	  //change:function(combo,newValue, oldValue){

@@ -22,7 +22,7 @@ public class AdjustList extends UUIDEntity{
 	private String adjust_id;
 	@Column(length=25)
 	private String ecode;
-	@org.hibernate.annotations.Type(type="yes_no")
+	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean isnew=false;//
 //	private Integer out_num=1;//申请出库的数量,永远是1，主要用来比较入库的数量
 //	private Integer in_num=0;//入库的数量,永远是1
@@ -36,7 +36,7 @@ public class AdjustList extends UUIDEntity{
 	
 	
 	//下面的几个字段只有在AdjustType.borrow的时候有值
-	@org.hibernate.annotations.Type(type="yes_no")
+	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean isReturn=false;
 	//和主表中的adjust_id_borrow是相反的，这个有值，adjust_id_borrow就没有值
 	@Column(length=36)

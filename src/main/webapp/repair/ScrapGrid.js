@@ -18,7 +18,7 @@ Ext.define('Ems.repair.ScrapGrid',{
       me.columns=[
 		{dataIndex:'id',text:'报废单号'},
 		{dataIndex:'ecode',text:'条码'},
-		{dataIndex:'operateDate',text:'报废时间',xtype: 'datecolumn',   format:'Y-m-d'}
+		{dataIndex:'operateDate',text:'报废时间',width:160}
 		//{dataIndex:'operater',text:'operater'},
 		//{dataIndex:'reason',text:'reason'},
 		//{dataIndex:'repair_id',text:'repair_id'},

@@ -7,6 +7,7 @@ Ext.define('Ems.adjust.AdjustGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			refresh:function(){
 				//this.select(0);
@@ -17,13 +18,13 @@ Ext.define('Ems.adjust.AdjustGrid',{
       var me = this;
       me.columns=[
       	Ext.create('Ext.grid.RowNumberer'),
-		{dataIndex:'id',text:'单号'},
+		{dataIndex:'id',text:'单号',width:130},
 		{dataIndex:'status_name',text:'状态',width:60},
 		{dataIndex:'adjustType_name',text:'调拨单类型'},
 		{dataIndex:'returnStatus_name',text:'归还状态',width:60},
 		{dataIndex: 'str_out_name',text: '出库仓库'},
     	{dataIndex: 'str_in_name',text: '入库仓库'},
-    	{dataIndex:'str_out_date',text:'出库时间',xtype: 'datecolumn',   format:'Y-m-d',width:80},
+    	{dataIndex:'str_out_date',text:'出库时间',width:160},
     	{dataIndex:'memo',text:'备注',flex:1}
       ];
       
@@ -31,16 +32,16 @@ Ext.define('Ems.adjust.AdjustGrid',{
 			autoSync:false,
 			pageSize:50,
 			model: 'Ems.adjust.Adjust',
-			autoLoad:false
-//			proxy:{
-//				type:'ajax',
-//				actionMethods:{read:'POST'},
-//				url:Ext.ContextPath+'/adjust/query4InStr.do',
-//				reader:{
-//					type:'json',
-//					root:'root'
-//				}
-//			}
+			autoLoad:false,
+			proxy:{
+				type:'ajax',
+				actionMethods:{read:'POST'},
+				url:Ext.ContextPath+'/adjust/query.do',
+				reader:{
+					type:'json',
+					root:'root'
+				}
+			}
 	  });
 	  
       me.dockedItems= [{
@@ -135,7 +136,7 @@ Ext.define('Ems.adjust.AdjustGrid',{
 	        name: 'status',
 		    displayField: 'name',
 		    valueField: 'id',
-	        allowBlank: false,
+	        allowBlank: true,
 	        store:Ext.create('Ext.data.Store', {
 		    	fields: ['id', 'name'],
 			    data:[{id:"",name:"所有"},{id:"carry",name:"在途"},{id:"partin",name:"未全入"},{id:"over",name:"完成"}]//,{id:"edit",name:"编辑中"}

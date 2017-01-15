@@ -220,7 +220,12 @@ insert into ems_installinlist(id,ecode,installin_id,isbad,installout_id,installi
 select id,ecode,installin_id,decode(isbad,'Y',1,0) isbad,installout_id,installinlisttype,decode(isnew,'Y',1,0) isnew,project_id from ems_installinlist@emslink;
 --借转领数据同步
 insert into ems_B2INotify(id,borrow_id,createdate,ecode,ishandled,pole_id,store_id,task_id,workunit_id)
-select id,borrow_id,createdate,ecode,ishandled,pole_id,store_id,task_id,workunit_id from ems_B2INotify@emslink
+select id,borrow_id,createdate,ecode,ishandled,pole_id,store_id,task_id,workunit_id from ems_B2INotify@emslink;
+--调拨单数据同步
+insert into ems_adjust(id,adjusttype,adjust_id_borrow,memo,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,str_out_id,str_out_oper_id,project_id,returnstatus)
+select id,adjusttype,adjust_id_borrow,memo,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,str_out_id,str_out_oper_id,project_id,returnstatus from  ems_adjust@emslink;
+insert into ems_adjustlist(id,adjustliststatus,adjust_id,ecode,ecode_returnback,indate,isnew,isreturn,adjustlist_id_returnback)
+select id,adjustliststatus,adjust_id,ecode,ecode_returnback,indate,decode(isnew,'Y',1,0) isnew,decode(isreturn,'Y',1,0) isreturn,adjustlist_id_returnback from  ems_adjustlist@emslink;
 
 
 

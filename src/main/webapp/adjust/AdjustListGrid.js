@@ -7,6 +7,7 @@ Ext.define('Ems.adjust.AdjustListGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			refresh:function(){
 				//this.select(0);
@@ -20,7 +21,7 @@ Ext.define('Ems.adjust.AdjustListGrid',{
       	Ext.create('Ext.grid.RowNumberer'),
 		//{dataIndex:'id',text:'id'},
 		//{dataIndex:'adjust_id',text:'adjust_id'},
-		{dataIndex:'ecode',text:'条码',width:130},
+		{dataIndex:'ecode',text:'条码',width:160},
 		{dataIndex:'adjustListStatus_name',text:'状态',width:60},
 		{itemId: 'isReturnColumn',dataIndex:'isReturn',hidden:true,text:'是否归还',width:60,renderer:function(value,metadata,record){
 			if(value==true){

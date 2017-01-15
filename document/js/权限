@@ -1,0 +1,2 @@
+exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
+				where x.position_id=y.position_id and a.str_out_id=y.org_id and x.user_id=#{user_id} and y.look=1) 

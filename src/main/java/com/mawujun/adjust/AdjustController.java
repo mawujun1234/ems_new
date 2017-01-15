@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.utils.page.Pager;
@@ -63,8 +64,8 @@ public class AdjustController {
 	 */
 	@RequestMapping("/adjust/query.do")
 	@ResponseBody
-	public Pager<Adjust> query(Integer start,Integer limit,String str_out_id,String str_in_id,String str_out_date_start,String str_out_date_end,String status) {	
-		Pager<Adjust> page=new Pager<Adjust>();//Page.getInstance(start,limit);	
+	public Pager<AdjustVO> query(Integer start,Integer limit,String str_out_id,String str_in_id,String str_out_date_start,String str_out_date_end,String status) {	
+		Pager<AdjustVO> page=new Pager<AdjustVO>();//Page.getInstance(start,limit);	
 		page.setStart(start);
 		page.setLimit(limit);
 		page.addParam("str_out_id", str_out_id);
@@ -74,7 +75,7 @@ public class AdjustController {
 		page.addParam("status", status);
 		
 		page.addParam("user_id", ShiroUtils.getAuthenticationInfo().getId());
-		return adjustService.queryPage(page);
+		return adjustService.queryPageVO(page);
 	}
 	
 	/**
@@ -92,21 +93,22 @@ public class AdjustController {
 	
 	@RequestMapping("/adjust/getAdjustListVOByEcode.do")
 	@ResponseBody
-	public AdjustListVO getAdjustListVOByEcode(String ecode,String store_id) {	
+	public ResultModel getAdjustListVOByEcode(String ecode,String store_id) {	
 		AdjustListVO repairvo= adjustService.getAdjustListVOByEcode(ecode,store_id);
 		if(repairvo==null){
 			throw new BusinessException("对不起，该条码对应的设备不存在，或者该设备挂在其他仓库中!");
 		}
 
 		//repairvo.setStatus(AdjustStatus.edit);
-		return repairvo;
+		//return repairvo;
+		return ResultModel.getInstance().setRoot(repairvo);
 	}
 	
 	@RequestMapping("/adjust/newAdjuest.do")
 	@ResponseBody
 	public String newAdjuest(Adjust adjust,@RequestBody AdjustList[] adjuestLists) {
 		adjustService.newAdjuest(adjust,adjuestLists);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -156,7 +158,7 @@ public class AdjustController {
 	@ResponseBody
 	public String adjustInStore(@RequestBody AdjustList[] adjustLists,String adjust_id,String project_id) {	
 		adjustService.adjustInStore(adjustLists,adjust_id,project_id);	
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -185,6 +187,6 @@ public class AdjustController {
 	@ResponseBody
 	public String adjuestReturn(Adjust adjust,@RequestBody AdjustList[] adjuestLists,String adjust_id_borrow) {
 		adjustService.adjuestReturn(adjust,adjuestLists,adjust_id_borrow);
-		return "success";
+		return "{success:true}";
 	}
 }

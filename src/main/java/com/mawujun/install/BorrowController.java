@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mawujun.baseinfo.EquipmentService;
 import com.mawujun.baseinfo.EquipmentStatus;
 import com.mawujun.baseinfo.EquipmentVO;
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.utils.M;
 import com.mawujun.utils.page.Pager;
@@ -56,7 +57,7 @@ public class BorrowController {
 	 */
 	@RequestMapping("/borrow/getEquipmentByEcode.do")
 	@ResponseBody
-	public EquipmentVO getEquipmentByEcode(String ecode,String store_id) {	
+	public ResultModel getEquipmentByEcode(String ecode,String store_id) {	
 		EquipmentVO equipment= equipmentService.getEquipmentByEcode_in_store(ecode,store_id);
 		if(equipment==null){
 			//equipment=new Equipment();
@@ -67,7 +68,7 @@ public class BorrowController {
 		if(equipment.getStatus()!=EquipmentStatus.in_storage){
 			throw new BusinessException("设备状态不是\"已入库\",不能借用该设备!");
 		}
-		return equipment;
+		return ResultModel.getInstance().setRoot(equipment);
 	}
 	
 	/**

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mawujun.baseinfo.EquipmentStatus;
 import com.mawujun.baseinfo.EquipmentVO;
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.utils.page.Pager;
@@ -62,7 +63,7 @@ public class RepairController {
 			throw new BusinessException("请先选择一个维修中心!");
 		}
 		repairService.brokenEquipment2Repair(store_id,rpa_id);
-		return "success";
+		return "{success:true}";
 	}
 
 	
@@ -96,7 +97,7 @@ public class RepairController {
 	
 	@RequestMapping("/repair/getRepairVOByEcode.do")
 	@ResponseBody
-	public RepairVO getRepairVOByEcode(String ecode,String store_id) {	
+	public ResultModel getRepairVOByEcode(String ecode,String store_id) {	
 		RepairVO repairvo= repairService.getRepairVOByEcode(ecode,store_id);
 		if(repairvo==null){
 			throw new BusinessException("对不起，该条码对应的设备不存在，或者该设备挂在其他仓库中!");
@@ -105,7 +106,7 @@ public class RepairController {
 			throw new BusinessException("该设备为非\"入库待维修\"状态,不能添加到列表");
 		}
 		repairvo.setStatus(RepairStatus.to_repair);
-		return repairvo;
+		return ResultModel.getInstance().setRoot(repairvo);
 	}
 	
 	
@@ -121,7 +122,7 @@ public class RepairController {
 	public String newRepair(@RequestBody Repair[] repairs) {
 		//repairService.createBatch(createBatch);
 		repairService.newRepair(repairs);
-		return "success";
+		return "{success:true}";
 	}
 	
 	@RequestMapping("/repair/storeMgrQuery.do")
@@ -194,7 +195,7 @@ public class RepairController {
 	 */
 	@RequestMapping("/repair/getRepairVOByEcodeAtTo_repair.do")
 	@ResponseBody
-	public RepairVO getRepairVOByEcodeAtTo_repair(String ecode,String rpa_id) {	
+	public ResultModel getRepairVOByEcodeAtTo_repair(String ecode,String rpa_id) {	
 		RepairVO repairvo= repairService.getRepairVOByEcodeStatus(ecode,RepairStatus.to_repair);
 		
 		if(repairvo==null){
@@ -203,7 +204,8 @@ public class RepairController {
 		if(!repairvo.getRpa_id().equals(rpa_id)){
 			throw new BusinessException("该设备入库能入库这个维修中心!");
 		}
-		return repairvo;
+		//return repairvo;
+		return ResultModel.getInstance().setRoot(repairvo);
 	}
 	/**
 	 * 维修中心入库
@@ -217,7 +219,7 @@ public class RepairController {
 	@ResponseBody
 	public String repairInStore(@RequestBody Repair[] repairs){
 		repairService.repairInStore(repairs);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -229,7 +231,7 @@ public class RepairController {
 	 */
 	@RequestMapping("/repair/getRepairVOByEcodeAtRepairing.do")
 	@ResponseBody
-	public RepairVO getRepairVOByEcodeAtRepairing(String ecode,String store_id) {	
+	public ResultModel getRepairVOByEcodeAtRepairing(String ecode,String store_id) {	
 		RepairVO repairvo= repairService.getRepairVOByEcodeStatus(ecode,RepairStatus.repairing);
 		
 		if(repairvo==null){
@@ -242,7 +244,8 @@ public class RepairController {
 		if(!StringUtils.hasText(repairvo.getRpa_user_id())){
 			throw new BusinessException("请先填写维修人，故障原因等维修信息!");
 		}
-		return repairvo;
+		//return repairvo;
+		return ResultModel.getInstance().setRoot(repairvo);
 	}
 	/**
 	 * 维修中心出库
@@ -264,7 +267,7 @@ public class RepairController {
 			}
 		}
 		repairService.repairOutStore(repairs);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -276,7 +279,7 @@ public class RepairController {
 	 */
 	@RequestMapping("/repair/getRepairVOByEcodeAtBack_store.do")
 	@ResponseBody
-	public RepairVO getRepairVOByEcodeAtBack_store(String ecode,String store_id) {	
+	public ResultModel getRepairVOByEcodeAtBack_store(String ecode,String store_id) {	
 		RepairVO repairvo= repairService.getRepairVOByEcodeStatus(ecode,RepairStatus.back_store);
 		
 		if(repairvo==null){
@@ -285,7 +288,8 @@ public class RepairController {
 		if(!repairvo.getStr_in_id().equals(store_id)){
 			throw new BusinessException("该设备入库能入库这个仓库，不是从这里出去的!");
 		}
-		return repairvo;
+		//return repairvo;
+		return ResultModel.getInstance().setRoot(repairvo);
 	}
 	
 	/**
@@ -305,7 +309,7 @@ public class RepairController {
 //			}
 //		}
 		repairService.storeInStore(repairs);
-		return "success";
+		return "{success:true}";
 	}
 	
 

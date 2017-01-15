@@ -4,7 +4,7 @@ Ext.define("Ems.repair.Scrap",{
 	fields:[
 		{name:'id',type:'string'},
 		{name:'ecode',type:'string'},
-		{name:'operateDate',type:'date', dateFormat: 'Y-m-d'},
+		{name:'operateDate',type:'string', dateFormat: 'Y-m-d'},
 		{name:'operater',type:'string'},
 		{name:'reason',type:'string'},
 		{name:'repair_id',type:'string'},
