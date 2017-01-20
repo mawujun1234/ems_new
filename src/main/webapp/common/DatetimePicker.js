@@ -1,6 +1,6 @@
-Ext.define('y.common.DatetimePicker', {
+Ext.define('Ems.common.DatetimePicker', {
     extend: 'Ext.picker.Date',
-    alias: 'widget.datetimepicker',
+    xtype: 'datetimepicker',
     requires: [
         'Ext.picker.Date',
         'Ext.slider.Single',

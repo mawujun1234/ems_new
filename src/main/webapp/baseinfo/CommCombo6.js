@@ -3,6 +3,7 @@ Ext.define("Ems.baseinfo.IdName",{
 	extend:"Ext.data.Model",
 	fields:[
 		{name:'id',type:'string'},
+		{name:'key',type:'string'},//值等于id，为了显示"所有"
 		{name:'name',type:'string'},
 		{name:'text',type:'string'}
 	]
@@ -15,17 +16,23 @@ Ext.define('Ems.baseinfo.TypeCombo', {
 			],
 			fieldLabel : '大类',
 			displayField : 'name',
-			valueField : 'id',
+			valueField : 'key',
 			editable:false,
 			forceSelection : true,
 			queryParam : 'name',
 			queryMode : 'remote',
 			name : 'type_id',
+			
+			selFirst:false,
+			showBlank:false,//是否显示“无”的数据
+			autoLoad:true,
+	
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
 							//fields : ['id', 'name', 'text'],
 							model:'Ems.baseinfo.IdName',
+							autoLoad:me.autoLoad,
 							proxy : {
 								type : 'ajax',
 								actionMethods : {
@@ -34,6 +41,9 @@ Ext.define('Ems.baseinfo.TypeCombo', {
 									update : 'POST',
 									destroy : 'POST'
 								},
+								extraParams:{
+							    	showBlank:me.showBlank
+							    },
 								url : Ext.ContextPath
 										+ "/equipmentType/queryTypeCombo.do",
 								reader : {
@@ -53,6 +63,21 @@ Ext.define('Ems.baseinfo.TypeCombo', {
 							}
 						});
 				me.store = store;
+				
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
 
 				me.callParent();
 			}
@@ -66,18 +91,24 @@ Ext.define('Ems.baseinfo.SubtypeCombo', {
 			],
 			fieldLabel : '类型',
 			displayField : 'name',
-			valueField : 'id',
+			valueField : 'key',
 
 			editable:false,
 			forceSelection : true,
 			queryParam : 'name',
 			queryMode : 'remote',
 			name : 'subtype_id',
+			
+			selFirst:false,
+			showBlank:false,//是否显示“无”的数据
+			autoLoad:true,
+			
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
 							//fields : ['id', 'name', 'text'],
 					model:'Ems.baseinfo.IdName',
+					autoLoad:me.autoLoad,
 							proxy : {
 								type : 'ajax',
 								actionMethods : {
@@ -86,6 +117,9 @@ Ext.define('Ems.baseinfo.SubtypeCombo', {
 									update : 'POST',
 									destroy : 'POST'
 								},
+								extraParams:{
+							    	showBlank:me.showBlank
+							    },
 								url : Ext.ContextPath
 										+ "/equipmentType/querySubtypeCombo.do",
 								reader : {
@@ -95,19 +129,33 @@ Ext.define('Ems.baseinfo.SubtypeCombo', {
 							},
 							listeners : {
 								beforeload : function(store) {
-									// 包含所有的选项
-									if (me.containAll) {
-										store.getProxy().extraParams = Ext
-												.apply(
-														store.getProxy().extraParams,
-														{
-															containAll : true
-														})
-									}
+//									// 包含所有的选项
+//									if (me.containAll) {
+//										store.getProxy().extraParams = Ext
+//												.apply(
+//														store.getProxy().extraParams,
+//														{
+//															containAll : true
+//														})
+//									}
 								}
 							}
 						});
 				me.store = store;
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
 
 				me.callParent();
 			}
@@ -121,7 +169,7 @@ Ext.define('Ems.baseinfo.ProdCombo', {
 			],
 			fieldLabel : '品名',
 			displayField : 'text',
-			valueField : 'id',
+			valueField : 'key',
 			minChars : 1,
 			forceSelection : true,
 			queryParam : 'name',
@@ -135,6 +183,11 @@ Ext.define('Ems.baseinfo.ProdCombo', {
 			// var me = this;
 			// me.setValue('');
 			// },
+			
+			selFirst:false,
+			showBlank:false,//是否显示“无”的数据
+			autoLoad:false,
+			
 			triggers : {
 				foo : {
 					cls : Ext.baseCSSPrefix + 'form-clear-trigger',
@@ -150,7 +203,7 @@ Ext.define('Ems.baseinfo.ProdCombo', {
 				var store = Ext.create('Ext.data.Store', {
 							//fields : ['id', 'text'],
 					model:'Ems.baseinfo.IdName',
-							autoLoad : false,
+							autoLoad:me.autoLoad,
 							proxy : {
 								type : 'ajax',
 								actionMethods : {
@@ -161,6 +214,9 @@ Ext.define('Ems.baseinfo.ProdCombo', {
 								},
 								url : Ext.ContextPath
 										+ "/equipmentType/queryProdCombo.do",
+								extraParams:{
+							    	showBlank:me.showBlank
+							    },
 								reader : {
 									type : 'json',
 									rootProperty : 'root'
@@ -168,19 +224,34 @@ Ext.define('Ems.baseinfo.ProdCombo', {
 							},
 							listeners : {
 								beforeload : function(store) {
-									// 包含所有的选项
-									if (me.containAll) {
-										store.getProxy().extraParams = Ext
-												.apply(
-														store.getProxy().extraParams,
-														{
-															containAll : true
-														})
-									}
+//									// 包含所有的选项
+//									if (me.containAll) {
+//										store.getProxy().extraParams = Ext
+//												.apply(
+//														store.getProxy().extraParams,
+//														{
+//															containAll : true
+//														})
+//									}
 								}
 							}
 						});
 				me.store = store;
+				
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
 				me.callParent();
 			}
 		});
@@ -193,13 +264,18 @@ Ext.define('Ems.baseinfo.BrandCombo', {
 			],
 			fieldLabel : '品牌',
 			displayField : 'name',
-			valueField : 'id',
+			valueField : 'key',
 			minChars : -1,
 			forceSelection : true,
 			queryParam : 'name',
 			queryMode : 'remote',
 			name : 'brand_id',
 			triggerAction : 'query',
+			
+			selFirst:false,
+			showBlank:false,//是否显示“所有”的数据
+			autoLoad:false,
+			
 			triggers : {
 				foo : {
 					cls : Ext.baseCSSPrefix + 'form-clear-trigger',
@@ -222,6 +298,7 @@ Ext.define('Ems.baseinfo.BrandCombo', {
 				var store = Ext.create('Ext.data.Store', {
 							//fields : ['id', 'name'],
 					model:'Ems.baseinfo.IdName',
+					autoLoad:me.autoLoad,
 							proxy : {
 								type : 'ajax',
 								actionMethods : {
@@ -230,6 +307,9 @@ Ext.define('Ems.baseinfo.BrandCombo', {
 									update : 'POST',
 									destroy : 'POST'
 								},
+								extraParams:{
+							    	showBlank:me.showBlank
+							    },
 								url : Ext.ContextPath
 										+ "/brand/queryBrandCombo.do",
 								reader : {
@@ -239,19 +319,34 @@ Ext.define('Ems.baseinfo.BrandCombo', {
 							},
 							listeners : {
 								beforeload : function(store) {
-									// 包含所有的选项
-									if (me.containAll) {
-										store.getProxy().extraParams = Ext
-												.apply(
-														store.getProxy().extraParams,
-														{
-															containAll : true
-														})
-									}
+//									// 包含所有的选项
+//									if (me.containAll) {
+//										store.getProxy().extraParams = Ext
+//												.apply(
+//														store.getProxy().extraParams,
+//														{
+//															containAll : true
+//														})
+//									}
 								}
 							}
 						});
 				me.store = store;
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
+				
 				me.callParent();
 			}
 		});
@@ -265,7 +360,7 @@ Ext.define('Ems.baseinfo.SupplierCombo', {
 			emptyText:'请输入关键词进行过滤',
 			fieldLabel : '供应商',
 			displayField : 'name',
-			valueField : 'id',
+			valueField : 'key',
 			forceSelection : true,
 			minChars : 1,
 			queryParam : 'name',
@@ -289,10 +384,16 @@ Ext.define('Ems.baseinfo.SupplierCombo', {
 				// // }
 				// }
 			},
+			
+			selFirst:false,
+			showBlank:false,//是否显示“所有”的数据
+			autoLoad:false,
+			
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
 							//fields : ['id', 'name'],
+					autoLoad:me.autoLoad,
 					model:'Ems.baseinfo.IdName',
 							proxy : {
 								type : 'ajax',
@@ -302,6 +403,9 @@ Ext.define('Ems.baseinfo.SupplierCombo', {
 									update : 'POST',
 									destroy : 'POST'
 								},
+								extraParams:{
+							    	showBlank:me.showBlank
+							    },
 								url : Ext.ContextPath
 										+ "/supplier/querySupplierCombo.do",
 								reader : {
@@ -311,19 +415,33 @@ Ext.define('Ems.baseinfo.SupplierCombo', {
 							},
 							listeners : {
 								beforeload : function(store) {
-									// 包含所有的选项
-									if (me.containAll) {
-										store.getProxy().extraParams = Ext
-												.apply(
-														store.getProxy().extraParams,
-														{
-															containAll : true
-														})
-									}
+//									// 包含所有的选项
+//									if (me.containAll) {
+//										store.getProxy().extraParams = Ext
+//												.apply(
+//														store.getProxy().extraParams,
+//														{
+//															containAll : true
+//														})
+//									}
 								}
 							}
 						});
 				me.store = store;
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
 				me.callParent();
 			}
 		});
@@ -340,7 +458,7 @@ Ext.define('Ems.baseinfo.ProjectCombo', {
 			emptyText:'可以输入关键词进行过滤',
 			name : 'project_id',
 			displayField : 'name',
-			valueField : 'id',
+			valueField : 'key',
 			queryParam : 'name',
 			queryMode : 'remote',
 			triggerAction : 'query',
@@ -352,6 +470,11 @@ Ext.define('Ems.baseinfo.ProjectCombo', {
 			// var me = this;
 			// me.setValue('');
 			// },
+			
+			selFirst:false,
+			showBlank:false,//是否显示“无”的数据
+			autoLoad:true,
+			
 			triggers : {
 				foo : {
 					cls : Ext.baseCSSPrefix + 'form-clear-trigger',
@@ -374,6 +497,7 @@ Ext.define('Ems.baseinfo.ProjectCombo', {
 				me.store = Ext.create('Ext.data.Store', {
 							//fields : ['id', 'name'],
 					model:'Ems.baseinfo.IdName',
+					autoLoad:me.autoLoad,
 							proxy : {
 								type : 'ajax',
 								actionMethods : {
@@ -383,6 +507,9 @@ Ext.define('Ems.baseinfo.ProjectCombo', {
 									destroy : 'POST'
 								},
 								// extraParams:{type:[1,3],look:true},
+								extraParams:{
+							    	showBlank:me.showBlank
+							    },
 								url : Ext.ContextPath
 										+ "/project/queryCombo.do",
 								reader : {
@@ -390,20 +517,35 @@ Ext.define('Ems.baseinfo.ProjectCombo', {
 									rootProperty : 'root'
 								},
 								listeners : {
-									beforeload : function(store) {
-										// 包含所有的选项
-										if (me.containAll) {
-											store.getProxy().extraParams = Ext
-													.apply(
-															store.getProxy().extraParams,
-															{
-																containAll : true
-															})
-										}
-									}
+//									beforeload : function(store) {
+//										// 包含所有的选项
+//										if (me.containAll) {
+//											store.getProxy().extraParams = Ext
+//													.apply(
+//															store.getProxy().extraParams,
+//															{
+//																containAll : true
+//															})
+//										}
+//									}
 								}
 							}
 						});
+						
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
 				me.callParent();
 			}
 		});
@@ -417,21 +559,28 @@ Ext.define('Ems.baseinfo.StoreCombo', {
 			// afterLabelTextTpl: Ext.required,
 			name : 'store_id',
 			displayField : 'name',
-			valueField : 'id',
+			valueField : 'key',
 			allowBlank : true,
 			editable:false,
 			look : true,//获取只读的仓库
 			edit : false,//获取可以编辑操作的仓库，就是可以有权限入库的
 			orgtype:'',//设置取的是在建仓库还是备品备件仓库，如果没有设置，就表示取所有的仓库
+			
+			selFirst:false,
+			showBlank:false,//是否显示“无”的数据
+			autoLoad:true,
+			
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
 							//fields : ['id', 'name'],
 					model:'Ems.baseinfo.IdName',
+					autoLoad:me.autoLoad,
 							proxy : {
 								type : 'ajax',
 								extraParams : {
 									// type : [1, 3],
+									showBlank:me.showBlank,
 									orgtype:me.orgtype,
 									look : me.look,
 									edit : me.edit
@@ -444,6 +593,20 @@ Ext.define('Ems.baseinfo.StoreCombo', {
 							}
 						})
 				me.store = store;
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
 
 				me.callParent();
 			}
@@ -456,22 +619,29 @@ Ext.define('Ems.baseinfo.WorkunitCombo', {
 			labelWidth : 60,
 			// xtype:'combobox',
 			// afterLabelTextTpl: Ext.required,
-			name : 'store_id',
+			name : 'workunit_id',
 			displayField : 'name',
-			valueField : 'id',
+			valueField : 'key',
 			allowBlank : true,
 			editable:false,
 			look : true,//获取只读的仓库
 			edit : false,//获取可以编辑操作的仓库，就是可以有权限入库的
+			
+			selFirst:false,
+			showBlank:false,//是否显示“无”的数据
+			autoLoad:true,
+			
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
 							//fields : ['id', 'name'],
 					model:'Ems.baseinfo.IdName',
+					autoLoad:me.autoLoad,
 							proxy : {
 								type : 'ajax',
 								extraParams : {
 									// type : [1, 3],
+									showBlank:me.showBlank,
 									look : me.look,
 									edit : me.edit
 								},
@@ -483,7 +653,20 @@ Ext.define('Ems.baseinfo.WorkunitCombo', {
 							}
 						})
 				me.store = store;
-
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
 				me.callParent();
 			}
 		});
@@ -495,22 +678,29 @@ Ext.define('Ems.baseinfo.RepaircenterCombo', {
 			labelWidth : 60,
 			// xtype:'combobox',
 			// afterLabelTextTpl: Ext.required,
-			name : 'store_id',
+			name : 'repair_id',
 			displayField : 'name',
-			valueField : 'id',
+			valueField : 'key',
 			allowBlank : true,
 			editable:false,
 			look : true,//获取只读的仓库
 			edit : false,//获取可以编辑操作的仓库，就是可以有权限入库的
+			
+			selFirst:false,
+			showBlank:false,//是否显示“无”的数据
+			autoLoad:true,
+			
 			initComponent : function() {
 				var me = this;
 				var store = Ext.create('Ext.data.Store', {
 							//fields : ['id', 'name'],
 					model:'Ems.baseinfo.IdName',
+					autoLoad:me.autoLoad,
 							proxy : {
 								type : 'ajax',
 								extraParams : {
 									// type : [1, 3],
+									showBlank:me.showBlank,
 									look : me.look,
 									edit : me.edit
 								},
@@ -522,7 +712,107 @@ Ext.define('Ems.baseinfo.RepaircenterCombo', {
 							}
 						})
 				me.store = store;
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
+				me.callParent();
+			}
+		});
 
+Ext.define('Ems.baseinfo.CustomerCombo', {
+			extend : 'Ext.form.field.ComboBox',
+			xtype : 'customercombo',
+			requires : [
+			// 'Ems.baseinfo.Brand'
+			],
+			fieldLabel: '客户',
+	        labelAlign:'right',
+            labelWidth:60,
+            //width:250,
+	        //xtype:'combobox',
+	        //afterLabelTextTpl: Ext.required,
+	        name: 'customer_id',
+		    displayField: 'name',
+		    valueField: 'key',
+		    queryParam: 'name',
+    		queryMode: 'remote',
+    		triggerAction: 'query',
+    		minChars:-1,
+			triggers : {
+				foo : {
+					cls : Ext.baseCSSPrefix + 'form-clear-trigger',
+					weight : -1,
+					handler : function() {
+						var me = this;
+						me.setValue('');
+					}
+				}
+				// bar: {
+				// cls: Ext.baseCSSPrefix + 'form-arrow-trigger'
+				// // weight: -1,
+				// // handler: function() {
+				// // console.log('bar trigger clicked');
+				// // }
+				// }
+			},
+			
+			selFirst:false,
+			showBlank:false,//是否显示“无”的数据
+			autoLoad:false,
+			
+			initComponent : function() {
+				var me = this;
+				var store = Ext.create('Ext.data.Store', {
+							//fields : ['id', 'name'],
+					autoLoad:me.autoLoad,
+					model:'Ems.baseinfo.IdName',
+					//fields: ['id', 'name'],
+							proxy : {
+								type : 'ajax',
+								actionMethods : {
+									create : 'POST',
+									read : 'POST',
+									update : 'POST',
+									destroy : 'POST'
+								},
+								extraParams:{
+							    	showBlank:me.showBlank
+							    },
+								url : Ext.ContextPath+ "/customer/queryCombo.do",
+								reader : {
+									type : 'json',
+									rootProperty : 'root'
+								}
+							},
+							listeners : {
+							}
+						});
+				me.store = store;
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
 				me.callParent();
 			}
 		});

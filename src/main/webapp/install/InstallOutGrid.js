@@ -38,7 +38,7 @@ Ext.define('Ems.install.InstallOutGrid',{
 				url:Ext.ContextPath+'/installOut/queryMain.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });

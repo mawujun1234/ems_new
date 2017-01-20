@@ -83,7 +83,7 @@ public class EquipmentService extends AbstractService<Equipment, String>{
 			//equipmentCycleService.update(equipmentCycle);
 		}
 		//equipmentService.update(Cnd.update().set(M.Equipment.status, EquipmentStatus.wait_for_repair).andEquals(M.Equipment.ecode, ecode));
-		return "success";
+		return "{success:true}";
 	}
 	
 	public String to_old(String ecode,String reason) {
@@ -139,7 +139,7 @@ public class EquipmentService extends AbstractService<Equipment, String>{
 			//equipmentCycleService.update(equipmentCycle);
 		}
 		//equipmentService.update(Cnd.update().set(M.Equipment.isnew, false).andEquals(M.Equipment.ecode, ecode));
-		return "success";
+		return "{success:true}";
 	}
 	
 	public List<EquipmentVO> queryByStore(EquipmentVO equipmentVO,Integer level,Integer start,Integer limit) {

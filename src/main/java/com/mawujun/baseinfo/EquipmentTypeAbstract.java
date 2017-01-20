@@ -38,6 +38,15 @@ public class EquipmentTypeAbstract {
 //	@Transient
 //	private String brand_id;//有用，收集前端信息的时候
 	
+	/**
+	 * //值等于id，为了显示"所有"
+	 * @author mawujun qq:16064988 mawujun1234@163.com
+	 * @return
+	 */
+	public String getKey() {
+		return this.getId();
+	}
+	
 	
 	public String getStatus_name() {
 		if(this.getStatus()==true){

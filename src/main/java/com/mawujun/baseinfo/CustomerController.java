@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mawujun.org.Org;
 import com.mawujun.utils.string.StringUtils;
 /**
  * @author mawujun qq:16064988 e-mail:16064988@qq.com 
@@ -90,8 +91,15 @@ public class CustomerController {
 	}
 	@RequestMapping("/customer/queryCombo.do")
 	@ResponseBody
-	public List<Customer> queryCombo(String name) {	
-		return customerService.queryCombo(name);
+	public List<Customer> queryCombo(String name,Boolean showBlank) {	
+		List<Customer> list= customerService.queryCombo(name);
+		if(showBlank!=null && showBlank==true){
+			Customer pubCode=new Customer();
+			pubCode.setId("");
+			pubCode.setName("所有");
+			list.add(0,pubCode);
+		}
+		return list;
 		//return customerService.query(Cnd.select().andEquals(M.Customer.status, true).andLike(M.Customer.name, name));	
 	}
 	

@@ -142,7 +142,7 @@ Ext.define('Ems.install.B2INotifyGrid',{
 			    	url:Ext.ContextPath+"/installOutType/query.do",
 			    	reader:{
 			    		type:'json',
-			    		root:'root'
+			    		rootProperty:'root'
 			    	}
 			    }
 		   }),

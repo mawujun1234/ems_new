@@ -224,14 +224,14 @@ public class EquipmentTypeController {
 	
 	@RequestMapping("/equipmentType/queryTypeCombo.do")
 	@ResponseBody
-	public List<EquipmentType> queryTypeCombo(String name,Boolean containAll) {
+	public List<EquipmentType> queryTypeCombo(String name,Boolean showBlank) {
 		Cnd  cnd=Cnd.select().andEquals(M.EquipmentType.status, true);
 		
 		if(StringUtils.hasText(name)){
 			cnd.andLike(M.EquipmentType.name, name);
 		}
 		List<EquipmentType> list= equipmentTypeService.query(cnd);	
-		if(containAll!=null && containAll){
+		if(showBlank!=null && showBlank){
 			EquipmentType all=new EquipmentType();
 			all.setId("");
 			all.setName("所有");
@@ -244,12 +244,12 @@ public class EquipmentTypeController {
 	 * @author mawujun email:160649888@163.com qq:16064988
 	 * @param equipmentType_id 上级id
 	 * @param name 按名称过滤
-	 * @param containAll 是否显示‘所有’选项
+	 * @param showBlank 是否显示‘所有’选项
 	 * @return
 	 */
 	@RequestMapping("/equipmentType/querySubtypeCombo.do")
 	@ResponseBody
-	public List<EquipmentSubtype> querySubtype(String equipmentType_id,String name,Boolean containAll) {
+	public List<EquipmentSubtype> querySubtype(String equipmentType_id,String name,Boolean showBlank) {
 		Cnd cnd=Cnd.select().andEquals(M.EquipmentSubtype.status, true);
 		if(StringUtils.hasText(equipmentType_id)){
 			cnd.andEquals(M.EquipmentSubtype.parent_id, equipmentType_id);
@@ -258,7 +258,7 @@ public class EquipmentTypeController {
 			cnd.andLike(M.EquipmentSubtype.name, name);
 		}
 		List<EquipmentSubtype> list= equipmentSubtypeService.query(cnd);	
-		if(containAll!=null && containAll){
+		if(showBlank!=null && showBlank){
 			EquipmentSubtype all=new EquipmentSubtype();
 			all.setId("");
 			all.setName("所有");
@@ -274,13 +274,13 @@ public class EquipmentTypeController {
 	 */
 	@RequestMapping("/equipmentType/queryProdCombo.do")
 	@ResponseBody
-	public List<EquipmentProd> queryProdCombo(String equipmentSubtype_id,String name,Boolean containAll) {
+	public List<EquipmentProd> queryProdCombo(String equipmentSubtype_id,String name,Boolean showBlank) {
 		if(!StringUtils.hasText(equipmentSubtype_id)){
 			return new ArrayList<EquipmentProd>();
 		}
 		
 		List<EquipmentProd> list= equipmentProdService.query(Cnd.select().andEquals(M.EquipmentProd.status, true).andLike(M.EquipmentProd.name, name).andEquals(M.EquipmentProd.subtype_id, equipmentSubtype_id));	
-		if(containAll!=null && containAll){
+		if(showBlank!=null && showBlank){
 			EquipmentProd all=new EquipmentProd();
 			all.setId("");
 			all.setName("所有");

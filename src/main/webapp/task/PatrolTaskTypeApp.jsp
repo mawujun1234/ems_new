@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="UTF-8">
 
 	
-	<%@include file="../common/init6.jsp" %>
+	<%@include file="../common/init.jsp" %>
 	<script type="text/javascript" src="PatrolTaskTypeApp.js"></script>
   </head>
   

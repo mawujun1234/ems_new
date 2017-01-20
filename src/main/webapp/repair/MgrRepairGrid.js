@@ -300,30 +300,40 @@ Ext.define('Ems.repair.MgrRepairGrid',{
 				//先选择仓库，弹出框
 				var from=Ext.create('Ext.form.Panel',{
 					frame:true,
-					items:[{
-				        fieldLabel: '<b>选择仓库</b>',
-				        labelAlign:'right',
-			            labelWidth:70,
-				        xtype:'combobox',
-				        afterLabelTextTpl: Ext.required,
-				        name: 'str_in_id',
-				        itemId:'str_in_id',
-					    displayField: 'name',
-					    valueField: 'id',
-				        allowBlank: false,
-				        store:Ext.create('Ext.data.Store', {
-					    	fields: ['id', 'name'],
-						    proxy:{
-						    	type:'ajax',
-						    	extraParams:{type:[1,3],edit:true},
-						    	url:Ext.ContextPath+"/store/queryCombo.do",
-						    	reader:{
-						    		type:'json',
-						    		root:'root'
-						    	}
-						    }
-					   })
-				  }],
+					items:[
+					Ext.create('Ems.baseinfo.StoreCombo', {
+								edit : true,
+								allowBlank : false,
+								labelWidth:70,
+								name: 'str_in_id',
+								itemId:'str_in_id',
+								fieldLabel: '<b>选择仓库</b>'
+					  })
+//						{
+//				        fieldLabel: '<b>选择仓库</b>',
+//				        labelAlign:'right',
+//			            labelWidth:70,
+//				        xtype:'combobox',
+//				        afterLabelTextTpl: Ext.required,
+//				        name: 'str_in_id',
+//				        itemId:'str_in_id',
+//					    displayField: 'name',
+//					    valueField: 'id',
+//				        allowBlank: false,
+//				        store:Ext.create('Ext.data.Store', {
+//					    	fields: ['id', 'name'],
+//						    proxy:{
+//						    	type:'ajax',
+//						    	extraParams:{type:[1,3],edit:true},
+//						    	url:Ext.ContextPath+"/store/queryCombo.do",
+//						    	reader:{
+//						    		type:'json',
+//						    		root:'root'
+//						    	}
+//						    }
+//					   })
+//				  }
+				  ],
 				  buttons:[{
 				  	text:'确定',
 				  	handler:function(){

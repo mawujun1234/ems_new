@@ -183,20 +183,20 @@ public class TaskController {
 	@ResponseBody
 	public String confirm(String id) {
 		taskService.confirm(id);
-		return "success";
+		return "{success:true}";
 	}
 	
 	@RequestMapping("/task/sendBack.do")
 	@ResponseBody
 	public String sendBack(String id) {
 		taskService.sendBack(id);
-		return "success";
+		return "{success:true}";
 	}
 	@RequestMapping("/task/cancel.do")
 	@ResponseBody
 	public String cancel(String id) {
 		taskService.cancel(id);
-		return "success";
+		return "{success:true}";
 	}
 //
 //	/**
@@ -229,7 +229,7 @@ public class TaskController {
 			task.setCreaterType(TaskCreaterType.manager);
 		}
 		taskService.create(taskes);
-		return "success";
+		return "{success:true}";
 	}
 	
 	
@@ -319,7 +319,7 @@ public class TaskController {
 	public String mobile_updateTaskEquipmentListType(String taskEquipmentList_id,String ecode,TaskListTypeEnum type){
 		
 		taskService.mobile_updateTaskEquipmentListType(taskEquipmentList_id,ecode,type);
-		return "success";
+		return "{success:true}";
 	}
 	/**
 	 * 在某个任务上删除某个设备
@@ -334,7 +334,7 @@ public class TaskController {
 			throw new BusinessException("请选择一个条码!");
 		}
 		taskService.mobile_deleteTaskEquipmentList(ecode,taskEquipmentList_id);
-		return "success";
+		return "{success:true}";
 		//return equipmentVO;
 	}
 	
@@ -351,7 +351,7 @@ public class TaskController {
 			,String handleMethod_id,String handle_contact) {
 		//jquery 2 json地方有文图，，不能将数组正确的转换
 		taskService.mobile_save(task_id,hitchType_id,hitchReasonTpl_id,hitchReason,handleMethod_id,handle_contact);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -366,7 +366,7 @@ public class TaskController {
 	public String mobile_submit(String task_id,Integer hitchType_id,Integer hitchReasonTpl_id,String hitchReason,String handleMethod_id,String handle_contact) {
 		//jquery 2 json地方有文图，，不能将数组正确的转换
 		taskService.mobile_submit(task_id,hitchType_id,hitchReasonTpl_id,hitchReason,handleMethod_id,handle_contact);
-		return "success";
+		return "{success:true}";
 	}
 	
 
@@ -417,7 +417,7 @@ public class TaskController {
 		task.setCreaterType(TaskCreaterType.workunit);
 		
 		taskService.create(new Task[]{task});
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -431,7 +431,7 @@ public class TaskController {
 	@ResponseBody
 	public String finishRepairTask(String task_id,Integer hitchType_id,String hitchType,Integer hitchReasonTpl_id,String hitchReason,String handleMethod_id) {
 		taskService.finishRepairTask(task_id,hitchType_id,hitchType,hitchReasonTpl_id,hitchReason,handleMethod_id);
-		return "success";
+		return "{success:true}";
 	}
 	
 	

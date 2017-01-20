@@ -17,6 +17,14 @@ public class Brand implements IdEntity<String>{
 	private String name;
 	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean status=true;
+	/**
+	 * //值等于id，为了显示"所有"
+	 * @author mawujun qq:16064988 mawujun1234@163.com
+	 * @return
+	 */
+	public String getKey() {
+		return this.getId();
+	}
 	
 	public String getId() {
 		return id;

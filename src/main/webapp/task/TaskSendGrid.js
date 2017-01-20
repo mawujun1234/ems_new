@@ -8,28 +8,33 @@ Ext.define('Ems.task.TaskSendGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			refresh:function(){
 				//this.select(0);
 			}
 		}
 	},
+	selModel: {
+          selType: 'checkboxmodel'
+          //,checkOnly:true
+    },
 	pageSize:50,
-	selModel:new Ext.selection.CheckboxModel({
-		checkOnly:true,
-		showHeaderCheckbox:true//防止点全选，去选择
-//		renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-//			alert(record.get("status")+"测试在没有复选框的时候，getSelect会不会选择");
-//			if(record.get("status")!='installing' && !record.get("status")=='cancel' ){
-//				var baseCSSPrefix = Ext.baseCSSPrefix;
-//		        metaData.tdCls = baseCSSPrefix + 'grid-cell-special ' + baseCSSPrefix + 'grid-cell-row-checker';
-//		        return '<div class="' + baseCSSPrefix + 'grid-row-checker">&#160;</div>';
-//			} else {
-//				return "";
-//			}
-//	        
-//	    }
-	}),
+//	selModel:new Ext.selection.CheckboxModel({
+//		checkOnly:true,
+//		showHeaderCheckbox:true//防止点全选，去选择
+////		renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+////			alert(record.get("status")+"测试在没有复选框的时候，getSelect会不会选择");
+////			if(record.get("status")!='installing' && !record.get("status")=='cancel' ){
+////				var baseCSSPrefix = Ext.baseCSSPrefix;
+////		        metaData.tdCls = baseCSSPrefix + 'grid-cell-special ' + baseCSSPrefix + 'grid-cell-row-checker';
+////		        return '<div class="' + baseCSSPrefix + 'grid-row-checker">&#160;</div>';
+////			} else {
+////				return "";
+////			}
+////	        
+////	    }
+//	}),
 	initComponent: function () {
       var me = this;
       me.columns=[
@@ -48,8 +53,8 @@ Ext.define('Ems.task.TaskSendGrid',{
 		   }
 		   return record.get("status_name");
 		 }},
-		{dataIndex:'code',text:'编号',width:60},
-		{dataIndex:'name',text:'点位名称',renderer:function(value,metadata ,record){
+		{dataIndex:'code',text:'编号',width:70},
+		{dataIndex:'name',text:'点位名称',width:150,renderer:function(value,metadata ,record){
 			if(record.get("task_num")){
 				 return "<a href='javascript:void(0);'>("+record.get("task_num")+")"+value+"</a>";
 			}
@@ -90,21 +95,21 @@ Ext.define('Ems.task.TaskSendGrid',{
 	  me.on('cellclick',function(view, td, cellIndex, record, tr, rowIndex, e, eOpts){
 	  	//alert(cellIndex);
 	  	if(cellIndex==2){
-	  		//me.showTaskForm(record,record.get("task_type"))
-	  		//var iframe=top.window.docPanel.loadPage("/task/TaskQueryApp.jsp?callBack=query4Pole&pole_id="+record.get("id"),
-	  		//	"dd2f0178-bc59-422e-ae96-0af92bc6cc0c","任务查询管理","other");
-	  		
-	  		var iframe=top.window.docPanel.loadPage("/task/TaskQueryApp.jsp?autoLoad=false",
-	  			"dd2f0178-bc59-422e-ae96-0af92bc6cc0c","任务查询管理","other");
-	  		if(iframe){
-	  			iframe.on('load',function(){
-		  			//alert(111);
-		  			iframe.getWin().query4Pole(record.get("id"));
-		  		});
-		  		me.iframe=iframe;
-	  		} else {
-	  			me.iframe.getWin().query4Pole(record.get("id"));
-	  		}
+//	  		//me.showTaskForm(record,record.get("task_type"))
+//	  		//var iframe=top.window.docPanel.loadPage("/task/TaskQueryApp.jsp?callBack=query4Pole&pole_id="+record.get("id"),
+//	  		//	"dd2f0178-bc59-422e-ae96-0af92bc6cc0c","任务查询管理","other");
+//	  		
+//	  		var iframe=top.window.docPanel.loadPage("/task/TaskQueryApp.jsp?autoLoad=false",
+//	  			"dd2f0178-bc59-422e-ae96-0af92bc6cc0c","任务查询管理","other");
+//	  		if(iframe){
+//	  			iframe.on('load',function(){
+//		  			//alert(111);
+//		  			iframe.getWin().query4Pole(record.get("id"));
+//		  		});
+//		  		me.iframe=iframe;
+//	  		} else {
+//	  			me.iframe.getWin().query4Pole(record.get("id"));
+//	  		}
 	  		
 	  		
 	  	}
@@ -115,40 +120,41 @@ Ext.define('Ems.task.TaskSendGrid',{
 	//初始化工具栏
 	initToolbar:function(){
 		var me=this;
-		var customer_combox=Ext.create('Ext.form.field.ComboBox',{
-	        fieldLabel: '客户名称',
-	        labelAlign:'right',
-            labelWidth:60,
-            //width:250,
-	        //xtype:'combobox',
-	        //afterLabelTextTpl: Ext.required,
-	        name: 'customer_id',
-		    displayField: 'name',
-		    valueField: 'id',
-		    queryParam: 'name',
-    		queryMode: 'remote',
-    		triggerAction: 'query',
-    		minChars:-1,
-		    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-		    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-			onTrigger1Click : function(){
-			    var me = this;
-			    me.setValue('');
-			},
-	        //allowBlank: false,
-	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    proxy:{
-			    	type:'ajax',
-			    	//extraParams:{type:1,edit:true},
-			    	url:Ext.ContextPath+"/customer/queryCombo.do",
-			    	reader:{
-			    		type:'json',
-			    		rootProperty:'root'
-			    	}
-			    }
-		   })
-	    });
+//		var customer_combox=Ext.create('Ext.form.field.ComboBox',{
+//	        fieldLabel: '客户名称',
+//	        labelAlign:'right',
+//            labelWidth:60,
+//            //width:250,
+//	        //xtype:'combobox',
+//	        //afterLabelTextTpl: Ext.required,
+//	        name: 'customer_id',
+//		    displayField: 'name',
+//		    valueField: 'id',
+//		    queryParam: 'name',
+//    		queryMode: 'remote',
+//    		triggerAction: 'query',
+//    		minChars:-1,
+//		    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
+//		    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
+//			onTrigger1Click : function(){
+//			    var me = this;
+//			    me.setValue('');
+//			},
+//	        //allowBlank: false,
+//	        store:Ext.create('Ext.data.Store', {
+//		    	fields: ['id', 'name'],
+//			    proxy:{
+//			    	type:'ajax',
+//			    	//extraParams:{type:1,edit:true},
+//			    	url:Ext.ContextPath+"/customer/queryCombo.do",
+//			    	reader:{
+//			    		type:'json',
+//			    		rootProperty:'root'
+//			    	}
+//			    }
+//		   })
+//	    });
+		var customer_combox=Ext.create('Ems.baseinfo.CustomerCombo',{});
 	    var filter_other_combox=Ext.create('Ext.form.field.ComboBox',{
 	        fieldLabel: '过滤',
 	        labelAlign:'right',
@@ -206,6 +212,7 @@ Ext.define('Ems.task.TaskSendGrid',{
 //	    });
 		var workunit_combox= Ext.create('Ems.baseinfo.WorkunitCombo', {
 			edit:true,
+			showBlank:true,
 			allowBlank : true,
 			fieldLabel : '作业单位'
 		});
@@ -272,7 +279,7 @@ Ext.define('Ems.task.TaskSendGrid',{
 					if(!bool){
 						return;
 					}
-					//me.showTaskForm(records[0],"newInstall");
+					me.showTaskForm(records[0],"newInstall");
 					
 				} else {
 					Ext.Msg.confirm("提醒","只会为对'未安装'的点位发送安装任务,选'是'进行发送,并且将会直接发送，不能填写任务描述信息",function(btn){
@@ -482,7 +489,7 @@ Ext.define('Ems.task.TaskSendGrid',{
 						showSendButton=false;//标识我现在只是查看这个任务的状态
 						title="查看任务详情";
 					}
-						
+					
 					var record=Ext.create('Ems.task.Task',values);
 					var form=Ext.create('Ems.task.TaskForm',{
 						url:Ext.ContextPath+'/task/create.do',
@@ -509,6 +516,7 @@ Ext.define('Ems.task.TaskSendGrid',{
 		        		modal:true
 		        	});
 		        	win.show();
+		        	
 		return record;
 	},
 	/**
@@ -550,7 +558,7 @@ Ext.define('Ems.task.TaskSendGrid',{
 						            itemId: 'hitchDate',
 						            editable:false,
 						            allowBlank: true,
-						            xtype: 'DatetimeField'
+						            xtype: 'datetimefield'
 						        },
 								{
 							        fieldLabel: '任务描述',
@@ -663,7 +671,7 @@ Ext.define('Ems.task.TaskSendGrid',{
 						    	url:Ext.ContextPath+"/patrolTaskType/queryAll.do",
 						    	reader:{
 						    		type:'json',
-						    		root:'root'
+						    		rootProperty:'root'
 						    	}
 						    }
 					   })

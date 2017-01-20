@@ -211,7 +211,7 @@ public class BorrowController {
 	//public String equipOutStore(@RequestBody Equipment[] equipments,String store_id,String workUnit_id,String type,String memo) {
 	public String borrowReturn(@RequestBody BorrowList borrowlists[],String store_id) { 
 		borrowService.borrowReturn(borrowlists,store_id);
-		return "success";
+		return "{success:true}";
 	}
 	
 	
@@ -249,7 +249,7 @@ public class BorrowController {
 			throw new BusinessException("请选择领用类型!");
 		}
 		borrowService.updateInstalloutListType(b2INotify_id,ecode, borrow_id, installOutType_id, installOutType_content);
-		return "success";
+		return "{success:true}";
 	}
 
 }

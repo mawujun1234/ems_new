@@ -129,7 +129,7 @@ Ext.onReady(function(){
 			    	url:Ext.ContextPath+"/store/queryCombo.do",
 			    	reader:{
 			    		type:'json',
-			    		root:'root'
+			    		rootProperty:'root'
 			    	}
 			    }
 		   })

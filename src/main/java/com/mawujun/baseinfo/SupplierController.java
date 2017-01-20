@@ -99,7 +99,7 @@ public class SupplierController {
 	
 	@RequestMapping("/supplier/querySupplierCombo.do")
 	@ResponseBody
-	public List<Supplier> querySupplierComboS(String name,Boolean containAll) {
+	public List<Supplier> querySupplierComboS(String name,Boolean showBlank) {
 		//System.out.println("==========================================================="+name);
 		List<Supplier> list=null;
 		if(StringUtils.hasText(name)){
@@ -107,7 +107,7 @@ public class SupplierController {
 		} else {
 			list= supplierService.query(Cnd.select().andEquals(M.Supplier.status, true));	
 		}
-		if(containAll!=null && containAll){
+		if(showBlank!=null && showBlank){
 			Supplier all=new Supplier();
 			all.setId("");
 			all.setName("所有");

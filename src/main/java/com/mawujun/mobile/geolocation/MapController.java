@@ -250,7 +250,7 @@ public class MapController {
 	@ResponseBody
 	public String updatePoleLngLat(String pole_id,String longitude,String latitude) {	
 		poleRepository.updateCoordes(longitude, latitude, pole_id);
-		return "success";
+		return "{success:true}";
 	}
 //	/**
 //	 * 查询所有还未设置了经纬度的点位

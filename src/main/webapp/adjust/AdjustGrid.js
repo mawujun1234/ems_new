@@ -39,7 +39,7 @@ Ext.define('Ems.adjust.AdjustGrid',{
 				url:Ext.ContextPath+'/adjust/query.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });

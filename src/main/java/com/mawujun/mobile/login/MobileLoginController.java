@@ -125,7 +125,7 @@ public class MobileLoginController {
 //		User user=ShiroUtils.getAuthenticationInfo();
 //		String loginName=user.getUsername();
 //		workUnitService.update(Cnd.update().set(M.WorkUnit.password, password).andEquals(M.WorkUnit.loginName, loginName));	
-//		return "success";
+//		return "{success:true}";
 //	}
 	
 	

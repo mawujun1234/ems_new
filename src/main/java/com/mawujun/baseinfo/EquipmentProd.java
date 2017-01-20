@@ -56,6 +56,15 @@ public class EquipmentProd  implements
 	private Integer depreci_year;//默认是5年，报废年限，可使用的年限
 	
 	/**
+	 * //值等于id，为了显示"所有"
+	 * @author mawujun qq:16064988 mawujun1234@163.com
+	 * @return
+	 */
+	public String getKey() {
+		return this.getId();
+	}
+	
+	/**
 	 * 这个字段是要删除的
 	 * @author mawujun email:160649888@163.com qq:16064988
 	 * @return

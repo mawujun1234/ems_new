@@ -143,7 +143,7 @@ Ext.define('Ems.task.FinishRepairForm',{
 	  me.buttons=	[send_Button];
 
 	
-      me.addEvents("sended");
+     // me.addEvents("sended");
       me.callParent();
 	}
 });

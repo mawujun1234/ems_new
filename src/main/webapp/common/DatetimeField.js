@@ -2,10 +2,10 @@
  * 带时间的日期输入控件 
  * 转载请注明来自于gogo1217.iteye.com 
  */  
-Ext.define('y.common.DatetimeField', {
+Ext.define('Ems.common.DatetimeField', {
     extend: 'Ext.form.field.Date',
-    alias: 'widget.datetimefield',
-    requires: ['y.common.DatetimePicker'],
+    xtype: 'datetimefield',
+    requires: ['Ems.common.DatetimePicker'],
 
     //<locale>
     /**
@@ -56,7 +56,7 @@ Ext.define('y.common.DatetimeField', {
         var me = this,
             format = Ext.String.format;
 
-        var picker =  new y.common.DatetimePicker({
+        var picker =  Ext.create('Ems.common.DatetimePicker',{
             pickerField: me,
             floating: true,
             hidden: true,

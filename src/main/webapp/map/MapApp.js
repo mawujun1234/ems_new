@@ -69,7 +69,7 @@ Ext.onReady(function(){
 			    	url:Ext.ContextPath+"/customer/query4combo.do",
 			    	reader:{
 			    		type:'json',
-			    		root:'root'
+			    		rootProperty:'root'
 			    	}
 			    }
 		   }),
@@ -115,7 +115,7 @@ Ext.onReady(function(){
 			    	url:Ext.ContextPath+"/customer/query4combo.do",
 			    	reader:{
 			    		type:'json',
-			    		root:'root'
+			    		rootProperty:'root'
 			    	}
 			    },
 			    listeners:{
@@ -195,7 +195,7 @@ Ext.onReady(function(){
 			    	url:Ext.ContextPath+"/workUnit/queryCombo.do",
 			    	reader:{
 			    		type:'json',
-			    		root:'root'
+			    		rootProperty:'root'
 			    	}
 			    }
 		   })
@@ -388,7 +388,7 @@ Ext.onReady(function(){
 				        url: Ext.ContextPath+'/map/queryPoles.do',
 				        reader: {
 				        	type:'json',
-				            root: 'root'
+				            rootProperty: 'root'
 				        }
 				},
 				autoLoad:false

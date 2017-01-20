@@ -76,7 +76,7 @@ Ext.define('Ems.task.HitchReasonTplForm',{
       });
       me.buttons=[saveButton];
       
-      me.addEvents("saved");
+      ///me.addEvents("saved");
       me.callParent();
 	}
 });

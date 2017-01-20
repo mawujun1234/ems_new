@@ -55,6 +55,14 @@ public class Org {
 		}
 		return state.getName();
 	}
+	/**
+	 * //值等于id，为了显示"所有"
+	 * @author mawujun qq:16064988 mawujun1234@163.com
+	 * @return
+	 */
+	public String getKey() {
+		return this.getId();
+	}
 
 	
 	

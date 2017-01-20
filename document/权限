@@ -1,0 +1,6 @@
+exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
+				where x.position_id=y.position_id and a.str_out_id=y.org_id and x.user_id=#{user_id} and y.look=1) 
+				
+--获取用户可访问的点位，只要再关联一个ems_pole表就够了
+select c.* from t_position_org_user a,t_position_org_access b,ems_pole_workunit c
+			where a.position_id=b.position_id and  b.org_id=c.workunit_id and a.user_id=#{user_id}

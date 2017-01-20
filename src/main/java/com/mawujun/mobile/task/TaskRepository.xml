@@ -38,8 +38,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		d.name as customer_name,
 		e.task_num
 		from EMS_pole a 
-		inner join sys_user_workunit b on a.workunit_id=b.workunit_id and b.user_id=#{user_id}
-		inner join Ems_Workunit c on a.workunit_id=c.id
+		inner join (select c.* from t_position_org_user a,t_position_org_access b,ems_pole_workunit c
+			where a.position_id=b.position_id and  b.org_id=c.workunit_id and a.user_id=#{user_id}) b on a.id=b.pole_id 
+		inner join t_org c on b.workunit_id=c.id
 		inner join ems_customer d on a.customer_id=d.id
 		
 		left join (select pole_id,count(id) as task_num from ems_task where  status!='complete' group by pole_id) e on a.id=e.pole_id
@@ -49,7 +50,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			</if>
 
 			<if test="workunit_id!=null">
-				and a.workunit_id=#{workunit_id}
+				and b.workunit_id=#{workunit_id}
 			</if>
 			<if test="pole_name!=null">
 				and (a.name like #{pole_name} or a.code like #{pole_name})
@@ -61,13 +62,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	select 
 			count(a.id)
 		from EMS_pole a 
-		inner join sys_user_workunit b on a.workunit_id=b.workunit_id and b.user_id=#{user_id}
+		inner join (select c.* from t_position_org_user a,t_position_org_access b,ems_pole_workunit c
+			where a.position_id=b.position_id and  b.org_id=c.workunit_id and a.user_id=#{user_id}) b on a.id=b.pole_id 
 		<where>
 			<if test="customer_id!=null">
 				and a.customer_id=#{customer_id}
 			</if>
 			<if test="workunit_id!=null">
-				and a.workunit_id=#{workunit_id}
+				and b.workunit_id=#{workunit_id}
 			</if>
 			<if test="pole_name!=null">
 				and (a.name like #{pole_name} or a.code like #{pole_name})
@@ -87,8 +89,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		d.name as customer_name,
 		0 as task_num
 		from EMS_pole a 
-		inner join sys_user_workunit b on a.workunit_id=b.workunit_id and b.user_id=#{user_id}
-		inner join Ems_Workunit c on a.workunit_id=c.id
+		inner join (select c.* from t_position_org_user a,t_position_org_access b,ems_pole_workunit c
+			where a.position_id=b.position_id and  b.org_id=c.workunit_id and a.user_id=#{user_id}) b on a.id=b.pole_id 
+		inner join t_org c on b.workunit_id=c.id
 		inner join ems_customer d on a.customer_id=d.id
 		<where>
 			not exists ( select 1 from ems_task task where  task.pole_id=a.id)
@@ -96,7 +99,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 				and a.customer_id=#{customer_id}
 			</if>
 			<if test="workunit_id!=null">
-				and a.workunit_id=#{workunit_id}
+				and b.workunit_id=#{workunit_id}
 			</if>
 			<if test="pole_name!=null">
 				and (a.name like #{pole_name} or a.code like #{pole_name})
@@ -108,14 +111,15 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	select 
 			count(a.id)
 		from EMS_pole a 
-		inner join sys_user_workunit b on a.workunit_id=b.workunit_id and b.user_id=#{user_id}
+		inner join (select c.* from t_position_org_user a,t_position_org_access b,ems_pole_workunit c
+			where a.position_id=b.position_id and  b.org_id=c.workunit_id and a.user_id=#{user_id}) b on a.id=b.pole_id 
 		<where>
 			not exists ( select 1 from ems_task task where  task.pole_id=a.id)
 			<if test="customer_id!=null">
 				and a.customer_id=#{customer_id}
 			</if>
 			<if test="workunit_id!=null">
-				and a.workunit_id=#{workunit_id}
+				and b.workunit_id=#{workunit_id}
 			</if>
 			<if test="pole_name!=null">
 				and (a.name like #{pole_name} or a.code like #{pole_name})

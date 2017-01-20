@@ -135,7 +135,7 @@ Ext.define('Ems.store.InStoreListGridQuery',{
 				url:Ext.ContextPath+'/inStore/queryList.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });
@@ -159,7 +159,7 @@ Ext.define('Ems.store.InStoreListGridQuery',{
 				url:Ext.ContextPath+'/inStore/queryList.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });
@@ -183,7 +183,7 @@ Ext.define('Ems.store.InStoreListGridQuery',{
 				url:Ext.ContextPath+'/inStore/queryList.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });
@@ -207,7 +207,7 @@ Ext.define('Ems.store.InStoreListGridQuery',{
 				url:Ext.ContextPath+'/inStore/queryList.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });
@@ -231,7 +231,7 @@ Ext.define('Ems.store.InStoreListGridQuery',{
 				url:Ext.ContextPath+'/inStore/queryList.do',
 				reader:{
 					type:'json',
-					root:'root'
+					rootProperty:'root'
 				}
 			}
 	  });

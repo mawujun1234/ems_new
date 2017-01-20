@@ -100,7 +100,7 @@ Ext.define('Ems.task.TaskForm',{
             name: 'hitchDate',
             editable:false,
             allowBlank: true,
-            xtype: 'DatetimeField'
+            xtype: 'datetimefield'
             ,hidden:me.task_type=='repair'?false:true
             //,value:new Date()
             //,format: 'Y-m-d H:i:s'
@@ -123,7 +123,7 @@ Ext.define('Ems.task.TaskForm',{
 			    	url:Ext.ContextPath+"/patrolTaskType/queryAll.do",
 			    	reader:{
 			    		type:'json',
-			    		root:'root'
+			    		rootProperty:'root'
 			    	}
 			    }
 		   })
@@ -208,7 +208,7 @@ Ext.define('Ems.task.TaskForm',{
 	  
 	  var send_Button=Ext.create('Ext.button.Button',{
             text: '发送',
-            iconCls:'form-save-button',
+            iconCls:'icon-circle-arrow-right',
             //formBind: true,当设置这个值得时候，当表单里面有内容后，就自动会变成可执行
             hidden :!me.showSendButton,
 
@@ -236,7 +236,7 @@ Ext.define('Ems.task.TaskForm',{
                 Ext.Ajax.request({
                 	method:'POST',
                 	url:Ext.ContextPath+"/task/create.do",
-                	jsonData:values,
+                	jsonData:[values],
                 	headers:{ 
                 		'Accept':'application/json;',
                 		'Content-Type':'application/json;charset=UTF-8'
@@ -269,7 +269,7 @@ Ext.define('Ems.task.TaskForm',{
 	  me.buttons=	[send_Button];
 
 	
-      me.addEvents("sended");
+      //me.addEvents("sended");
       me.callParent();
 	}
 });

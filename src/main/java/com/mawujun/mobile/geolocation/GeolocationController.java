@@ -60,14 +60,14 @@ public class GeolocationController {
 //		//updateGpsUploadTime(SecurityUtils.getSubject().getSession().getId().toString(),longitude,latitude);
 //		//SecurityUtils.getSubject().getSession().getId();
 //		updateGpsUploadTime(sessionId,longitude,latitude);
-//		return "success";
+//		return "{success:true}";
 //	}
 	//SimpleDateFormat ff=new SimpleDateFormat("HH:mm:ss");
 	@RequestMapping("/geolocation/mobile/upload.do")
 	public String upload(Geolocation geolocation) {
 		//如果是很么值都没有就表示是心跳反应
 		if(geolocation==null || geolocation.getLatitude()==null || geolocation.getLongitude()==null){
-			return "success";
+			return "{success:true}";
 		}
 		//System.out.println(ff.format(new Date())+"-----"+geolocation.getSessionId());
 		
@@ -88,7 +88,7 @@ public class GeolocationController {
 		SecurityUtils.getSubject().getSession().getId();
 		//updateGpsUploadTime(geolocation.getSessionId(),geolocation.getLongitude(),geolocation.getLatitude(),geolocation.getLoc_time());
 		updateGpsUploadTime(geolocation);
-		return "success";
+		return "{success:true}";
 	}
 	
 	
@@ -96,7 +96,7 @@ public class GeolocationController {
 //	public String heartbeat(String sessionId) {
 //		
 //		//SecurityUtils.getSubject().getSession().getId();
-//		return "success";
+//		return "{success:true}";
 //	}
 	
 	/**

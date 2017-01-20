@@ -108,12 +108,20 @@ public class OrgController {
 	 */
 	@RequestMapping("/org/queryStores4Combo.do")
 	@ResponseBody
-	public List<Org> queryStores4Combo(Boolean look,Boolean edit,OrgType orgtype) {
+	public List<Org> queryStores4Combo(Boolean look,Boolean edit,OrgType orgtype,Boolean showBlank) {
+		List<Org> list=null;
 		if(orgtype==null){
-			return orgService.queryStores4Combo(look, edit);
+			list=  orgService.queryStores4Combo(look, edit);
 		} else {
-			return orgService.queryStores4Combo(look, edit,orgtype);
+			list=  orgService.queryStores4Combo(look, edit,orgtype);
 		}
+		if(showBlank!=null && showBlank==true){
+			Org pubCode=new Org();
+			pubCode.setId("");
+			pubCode.setName("所有");
+			list.add(0,pubCode);
+		}
+		return list;
 		
 	}
 	/**
@@ -124,8 +132,16 @@ public class OrgController {
 	 */
 	@RequestMapping("/org/queryRepaircenter4Combo.do")
 	@ResponseBody
-	public List<Org> queryRepaircenter4Combo(Boolean look,Boolean edit) {	
-		return orgService.queryRepaircenter4Combo(look, edit);
+	public List<Org> queryRepaircenter4Combo(Boolean look,Boolean edit,Boolean showBlank) {	
+		List<Org> list= orgService.queryRepaircenter4Combo(look, edit);
+		
+		if(showBlank!=null && showBlank==true){
+			Org pubCode=new Org();
+			pubCode.setId("");
+			pubCode.setName("所有");
+			list.add(0,pubCode);
+		}
+		return list;
 	}
 	/**
 	 * 
@@ -135,8 +151,16 @@ public class OrgController {
 	 */
 	@RequestMapping("/org/queryWorkunits4Combo.do")
 	@ResponseBody
-	public List<Org> queryWorkunits4Combo(Boolean look,Boolean edit) {	
-		return orgService.queryWorkunits4Combo(look, edit);
+	public List<Org> queryWorkunits4Combo(Boolean look,Boolean edit,Boolean showBlank) {	
+		
+		List<Org> list= orgService.queryWorkunits4Combo(look, edit);
+		if(showBlank!=null && showBlank==true){
+			Org pubCode=new Org();
+			pubCode.setId("");
+			pubCode.setName("所有");
+			list.add(0,pubCode);
+		}
+		return list;
 	}
 
 	/**

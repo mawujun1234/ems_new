@@ -45,7 +45,7 @@ public class CheckController {
 		
 		checkService.complete(check_id);
 
-		return "success";
+		return "{success:true}";
 	}
 	/**
 	 * 转移
@@ -58,7 +58,7 @@ public class CheckController {
 		
 		checkService.transfer(trim);
 
-		return "success";
+		return "{success:true}";
 	}
 	/**
 	 * 交换，把两个点位上的设备进行交换
@@ -71,7 +71,7 @@ public class CheckController {
 	public String exchange(@RequestBody TrimBindVO trimBindVO) {	
 		
 		checkService.exchange(trimBindVO.getScan_eqip(), trimBindVO.getPole_eqip());
-		return "success";
+		return "{success:true}";
 	}
 	/**
 	 * 卸载，从点位上把多余的设备卸载下来
@@ -84,7 +84,7 @@ public class CheckController {
 		
 		checkService.uninstall(trim);
 
-		return "success";
+		return "{success:true}";
 	}
 	
 	

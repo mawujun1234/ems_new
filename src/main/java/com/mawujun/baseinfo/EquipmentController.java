@@ -128,7 +128,7 @@ public class EquipmentController {
 //			equipmentCycleService.update(equipmentCycle);
 //		}
 		equipmentService.wait_for_repair(ecode, reason);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**
@@ -193,7 +193,7 @@ public class EquipmentController {
 //		}
 //		//equipmentService.update(Cnd.update().set(M.Equipment.isnew, false).andEquals(M.Equipment.ecode, ecode));
 		equipmentService.to_old(ecode, reason);
-		return "success";
+		return "{success:true}";
 	}
 	
 	/**

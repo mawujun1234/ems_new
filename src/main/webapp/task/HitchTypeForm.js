@@ -57,7 +57,7 @@ Ext.define('Ems.task.HitchTypeForm',{
             }
       });
       me.buttons=[saveButton];
-      me.addEvents("saved");
+      //me.addEvents("saved");
       me.callParent();
 	}
 });

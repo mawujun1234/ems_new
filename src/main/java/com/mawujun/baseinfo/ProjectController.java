@@ -61,14 +61,14 @@ public class ProjectController {
 	}
 	@RequestMapping("/project/queryCombo.do")
 	@ResponseBody
-	public List<Project> queryCombo(String name,Boolean containAll){
+	public List<Project> queryCombo(String name,Boolean showBlank){
 		List<Project> list=null;
 		if(StringUtils.hasText(name)){
 			list= projectService.query(Cnd.select().andEquals(M.Supplier.status, true).andLike(M.Supplier.name, name));	
 		} else {
 			list= projectService.query(Cnd.select().andEquals(M.Supplier.status, true));	
 		}
-		if(containAll!=null && containAll){
+		if(showBlank!=null && showBlank){
 			Project all=new Project();
 			all.setId("");
 			all.setName("所有");
