@@ -22,7 +22,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		    </choose>
 		    
 		    <if test="name!=null and name!=''">
-		    	and a.name like #{name}
+		    	and a.name like '%${name}%'
 		    </if>
 		    
         </where>
@@ -35,7 +35,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			status=1 AND a.type!=2
 			
 		    <if test="name!=null and name!=''">
-		    	and a.name like #{name}
+		    	and a.name like '%${name}%'
 		    </if>
 		    <if test="user_id!=null and user_id!=''">
 		    	and exists (select * 

@@ -244,18 +244,30 @@ depreci_day,depreci_month,depreci_year  from ems_repair@emslink;
 //=============================================================================任务
 --巡检任务类型数据同步
 insert into ems_patroltasktype(id,name) 
-select * from ems_patroltasktype@emslink;
+select id,name from ems_patroltasktype@emslink;
 --故障处理方法数据同步
 insert into ems_handlemethod(id,name) 
-select * from ems_handlemethod@emslink;
+select id,name from ems_handlemethod@emslink;
 --超时数据同步
-insert into ems_overtime(id,name) 
-select * from ems_overtime@emslink;
+insert into ems_overtime(id,HANDLING,read) 
+select id,HANDLING,read from ems_overtime@emslink;
 --
 insert into ems_metaversion(clasname,version) 
 select clasname,version from ems_metaversion@emslink;
---故障类型和原因模板数据同步
+--故障类型数据同步
 insert into ems_hitchtype(id,name) 
 select id,name from ems_hitchtype@emslink;
+--故障原因模板
 insert into ems_hitchreasontpl(id,name,tpl,hitchtype_id) 
 select id,name,tpl,hitchtype_id from ems_hitchreasontpl@emslink;
+--任务数据同步
+insert into ems_task(id,createdate,customer_id,hitchreason,hitchtype,memo,
+ pole_id,starthanddate,status,submitdate,type,workunit_id,customer_name,pole_address,pole_name,workunit_name
+ ,hitchreasontpl_id,hitchtype_id,creatertype,hitchdate,completedate,handlemethod_id,handle_contact,patroltasktype_id)
+select id,createdate,customer_id,hitchreason,hitchtype,memo,
+ pole_id,starthanddate,status,submitdate,type,workunit_id,customer_name,pole_address,pole_name,workunit_name
+ ,hitchreasontpl_id,hitchtype_id,creatertype,hitchdate,completedate,handlemethod_id,handle_contact,patroltasktype_id from ems_task@emslink;
+ --任务明细数据同步
+ insert into ems_taskequipmentlist(id,ecode,scandate,task_id,type,installouttype)
+ select id,ecode,scandate,task_id,type,installouttype from ems_taskequipmentlist@emslink
+ 

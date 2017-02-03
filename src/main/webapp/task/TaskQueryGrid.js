@@ -8,6 +8,7 @@ Ext.define('Ems.task.TaskQueryGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			expandBody:function(rowNode, record, expandRow){
 				Ext.Ajax.request({
@@ -34,25 +35,25 @@ Ext.define('Ems.task.TaskQueryGrid',{
 	initComponent: function () {
       var me = this;
       me.columns=[
-        {dataIndex:'id',text:'任务编号',width:100},
-		{dataIndex:'status_name',text:'状态',width:50,renderer:function(value,meta,record){
+        {dataIndex:'id',text:'任务编号',width:130},
+		{dataIndex:'status_name',text:'状态',width:80,renderer:function(value,meta,record){
 			if(record.get("status")=='submited'){
 				return '<span style="color:red;">'+value+'</span>';
 			}
 			return value;
 		}},
-		{dataIndex:'type_name',text:'任务类型',width:60},
-		{dataIndex:'pole_code',text:'点位编号',width:55},
-		{dataIndex:'pole_name',text:'点位名称'},
-		{dataIndex:'pole_address',text:'地址',flex:1},
+		{dataIndex:'type_name',text:'任务类型',width:80},
+		{dataIndex:'pole_code',text:'点位编号',width:80},
+		{dataIndex:'pole_name',text:'点位名称',width:180},
+		{dataIndex:'pole_address',text:'地址',width:260},
 		{dataIndex:'hitchType',text:'故障类型'},
-		{dataIndex:'hitchReason',text:'故障原因'},
-		{dataIndex:'createDate',text:'创建时间'},
-		{dataIndex:'submitDate',text:'提交时间'},
-		{dataIndex:'completeDate',text:'完成时间'},
-		{dataIndex:'workunit_name',text:'作业单位'},
-		{dataIndex:'customer_name',text:'所属客户'},
-		{dataIndex:'memo',text:'任务描述',flex:1,renderer:function(value,metadata,record){
+		{dataIndex:'hitchReason',text:'故障原因',width:150},
+		{dataIndex:'createDate',text:'创建时间',width:150},
+		{dataIndex:'submitDate',text:'提交时间',width:150},
+		{dataIndex:'completeDate',text:'完成时间',width:150},
+		{dataIndex:'workunit_name',text:'作业单位',width:160},
+		{dataIndex:'customer_name',text:'所属客户',width:150},
+		{dataIndex:'memo',text:'任务描述',width:180,renderer:function(value,metadata,record){
 			metadata.tdAttr = "data-qtip='" + value+ "'";
 		    return value;
 		}}
@@ -65,6 +66,7 @@ Ext.define('Ems.task.TaskQueryGrid',{
 			autoLoad:me.autoLoad1,
 			proxy:{
 				type:'ajax',
+				actionMethods: { read: 'POST' },
 				url:Ext.ContextPath+'/task/query.do',
 				reader:{
 					type:'json',
@@ -107,12 +109,6 @@ Ext.define('Ems.task.TaskQueryGrid',{
     		queryMode: 'remote',
     		triggerAction: 'query',
     		minChars:-1,
-//		    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-//		    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-//			onTrigger1Click : function(){
-//			    var me = this;
-//			    me.setValue('');
-//			},
     		triggers : {
 				foo : {
 					cls : Ext.baseCSSPrefix + 'form-clear-trigger',
@@ -128,6 +124,7 @@ Ext.define('Ems.task.TaskQueryGrid',{
 		    	fields: ['id', 'name'],
 			    proxy:{
 			    	type:'ajax',
+			    	actionMethods: { read: 'POST' },
 			    	//extraParams:{type:1,edit:true},
 			    	url:Ext.ContextPath+"/customer/queryCombo.do",
 			    	reader:{
@@ -178,6 +175,7 @@ Ext.define('Ems.task.TaskQueryGrid',{
 	  var workunit_combox= Ext.create('Ems.baseinfo.WorkunitCombo', {
 		edit:true,
 		allowBlank : true,
+		showBlank : true,
 		fieldLabel : '<b>作业单位</b>'
 	  });
 	    
@@ -190,11 +188,11 @@ Ext.define('Ems.task.TaskQueryGrid',{
 	        //afterLabelTextTpl: Ext.required,
 	        name: 'status',
 		    displayField: 'name',
-		    valueField: 'id',
+		    valueField: 'key',
 	        //allowBlank: false,
 	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    data:[{id:'',name:'无'},{id:'newInstall',name:'新安装'},{id:'repair',name:'维修维护'},{id:'patrol',name:'巡检'},{id:'check',name:'盘点'},{id:'cancel',name:'取消'}]
+		    	fields: ['key', 'name'],
+			    data:[{key:'',name:'无'},{key:'newInstall',name:'新安装'},{key:'repair',name:'维修维护'},{key:'patrol',name:'巡检'},{key:'check',name:'盘点'},{key:'cancel',name:'取消'}]
 		   })
 	  }); 
 		
@@ -207,11 +205,11 @@ Ext.define('Ems.task.TaskQueryGrid',{
 	        //afterLabelTextTpl: Ext.required,
 	        name: 'status',
 		    displayField: 'name',
-		    valueField: 'id',
+		    valueField: 'key',
 	        //allowBlank: false,
 	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    data:[{id:'',name:'无'},{id:'newTask',name:'新任务'},{id:'read',name:'已阅'},{id:'handling',name:'处理中'},{id:'submited',name:'已提交'},{id:'complete',name:'完成'}]
+		    	fields: ['key', 'name'],
+			    data:[{key:'',name:'无'},{key:'newTask',name:'新任务'},{key:'read',name:'已阅'},{key:'handling',name:'处理中'},{key:'submited',name:'已提交'},{key:'complete',name:'完成'}]
 		   })
 	  }); 
 	    var pole_textfield=Ext.create('Ext.form.field.Text',{

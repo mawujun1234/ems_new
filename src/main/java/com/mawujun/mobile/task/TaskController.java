@@ -95,14 +95,15 @@ public class TaskController {
 		
 		
 		if(pole_name!=null && !"".equals(pole_name)){
-			page.addParam(M.Task.pole_name, "%"+pole_name+"%");
+			page.addParam(M.Task.pole_name, pole_name);
 		}
 		if(isOvertime!=null && isOvertime==true){
-			page.addParam("isOvertime", true);
+			//page.addParam("isOvertime", true);
 			//获取超期时间
 			Overtime overtime=overtimeService.get("overtime");
-			page.addParam("handling", overtime.getHandling());
-			
+			if(overtime!=null){
+				page.addParam("handling", overtime.getHandling());
+			}
 		}
 		return taskService.queryPage(page);
 	}
@@ -171,7 +172,7 @@ public class TaskController {
 			builder.append("<br/>");
 		}
 		//JsonConfigHolder.setAutoWrap(false);
-		return builder.toString();
+		return "{success:true,root:'"+builder.toString()+"'}";
 	}
 	
 	@RequestMapping("/task/queryTaskEquipmentList.do")
