@@ -132,7 +132,12 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	select a.*,b.code as pole_code from ems_task a,ems_pole b
     	<where>
     		a.pole_id=b.id
-    		and exists (select 1 from sys_user_workunit c where b.workunit_id=c.workunit_id and c.user_id=#{user_id})
+    		and exists (select c.* from t_position_org_user a,t_position_org_access b,ems_pole_workunit c
+				where a.position_id=b.position_id and  b.org_id=c.workunit_id and a.user_id=#{user_id}
+					<if test="workunit_id!=null and workunit_id!=''">
+						and c.workunit_id=#{workunit_id}
+					</if>
+				)
 			<if test="customer_id!=null and customer_id!=''">
 				and a.customer_id=#{customer_id}
 			</if>
@@ -142,9 +147,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			<if test="type!=null and type!=''">
 				and a.type=#{type}
 			</if>
-			<if test="workunit_id!=null and workunit_id!=''">
-				and a.workunit_id=#{workunit_id}
-			</if>
+			
 			<if test="pole_id!=null and pole_id!=''">
 				and a.pole_id=#{pole_id} and  a.status  &lt; &gt;'complete'
 			</if>
@@ -161,7 +164,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     
     <!-- 查询所有已经提交的任务 -->
     <select id="querySubmited" resultType="com.mawujun.mobile.task.TaskVO" parameterType="map">
-    	select a.*,b.code as pole_code from ems_task a,ems_pole b,sys_user_workunit c
+    	select a.*,b.code as pole_code from ems_task a,ems_pole b,(select c.* from t_position_org_user a,t_position_org_access b,ems_pole_workunit c
+			where a.position_id=b.position_id and  b.org_id=c.workunit_id and a.user_id=#{user_id}) c
     	<where>
     	    b.workunit_id=c.workunit_id and c.user_id=#{user_id}
     		and a.pole_id=b.id and a.status='submited'
@@ -176,7 +180,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 				and a.hitchType_id=#{hitchType_id}
 			</if>
 			<if test="workunit_id!=null and workunit_id!=''">
-				and a.workunit_id=#{workunit_id}
+				and c.workunit_id=#{workunit_id}
 			</if>
 			<if test="pole_name!=null">
 				and (a.pole_name like #{pole_name} or b.code like #{pole_name} )

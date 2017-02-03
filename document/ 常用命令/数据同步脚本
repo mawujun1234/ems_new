@@ -245,3 +245,17 @@ depreci_day,depreci_month,depreci_year  from ems_repair@emslink;
 --巡检任务类型数据同步
 insert into ems_patroltasktype(id,name) 
 select * from ems_patroltasktype@emslink;
+--故障处理方法数据同步
+insert into ems_handlemethod(id,name) 
+select * from ems_handlemethod@emslink;
+--超时数据同步
+insert into ems_overtime(id,name) 
+select * from ems_overtime@emslink;
+--
+insert into ems_metaversion(clasname,version) 
+select clasname,version from ems_metaversion@emslink;
+--故障类型和原因模板数据同步
+insert into ems_hitchtype(id,name) 
+select id,name from ems_hitchtype@emslink;
+insert into ems_hitchreasontpl(id,name,tpl,hitchtype_id) 
+select id,name,tpl,hitchtype_id from ems_hitchreasontpl@emslink;

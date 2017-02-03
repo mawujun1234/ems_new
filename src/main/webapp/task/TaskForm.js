@@ -100,6 +100,7 @@ Ext.define('Ems.task.TaskForm',{
             name: 'hitchDate',
             editable:false,
             allowBlank: true,
+            format : "Y-m-d H:i:s",
             xtype: 'datetimefield'
             ,hidden:me.task_type=='repair'?false:true
             //,value:new Date()

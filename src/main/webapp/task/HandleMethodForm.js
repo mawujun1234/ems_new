@@ -116,7 +116,7 @@ Ext.define('Ems.task.HandleMethodForm',{
 				var form=btn.up("form");
 				var grid=form.grid;//是在HandleMethodApp.js中把引用授予的
 				var modelName=grid.model||grid.getStore().getProxy( ).getModel().getName( );
-				var model=Ext.createModel(modelName,{      	//id:''
+				var model=Ext.create(modelName,{      	//id:''
 				});
 				model.phantom =true;
 				form.getForm().loadRecord(model);//form是在app中定义的grid.form=form;
