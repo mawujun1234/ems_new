@@ -269,5 +269,5 @@ select id,createdate,customer_id,hitchreason,hitchtype,memo,
  ,hitchreasontpl_id,hitchtype_id,creatertype,hitchdate,completedate,handlemethod_id,handle_contact,patroltasktype_id from ems_task@emslink;
  --任务明细数据同步
  insert into ems_taskequipmentlist(id,ecode,scandate,task_id,type,installouttype)
- select id,ecode,scandate,task_id,type,installouttype from ems_taskequipmentlist@emslink
+ select id,ecode,scandate,task_id,type,installouttype from ems_taskequipmentlist@emslink;
  

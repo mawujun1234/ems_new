@@ -165,7 +165,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	select a.*,b.code as pole_code from ems_task a,ems_pole b,(select c.* from t_position_org_user a,t_position_org_access b,ems_pole_workunit c
 			where a.position_id=b.position_id and  b.org_id=c.workunit_id and a.user_id=#{user_id}) c
     	<where>
-    	    b.workunit_id=c.workunit_id and c.user_id=#{user_id}
+    	    and a.workunit_id=c.workunit_id and a.pole_id=c.pole_id
     		and a.pole_id=b.id and a.status='submited'
 			<if test="customer_id!=null and customer_id!=''">
 				and a.customer_id=#{customer_id}

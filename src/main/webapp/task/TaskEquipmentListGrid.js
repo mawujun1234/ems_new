@@ -18,13 +18,13 @@ Ext.define('Ems.task.TaskEquipmentListGrid',{
       me.columns=[
       	Ext.create('Ext.grid.RowNumberer'),
 		//{dataIndex:'id',text:'id'},
-		{dataIndex:'ecode',text:'二维码',width:130},
+		{dataIndex:'ecode',text:'二维码',width:160},
 		{dataIndex:'type_name',text:'动作'},
-		{dataIndex:'prod_name',text:'品名'},
-		{dataIndex:'prod_style',text:'型号'},
-		{dataIndex:'subtype_name',text:'子类型'},
+		{dataIndex:'prod_name',text:'品名',width:200},
+		{dataIndex:'prod_style',text:'型号',width:150},
+		{dataIndex:'subtype_name',text:'子类型',width:150},
 		
-		{dataIndex:'brand_name',text:'品牌'}
+		{dataIndex:'brand_name',text:'品牌',width:150}
 		//{dataIndex:'supplier_name',text:'供应商'}
       ];
       

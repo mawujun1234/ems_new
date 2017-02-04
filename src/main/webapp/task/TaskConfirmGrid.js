@@ -17,18 +17,19 @@ Ext.define('Ems.task.TaskConfirmGrid',{
 	initComponent: function () {
       var me = this;
       me.columns=[
-        {dataIndex:'id',text:'任务编号',width:100},
-        {dataIndex:'submitDate',text:'提交时间'},
+        Ext.create('Ext.grid.RowNumberer'),
+        {dataIndex:'id',text:'任务编号',width:120},
+        {dataIndex:'submitDate',text:'提交时间',width:150},
 		//{dataIndex:'status_name',text:'状态',width:50},
-		{dataIndex:'type_name',text:'任务类型',width:60},
-		{dataIndex:'hitchType',text:'故障类型',width:60},
-		{dataIndex:'hitchReason',text:'故障类型',width:60},
-		{dataIndex:'pole_code',text:'点位编号',width:55},
-		{dataIndex:'pole_name',text:'点位名称'},
-		{dataIndex:'pole_address',text:'地址',flex:1},
-		{dataIndex:'workunit_name',text:'作业单位'},
+		{dataIndex:'type_name',text:'任务类型',width:80},
+		{dataIndex:'hitchType',text:'故障类型',width:80},
+		{dataIndex:'hitchReason',text:'故障 原因',width:100},
+		{dataIndex:'pole_code',text:'点位编号',width:70},
+		{dataIndex:'pole_name',text:'点位名称',width:170},
+		{dataIndex:'pole_address',text:'地址',width:200},
+		{dataIndex:'workunit_name',text:'作业单位',width:160},
 		//{dataIndex:'customer_name',text:'所属客户'},
-		{dataIndex:'memo',text:'任务描述',flex:1,renderer:function(value,metadata,record){
+		{dataIndex:'memo',text:'任务描述',width:80,renderer:function(value,metadata,record){
 			metadata.tdAttr = "data-qtip='" + value+ "'";
 		    return value;
 		}}
@@ -138,6 +139,7 @@ Ext.define('Ems.task.TaskConfirmGrid',{
 			edit:true,
 			width:200,
 			allowBlank : true,
+			showBlank: true,
 			fieldLabel : '<b>作业单位</b>'
 	  });
 	    
@@ -150,11 +152,11 @@ Ext.define('Ems.task.TaskConfirmGrid',{
 	        //afterLabelTextTpl: Ext.required,
 	        name: 'status',
 		    displayField: 'name',
-		    valueField: 'id',
+		    valueField: 'key',
 	        //allowBlank: false,
 	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    data:[{id:'',name:'所有'},{id:'newInstall',name:'新安装'},{id:'repair',name:'维修维护'},{id:'patrol',name:'巡检'},{id:'check',name:'盘点'},{id:'cancel',name:'取消'}]
+		    	fields: ['key', 'name'],
+			    data:[{key:'',name:'所有'},{key:'newInstall',name:'新安装'},{key:'repair',name:'维修维护'},{key:'patrol',name:'巡检'},{key:'check',name:'盘点'},{key:'cancel',name:'取消'}]
 		   })
 	  }); 
 	  var hitchType_combox=Ext.create('Ext.form.field.ComboBox',{
@@ -224,28 +226,36 @@ Ext.define('Ems.task.TaskConfirmGrid',{
 					alert("请先选择任务");
 					return;
 				}
-				Ext.getBody().mask("正在处理,请稍候....");
+				
 				if(records.length==1){
-					if(records[0].get("status")!="submited"){
-						alert("只有'已提交'状态下，才能确认!");
-						return;
-					}	
-					Ext.Ajax.request({
-						url:Ext.ContextPath+'/task/confirm.do',
-						method:'POST',
-						params:{id:records[0].get("id")},
-						success:function(response){
-							me.getStore().reload();
-							me.gridList.getStore().removeAll();
-							Ext.getBody().unmask();
+					Ext.Msg.confirm("提醒","确定'确认'该订单?",function(btn){
+						if(btn=='yes'){
+							Ext.getBody().mask("正在处理,请稍候....");
+							if(records[0].get("status")!="submited"){
+								alert("只有'已提交'状态下，才能确认!");
+								return;
+							}	
+							Ext.Ajax.request({
+								url:Ext.ContextPath+'/task/confirm.do',
+								method:'POST',
+								params:{id:records[0].get("id")},
+								success:function(response){
+									me.getStore().reload();
+									me.gridList.getStore().removeAll();
+									Ext.getBody().unmask();
+								},
+								failure:function(){
+									Ext.getBody().unmask();
+								}
+							});
 						}
 					});
 				} else {
-					Ext.Msg.confirm("提醒","只会为对'只有'已提交'状态的状态，才能确认",function(btn){
-						if(btn=='yes'){
+					//Ext.Msg.confirm("提醒","只会为对'只有'已提交'状态的状态，才能确认",function(btn){
+					//	if(btn=='yes'){
 						
-						}
-					});
+					//	}
+					//});
 				}
 				
 			}
