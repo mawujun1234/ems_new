@@ -124,7 +124,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/ord/mobile/yxgs/getOrstat.do*", "anon");
 
 		
-		filterChainDefinitionMap.put("/mobile/redirect_yxgshtml.do*", "anon");
+		//filterChainDefinitionMap.put("/mobile/redirect_yxgshtml.do*", "anon");
 		filterChainDefinitionMap.put("/mobile/report/**/*.do*", "anon");
 		
 		
