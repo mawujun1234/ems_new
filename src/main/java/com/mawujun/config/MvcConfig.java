@@ -83,9 +83,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements SchedulingConf
 	 */
 	@Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		converters.add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
         converters.add(new MappingJackson2HttpMessageConverter(getObjectMapper()));
-        
-        converters.add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
     }
 	
 	@Override
