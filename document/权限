@@ -1,6 +1,13 @@
-exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
-				where x.position_id=y.position_id and a.str_out_id=y.org_id and x.user_id=#{user_id} and y.look=1) 
+--可访问的组织单元，作业单位，仓库
+exists (select 1 from T_POSITION_ORG_USER pou,T_POSITION_ORG_ACCESS poa
+				where pou.position_id=poa.position_id and a.xxxxxxxxx=poa.org_id and pou.user_id=#{user_id} and poa.look=1) 
 				
 --获取用户可访问的点位，只要再关联一个ems_pole表就够了
-select c.* from t_position_org_user a,t_position_org_access b,ems_pole_workunit c
-			where a.position_id=b.position_id and  b.org_id=c.workunit_id and a.user_id=#{user_id}
+select pw.* from t_position_org_user pou,t_position_org_access poa,ems_pole_workunit pw
+			where pou.position_id=poa.position_id and  poa.org_id=pw.workunit_id and pou.user_id=#{user_id} a
+			
+and exists (select 1 from T_POSITION_ORG_USER pou,T_POSITION_ORG_ACCESS poa,ems_pole_workunit pw
+				where pou.position_id=poa.position_id and pw.workunit_id=poa.org_id and a.id=z.pole_id and pou.user_id=#{user_id} and poa.look=1)		
+			
+			
+			

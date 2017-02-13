@@ -190,10 +190,24 @@ public class OrgService extends AbstractService<Org, String>{
 		initReportCode(org_id, dim,reportcodes[1]);
 		
 	}
-	
+	/**
+	 * 不区分在建仓库和备品备件仓库
+	 * @author mawujun qq:16064988 mawujun1234@163.com
+	 * @param look
+	 * @param edit
+	 * @return
+	 */
 	public List<Org> queryStores4Combo(Boolean look,Boolean edit) {
 		return orgRepository.queryStores4Combo(look, edit,ShiroUtils.getUserId(),null);
 	}
+	/**
+	 * 获取在建仓库或者备品备件仓库
+	 * @author mawujun qq:16064988 mawujun1234@163.com
+	 * @param look
+	 * @param edit
+	 * @param orgtype
+	 * @return
+	 */
 	public List<Org> queryStores4Combo(Boolean look,Boolean edit,OrgType orgtype) {
 		return orgRepository.queryStores4Combo(look, edit,ShiroUtils.getUserId(),orgtype.toString());
 	}

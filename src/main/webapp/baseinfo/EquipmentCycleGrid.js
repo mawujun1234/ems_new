@@ -7,6 +7,7 @@ Ext.define('Ems.baseinfo.EquipmentCycleGrid',{
 	stripeRows:true,
 	viewConfig:{
 		stripeRows:true,
+		enableTextSelection:true,
 		listeners:{
 			refresh:function(){
 				//this.select(0);
@@ -18,13 +19,13 @@ Ext.define('Ems.baseinfo.EquipmentCycleGrid',{
       me.columns=[
       	{xtype: 'rownumberer'},
 		//{dataIndex:'id',text:'id'},
-      	{dataIndex:'operateDate',text:'时间',width:130},
-		{dataIndex:'ecode',text:'二维码',width:140},
+      	{dataIndex:'operateDate',text:'时间',width:150},
+		{dataIndex:'ecode',text:'二维码',width:160},
 		{dataIndex:'operateType_name',text:'类型',width:100},
-		{dataIndex:'type_id',text:'单据号'},
-		{dataIndex:'target_name',text:'设备去向'},
+		{dataIndex:'type_id',text:'单据号',width:130},
+		{dataIndex:'target_name',text:'设备去向',width:150},
 		{dataIndex:'operater_name',text:'操作者'},
-		{dataIndex:'memo',text:'备注',flex:1,renderer:function(value,metadata,record){
+		{dataIndex:'memo',text:'备注',width:150,renderer:function(value,metadata,record){
 						metadata.tdAttr = "data-qtip='" + value+ "'";
 					    return value;
 						}}
@@ -55,7 +56,7 @@ Ext.define('Ems.baseinfo.EquipmentCycleGrid',{
 	  me.tbar=	[{
 			text: '刷新',
 			itemId:'reload',
-			disabled:me.disabledAction,
+			//disabled:me.disabledAction,
 			handler: function(btn){
 				var grid=btn.up("grid");
 				grid.getStore().reload();

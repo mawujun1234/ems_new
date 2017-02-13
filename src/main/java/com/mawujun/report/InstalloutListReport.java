@@ -9,15 +9,15 @@ import java.util.Date;
 public class InstalloutListReport {
 	private String installout_id;
 	private String project_id;
-	//private String project_name;
+	private String project_name;
 	private String operatedate;
 	private String ecode;
 	private String store_id;
-	//private String store_name;
+	private String store_name;
 	private String workunit_name;
 	private String pole_name;
 	private String customer_id;
-	//private String customer_name;
+	private String customer_name;
 	private String subtype_name;
 	private String brand_name;
 	private String prod_name;
@@ -115,6 +115,24 @@ public class InstalloutListReport {
 	}
 	public void setOperatedate(String operatedate) {
 		this.operatedate = operatedate;
+	}
+	public String getProject_name() {
+		return project_name;
+	}
+	public void setProject_name(String project_name) {
+		this.project_name = project_name;
+	}
+	public String getStore_name() {
+		return store_name;
+	}
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
+	}
+	public String getCustomer_name() {
+		return customer_name;
+	}
+	public void setCustomer_name(String customer_name) {
+		this.customer_name = customer_name;
 	}
 	
 	

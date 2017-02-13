@@ -13,7 +13,7 @@ public class InstoreListReport {
 	private String operatedate;
 	private String ecode;
 	private String store_id;
-	//private String store_name;
+	private String store_name;
 	private String subtype_name;
 	private String brand_name;
 	private String prod_name;
@@ -99,6 +99,12 @@ public class InstoreListReport {
 	}
 	public void setInstore_id(String instore_id) {
 		this.instore_id = instore_id;
+	}
+	public String getStore_name() {
+		return store_name;
+	}
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
 	}
 	
 	

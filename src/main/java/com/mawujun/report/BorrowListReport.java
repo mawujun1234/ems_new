@@ -13,7 +13,7 @@ public class BorrowListReport {
 	private String operatedate;
 	private String ecode;
 	private String store_id;
-	//private String store_name;
+	private String store_name;
 	private String workunit_name;
 	private String subtype_name;
 	private String brand_name;
@@ -113,6 +113,12 @@ public class BorrowListReport {
 	}
 	public void setBorrowtype(String borrowtype) {
 		this.borrowtype = borrowtype;
+	}
+	public String getStore_name() {
+		return store_name;
+	}
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
 	}
 	
 	

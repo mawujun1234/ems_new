@@ -37,8 +37,8 @@ public class StoreReportController {
 	private OrgService orgService;
 	@Resource
 	private ProjectService projectService;
-	@Resource
-	private CustomerService customerService;
+//	@Resource
+//	private CustomerService customerService;
 	
 	private void gen_InstalloutListReport_header(XSSFWorkbook wb, Sheet sheet,
 			int rownum) {
@@ -205,15 +205,21 @@ public class StoreReportController {
 				prod_unit_cell.setCellStyle(content_style);
 				
 				Cell project_name_cell = row.createCell(cellnum++);
-				if(projectService.get(installoutListReport.getProject_id())!=null){
-					project_name_cell.setCellValue(projectService.get(installoutListReport.getProject_id()).getName());
+				if(installoutListReport.getProject_name()!=null){
+					project_name_cell.setCellValue(installoutListReport.getProject_name());
 				}
+//				if(projectService.get(installoutListReport.getProject_id())!=null){
+//					project_name_cell.setCellValue(projectService.get(installoutListReport.getProject_id()).getName());
+//				}
 				project_name_cell.setCellStyle(content_style);
 				
 				Cell store_name_cell = row.createCell(cellnum++);
-				if(orgService.get(installoutListReport.getStore_id())!=null){
-					store_name_cell.setCellValue(orgService.get(installoutListReport.getStore_id()).getName());
+				if(installoutListReport.getStore_name()!=null){
+					store_name_cell.setCellValue(installoutListReport.getStore_name());
 				}
+//				if(orgService.get(installoutListReport.getStore_id())!=null){
+//					store_name_cell.setCellValue(orgService.get(installoutListReport.getStore_id()).getName());
+//				}
 				store_name_cell.setCellStyle(content_style);
 				
 				Cell workunit_name_cell = row.createCell(cellnum++);
@@ -225,9 +231,12 @@ public class StoreReportController {
 				installouttype_cell.setCellStyle(content_style);
 				
 				Cell customer_name_cell = row.createCell(cellnum++);
-				if(customerService.get(installoutListReport.getCustomer_id())!=null){
-					customer_name_cell.setCellValue(customerService.get(installoutListReport.getCustomer_id()).getName());
+				if(installoutListReport.getCustomer_name()!=null){
+					customer_name_cell.setCellValue(installoutListReport.getCustomer_name());
 				}
+//				if(customerService.get(installoutListReport.getCustomer_id())!=null){
+//					customer_name_cell.setCellValue(customerService.get(installoutListReport.getCustomer_id()).getName());
+//				}
 				customer_name_cell.setCellStyle(content_style);
 				
 				Cell pole_name_cell = row.createCell(cellnum++);
@@ -419,15 +428,21 @@ public class StoreReportController {
 				prod_unit_cell.setCellStyle(content_style);
 				
 				Cell project_name_cell = row.createCell(cellnum++);
-				if(projectService.get(borrowListReport.getProject_id())!=null){
-					project_name_cell.setCellValue(projectService.get(borrowListReport.getProject_id()).getName());
+				if(borrowListReport.getProject_name()!=null){
+					project_name_cell.setCellValue(borrowListReport.getProject_name());
 				}
+//				if(projectService.get(borrowListReport.getProject_id())!=null){
+//					project_name_cell.setCellValue(projectService.get(borrowListReport.getProject_id()).getName());
+//				}
 				project_name_cell.setCellStyle(content_style);
 				
 				Cell store_name_cell = row.createCell(cellnum++);
-				if(orgService.get(borrowListReport.getStore_id())!=null){
-					store_name_cell.setCellValue(orgService.get(borrowListReport.getStore_id()).getName());
+				if(borrowListReport.getStore_name()!=null){
+					store_name_cell.setCellValue(borrowListReport.getStore_name());
 				}
+//				if(orgService.get(borrowListReport.getStore_id())!=null){
+//					store_name_cell.setCellValue(orgService.get(borrowListReport.getStore_id()).getName());
+//				}
 				store_name_cell.setCellStyle(content_style);
 				
 				Cell workunit_name_cell = row.createCell(cellnum++);
@@ -620,16 +635,22 @@ public class StoreReportController {
 						if("修复入库".equals(instoreListReport.getProject_id())){
 							project_name_cell.setCellValue(instoreListReport.getProject_id());
 						} else {
-							if(projectService.get(instoreListReport.getProject_id())!=null){
-								project_name_cell.setCellValue(projectService.get(instoreListReport.getProject_id()).getName());
+							if(instoreListReport.getProject_name()!=null){
+								project_name_cell.setCellValue(instoreListReport.getProject_name());
 							}
+//							if(projectService.get(instoreListReport.getProject_id())!=null){
+//								project_name_cell.setCellValue(projectService.get(instoreListReport.getProject_id()).getName());
+//							}
 						}
 						project_name_cell.setCellStyle(content_style);
 						
 						Cell store_name_cell = row.createCell(cellnum++);
-						if(orgService.get(instoreListReport.getStore_id())!=null){
-							store_name_cell.setCellValue(orgService.get(instoreListReport.getStore_id()).getName());
+						if(instoreListReport.getStore_name()!=null){
+							store_name_cell.setCellValue(instoreListReport.getStore_name());
 						}
+//						if(orgService.get(instoreListReport.getStore_id())!=null){
+//							store_name_cell.setCellValue(orgService.get(instoreListReport.getStore_id()).getName());
+//						}
 						store_name_cell.setCellStyle(content_style);
 						
 						

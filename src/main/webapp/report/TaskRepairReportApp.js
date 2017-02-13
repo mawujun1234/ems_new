@@ -26,12 +26,14 @@ Ext.onReady(function(){
 	var pole_code=Ext.create('Ext.form.field.Text',{
 		fieldLabel: '点位号',
 		labelWidth:50,
+		width:155,
 		name: 'pole_code'
 	})
 	
 	var hitchType_id=Ext.create('Ext.form.field.ComboBox',{
 		fieldLabel: '故障类型',
 		labelWidth:60,
+		width:180,
 	    queryMode: 'remote',
 	    displayField: 'name',
 	    valueField: 'id',
@@ -60,6 +62,7 @@ Ext.onReady(function(){
 	var exportPoles = new Ext.Action({
 		    text: '导出',
 		    //itemId:'reload',
+		    margin :'0 0 0 10',
 		    icon:'../icons/page_excel.png',
 		    handler: function(){
 		    	var me=this;
@@ -127,23 +130,23 @@ Ext.onReady(function(){
 		stripeRows:true,
 		columns:[
 			{xtype: 'rownumberer'},
-			{dataIndex:'customer_name',text:'客户名称'},
-			{dataIndex:'pole_code',text:'点位编号',width:60},
-			{dataIndex:'pole_name',text:'点位名称'},
-			{dataIndex:'workunit_name',text:'作业单位'},
+			{dataIndex:'customer_name',text:'客户名称',width:160},
+			{dataIndex:'pole_code',text:'点位编号',width:80},
+			{dataIndex:'pole_name',text:'点位名称',width:160},
+			{dataIndex:'workunit_name',text:'作业单位',width:120},
 			{dataIndex:'memo',text:'故障现象'},
-			{dataIndex:'hitchDate',text:'故障时间',width:130},
-			{dataIndex:'createDate',text:'任务下发时间',width:130},
-			{dataIndex:'startHandDate',text:'开始处理时间',width:130},
-			{dataIndex:'submitDate',text:'提交时间',width:130},
-			{dataIndex:'completeDate',text:'完成时间',width:130},
+			{dataIndex:'hitchDate',text:'故障时间',width:150},
+			{dataIndex:'createDate',text:'任务下发时间',width:150},
+			{dataIndex:'startHandDate',text:'开始处理时间',width:150},
+			{dataIndex:'submitDate',text:'提交时间',width:150},
+			{dataIndex:'completeDate',text:'完成时间',width:150},
 			{dataIndex:'usedTime',text:'总耗时'},
 			{dataIndex:'repairUsedTime',text:'维修耗时'},
 			{dataIndex:'result',text:'维修结果'},
 			{dataIndex:'overtime',text:'超时',width:110},
 			{dataIndex:'hitchType',text:'故障类型'},
 			{dataIndex:'hitchReason',text:'故障原因'},
-			{dataIndex:'handleMethod_name',text:'处理方法'},
+			{dataIndex:'handleMethod_name',text:'处理方法',width:140},
 			{dataIndex:'handle_contact',text:'备注'}
 	    ],
       	store:store,

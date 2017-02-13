@@ -46,17 +46,17 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     
     <select id="getEquipmentWorkunitVO" resultType="com.mawujun.baseinfo.EquipmentWorkunitVO">
 		select a.*,b.name as workunit_name from 
-		ems_equipment_workunit a,ems_workunit b
+		ems_equipment_workunit a,t_org b
 		where a.workunit_id=b.id and a.ecode=#{ecode}
 	</select>
 	<select id="getEquipmentStoreVO" resultType="com.mawujun.baseinfo.EquipmentStoreVO">
 		select a.*,b.name as store_name from 
-		ems_equipment_store a,ems_store b
+		ems_equipment_store a,t_org b
 		where a.store_id=b.id and a.ecode=#{ecode}
 	</select>
 	<select id="getEquipmentRepairVO" resultType="com.mawujun.baseinfo.EquipmentRepairVO">
 		select a.*,b.name as repair_name from 
-		ems_equipment_repair a,ems_store b
+		ems_equipment_repair a,t_org b
 		where a.repair_id=b.id and a.ecode=#{ecode}
 	</select>
 	<select id="getEquipmentPoleVO" resultType="com.mawujun.baseinfo.EquipmentPoleVO">

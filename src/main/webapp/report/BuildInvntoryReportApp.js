@@ -42,7 +42,7 @@ Ext.onReady(function(){
 	
 	var date_start=Ext.create('Ext.form.field.Date',{
 	  	fieldLabel: '开始时间',
-	  	labelWidth:50,
+	  	labelWidth:60,
 	  	width:175,
 	  	format:'Y-m-d',
 	  	minValue:Ext.Date.parse('2015-07-10','Y-m-d')//从7.10号开始有数据
@@ -84,7 +84,8 @@ Ext.onReady(function(){
 	  var store_combox = Ext.create('Ems.baseinfo.StoreCombo', {
 				edit : true,
 				orgtype:'store_build',
-				allowBlank : false,
+				showBlank:true,
+				//allowBlank : false,
 				fieldLabel: '<b>在建仓库</b>'
 			});
 	var tbar1=Ext.create('Ext.toolbar.Toolbar',{
@@ -101,7 +102,7 @@ Ext.onReady(function(){
 						Ext.getBody().mask("正在执行...");
 						Ext.Ajax.request({
 							url:Ext.ContextPath+"/inventory/day/proc_report_day_sparepart.do",
-							params:{store_id:store_combox.getValue(),store_type:1},
+							params:{store_id:store_combox.getValue(),store_type:'store_build'},
 							success:function(response){
 								alert("计算成功!");
 								Ext.getBody().unmask();
@@ -119,7 +120,7 @@ Ext.onReady(function(){
 				if(!params){
 					return false;
 				}
-				params.store_type=1;
+				params.store_type='store_build';
 				var pp=Ext.Object.toQueryString(params);
 				window.open(Ext.ContextPath+"/inventory/month/sparepart/excelExport.do?"+pp, "_blank");
 			}
@@ -131,7 +132,7 @@ Ext.onReady(function(){
 				if(!params){
 					return false;
 				}
-				params.store_type=1;
+				params.store_type='store_build';
 				var pp=Ext.Object.toQueryString(params);
 				window.open(Ext.ContextPath+"/inventory/day/sparepart/excelExport.do?"+pp, "_blank");
 			}
@@ -148,14 +149,14 @@ Ext.onReady(function(){
 			text:'导出月报表模板',
 			icon:'../icons/page_excel.png',
 			handler:function(){
-				window.open(Ext.ContextPath+"/inventory/month/sparepart/excelTpl.do?store_type=1", "_blank");
+				window.open(Ext.ContextPath+"/inventory/month/sparepart/excelTpl.do?store_type=store_build", "_blank");
 			}
 		},
 		{
 			text:'导出日报表模板',
 			icon:'../icons/page_excel.png',
 			handler:function(){
-				window.open(Ext.ContextPath+"/inventory/day/sparepart/excelTpl.do?store_type=1", "_blank");
+				window.open(Ext.ContextPath+"/inventory/day/sparepart/excelTpl.do?store_type=store_build", "_blank");
 			}
 		},{
 			text:'导出月报表-净资产',
@@ -166,7 +167,7 @@ Ext.onReady(function(){
 				if(!params){
 					return false;
 				}
-				params.store_type=1;
+				params.store_type='store_build';
 				var pp=Ext.Object.toQueryString(params);
 				window.open(Ext.ContextPath+"/inventory/month/sparepart/excelExport_assetclean.do?"+pp, "_blank");
 			}
@@ -179,7 +180,7 @@ Ext.onReady(function(){
 				if(!params){
 					return false;
 				}
-				params.store_type=1;
+				params.store_type='store_build';
 				var pp=Ext.Object.toQueryString(params);
 				window.open(Ext.ContextPath+"/inventory/day/sparepart/excelExport_assetclean.do?"+pp, "_blank");
 			}

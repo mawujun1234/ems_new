@@ -9,7 +9,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <select id="exportUnrepairPoleReport" resultType="com.mawujun.mobile.task.TaskVO" parameterType="map">
     	select a.*,b.code as pole_code from ems_task a,ems_pole b
 		where a.pole_id=b.id
-			and exists (select 1 from sys_user_workunit x where x.workunit_id=b.workunit_id and x.user_id=#{user_id})
+			and exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
+				where x.position_id=y.position_id and a.workunit_id=y.org_id and x.user_id=#{user_id} and y.look=1) 
 			and a.type='repair' and a.status!='complete'
 			<if test="workunit_id!=null and workunit_id!=''">
 				and a.workunit_id=#{workunit_id}
@@ -29,7 +30,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <select id="queryUnrepairPoleReport" resultType="com.mawujun.mobile.task.TaskVO" parameterType="map">
     	select a.*,b.code as pole_code from ems_task a,ems_pole b
 		where a.pole_id=b.id
-			and exists (select 1 from sys_user_workunit x where x.workunit_id=b.workunit_id and x.user_id=#{user_id})
+			and exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
+				where x.position_id=y.position_id and a.workunit_id=y.org_id and x.user_id=#{user_id} and y.look=1) 
 			and a.type='repair'
 			and a.status !='complete'
 			<if test="workunit_id!=null">
@@ -54,7 +56,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		inner join ems_pole b on a.pole_id=b.id
 		left join ems_handlemethod c on a.handleMethod_id=c.id
 		where 
-		exists (select 1 from sys_user_workunit x where x.workunit_id=b.workunit_id and x.user_id=#{user_id})
+		exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
+				where x.position_id=y.position_id and a.workunit_id=y.org_id and x.user_id=#{user_id} and y.look=1) 
 		and a.type='repair'
 		and to_char(a.createDate,'yyyy-mm-dd')&gt;=#{date_start}
 		and to_char(a.createDate,'yyyy-mm-dd')&lt;=#{date_end}
@@ -69,8 +72,10 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	select count(a.id)
 		from ems_task a
 		inner join ems_pole b on a.pole_id=b.id
-		where a.type='repair'
-		and exists (select 1 from sys_user_workunit x where x.workunit_id=b.workunit_id and x.user_id=#{user_id})
+		where 
+		exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
+				where x.position_id=y.position_id and a.workunit_id=y.org_id and x.user_id=#{user_id} and y.look=1) 
+		and a.type='repair'
 		and to_char(a.createDate,'yyyy-mm-dd')&gt;=#{date_start}
 		and to_char(a.createDate,'yyyy-mm-dd')&lt;=#{date_end}
 		<if test="pole_code!=null and pole_code!=''">

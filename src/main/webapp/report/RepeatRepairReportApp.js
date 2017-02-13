@@ -39,6 +39,7 @@ Ext.onReady(function(){
 	var exportPoles = Ext.create('Ext.button.Button',{
 		    text: '导出',
 		    //itemId:'reload',
+		     margin :'0 0 0 10',
 		    icon:'../icons/page_excel.png',
 		    handler: function(){
 		    	var me=this;
@@ -86,14 +87,14 @@ Ext.onReady(function(){
 		stripeRows:true,
 		columns:[
 			{xtype: 'rownumberer'},
-			{dataIndex:'ecode',text:'设备编码',width:140},
+			{dataIndex:'ecode',text:'设备编码',width:160},
 			{dataIndex:'repeate_count',text:'重复次数'},
-			{dataIndex:'prod_name',text:'设备名称'},
-			{dataIndex:'str_out_name',text:'出库仓库'},
+			{dataIndex:'prod_name',text:'设备名称',width:150},
+			{dataIndex:'str_out_name',text:'出库仓库',width:150},
 			{dataIndex:'rpa_in_date',text:'维修入库',width:140},
-			{dataIndex:'rpa_user_name',text:'维修人员',width:150},	
-			{dataIndex:'rpa_out_date',text:'维修出库',width:140},
-			{dataIndex:'str_in_date',text:'入库日期',width:140}
+			{dataIndex:'rpa_user_name',text:'维修人员',width:100},	
+			{dataIndex:'rpa_out_date',text:'维修出库',width:160},
+			{dataIndex:'str_in_date',text:'入库日期',width:160}
 	    ],
       	store:store,
       	tbar:toolbar

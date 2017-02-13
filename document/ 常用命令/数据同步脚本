@@ -51,7 +51,7 @@ select sys_guid(),'小组成员'，id,'workunitgroup' from ems_workunit@emslink;
 //--------------------------------===========================================================
 --同步用户数据
 insert into t_user(id,loginname,name,pwd,cannotdel,phone,state)
-select id,username,name,password,0,phone,decode(status,'Y','valid','invalid') from sys_user@emslink
+select id,username,name,password,0,phone,decode(status,'N','invalid','valid') from sys_user@emslink
 where username!='admin' and name is NOT NULL;
 
 --把作业单位的账号密码提取出来，作为用户

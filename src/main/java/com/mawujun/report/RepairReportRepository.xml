@@ -25,7 +25,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	left join ems_equipmentprod d on a.prod_id=d.id
     	left join ems_equipmentsubtype e on d.subtype_id=e.id
     	left join ems_brand f on d.brand_id=f.id
-    	left join ems_store g on a.str_out_id=g.id
+    	left join t_org g on a.str_out_id=g.id
 		where to_char(a.str_in_date,'yyyy-mm-dd') &lt;= #{date_end}
 			and to_char(a.str_in_date,'yyyy-mm-dd') &gt;= #{date_start}
 			and a.status in ('over','scrap')
@@ -57,8 +57,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	select a.*,d.name as prod_name,d.style as equipment_style ,e.name as rpa_user_name,f.name as str_out_name
     	from (select a.*,b.id as scrap_id,b.reason as scrap_reason,b.residual as scrap_residual, b.operateDate as scrap_operateDate from ems_repair a INNER JOIN Ems_Scrap b on a.id=b.repair_id) a
     	left join ems_equipmentprod d on a.prod_id=d.id
-    	left join sys_user e on a.rpa_user_id=e.id
-    	left join ems_store f on a.str_out_id=f.id
+    	left join t_user e on a.rpa_user_id=e.id
+    	left join t_org f on a.str_out_id=f.id
     	
 		where to_char(a.rpa_in_date,'yyyy-mm-dd') &lt;= #{date_end}
 			and to_char(a.rpa_in_date,'yyyy-mm-dd') &gt;= #{date_start}

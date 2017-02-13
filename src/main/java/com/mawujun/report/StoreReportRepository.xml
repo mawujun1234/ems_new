@@ -7,7 +7,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.mawujun.report.StoreReportRepository">
 	<!-- 仓库入库明细报表 -->
     <select id="queryInstoreListReport" resultType="com.mawujun.report.InstoreListReport" parameterType="map">
-    	select a.*, d.name as subtype_name,e.name as brand_name,c.name as prod_name,c.style as prod_style,c.unit as prod_unit 
+    	select a.*, d.name as subtype_name,e.name as brand_name,c.name as prod_name,c.style as prod_style,c.unit as prod_unit,f.name as project_name 
+    	,g.name as store_name
     	from (
     		select a.id as instore_id,d.project_id,a.store_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,'新品入库' as instoretype,a.memo
 		    from ems_instore a 
@@ -81,22 +82,28 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 				and a.project_id=#{project_id}
 			</if>
     	
-    	) a,ems_equipment b,ems_equipmentprod c,ems_equipmentsubtype d,ems_brand e
-		where a.ecode=b.ecode and b.prod_id=c.id and b.subtype_id=d.id and b.brand_id=e.id
+    	) a
+		inner join ems_equipment b on  a.ecode=b.ecode
+		inner join ems_equipmentprod c on b.prod_id=c.id
+		inner join ems_equipmentsubtype d on b.subtype_id=d.id
+		inner join ems_brand e on b.brand_id=e.id
+		left join ems_project f on a.project_id = f.id
+		left join t_org g on a.store_id=g.id
 		order by a.operatedate
     </select>
     
     
     <!-- 仓库领用明细报表 -->
     <select id="queryInstalloutListReport" resultType="com.mawujun.report.InstalloutListReport" parameterType="map">
-    	select a.*, d.name as subtype_name,e.name as brand_name,c.name as prod_name,c.style as prod_style,c.unit as prod_unit 
+    	select a.*, d.name as subtype_name,e.name as brand_name,c.name as prod_name,c.style as prod_style,c.unit as prod_unit ,f.name as project_name
+    	,g.name as store_name,h.name as customer_name
     	from (
 		select a.id as installout_id,a.project_id,a.store_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,c.name as workunit_name,d.name as pole_name,d.customer_id,'领用' as installouttype,a.memo
 		from ems_installout a 
 		inner join ems_installoutlist b on a.id=b.installout_id
-		inner join ems_workunit c on a.workunit_id=c.id
+		inner join t_org c on a.workunit_id=c.id
 		inner join ems_pole d on b.pole_id=d.id
-		where  b. installoutlisttype='installout' and b.isreturn='N'
+		where  b. installoutlisttype='installout' and b.isreturn=0
 		and to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
 		<if test="store_id!=null and store_id!=''">
 			and a.store_id=#{store_id}
@@ -108,9 +115,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		select a.id as installout_id,a.project_id,a.store_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,c.name as workunit_name,d.name as pole_name,d.customer_id,'借转领' as installouttype,a.memo
 		from ems_borrow a 
 		inner join ems_borrowlist b on a.id=b.borrow_id
-		inner join ems_workunit c on a.workunit_id=c.id
+		inner join t_org c on a.workunit_id=c.id
 		inner join ems_pole d on b.pole_id=d.id
-		where  b. borrowlisttype='installout' and b.isreturn='N'
+		where  b. borrowlisttype='installout' and b.isreturn=0
 		and to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
 		<if test="store_id!=null and store_id!=''">
 			and a.store_id=#{store_id}
@@ -122,7 +129,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		select a.id as installout_id,a.project_id,a.str_out_id as store_id,to_char(a.str_out_date,'yyyy-mm-dd') as operatedate,b.ecode,c.name as workunit_name,'' as pole_name,'' as customer_id,'调拨领用' as installouttype,a.memo
 		from ems_adjust a 
 		inner join ems_adjustlist b on a.id=b.adjust_id
-		inner join ems_store c on a.str_out_id=c.id
+		inner join t_org c on a.str_out_id=c.id
 		where  a.adjusttype in ('installout','returnback')
 		and to_char(a.str_out_date,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.str_out_date,'yyyy-mm-dd') &lt;=#{date_end}
 		<if test="store_id!=null and store_id!=''">
@@ -131,20 +138,27 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<if test="project_id!=null and project_id!=''">
 			and a.project_id=#{project_id}
 		</if>	
-		) a,ems_equipment b,ems_equipmentprod c,ems_equipmentsubtype d,ems_brand e
-		where a.ecode=b.ecode and b.prod_id=c.id and b.subtype_id=d.id and b.brand_id=e.id
+		) a
+		inner join ems_equipment b on  a.ecode=b.ecode
+		inner join ems_equipmentprod c on b.prod_id=c.id
+		inner join ems_equipmentsubtype d on b.subtype_id=d.id
+		inner join ems_brand e on b.brand_id=e.id
+		left join ems_project f on a.project_id = f.id
+		left join t_org g on a.store_id=g.id
+		left join ems_customer h on a.customer_id =h.id
 		order by a.operatedate
     </select>
     
     
     <!-- 仓库借用明细报表 -->
     <select id="queryBorrowListReport" resultType="com.mawujun.report.BorrowListReport" parameterType="map">
-    	select a.*, d.name as subtype_name,e.name as brand_name,c.name as prod_name,c.style as prod_style,c.unit as prod_unit 
+    	select a.*, d.name as subtype_name,e.name as brand_name,c.name as prod_name,c.style as prod_style,c.unit as prod_unit,f.name as project_name
+    	,g.name as store_name
     	from (
     	select a.id as borrow_id,a.project_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,a.store_id,c.name as workunit_name,decode(b.isreturn,'Y','已归还','未归还') as status,'领用' as borrowtype,a.memo
 		from ems_installout a 
 		inner join ems_installoutlist b on a.id=b.installout_id
-		inner join ems_workunit c on a.workunit_id=c.id
+		inner join t_org c on a.workunit_id=c.id
 		where  b.installoutlisttype='borrow' 
 		and to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
 		<if test="store_id!=null and store_id!=''">
@@ -157,7 +171,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		select a.id as borrow_id,a.project_id,to_char(a.operatedate,'yyyy-mm-dd') operatedate,b.ecode,a.store_id,c.name as workunit_name,decode(b.isreturn,'Y','已归还','未归还') as status,'借用' as borrowtype,a.memo
 		from ems_borrow a 
 		inner join ems_borrowlist b on a.id=b.borrow_id
-		inner join ems_workunit c on a.workunit_id=c.id
+		inner join t_org c on a.workunit_id=c.id
 		where  b.borrowlisttype='borrow' 
 		and to_char(a.operatedate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.operatedate,'yyyy-mm-dd') &lt;=#{date_end}
 		<if test="store_id!=null and store_id!=''">
@@ -170,7 +184,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		select a.id as borrow_id,a.project_id,to_char(a.str_out_date,'yyyy-mm-dd') operatedate,b.ecode,a.str_out_id as store_id,c.name as workunit_name,decode(b.isreturn,'Y','已归还','未归还') as status,'调拨' as borrowtype,a.memo
 		from ems_adjust a 
 		inner join ems_adjustlist b on a.id=b.adjust_id
-		inner join ems_store c on a.str_out_id=c.id
+		inner join t_org c on a.str_out_id=c.id
 		where  a.adjusttype='borrow'
 		and to_char(a.str_out_date,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(a.str_out_date,'yyyy-mm-dd') &lt;=#{date_end}
 		<if test="store_id!=null and store_id!=''">
@@ -179,8 +193,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<if test="project_id!=null and project_id!=''">
 			and a.project_id=#{project_id}
 		</if>
-		) a,ems_equipment b,ems_equipmentprod c,ems_equipmentsubtype d,ems_brand e
-		where a.ecode=b.ecode and b.prod_id=c.id and b.subtype_id=d.id and b.brand_id=e.id
+		) a
+		inner join ems_equipment b on  a.ecode=b.ecode
+		inner join ems_equipmentprod c on b.prod_id=c.id
+		inner join ems_equipmentsubtype d on b.subtype_id=d.id
+		inner join ems_brand e on b.brand_id=e.id
+		left join ems_project f on a.project_id = f.id
+		left join t_org g on a.store_id=g.id
 		order by a.operatedate
     </select>
     
@@ -258,7 +277,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	    and to_char(b.returnDate,'yyyy-mm-dd') &gt;=#{date_start}  and to_char(b.returnDate,'yyyy-mm-dd') &lt;=#{date_end}
 		union all
 		select a.str_out_id store_id,b.ecode,'调拨' installouttype_name,c.name as installouttype_content,b.id as installoutlist_id
-		from ems_adjust a,ems_adjustlist b,ems_store c
+		from ems_adjust a,ems_adjustlist b,t_org c
 		where a.id=b.adjust_id and a.str_in_id=c.id and a.adjusttype in ('installout','returnback') 
 		<if test="use_in!=null and use_in==false">
 			and a.str_out_id=#{store_id}  

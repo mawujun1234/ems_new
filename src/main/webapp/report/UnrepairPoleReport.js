@@ -1,39 +1,42 @@
 Ext.require("Ems.task.Task");
 Ext.onReady(function(){
-	var customer_combox=Ext.create('Ext.form.field.ComboBox',{
-	        fieldLabel: '客户名称',
-	        labelAlign:'right',
-            labelWidth:55,
-            //width:250,
-	        //xtype:'combobox',
-	        //afterLabelTextTpl: Ext.required,
-	        name: 'customer_id',
-		    displayField: 'name',
-		    valueField: 'id',
-		    queryParam: 'name',
-    		queryMode: 'remote',
-    		triggerAction: 'query',
-    		minChars:-1,
-		    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-		    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-			onTrigger1Click : function(){
-			    var me = this;
-			    me.setValue('');
-			},
-	        //allowBlank: false,
-	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    proxy:{
-			    	type:'ajax',
-			    	//extraParams:{type:1,edit:true},
-			    	url:Ext.ContextPath+"/customer/queryCombo.do",
-			    	reader:{
-			    		type:'json',
-			    		rootProperty:'root'
-			    	}
-			    }
-		   })
-	    });
+//	var customer_combox=Ext.create('Ext.form.field.ComboBox',{
+//	        fieldLabel: '客户名称',
+//	        labelAlign:'right',
+//            labelWidth:55,
+//            //width:250,
+//	        //xtype:'combobox',
+//	        //afterLabelTextTpl: Ext.required,
+//	        name: 'customer_id',
+//		    displayField: 'name',
+//		    valueField: 'id',
+//		    queryParam: 'name',
+//    		queryMode: 'remote',
+//    		triggerAction: 'query',
+//    		minChars:-1,
+//		    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
+//		    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
+//			onTrigger1Click : function(){
+//			    var me = this;
+//			    me.setValue('');
+//			},
+//	        //allowBlank: false,
+//	        store:Ext.create('Ext.data.Store', {
+//		    	fields: ['id', 'name'],
+//			    proxy:{
+//			    	type:'ajax',
+//			    	//extraParams:{type:1,edit:true},
+//			    	url:Ext.ContextPath+"/customer/queryCombo.do",
+//			    	reader:{
+//			    		type:'json',
+//			    		rootProperty:'root'
+//			    	}
+//			    }
+//		   })
+//	    });
+	var customer_combox=Ext.create('Ems.baseinfo.CustomerCombo',{
+		
+	});
 	    
 //	var workunit_combox=Ext.create('Ext.form.field.ComboBox',{
 //	        fieldLabel: '作业单位',
@@ -150,14 +153,14 @@ Ext.onReady(function(){
 		columns:[
 			{xtype: 'rownumberer'},
 			
-	        {dataIndex:'customer_name',text:'派出所'},
-	        {dataIndex:'pole_code',text:'点位编号',width:55},
-	        {dataIndex:'pole_name',text:'点位名称'},
-	        {dataIndex:'workunit_name',text:'作业单位'},
-	        {dataIndex:'id',text:'任务编号',width:100},
+	        {dataIndex:'customer_name',text:'派出所',width:155},
+	        {dataIndex:'pole_code',text:'点位编号',width:75},
+	        {dataIndex:'pole_name',text:'点位名称',width:155},
+	        {dataIndex:'workunit_name',text:'作业单位',width:155},
+	        {dataIndex:'id',text:'任务编号',width:120},
 	        {dataIndex:'memo',text:'任务描述'},
-	        {dataIndex:'createDate',text:'任务下派时间',width:120},
-			{dataIndex:'startHandDate',text:'维修到达时间',width:120},
+	        {dataIndex:'createDate',text:'任务下派时间',width:150},
+			{dataIndex:'startHandDate',text:'维修到达时间',width:150},
 			{dataIndex:'hitchType',text:'故障类型'},
 			{dataIndex:'hitchReason',text:'故障原因'}
 			//{dataIndex:'',text:'维修未完成原因'},

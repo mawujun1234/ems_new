@@ -14,7 +14,7 @@ Ext.onReady(function(){
 		selectOnFocus:true,
 		labelWidth:100,
 		width:250,
-		allowBlank:false,
+		//allowBlank:false,
 		listeners:{
 			blur:function(f,e){
 				if(!f.getValue()||f.getValue()==''){
@@ -35,9 +35,14 @@ Ext.onReady(function(){
 						success:function(response){
 							var obj=Ext.decode(response.responseText);
 							//console.dir(obj.baseinfo);
-							baseinfo_form.getForm().setValues(obj.root);
+							baseinfo_form.getForm().setValues(obj);
 							
 							ecode_textfield.setValue('');
+							Ext.getBody().unmask();
+						},
+						failure:function(response ){
+							//var obj=Ext.decode(response.responseText);
+							//Ext.Msg.alert("消息",obj.msg);
 							Ext.getBody().unmask();
 						}
 					});

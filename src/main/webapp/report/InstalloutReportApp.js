@@ -45,6 +45,7 @@ Ext.onReady(function(){
 //	});	
 	  var store_combox = Ext.create('Ems.baseinfo.StoreCombo', {
 				edit : true,
+				showBlank:true,
 				allowBlank : true,
 				fieldLabel : '仓库'
 			});
