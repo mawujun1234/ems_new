@@ -301,3 +301,8 @@ installoutnum,oldnum,purchasenum,repairinnum,repairoutnum,scrapoutnum
  insert into report_equipment_store_day(day_key,ecode,store_id,value_net,value_old,value_original)
 select day_key,ecode,store_id,value_net,value_old,value_original 
 from report_equipment_store_day@emslink;
+
+//=====================================================================
+--gps上传时间间隔,如果已经存在就删除然后再同步
+insert into ems_gpsconfig(id,interval)
+select id,interval from ems_gpsconfig@emslink;

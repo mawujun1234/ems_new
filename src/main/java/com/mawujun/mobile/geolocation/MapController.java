@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mawujun.baseinfo.CustomerController;
 import com.mawujun.baseinfo.Pole;
 import com.mawujun.baseinfo.PoleRepository;
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.utils.page.Pager;
 import com.mawujun.utils.page.Params;
 
@@ -144,7 +145,7 @@ public class MapController {
 	@ResponseBody
 	public Pager<Pole> queryPoles(Integer start,Integer limit,String customer_2_id,String[] customer_0or1_id,String workunit_id,Boolean queryNoLngLatPole,Boolean queryBrokenPoles) {	
 		if(queryBrokenPoles!=null && queryBrokenPoles==true){
-			List<Pole> list= queryBrokenPoles();
+			List<Pole> list= (List<Pole>)queryBrokenPoles().getRoot();
 			Pager<Pole> page=new Pager<Pole>();
 			page.setStart(start);
 			page.setTotal(list.size());
@@ -190,7 +191,7 @@ public class MapController {
 	 */
 	@RequestMapping("/map/queryPolesAll.do")
 	@ResponseBody
-	public List<Pole> queryPolesAll(Integer start,Integer limit,String customer_2_id,String[] customer_0or1_id,String workunit_id,Boolean queryBrokenPoles) {	
+	public ResultModel queryPolesAll(Integer start,Integer limit,String customer_2_id,String[] customer_0or1_id,String workunit_id,Boolean queryBrokenPoles) {	
 		if(queryBrokenPoles!=null && queryBrokenPoles==true){
 			return queryBrokenPoles();
 		}
@@ -227,14 +228,16 @@ public class MapController {
 //			map.put(M.Pole.latitude, pole.getLatitude());
 //			result.add(map);
 //		}
-		return list;
+		
+		
+		return ResultModel.getInstance().setRoot(list);
 	}
 	
 	@RequestMapping("/map/queryBrokenPoles.do")
 	@ResponseBody
-	public List<Pole> queryBrokenPoles() {
+	public ResultModel queryBrokenPoles() {
 		List<Pole> list= poleRepository.queryBrokenPoles();
-		return list;
+		return ResultModel.getInstance().setRoot(list);
 	}
 	/**
 	 * 更新某个点位的经纬度

@@ -58,8 +58,9 @@ public class GpsConfigController {
 
 	int id=1;
 	@RequestMapping("/gpsConfig/get.do")
+	@ResponseBody
 	public GpsConfig get() {
-		return gpsConfigService.get();
+		return gpsConfigService.get(id);
 	}
 	
 //	@RequestMapping("/gpsConfig/create.do")

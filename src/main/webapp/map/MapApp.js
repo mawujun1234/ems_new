@@ -178,28 +178,34 @@ Ext.onReady(function(){
 //			    
 //		   })
 //		});
-		var workUnit_combox=Ext.create('Ext.form.field.ComboBox',{
-	        fieldLabel: '作业单位',
-	        labelAlign:'right',
-            labelWidth:60,
-	        //xtype:'combobox',
-	        //afterLabelTextTpl: Ext.required,
-	        name: 'workUnit_id',
-		    displayField: 'name',
-		    valueField: 'id',
-	        allowBlank: false,
-	        store:Ext.create('Ext.data.Store', {
-		    	fields: ['id', 'name'],
-			    proxy:{
-			    	type:'ajax',
-			    	url:Ext.ContextPath+"/workUnit/queryCombo.do",
-			    	reader:{
-			    		type:'json',
-			    		rootProperty:'root'
-			    	}
-			    }
-		   })
-	    });
+//		var workUnit_combox=Ext.create('Ext.form.field.ComboBox',{
+//	        fieldLabel: '作业单位',
+//	        labelAlign:'right',
+//            labelWidth:60,
+//	        //xtype:'combobox',
+//	        //afterLabelTextTpl: Ext.required,
+//	        name: 'workUnit_id',
+//		    displayField: 'name',
+//		    valueField: 'id',
+//	        allowBlank: false,
+//	        store:Ext.create('Ext.data.Store', {
+//		    	fields: ['id', 'name'],
+//			    proxy:{
+//			    	type:'ajax',
+//			    	url:Ext.ContextPath+"/workUnit/queryCombo.do",
+//			    	reader:{
+//			    		type:'json',
+//			    		rootProperty:'root'
+//			    	}
+//			    }
+//		   })
+//	    });
+		var workUnit_combox= Ext.create('Ems.baseinfo.WorkunitCombo', {
+			edit:true,
+			showBlank:true,
+			allowBlank : true,
+			fieldLabel : '作业单位'
+		});
 	var reload = new Ext.Action({
 		    text: '查询',
 		    itemId:'reload',
@@ -520,9 +526,9 @@ function showWorkunitCar(){
 		success : function(response) {
 			Ext.getBody().unmask();
 			var obj = Ext.decode(response.responseText);
-			window.cares=obj.root;
-			for(var i=0;i<obj.root.length;i++){
-				var workunit=obj.root[i];
+			window.cares=obj;
+			for(var i=0;i<obj.length;i++){
+				var workunit=obj[i];
 				//addMarker2Map(pole);
 				addCar2Map(workunit);
 			}
