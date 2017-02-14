@@ -9,18 +9,18 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <select id="queryByCheck" resultType="com.mawujun.check.TrimVO" parameterType="map">
     	select a.*,orginal.name as orginal_name,target.name as target_name from ems_trim a,
 		(
-			select id, name from ems_store
+			select id, name from t_org where orgtype in ('store_build','store_prepare')
 			union all
 			select id,name||'('||code||')' as name from ems_pole
 			union all
-			select id,name from ems_workunit
+			select id,name from t_org where orgtype='workunit'
 		) orginal
 		,(
-			select id, name from ems_store
+			select id, name from t_org where orgtype in ('store_build','store_prepare')
 			union all
 			select id,name||'('||code||')' as name from ems_pole
 			union all
-			select id,name from ems_workunit
+			select id,name from t_org where orgtype='workunit'
 		) target
 		where a.orginal_id=orginal.id and a.target_id=target.id
 		and a.check_id=#{check_id}

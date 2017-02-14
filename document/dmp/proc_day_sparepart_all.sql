@@ -3,8 +3,11 @@ create or replace procedure proc_day_sparepart_all(in_todaykey in varchar2)
 as
 begin
   for store in (
-    select * from ems_store  where type in (1,3)
+    select * from t_org  where orgtype in ('store_build','store_prepare')
   ) loop
     proc_day_sparepart(store.id,in_todaykey);
   END LOOP;
 end;
+
+
+

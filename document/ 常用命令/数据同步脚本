@@ -270,4 +270,34 @@ select id,createdate,customer_id,hitchreason,hitchtype,memo,
  --任务明细数据同步
  insert into ems_taskequipmentlist(id,ecode,scandate,task_id,type,installouttype)
  select id,ecode,scandate,task_id,type,installouttype from ems_taskequipmentlist@emslink;
+ --盘点数据同步
+ insert into ems_check(id,completedate,completer,createdate,creater,status,task_id)
+select id,completedate,completer,createdate,creater,status,task_id from ems_check@emslink;
+--盘点单明细数据
+insert into ems_checklist(check_id,ecode)
+select check_id,ecode from ems_checklist@emslink;
+--调整单同步
+insert into ems_trim( id,check_id,createdate,creater,ecode,orginal_id,orginal_type,target_id,target_type,trimtype)
+select id,check_id,createdate,creater,ecode,orginal_id,orginal_type,target_id,target_type,trimtype from ems_trim@emslink;
+
  
+ //=========================================================================
+ --创建存储过程
+ proc_report_assetclean
+ proc_day_sparepart
+ proc_day_sparepart_all
+ -- 设备残值表
+ insert into report_assetclean(day_key,ecode,day_have,day_used,value_net,value_old,value_original) 
+ select day_key,ecode,day_have,day_used,value_net,value_old,value_original from report_assetclean@emslink;
+ --
+ insert into report_day_sparepart(daykey,prod_id,store_id,createdate,
+installoutnum,oldnum,purchasenum,repairinnum,repairoutnum,scrapoutnum
+,borrownum,borrowreturnnum,monthkey,todaynum,yesterdaynum)
+select daykey,prod_id,store_id,createdate,
+installoutnum,oldnum,purchasenum,repairinnum,repairoutnum,scrapoutnum
+,borrownum,borrowreturnnum,monthkey,todaynum,yesterdaynum
+ from report_day_sparepart@emslink;
+ --每日仓库库存情况
+ insert into report_equipment_store_day(day_key,ecode,store_id,value_net,value_old,value_original)
+select day_key,ecode,store_id,value_net,value_old,value_original 
+from report_equipment_store_day@emslink;

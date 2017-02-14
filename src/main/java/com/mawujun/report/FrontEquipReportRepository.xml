@@ -48,7 +48,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			inner join ems_equipment_pole b on a.id=b.pole_id
 			inner join ems_customer c on a.customer_id=c.id
 			inner join ems_equipment d on b.ecode=d.ecode
-			left join report_assetclean g on b.ecode=g.ecode
+			left join report_assetclean g on b.ecode=g.ecode and g.day_key=to_char(sysdate,'yyyymmdd')
 			where  
 			exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y,ems_pole_workunit z
 				where x.position_id=y.position_id and z.workunit_id=y.org_id and a.id=z.pole_id and x.user_id=#{user_id} and y.look=1) 
@@ -86,7 +86,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			inner join ems_equipment_pole b on a.id=b.pole_id
 			inner join ems_customer c on a.customer_id=c.id
 			inner join ems_equipment d on b.ecode=d.ecode
-			left join report_assetclean g on b.ecode=g.ecode
+			left join report_assetclean g on b.ecode=g.ecode and g.day_key=to_char(sysdate,'yyyymmdd')
 			where  
 			exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y,ems_pole_workunit z
 				where x.position_id=y.position_id and z.workunit_id=y.org_id and a.id=z.pole_id and x.user_id=#{user_id} and y.look=1) 
@@ -139,7 +139,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		inner join ems_equipment_pole b on a.id=b.pole_id
 		inner join ems_customer c on a.customer_id=c.id
 		inner join ems_equipment d on b.ecode=d.ecode
-		left join report_assetclean g on b.ecode=g.ecode
+		left join report_assetclean g on b.ecode=g.ecode and g.day_key=to_char(sysdate,'yyyymmdd')
 		where  
 		 c.parent_id=#{customer_2} and c.type!=2
 			and c.id=#{customer_0or1}

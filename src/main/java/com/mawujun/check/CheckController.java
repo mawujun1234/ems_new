@@ -32,7 +32,7 @@ public class CheckController {
 		Pager<Check> page=new Pager<Check>();//Page.getInstance(start,limit);
 		page.setStart(start);
 		page.setLimit(limit);
-		page.addParam(M.Check.status, status);
+		page.addParam(M.Check.status, status==null?null:status.toString());
 		
 		Pager<Check> checkes=checkService.queryPage(page);
 		
