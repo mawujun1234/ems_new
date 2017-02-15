@@ -234,7 +234,7 @@ Ext.onReady(function(){
 		    	
 		    	showWorkunitCar();
 		    },
-		    iconCls: 'form-reload-button'
+		    iconCls: 'icon-search'
 		});	
 	
 		var brokenPolequery = new Ext.Action({
@@ -253,7 +253,7 @@ Ext.onReady(function(){
 					}
 				});
 		    },
-		    icon: '../icons/zoom_refresh.png'
+		    iconCls: 'icon-user-md'
 		});	
 	var initAllPoleNoLngLat = new Ext.Action({
 		    text: '初始化',
@@ -345,7 +345,7 @@ Ext.onReady(function(){
 //					}
 //				});
 		    },
-		    icon: '../icons/database_refresh.png'
+		    iconCls: 'icon-random'
 		});	
 		
 		
@@ -383,7 +383,7 @@ Ext.onReady(function(){
 //					}
 //				});
 		    },
-		    icon: '../icons/zoom_refresh.png'
+		    iconCls: ' icon-retweet'
 		});	
 	var poleStore=Ext.create('Ext.data.Store',{
 				autoSync:false,
@@ -435,9 +435,9 @@ Ext.onReady(function(){
 			   return record.get("status_name");
 			 }
 			},
-			{dataIndex:'code',text:'编号',width:60},
+			{dataIndex:'code',text:'编号',width:90},
 			{dataIndex:'name',text:'点位名称',width:160},
-	      	{dataIndex:'province',text:'地址',flex:1,renderer:function(value,metaData ,record){
+	      	{dataIndex:'province',text:'地址',width:200,renderer:function(value,metaData ,record){
 	      		var fulladdress= value+record.get("city")+record.get("area")+record.get("address");
 	      		metaData.tdAttr = "data-qtip='" + fulladdress+ "'";
 	      		return fulladdress;

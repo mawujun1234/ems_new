@@ -18,10 +18,10 @@ Ext.define('Ems.map.EquipmentCycleGrid',{
       me.columns=[
       	{xtype: 'rownumberer'},
 		//{dataIndex:'id',text:'id'},
-      	{dataIndex:'operateDate',text:'时间',width:130},
-		{dataIndex:'ecode',text:'二维码',width:140},
+      	{dataIndex:'operateDate',text:'时间',width:150},
+		{dataIndex:'ecode',text:'二维码',width:160},
 		{dataIndex:'operateType_name',text:'类型',width:100},
-		{dataIndex:'type_id',text:'单据号'},
+		{dataIndex:'type_id',text:'单据号',width:130},
 		{dataIndex:'target_name',text:'设备去向',flex:1},
 		{dataIndex:'operater_name',text:'操作者'},
 		{dataIndex:'memo',text:'备注'}
@@ -31,7 +31,21 @@ Ext.define('Ems.map.EquipmentCycleGrid',{
 			autoSync:false,
 			pageSize:50,
 			model: 'Ems.baseinfo.EquipmentCycle',
-			autoLoad:false
+			autoLoad:false,
+			proxy:{
+				type: 'ajax',
+			    url : Ext.ContextPath+'/equipmentCycle/query.do',
+			    headers:{ 'Accept':'application/json;'},
+			    actionMethods: { read: 'POST' },
+			    extraParams:{limit:50},
+			    reader:{
+					type:'json',//如果没有分页，那么可以把后面三行去掉，而且后台只需要返回一个数组就行了
+					rootProperty:'root',
+					//root:'root',
+					successProperty:'success',
+					totalProperty:'total'		
+				}
+			}
 	  });
 	   me.tbar=	[{
 			text: '刷新',
@@ -41,7 +55,7 @@ Ext.define('Ems.map.EquipmentCycleGrid',{
 				var grid=btn.up("grid");
 				grid.getStore().reload();
 			},
-			iconCls: 'form-reload-button'
+			iconCls: 'icon-refresh'
 		}];
 	  
 //	  me.tbar=	[{

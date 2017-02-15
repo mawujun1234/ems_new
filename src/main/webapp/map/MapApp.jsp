@@ -23,6 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
 	</style>
 	<%@include file="../common/init.jsp" %>
+	<script type="text/javascript" src="../baseinfo/CommCombo6.js"></script>
 	<script type="text/javascript" src="MapApp.js"></script>
 	<script type="text/javascript">
 
