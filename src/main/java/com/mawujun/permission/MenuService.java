@@ -62,11 +62,11 @@ public class MenuService extends AbstractService<Menu, String>{
 	
 	
 	@Transactional(readOnly=true)
-	public List<MenuVO> query_checkbox(String parent_id) {
+	public List<MenuVO> query_checkbox(String parent_id,Boolean expanded) {
 		List<MenuVO> parent_list= menuRepository.query_checkbox(parent_id);
 		for(MenuVO parent:parent_list){
-			parent.setExpanded(true);
-			List<MenuVO> children_list= this.query_checkbox(parent.getId());
+			parent.setExpanded(expanded==null?true:expanded);
+			List<MenuVO> children_list= this.query_checkbox(parent.getId(),expanded);
 			parent.setChildren(children_list);
 		}
 		return parent_list;
@@ -92,6 +92,14 @@ public class MenuService extends AbstractService<Menu, String>{
 			parent.setChildren(children_list);
 		}
 		return parent_list;
+	}
+	/**
+	 * 获取用户移动端的菜单功能
+	 * @param user_id
+	 * @return
+	 */
+	public List<Menu> queryMobileMenuByUser(String user_id) {
+		return menuRepository.queryMobileMenuByUser(user_id);
 	}
 	@Transactional(readOnly=true)
 	public List<Menu> queryElement(String jsp_url) {

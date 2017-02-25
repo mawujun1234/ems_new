@@ -1,6 +1,6 @@
 <template>
 <!--#page_function  功能列表 -->
-  <div class="page" id="page_function">
+  <div class="page page-current" id="page_function">
     <!-- 标题栏 -->
     <header class="bar bar-nav">
       <h1 class="title">功能列表</h1>
@@ -9,21 +9,24 @@
     <div class="content">
       <div class="content-block-title" style="margin: 10px 0 10px 10px;">任务</div>
       <div class="function_row">
-        <a class="function_grid" href="#page_taskes"><div
+        <a class="function_grid" href="#page_taskes" v-if="mobile_page_function_task_repair"><div
             class="icon icon-edit"></div>
           <p class="function_grid__label">维修(88)</p>
-          <span class="badge">12</span></a> <a class="function_grid"
-          href="#page_taskes"><div class="icon icon-browser"></div>
-          <p class="function_grid__label">巡检</p></a> <a class="function_grid"
-          href="#page_taskes"><div class="icon icon-remove"></div>
-          <p class="function_grid__label">取消</p></a> <a class="function_grid"
-          href="#page_taskes"><div class="icon icon-code"></div>
+          <span class="badge">12</span></a>
+      <a class="function_grid" href="#page_taskes" v-if="mobile_page_function_task_patrol">
+        <div class="icon icon-browser"></div>
+          <p class="function_grid__label">巡检</p></a>
+      <a class="function_grid" href="#page_taskes" v-if="mobile_page_function_task_cancel">
+        <div class="icon icon-remove"></div>
+          <p class="function_grid__label">取消</p></a>
+      <a class="function_grid" href="#page_taskes" v-if="mobile_page_function_task_check">
+        <div class="icon icon-code"></div>
           <p class="function_grid__label">盘点</p></a>
-          <a class="function_grid" href="#page_taskes">
+      <a class="function_grid" href="#page_taskes" v-if="mobile_page_function_task_newInstall">
             <div class="icon icon-app"></div>
             <p class="function_grid__label">新安装</p>
           </a>
-          <a class="function_grid" href="#page_message">
+      <a class="function_grid" href="#page_message" v-if="mobile_page_function_message">
             <div class="icon icon-message"></div>
             <p class="function_grid__label">消息</p>
           </a>
@@ -31,9 +34,9 @@
       </div>
       <div class="content-block-title" style="margin: 10px 0 10px 10px;">其他</div>
       <div class="function_row">
-        <a class="function_grid" href="#page_check_store"><div class="icon icon-code"></div><p class="function_grid__label">仓库盘点</p></a>
-        <a class="function_grid" href="#page_equip_info"><div class="icon icon-search"></div><p class="function_grid__label">设备信息</p></a>
-        <a class="function_grid" href="#page_check_store"><div class="icon icon-share"></div><p class="function_grid__label">拥有设备</p></a>
+        <a class="function_grid" href="#page_check_store" v-if="mobile_page_function_store_check"><div class="icon icon-code"></div><p class="function_grid__label">仓库盘点</p></a>
+        <a class="function_grid" href="#page_equip_info" v-if="mobile_page_function_equip_info"><div class="icon icon-search"></div><p class="function_grid__label">设备信息</p></a>
+        <a class="function_grid" href="#page_check_store" v-if="mobile_page_function_equip_have"><div class="icon icon-share"></div><p class="function_grid__label">拥有设备</p></a>
       </div>
     </div>
   </div>
@@ -42,12 +45,32 @@
 
 <script>
 export default {
-  //components: { page_login },
-  data () {
+   data () {
     return {
-      msg: ''
+        mobile_page_function_task_repair:true,
+        mobile_page_function_task_patrol:true,
+        mobile_page_function_task_cancel:true,
+        mobile_page_function_task_check:true,
+        mobile_page_function_task_newInstall:true,
+        mobile_page_function_message:true,
+        mobile_page_function_store_check:true,
+        mobile_page_function_equip_info:true,
+        mobile_page_function_equip_have:true
+      }
+    },
+    mounted:function(){
+      this.queryMobileMenuByUser();
+    },
+    methods:{
+      queryMobileMenuByUser:function(){
+        $.showPreloader("正在加载数据....");
+        var vue=this;
+        $.post($.SP+'/mobile/login/queryMobileMenuByUser.do', {}, function(response){
+          $.hidePreloader();
+          vue.$data=response.root;
+        });
+      }
     }
-  }
 }
 //alert($);
 </script>

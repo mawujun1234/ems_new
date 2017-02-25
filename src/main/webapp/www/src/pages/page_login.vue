@@ -15,7 +15,7 @@
             <div class="item-inner">
               <div class="item-title label">登录名:</div>
               <div class="item-input">
-                <input id="page_login_username" type="text" v-model="username"  placeholder="输入登录名">
+                <input id="page_login_loginname" type="text" v-model="loginname"  placeholder="输入登录名">
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@ export default {
     return {
       title: '生产调度系统',
       version:'2.0.0',
-      username:'',
+      loginname:'',
       password:'',
       serverip:'127.0.0.1',
       serverportal:'8085'
@@ -95,17 +95,22 @@ export default {
   methods:{
     login:function(){
       //page_function
-      //alert(this.username+"===="+this.password);
+      //alert(this.loginname+"===="+this.password);
       var params={
-        username: this.username,
+        loginname: this.loginname,
         password:this.password
       };
       $.SP="http://"+this.serverip+":"+this.serverportal;
       //alert($.SP);
+
+       //return;
       $.showPreloader("正在登陆....");
       $.post($.SP+'/mobile/login/login.do', params, function(response){
-        
         $.hidePreloader();
+        if(response.success){
+          window.appvue.$emit('e_route_page','/page_function');
+        }
+
       });
     }
   }

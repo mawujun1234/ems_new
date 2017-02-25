@@ -121,21 +121,20 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/**/*.html", "anon");
 		filterChainDefinitionMap.put("/main/login.jsp*", "anon");
 		filterChainDefinitionMap.put("/menu/queryElementPermission.do*", "anon");
-		filterChainDefinitionMap.put("/ord/mobile/yxgs/getOrstat.do*", "anon");
+		//filterChainDefinitionMap.put("/ord/mobile/yxgs/getOrstat.do*", "anon");
 
 		
 		//filterChainDefinitionMap.put("/mobile/redirect_yxgshtml.do*", "anon");
-		filterChainDefinitionMap.put("/mobile/report/**/*.do*", "anon");
-		
-		
+		//filterChainDefinitionMap.put("/mobile/login/queryMobileMenuByUser.do*", "anon");
+		filterChainDefinitionMap.put("//mobile/login/logout.do*", "anon");
+		filterChainDefinitionMap.put("/mobile/login/login.do*", "anon");
 		
 		filterChainDefinitionMap.put("/main/unauthorized.jsp*", "anon");
 		filterChainDefinitionMap.put("/user/login.do*", "anon");
 		filterChainDefinitionMap.put("/user/onlineling.do*", "anon");
-		filterChainDefinitionMap.put("/user/logout.do*", "anon");
-		filterChainDefinitionMap.put("/user/mobile/login.do*", "anon");
-		filterChainDefinitionMap.put("/user/mobile/getWxConfig.do*", "anon");
-		filterChainDefinitionMap.put("/ord/mobile/getOrdmt.do*", "anon");
+		
+		//filterChainDefinitionMap.put("/user/mobile/getWxConfig.do*", "anon");
+		//filterChainDefinitionMap.put("/ord/mobile/getOrdmt.do*", "anon");
 		filterChainDefinitionMap.put("/**/*.css", "anon");
 		filterChainDefinitionMap.put("/**/*.js", "anon");
 		filterChainDefinitionMap.put("/**/*.gif", "anon");

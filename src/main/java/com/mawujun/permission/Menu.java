@@ -27,7 +27,7 @@ public class Menu {
 	@Column(length=36)
 	private String id;
 	
-	@Column(length=30,nullable=true,unique=true)
+	@Column(length=50,nullable=true,unique=true)
 	@FieldDefine(title="编码",sort=3)
 	private String code;
 	
@@ -43,6 +43,9 @@ public class Menu {
 	@FieldDefine(title="是否叶子节点",sort=4)
 	private Boolean leaf=true; 
 	
+	@FieldDefine(title="是否移动端菜单",sort=4)
+	private Boolean ismobile=false; 
+	
 	@Column(length=15,nullable=false)
 	@Enumerated(EnumType.STRING)
 	@FieldDefine(title="菜单类型",sort=5,showType=ShowType.combobox,hidden=true)//
@@ -54,6 +57,14 @@ public class Menu {
 	
 	@FieldDefine(title="排序")//
 	private Integer sort;
+	public String getIsmobile_name() {
+		if(this.getIsmobile()!=null && this.getIsmobile()==true){
+			return "是";
+		} else {
+			return "否";
+		}
+	}
+	
 	
 	public MenuType getMenuType() {
 		return menuType;
@@ -134,6 +145,16 @@ public class Menu {
 
 	public void setLeaf(Boolean leaf) {
 		this.leaf = leaf;
+	}
+
+
+	public Boolean getIsmobile() {
+		return ismobile;
+	}
+
+
+	public void setIsmobile(Boolean ismobile) {
+		this.ismobile = ismobile;
 	}
 
 }

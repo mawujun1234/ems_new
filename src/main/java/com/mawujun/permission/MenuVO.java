@@ -17,7 +17,7 @@ public class MenuVO extends Menu{
 		return "icon-cogs";
 		//return "fa fa-cogs";
 	}
-	
+
 
 
 

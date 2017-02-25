@@ -104,6 +104,11 @@ and user_id  in (select id from t_user)
 and funrole_id  in (select id from t_role);
 
 
+--把把作业单位中的用户授权（移动端功能）到角色（作业单位）中,用于控制移动端的权限
+insert  into t_role_user(user_id,role_id)
+select a.user_id, 'c2977910-8a4f-49a7-a04e-01d7dc3198c2' from t_position_org_user a,t_org b
+where a.org_id=b.id and b.orgtype='workunit';
+
 ------------删除废弃的菜单
 --删除已经应用库房管理的角色关联
 DELETE t_role_menu where menu_id='2d512aa7-9fa4-4e0c-ae51-2258e476b89e';
@@ -114,6 +119,8 @@ DELETE t_role_menu where menu_id='9a4359ea-8050-4f71-b433-e31f19284294';
 DELETE t_role_menu where menu_id in (select id from T_MENU where PARENT_ID='9a4359ea-8050-4f71-b433-e31f19284294');
 DELETE T_MENU WHERE pARENT_ID='9a4359ea-8050-4f71-b433-e31f19284294';
 DELETE T_MENU WHERE ID='9a4359ea-8050-4f71-b433-e31f19284294';
+--把ismobile数据补回去
+update t_menu set ismobile=0 where ismobile!=1;
 
 ----------------===========================================================
 --设备类型数据同步

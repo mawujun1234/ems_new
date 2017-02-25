@@ -16,6 +16,9 @@
 
 package com.mawujun.config;
 
+import java.util.Properties;
+
+import javax.management.RuntimeErrorException;
 import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -26,6 +29,9 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.alibaba.druid.support.http.StatViewServlet;
+import com.thetransactioncompany.cors.CORSConfiguration;
+import com.thetransactioncompany.cors.CORSConfigurationException;
+import com.thetransactioncompany.cors.CORSFilter;
 
 
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -65,8 +71,26 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 		CharacterEncodingFilter filter=new CharacterEncodingFilter();
 		filter.setEncoding("UTF-8");
 		filter.setForceEncoding(true);
+		
+		
+		CORSFilter corsfilter=new CORSFilter();
+		Properties propes=new Properties();
+		propes.setProperty("cors.allowOrigin", "*");
+		propes.setProperty("cors.supportedMethods", "GET, POST, HEAD, PUT, DELETE");
+		propes.setProperty("cors.supportedHeaders", "Accept, Origin, X-Requested-With, Content-Type, Last-Modified");
+		propes.setProperty("cors.exposedHeaders", "Set-Cookie");
+		propes.setProperty("cors.supportsCredentials", "true");
+		CORSConfiguration corsconfiguration = null;
+		try {
+			corsconfiguration = new CORSConfiguration(propes);
+		} catch (CORSConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("初始化跨域访问过滤器异常....");
+		}
+		corsfilter.setConfiguration(corsconfiguration);
 
-        return new Filter[] { filter };
+        return new Filter[] { corsfilter,filter};
     }
 
 

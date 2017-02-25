@@ -5,6 +5,7 @@ Ext.define("Ems.permission.Menu",{
 		{name:'code',type:'string'},
 		{name:'menuType',type:'string'},
 		{name:'leaf',type:'string'},
+		{name:'ismobile',type:'string'},
 		{name:'createDate',type:'string'},
 		{name:'url',type:'string'},
 		{name:'remark',type:'string'},

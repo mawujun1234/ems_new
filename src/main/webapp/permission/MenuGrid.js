@@ -6,6 +6,9 @@ Ext.define('Ems.permission.MenuGrid',{
 	columnLines :true,
 	stripeRows:true,
 	readOnly:false,//true表示不显示增删该查按钮
+	viewConfig:{
+		enableTextSelection:true
+	},
 	initComponent: function () {
       var me = this;
      var store_menuType=Ext.create('Ext.data.Store',{
@@ -20,9 +23,11 @@ Ext.define('Ems.permission.MenuGrid',{
       	{xtype: 'rownumberer'},
 		{dataIndex:'name',header:'菜单名称'
         },
-		{dataIndex:'code',header:'编码'
+		{dataIndex:'code',header:'编码',width:250
         },
-		{dataIndex:'url',header:'地址'
+		{dataIndex:'url',header:'地址',width:200
+        },
+        {dataIndex:'ismobile_name',header:'移动端',width:60
         },
 		{dataIndex:'remark',header:'备注'
         }

@@ -21,6 +21,7 @@ Ext.define('Ems.permission.MenuTreeCheckbox', {
 			},
 			proxy:{
 				type: 'ajax',
+				extraParams:{expanded:false},
 				url:Ext.ContextPath+"/menu/query_checkbox.do"
 			}
 		});

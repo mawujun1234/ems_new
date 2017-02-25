@@ -1,6 +1,7 @@
 package com.mawujun.mobile.login;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -12,14 +13,13 @@ import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mawujun.controller.spring.mvc.ResultModel;
-import com.mawujun.mobile.geolocation.GeolocationController;
-import com.mawujun.mobile.geolocation.GpsConfigService;
+import com.mawujun.permission.Menu;
+import com.mawujun.permission.MenuService;
 import com.mawujun.permission.ShiroUtils;
 
 /**
@@ -32,14 +32,17 @@ public class MobileLoginController {
 	private static Logger logger = LogManager.getLogger(MobileLoginController.class.getName());
 //	@Resource
 //	private WorkUnitService workUnitService;
-	@Resource
-	private GpsConfigService gpsConfigService;
+//	@Resource
+//	private GpsConfigService gpsConfigService;
 //	@Autowired
 //	private GeolocationController geolocationController;
 	
+	@Resource
+	private MenuService menuService;
+	
 	@RequestMapping("/mobile/login/login.do")
 	@ResponseBody
-	public ResultModel logIn(HttpServletRequest request,HttpServletResponse response ,String loginName,String password,Boolean rememberMe){
+	public ResultModel logIn(HttpServletRequest request,HttpServletResponse response ,String loginname,String password,Boolean rememberMe){
 		//return null;
 		//response.setHeader("Access-Control-Allow-Origin", "*");
 		//response.addHeader("Access-Control-Allow-Methods","GET,POST,OPTIONS"); 
@@ -47,7 +50,7 @@ public class MobileLoginController {
 		//System.out.println(username);
 		Subject subject = SecurityUtils.getSubject(); 
 		
-		MobileUsernamePasswordToken token = new MobileUsernamePasswordToken(loginName, password); 
+		MobileUsernamePasswordToken token = new MobileUsernamePasswordToken(loginname, password); 
 		token.setRememberMe(rememberMe==null?false:rememberMe);
 		//subject.login(token);
 		
@@ -61,7 +64,7 @@ public class MobileLoginController {
             error = "用户名/密码错误";  
             e.printStackTrace();
             
-            return ResultModel.getInstance().setMsg(error);
+            return ResultModel.getInstance().setMsg(error).setSuccess(false);
         } 
 		//JsonConfigHolder.setRootName("reasons");
 		//JsonConfigHolder.setJsonpCallback(jsonpCallback);
@@ -100,6 +103,22 @@ public class MobileLoginController {
              return ResultModel.getInstance().setRoot(ShiroUtils.getAuthenticationInfo());
 //        }  
 		
+	}
+	/**
+	 * 获取用户可以访问的移动端功能
+	 * @return
+	 */
+	@RequestMapping("/mobile/login/queryMobileMenuByUser.do")
+	@ResponseBody
+	public ResultModel queryMenues(){
+		List<Menu> list= menuService.queryMobileMenuByUser(ShiroUtils.getUserId());
+		//return ResultModel.getInstance().setRoot(list);
+		//ResultModel result=ResultModel.getInstance();
+		Map<String,Boolean> root=new HashMap<String,Boolean>();
+		for(Menu menu:list){
+			root.put(menu.getCode(), true);
+		}
+		return ResultModel.getInstance().setRoot(root);
 	}
 	
 	@RequestMapping("/mobile/login/logout.do")

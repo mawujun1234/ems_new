@@ -30,6 +30,22 @@ delete EMS_ORDERLIST a where id in (
 insert into t_role(id,name,roletype) values('admin','admin','role');
 insert into t_user(id,loginname,name,pwd,cannotdel,state) values('admin','admin','admin','admin',1,'valid');
 insert into t_role_user(user_id,role_id) values('admin','admin');
+Insert into T_ROLE (ID,NAME,PARENT_ID,REMARK,ROLETYPE) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','作业单位',null,null,'role');
+
+--移动端菜单
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('c1495530-308e-45c2-9247-9963867bf302',null,'menu','移动端功能',null,null,20,null,0,1);
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('106fd89d-2361-4ceb-bf2b-40569fd54f55','mobile_page_function','menu','功能列表','c1495530-308e-45c2-9247-9963867bf302',null,0,null,0,1);
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('79860906-1af1-469d-bb0a-774fffe51b5b','mobile_page_function_task_repair','element','维修','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('34e5176a-ed69-4925-8cdf-5c59ab3ea279','mobile_page_function_task_patrol','element','巡检','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('65674cb5-ed3d-45f0-8444-e84d86062dcb','mobile_page_function_task_cancel','element','取消','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('11f4e3ad-2ab7-43e9-aa9a-bbe043a7b7d4','mobile_page_function_task_check','element','盘点','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('d02ffc51-55d0-4bcd-b40e-a2b80a0814a9','mobile_page_function_task_newInstall','element','新安装','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('631f0441-5953-49c7-b116-8c4176da5214','mobile_page_function_message','element','消息','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('185fcc10-0d29-4d26-b754-36418e09f94c','mobile_page_function_store_check','element','仓库盘点','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('8760c2d9-81f2-49a0-a494-da8ded5647ed','mobile_page_function_equip_info','element','设备信息','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
+Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('8d99f2c4-2c64-4157-aa72-82987d720df7','mobile_page_function_equip_have','element','拥有的设备','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
+
+
 --菜单
 Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,'menu','系统管理',null,null,0,null,0);
 Insert into EMSNEW.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('539ea37c-a286-4ae2-8a0b-cb4dab321515',null,'menu','菜单管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/MenuApp.jsp',1);
@@ -143,6 +159,20 @@ Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','a124a5f1-70a3-
 Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','a3a58507-1c50-46f4-8316-6492d3d4b10e');
 Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','a7439ed8-ad09-452f-9860-27157c9027d9');
 Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','e35d2b7f-58c2-4e61-a50d-bc6112779b4c');
+
+--作业单位角色可以访问的移动端功能
+Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','106fd89d-2361-4ceb-bf2b-40569fd54f55');
+Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','11f4e3ad-2ab7-43e9-aa9a-bbe043a7b7d4');
+Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','34e5176a-ed69-4925-8cdf-5c59ab3ea279');
+Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','631f0441-5953-49c7-b116-8c4176da5214');
+Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','65674cb5-ed3d-45f0-8444-e84d86062dcb');
+Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','79860906-1af1-469d-bb0a-774fffe51b5b');
+Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','8760c2d9-81f2-49a0-a494-da8ded5647ed');
+Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','8d99f2c4-2c64-4157-aa72-82987d720df7');
+Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','c1495530-308e-45c2-9247-9963867bf302');
+Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','d02ffc51-55d0-4bcd-b40e-a2b80a0814a9');
+
+
 
 
 

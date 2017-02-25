@@ -7,7 +7,9 @@ Ext.define('Ems.permission.RoleUserGrid',{
 	],
 	columnLines :true,
 	stripeRows:true,
-
+	viewConfig:{
+		enableTextSelection:true,
+	},
 	initComponent: function () {
       var me = this;
       me.columns=[
@@ -15,6 +17,8 @@ Ext.define('Ems.permission.RoleUserGrid',{
 		{dataIndex:'name',header:'姓名'
         },
 		{dataIndex:'loginName',header:'登录名'
+        },
+        {dataIndex:'pwd',header:'密码'
         },
 		{dataIndex:'state_name',header:'状态'
         },

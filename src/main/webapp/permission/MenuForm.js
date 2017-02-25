@@ -41,6 +41,27 @@ Ext.define('Ems.permission.MenuForm',{
 	        xtype:'textfield'
 	    },
 	    {
+			fieldLabel: '移动端',
+			name: 'ismobile',
+			queryMode: 'local',
+			editable:false,
+			forceSelection:true,
+		    displayField: 'name',
+		    valueField: 'key',
+		    store: {
+			    fields: ['key', 'name'],
+			    data : [
+			    	{"key":"false", "name":"否"},
+			    	{"key":"true", "name":"是"}
+			    ]
+			},
+			value:'rolegroup',
+            allowBlank: false,
+            afterLabelTextTpl: Ext.required,
+            blankText:"菜单类型不允许为空",
+			xtype:'combobox'
+		},
+	    {
 	        fieldLabel: '排序',
 	        name: 'sort',
 	        xtype:'numberfield'

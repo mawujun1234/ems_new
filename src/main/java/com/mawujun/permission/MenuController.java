@@ -38,7 +38,7 @@ public class MenuController {
 	public List<Menu> query(String parent_id,MenuType menuType) {
 		//System.out.println(MenuType.menu);
 		Cnd cnd=Cnd.select().andEquals(M.Menu.parent_id, "root".equals(parent_id)?null:parent_id)
-				.andEquals(M.Menu.menuType, menuType==null?MenuType.menu:menuType);
+				.andEquals(M.Menu.menuType, menuType==null?MenuType.menu:menuType).asc(M.Menu.sort);
 		List<Menu> menues=menuService.query(cnd);
 		return menues;
 	}
@@ -46,13 +46,13 @@ public class MenuController {
 	
 	@RequestMapping("/menu/query_checkbox.do")
 	@ResponseBody
-	public List<MenuVO> query_checkbox(String parent_id) {
+	public List<MenuVO> query_checkbox(String parent_id,Boolean expanded) {
 		//System.out.println(MenuType.menu);
 		//Cnd cnd=Cnd.select().andEquals(M.Menu.parent_id, "root".equals(parent_id)?null:parent_id));
 		if("root".equals(parent_id)){
 			parent_id=null;
 		}
-		List<MenuVO> menues=menuService.query_checkbox(null);
+		List<MenuVO> menues=menuService.query_checkbox(null,expanded);
 		return menues;
 	}
 	
