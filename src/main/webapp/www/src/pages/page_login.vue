@@ -86,8 +86,8 @@ export default {
     return {
       title: '生产调度系统',
       version:'2.0.0',
-      loginname:'',
-      password:'',
+      loginname:'admin',
+      password:'admin',
       serverip:'127.0.0.1',
       serverportal:'8085'
     }
@@ -108,7 +108,7 @@ export default {
       $.post($.SP+'/mobile/login/login.do', params, function(response){
         $.hidePreloader();
         if(response.success){
-          window.appvue.$emit('e_route_page','/page_function');
+          window.appvue.to("/page_function");//.$emit('e_route_page','/page_function');
         }
 
       });

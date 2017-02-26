@@ -23,14 +23,19 @@ const appvue=new Vue({
   el: '#app',
 
   router:router,
-  render: h => h(App)
+  render: h => h(App),
+  methods:{
+    to:function(path){
+      router.push(path);
+    }
+  }
 });
 window.appvue=appvue;
 
 router.push('/page_login');
-window.appvue.$on("e_route_page",function(path){//alert(1);
-  router.push(path);
-});
+//window.appvue.$on("e_route_page",function(path){//alert(1);
+//  router.push(path);
+//});
 
 //app.currentRoute="/";
 

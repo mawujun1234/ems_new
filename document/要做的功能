@@ -3,10 +3,12 @@ ok用户登录的时候获取移动端的菜单权限
 ok通过vue控制菜单的动态显示和生成
 ok菜单数据同步，把移动端的菜单通过insert sql拷贝出来
 ok用户登录成功后，跳转到功能页面
+okvue跨域访问和跨域访问之后的会话一致的问题
 
-vue动画效果没有成功，只有fade成功
+vue动画效果没有成功，只有fade成功,只拷贝css代码出来试验下，判断问题是出在什么地方
+是不是page-current的原因，找个地方进行控制u取消掉试试
 	https://cn.vuejs.org/v2/guide/transitions.html#单元素-组件的过渡
-vue跨域访问和跨域访问之后的会话一致的问题
+
 
 
 
