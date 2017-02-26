@@ -118,6 +118,7 @@ public class MobileLoginController {
 		for(Menu menu:list){
 			root.put(menu.getCode(), true);
 		}
+		//root.put("mobile_page_function_equip_have", true);
 		return ResultModel.getInstance().setRoot(root);
 	}
 	

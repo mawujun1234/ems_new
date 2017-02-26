@@ -1,10 +1,5 @@
 <template>
   <div id="app" class="page-group">
-    <!--<page_login></page_login>
-    <page_function></page_function>
-
-    <router-link to="/page_login">page_login</router-link>
-    aaa-->
     <transition :name="transitionName">
       <router-view></router-view>
     </transition>

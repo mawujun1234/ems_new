@@ -15,17 +15,18 @@ const routes = [
   { path: '/page_function', component: page_function }
 ]
 
-
 const router = new VueRouter({
   routes // （缩写）相当于 routes: routes
 })
 
-window.appvue=new Vue({
+const appvue=new Vue({
   el: '#app',
 
   router:router,
   render: h => h(App)
 });
+window.appvue=appvue;
+
 router.push('/page_login');
 window.appvue.$on("e_route_page",function(path){//alert(1);
   router.push(path);
@@ -35,9 +36,11 @@ window.appvue.$on("e_route_page",function(path){//alert(1);
 
 //application/json;charset=ISO-8859-1
 $.ajaxSettings.dataType='json';
-//$.ajaxSettings.accepts.json="application/json;charset=UTF-8";
-$(function(){
 
+$(function(){
+  $(document).on('ajaxBeforeSend', function(e, xhr, options){
+    xhr.withCredentials = true;
+  })
 	$(document).on('ajaxSuccess',function(e,xhr,options,response){
 		handlerReturn(response);
 	});
@@ -45,9 +48,10 @@ $(function(){
 		if(xhr.status==503){
 			handlerReturn(JSON.parse(xhr.responseText));
 		} else {
-			handlerReturn(response);
+			//handlerReturn(response);
+      $.alert(xhr.status+"：非正常请求，请联系管理员！");
 		}
-
+    $.hidePreloader();
 	});
 	function handlerReturn(response){
 		if(response.success==false){

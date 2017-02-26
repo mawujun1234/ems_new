@@ -47,15 +47,15 @@
 export default {
    data () {
     return {
-        mobile_page_function_task_repair:true,
-        mobile_page_function_task_patrol:true,
-        mobile_page_function_task_cancel:true,
-        mobile_page_function_task_check:true,
-        mobile_page_function_task_newInstall:true,
-        mobile_page_function_message:true,
-        mobile_page_function_store_check:true,
-        mobile_page_function_equip_info:true,
-        mobile_page_function_equip_have:true
+        mobile_page_function_task_repair:false,
+        mobile_page_function_task_patrol:false,
+        mobile_page_function_task_cancel:false,
+        mobile_page_function_task_check:false,
+        mobile_page_function_task_newInstall:false,
+        mobile_page_function_message:false,
+        mobile_page_function_store_check:false,
+        mobile_page_function_equip_info:false,
+        mobile_page_function_equip_have:false
       }
     },
     mounted:function(){
@@ -65,10 +65,18 @@ export default {
       queryMobileMenuByUser:function(){
         $.showPreloader("正在加载数据....");
         var vue=this;
+        //$.SP="http://127.0.0.1:8085";
         $.post($.SP+'/mobile/login/queryMobileMenuByUser.do', {}, function(response){
+
+          var root=response.root;
+          for (var x in root) {
+            vue.$data[x]=root[x];
+          }
           $.hidePreloader();
-          vue.$data=response.root;
         });
+      },
+      queryTasknumber:function(){
+      
       }
     }
 }

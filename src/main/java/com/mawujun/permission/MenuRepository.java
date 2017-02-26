@@ -19,5 +19,5 @@ public interface MenuRepository extends IRepository<Menu, String>{
 	
 	public List<Menu> queryElement(@Param("jsp_url")String jsp_url,@Param("user_id")String user_id);
 	
-	public List<Menu> queryMobileMenuByUser(String user_id);
+	public List<Menu> queryMobileMenuByUser(@Param("user_id")String user_id);
 }

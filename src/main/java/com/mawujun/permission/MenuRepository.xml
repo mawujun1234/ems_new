@@ -49,18 +49,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     
     <select id="queryMobileMenuByUser" resultType="com.mawujun.permission.Menu" parameterType="map">
     	select a.* from t_menu a , t_role_user b,t_role_menu c
-    	where a.menuType='menu' and b.role_id=c.role_id  and c.menu_id=a.id 
-    	<if test="parent_id==null">
-    		and a.parent_id is null
-    	</if>
-    	<if test="parent_id!=null">
-    		and a.parent_id=#{parent_id}
-    	</if>
+    	where a.menuType='element' and b.role_id=c.role_id  and c.menu_id=a.id 
     	<if test="user_id!=null ">
     		and b.user_id =#{user_id}
     	</if>
     	and	 a.ismobile=1
-    	order by a.sort
     </select> 
     
     
