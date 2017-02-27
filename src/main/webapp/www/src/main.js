@@ -15,9 +15,9 @@ import remutils from './assets/remutils'
 
 const routes = [
   { path: '/', component: page_login },
-  { path: '/page_login', component: page_login },
-  { path: '/page_function', component: page_function },
-  { path: '/page_function/page_taskes', component: page_taskes }
+  { path: '/page_login', component: page_login,name: 'page_login' },
+  { path: '/page_function', component: page_function ,name: 'page_function'},
+  { path: '/page_function/page_taskes', component: page_taskes,name: 'page_taskes' }
 ]
 
 const router = new VueRouter({

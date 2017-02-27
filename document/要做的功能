@@ -10,7 +10,9 @@ ok把task任务从taskservice移到mobiletaskservice，也就是说进行重构
 
 
 任务类型如何传递到任务查询界面，以及后续的共用
+	https://router.vuejs.org/zh-cn/essentials/dynamic-matching.html
 任务的数量和新任务的数量，在几个地方如何共享，一个改了，另外一个也改，例子中有的
+	使用状态管理https://vuex.vuejs.org/zh-cn/getting-started.html
 任务查询界面
 
 
