@@ -13,11 +13,13 @@ import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mawujun.controller.spring.mvc.ResultModel;
+import com.mawujun.mobile.task.MobileTaskService;
 import com.mawujun.permission.Menu;
 import com.mawujun.permission.MenuService;
 import com.mawujun.permission.ShiroUtils;
@@ -39,6 +41,8 @@ public class MobileLoginController {
 	
 	@Resource
 	private MenuService menuService;
+	@Autowired
+	private MobileTaskService mobileTaskService;
 	
 	@RequestMapping("/mobile/login/login.do")
 	@ResponseBody
@@ -114,9 +118,16 @@ public class MobileLoginController {
 		List<Menu> list= menuService.queryMobileMenuByUser(ShiroUtils.getUserId());
 		//return ResultModel.getInstance().setRoot(list);
 		//ResultModel result=ResultModel.getInstance();
-		Map<String,Boolean> root=new HashMap<String,Boolean>();
+		Map<String,Object> root=new HashMap<String,Object>();
 		for(Menu menu:list){
 			root.put(menu.getCode(), true);
+		}
+		List<Map<String,Object>> tasknum=mobileTaskService.queryTasknum(ShiroUtils.getUserId());
+		for(Map<String,Object> map:tasknum){
+			Map<String,Object> num=new HashMap<String,Object>();
+			num.put("totalnum",map.get("TOTALNUM") );
+			num.put("badgenum", map.get("BADGENUM"));
+			root.put("task_"+map.get("TYPE"), num);
 		}
 		//root.put("mobile_page_function_equip_have", true);
 		return ResultModel.getInstance().setRoot(root);

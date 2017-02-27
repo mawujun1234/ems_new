@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.mawujun.mobile.task.TaskVO;
+import com.mawujun.task.TaskVO;
 import com.mawujun.utils.page.Pager;
 import com.mawujun.utils.page.Params;
 

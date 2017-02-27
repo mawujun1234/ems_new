@@ -4,23 +4,17 @@ ok通过vue控制菜单的动态显示和生成
 ok菜单数据同步，把移动端的菜单通过insert sql拷贝出来
 ok用户登录成功后，跳转到功能页面
 okvue跨域访问和跨域访问之后的会话一致的问题
-
-vue动画效果没有成功，只有fade成功,只拷贝css代码出来试验下，判断问题是出在什么地方
-是不是page-current的原因，找个地方进行控制u取消掉试试
-	https://cn.vuejs.org/v2/guide/transitions.html#单元素-组件的过渡
-
-
-
-
-在获取页面功能的同时，获取功能页面上各个任务的任务数，在组件的生命周期mounted的时候,并且添加到badge上（红色提示数字）
+ok在获取页面功能的同时，获取功能页面上各个任务的任务数，在组件的生命周期mounted的时候,并且添加到badge上（红色提示数字）
    注意要根据任务的类型获取不同类型任务的任务数
-从例子中看如何引入zepto和css的，并尝试测试引入
-   
-尝试复杂页面组件化，降低页面的复杂度。
+ok把task任务从taskservice移到mobiletaskservice，也就是说进行重构
+
+
+任务类型如何传递到任务查询界面，以及后续的共用
+任务的数量和新任务的数量，在几个地方如何共享，一个改了，另外一个也改，例子中有的
+任务查询界面
+
 
 websocket支持度测试
 
-vue页面切换的例子,
-https://github.com/chrisvfritz/vue-2.0-simple-routing-example/blob/master/src/main.js
-vue的router只能对子组件进行导航，所以在页面切换的时候，要在父组件上通过js函数的方式进行导航，或者是在父组件上通过《router-link》进行导航
-<page_function></page_function>组件如果直接放到一个组件或者页面中的时候，是会马上触发vue实例的生命周期，也就是这个组件的生命周期中所有的钩子函数
+从例子中看如何引入zepto和css的，并尝试测试引入
+尝试复杂页面组件化，降低页面的复杂度。

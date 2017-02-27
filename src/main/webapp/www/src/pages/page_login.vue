@@ -86,8 +86,8 @@ export default {
     return {
       title: '生产调度系统',
       version:'2.0.0',
-      loginname:'admin',
-      password:'admin',
+      loginname:'yinzhou2',
+      password:'123',
       serverip:'127.0.0.1',
       serverportal:'8085'
     }

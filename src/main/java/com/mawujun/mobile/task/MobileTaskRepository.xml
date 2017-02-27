@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.mobile.task.MobileTaskRepository">
+	<select id="queryTasknum" resultType="map" parameterType="map">
+    	select a.type,count(status) totalnum,sum(decode(a.status,'newTask',1,0)) badgenum
+		from ems_task a,t_position_org_user b
+		where a.workunit_id=b.org_id and b.user_id=#{user_id}
+		and a.status!='complete'
+		group by a.type
+    </select>
+    
+</mapper>
+

@@ -23,11 +23,11 @@ import com.mawujun.baseinfo.EquipmentWorkunitType;
 import com.mawujun.baseinfo.OperateType;
 import com.mawujun.baseinfo.TargetType;
 import com.mawujun.exception.BusinessException;
-import com.mawujun.mobile.task.LockEquipmentService;
 import com.mawujun.org.OrgService;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
+import com.mawujun.task.LockEquipmentService;
 import com.mawujun.utils.M;
 import com.mawujun.utils.page.Pager;
 
