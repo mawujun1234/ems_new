@@ -7,6 +7,7 @@ Vue.config.debug = true;
 import page_login from './pages/page_login.vue'
 import page_function from './pages/page_function.vue'
 import page_taskes from './pages/page_taskes.vue'
+import page_taskes_list from './pages/page_taskes_list.vue'
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
@@ -17,7 +18,17 @@ const routes = [
   { path: '/', component: page_login },
   { path: '/page_login', component: page_login,name: 'page_login' },
   { path: '/page_function', component: page_function ,name: 'page_function'},
-  { path: '/page_function/page_taskes', component: page_taskes,name: 'page_taskes' }
+  { path: '/page_taskes/:type', component: page_taskes,name: 'page_taskes'
+    ,children:[{
+          // 当 /user/:id/profile 匹配成功，
+          // UserProfile 会被渲染在 User 的 <router-view> 中
+          path: 'all',
+          component: page_taskes_list
+        },{
+          path: 'newTask',
+          component: page_taskes_list
+        }]
+  }
 ]
 
 const router = new VueRouter({

@@ -99,7 +99,7 @@ export default {
       },
       to_page_taskes:function(type){
         //alert(type);
-        window.appvue.to("/page_function/page_taskes");
+        window.appvue.to({ name: 'page_taskes', params: { type: type }});
       }
     }
 }

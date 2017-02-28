@@ -20,3 +20,4 @@ websocket支持度测试
 
 从例子中看如何引入zepto和css的，并尝试测试引入
 尝试复杂页面组件化，降低页面的复杂度。
+	http://cn.vuejs.org/v2/guide/components.html#编写可复用组件
