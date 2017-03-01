@@ -29,6 +29,7 @@ export default {
 
       const vm=this;
       $.post($.SP+'/mobile/task/queryTaskes.do',{type:type,status:status},function(response){
+        //alert(response.root.length);
         vm.taskes=response.root;
       });
     }
