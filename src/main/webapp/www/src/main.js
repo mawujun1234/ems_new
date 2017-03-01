@@ -2,7 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 //var $ = require('zepto');
 //开启debug模式
-Vue.config.debug = true;
+window.debug=true;
+Vue.config.debug = window.debug;
 
 import page_login from './pages/page_login.vue'
 import page_function from './pages/page_function.vue'

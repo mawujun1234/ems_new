@@ -13,33 +13,26 @@
 
   <!-- 这里是页面内容区 -->
   <div class="content">
+
     <div class="buttons-tab fixed-tab" data-offset="45">
-      <a href="#page_taskes_all" @click="showTasklist('all')" class="tab-link active button">全部<span>({{nums.all_num}})</span></a>
-      <a href="#page_taskes_newTask" @click="showTasklist('newTask')" class="tab-link button">新任务<span>({{nums.newTask_num}})</span></a>
+      <a href="#page_taskes_newTask" @click="showTasklist('newTask')" class="tab-link button active ">新任务<span>({{nums.newTask_num}})</span></a>
       <a href="#page_taskes_read" @click="showTasklist('read')" class="tab-link button">已阅<span>({{nums.read_num}})</span></a>
       <a href="#page_taskes_handling" @click="showTasklist('handling')" class="tab-link button">处理中<span>({{nums.handling_num}})</span></a>
       <a href="#page_taskes_submited" @click="showTasklist('submited')" class="tab-link button">已提交<span>({{nums.submited_num}})</span></a>
     </div>
 
     <div class="tabs">
-      <div id="page_taskes_all" class="tab active">
-        <all_taskes_list></all_taskes_list>
-      </div>
-      <div id="page_taskes_newTask" class="tab">
-        <newTask_taskes_list></newTask_taskes_list>
+      <div id="page_taskes_newTask" class="tab active">
+        <newTask_taskes_list ref="newTask_taskes_list"></newTask_taskes_list>
       </div>
       <div id="page_taskes_read" class="tab">
-        <div class="content-block">
-          <p>This is tab 3 content</p>
-        </div>
+        <read_taskes_list ref="read_taskes_list"></read_taskes_list>
       </div>
       <div id="page_taskes_handling" class="tab">
-        <div class="content-block">
-          <p>处理中的任务</p>
-        </div>
+        <handling_taskes_list ref="handling_taskes_list"></handling_taskes_list>
       </div>
       <div id="page_taskes_submited" class="tab">
-        <p>已提交任务</p>
+        <submited_taskes_list ref="submited_taskes_list"></submited_taskes_list>
       </div>
     </div>
 
@@ -52,7 +45,9 @@
 <script>
 import taskes_list from '../components/taskes_list.vue'
 import newTask_taskes_list from '../components/newTask_taskes_list.vue'
-import all_taskes_list from '../components/all_taskes_list.vue'
+import read_taskes_list from '../components/read_taskes_list.vue'
+import handling_taskes_list from '../components/handling_taskes_list.vue'
+import submited_taskes_list from '../components/submited_taskes_list.vue'
 
 export default {
 
@@ -69,27 +64,26 @@ export default {
     }
   },
   components:{
-    newTask_taskes_list,all_taskes_list
+    newTask_taskes_list,read_taskes_list,handling_taskes_list,submited_taskes_list
   },
   beforeRouteEnter  (to, from, next) {
-    // 在当前路由改变，但是改组件被复用时调用
-    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
-    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
-    // 可以访问组件实例 `this`
-    //alert(to.params.type);
     next(vm => {
       // 通过 `vm` 访问组件实例
       vm.type=to.params.type;
       //alert("vm.type:"+vm.type);
-      vm.showTasklist("all");
+      //刚进来的时候，初始化界面数据
+      vm.showTasklist("newTask");
     });
   },
   methods:{
     showTasklist:function(status){
-      //alert(status);
-      //$.post($.SP+'/mobile/task/queryTaskes.do',{type:this.type,status:status},function(response){
 
-      //});
+      var child_name=status+"_taskes_list";
+      this.$refs[child_name].refreshlist(this.type,status);
+      //$.initPullToRefresh(".pull-to-refresh-content");
+      //alert(1);
+      //alert(status);
+
     }
   },
   watch: {

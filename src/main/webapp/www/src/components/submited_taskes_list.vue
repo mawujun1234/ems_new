@@ -29,7 +29,8 @@ export default {
 
       const vm=this;
       $.post($.SP+'/mobile/task/queryTaskes.do',{type:type,status:status},function(response){
-        vm.taskes=response.root;
+        alert(response.pager.root.length);
+        vm.taskes=response.pager.root;
       });
     }
   }

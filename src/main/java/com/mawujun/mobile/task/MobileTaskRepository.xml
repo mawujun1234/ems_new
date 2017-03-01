@@ -12,6 +12,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		and a.status!='complete'
 		group by a.type
     </select>
+    <!-- 查询任务数-->
+    <select id="queryTaskes" resultType="com.mawujun.task.TaskVO" parameterType="map">
+    	select a.id,a.memo,a.type,a.status,a.pole_id,b.code as pole_code,b.longitude as pole_longitude,b.latitude as pole_latitude,b.name as pole_name,b.address as pole_address,a.createDate 
+    	from ems_task a,ems_pole b,t_position_org_user c
+    	where a.workunit_id=c.org_id and a.pole_id=b.id and c.user_id=#{user_id}
+    	and a.type=#{type} and a.status =#{status}
+		order by b.code asc
+    </select>
     
 </mapper>
 
