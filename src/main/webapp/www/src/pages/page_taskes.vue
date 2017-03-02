@@ -15,7 +15,7 @@
   <div class="content">
 
     <div class="buttons-tab fixed-tab" data-offset="45">
-      <a href="#page_taskes_newTask" @click="showTasklist('newTask')" class="tab-link button active ">新任务<span>({{nums.newTask_num}})</span></a>
+      <a id="a_page_taskes_newTask" href="#page_taskes_newTask" @click="showTasklist('newTask')" class="tab-link button active ">新任务<span>({{nums.newTask_num}})</span></a>
       <a href="#page_taskes_read" @click="showTasklist('read')" class="tab-link button">已阅<span>({{nums.read_num}})</span></a>
       <a href="#page_taskes_handling" @click="showTasklist('handling')" class="tab-link button">处理中<span>({{nums.handling_num}})</span></a>
       <a href="#page_taskes_submited" @click="showTasklist('submited')" class="tab-link button">已提交<span>({{nums.submited_num}})</span></a>
@@ -55,7 +55,6 @@ export default {
     return {
       type:'',
       nums:{
-        all_num:0,
         newTask_num:0,
         read_num:0,
         handling_num:0,
@@ -70,9 +69,14 @@ export default {
     next(vm => {
       // 通过 `vm` 访问组件实例
       vm.type=to.params.type;
+      vm.nums.newTask_num=to.params.newTask_num;
+      vm.nums.read_num=to.params.read_num;
+      vm.nums.handling_num=to.params.handling_num;
+      vm.nums.submited_num=to.params.submited_num;
       //alert("vm.type:"+vm.type);
       //刚进来的时候，初始化界面数据
-      vm.showTasklist("newTask");
+      //vm.showTasklist("newTask");
+      $("#a_page_taskes_newTask").trigger('click');
     });
   },
   methods:{

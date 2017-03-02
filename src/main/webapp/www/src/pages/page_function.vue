@@ -11,24 +11,24 @@
       <div class="function_row">
         <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('repair')" v-if="mobile_page_function_task_repair"><div
             class="icon icon-edit"></div>
-          <p class="function_grid__label">维修<span v-if="task_repair.totalnum>0">({{task_repair.totalnum}})</span></p>
-          <span class="badge" v-if="task_repair.badgenum>0">{{task_repair.badgenum}}</span></a>
+          <p class="function_grid__label">维修<span v-if="task_repair.total_num>0">({{task_repair.total_num}})</span></p>
+          <span class="badge" v-if="task_repair.newTask_num>0">{{task_repair.newTask_num}}</span></a>
       <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('patrol')" v-if="mobile_page_function_task_patrol">
         <div class="icon icon-browser"></div>
-          <p class="function_grid__label">巡检<span v-if="task_patrol.totalnum>0">({{task_patrol.totalnum}})</span></p>
-          <span class="badge" v-if="task_patrol.badgenum>0">{{task_patrol.badgenum}}</span></a>
+          <p class="function_grid__label">巡检<span v-if="task_patrol.total_num>0">({{task_patrol.total_num}})</span></p>
+          <span class="badge" v-if="task_patrol.newTask_num>0">{{task_patrol.newTask_num}}</span></a>
       <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('cancel')" v-if="mobile_page_function_task_cancel">
         <div class="icon icon-remove"></div>
-          <p class="function_grid__label">取消<span v-if="task_cancel.totalnum>0">({{task_cancel.totalnum}})</span></p>
-          <span class="badge" v-if="task_cancel.badgenum>0">{{task_cancel.badgenum}}</span></a>
+          <p class="function_grid__label">取消<span v-if="task_cancel.total_num>0">({{task_cancel.total_num}})</span></p>
+          <span class="badge" v-if="task_cancel.newTask_num>0">{{task_cancel.newTask_num}}</span></a>
       <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('check')" v-if="mobile_page_function_task_check">
         <div class="icon icon-code"></div>
-          <p class="function_grid__label">盘点<span v-if="task_check.totalnum>0">({{task_check.totalnum}})</span></p>
-          <span class="badge" v-if="task_check.badgenum>0">{{task_check.badgenum}}</span></a>
+          <p class="function_grid__label">盘点<span v-if="task_check.total_num>0">({{task_check.total_num}})</span></p>
+          <span class="badge" v-if="task_check.newTask_num>0">{{task_check.newTask_num}}</span></a>
       <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('newInstall')" v-if="mobile_page_function_task_newInstall">
           <div class="icon icon-app"></div>
-          <p class="function_grid__label">新安装<span v-if="task_newInstall.totalnum>0">({{task_newInstall.totalnum}})</span></p>
-          <span class="badge" v-if="task_newInstall.badgenum>0">{{task_newInstall.badgenum}}</span></a>
+          <p class="function_grid__label">新安装<span v-if="task_newInstall.total_num>0">({{task_newInstall.total_num}})</span></p>
+          <span class="badge" v-if="task_newInstall.newTask_num>0">{{task_newInstall.newTask_num}}</span></a>
       <a class="function_grid" href="#page_message" v-if="mobile_page_function_message">
             <div class="icon icon-message"></div>
             <p class="function_grid__label">消息</p>
@@ -60,24 +60,39 @@ export default {
         mobile_page_function_equip_info:false,
         mobile_page_function_equip_have:false,
         task_repair:{
-          totalnum:1,
-          badgenum:1
+          total_num:0,
+          newTask_num:0,
+          read_num:0,
+          handling_num:0,
+          submited_num:0
         },
         task_patrol:{
-          totalnum:0,
-          badgenum:0
+          total_num:0,
+          newTask_num:0,
+          read_num:0,
+          handling_num:0,
+          submited_num:0
         },
         task_cancel:{
-          totalnum:0,
-          badgenum:0
+          total_num:0,
+          newTask_num:0,
+          read_num:0,
+          handling_num:0,
+          submited_num:0
         },
         task_check:{
-          totalnum:0,
-          badgenum:0
+          total_num:0,
+          newTask_num:0,
+          read_num:0,
+          handling_num:0,
+          submited_num:0
         },
         task_newInstall:{
-          totalnum:0,
-          badgenum:0
+          total_num:0,
+          newTask_num:0,
+          read_num:0,
+          handling_num:0,
+          submited_num:0
         },
       }
     },
@@ -98,8 +113,16 @@ export default {
         });
       },
       to_page_taskes:function(type){
-        //alert(type);
-        window.appvue.to({ name: 'page_taskes', params: { type: type }});
+        //alert(this['task_'+type].total_num);
+        window.appvue.to({ name: 'page_taskes',
+          params: {
+            type: type,
+            newTask_num:this['task_'+type].newTask_num,
+            read_num:this['task_'+type].read_num,
+            handling_num:this['task_'+type].handling_num,
+            submited_num:this['task_'+type].submited_num
+          }
+        });
       }
     }
 }

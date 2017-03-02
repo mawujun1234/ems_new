@@ -6,13 +6,17 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 <!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
 <mapper namespace="com.mawujun.mobile.task.MobileTaskRepository">
 	<select id="queryTasknum" resultType="map" parameterType="map">
-    	select a.type,count(status) totalnum,sum(decode(a.status,'newTask',1,0)) badgenum
+    	select a.type,count(status) total_num
+    	,sum(decode(a.status,'newTask',1,0)) newTask_num
+    	,sum(decode(a.status,'read',1,0)) read_num
+    	,sum(decode(a.status,'handling',1,0)) handling_num
+    	,sum(decode(a.status,'submited',1,0)) submited_num
 		from ems_task a,t_position_org_user b
 		where a.workunit_id=b.org_id and b.user_id=#{user_id}
 		and a.status!='complete'
 		group by a.type
     </select>
-    <!-- 查询任务数-->
+    <!-- 查询任务-->
     <select id="queryTaskes" resultType="com.mawujun.task.TaskVO" parameterType="map">
     	select a.id,a.memo,a.type,a.status,a.pole_id,b.code as pole_code,b.longitude as pole_longitude,b.latitude as pole_latitude,b.name as pole_name,b.address as pole_address,a.createDate 
     	from ems_task a,ems_pole b,t_position_org_user c

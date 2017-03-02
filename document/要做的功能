@@ -7,13 +7,14 @@ okvue跨域访问和跨域访问之后的会话一致的问题
 ok在获取页面功能的同时，获取功能页面上各个任务的任务数，在组件的生命周期mounted的时候,并且添加到badge上（红色提示数字）
    注意要根据任务的类型获取不同类型任务的任务数
 ok把task任务从taskservice移到mobiletaskservice，也就是说进行重构
+ok查询规格任务的任务数，在导航进来的时候
 
 
-
-查询规格任务的任务数，在导航进来的时候
-
-任务类型如何传递到任务查询界面，以及后续的共用
-	https://router.vuejs.org/zh-cn/essentials/dynamic-matching.html
+任务明细数据查看
+    维修任务
+    扫描，添加人员
+任务查询
+无限列表查询，任务分页
 任务的数量和新任务的数量，在几个地方如何共享，一个改了，另外一个也改，例子中有的
 	使用状态管理https://vuex.vuejs.org/zh-cn/getting-started.html
 任务查询界面
