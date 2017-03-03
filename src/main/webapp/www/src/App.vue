@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="page-group">
     <transition :name="transitionName">
-      <keep-alive>
+      <keep-alive include="page_taskes">
       <router-view></router-view>
-    </keep-alive>
+      </keep-alive>
     </transition>
   </div>
 </template>

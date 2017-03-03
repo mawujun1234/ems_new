@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.task.TaskStatus;
 import com.mawujun.task.TaskType;
@@ -43,5 +44,9 @@ public class MobileTaskService {
 		params.addParam(M.Task.status, status.toString());
 		params.addParam("user_id", ShiroUtils.getUserId());
 		return mobileTaskRepository.queryTaskes(params);
+	}
+	
+	public MobileTaskVO getTask(String id) {
+		return mobileTaskRepository.getTask(id);
 	}
 }

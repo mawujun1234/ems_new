@@ -2,7 +2,7 @@
   <div class="list-block media-list " >
     <ul>
       <li v-for="task in taskes">
-        <a href="#page_task_info" class="item-link item-content">
+        <a href="javascript:void(0);" v-on:click="to_page_taskes_info" :task_id="task.id" class="item-link item-content">
           <div class="item-inner">
             <div class="item-title-row">
               <div class="item-title">{{task.id}}</div>
@@ -32,7 +32,19 @@ export default {
         //alert(response.root.length);
         vm.taskes=response.root;
       });
-    }
+    },
+    to_page_taskes_info:function(event){
+      //alert(this['task_'+type].total_num);
+      // alert(event.target.tagName);//.attr("task_id"))
+      // alert($(event.target).closest("a").attr("task_id"));
+      //return;
+      var task_id=$(event.target).closest("a").attr("task_id");
+      window.appvue.to({ name: 'page_task_info',
+        params: {
+          task_id:task_id
+        }
+      });
+    }//to_page_taskes
   }
 }
 </script>

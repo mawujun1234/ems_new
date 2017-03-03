@@ -67,6 +67,9 @@ export default {
   },
   beforeRouteEnter  (to, from, next) {
     next(vm => {
+      if(to.params.back){
+        return;
+      }
       // 通过 `vm` 访问组件实例
       vm.type=to.params.type;
       vm.nums.newTask_num=to.params.newTask_num;

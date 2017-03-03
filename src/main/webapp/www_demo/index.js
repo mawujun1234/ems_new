@@ -39,11 +39,20 @@ $(function(){
 	});
 	
 	//扫描的设备的清单，左划，出现删除按钮
-	$("#page_task_info_equip_list li").on("swipeLeft",function(){
+	$("#page_task_info_equiplist_tab li").on("swipeLeft",function(){
 		$(this).siblings().removeClass("swipeLeft");
 		$(this).addClass("swipeLeft");
 	}).on("swipeRight",function(){
 		$(this).removeClass("swipeLeft");
+	});
+	
+	$("#page_task_info_equiplist_tab li").on("dragstart",function(){
+		if($(this).hasClass("swipeLeft")){
+			$(this).removeClass("swipeLeft");
+		} else {
+			$(this).siblings().removeClass("swipeLeft");
+			$(this).addClass("swipeLeft");
+		}
 	});
 });
 	

@@ -227,9 +227,6 @@
 				</a>
 				<h1 class="title">任务信息</h1>
 			</header>
-
-
-
 			<!-- 这里是页面内容区 -->
 			<div class="content">
 				<div class="list-block" style="margin-top:0px;">
@@ -280,7 +277,7 @@
 				          </div>
 				        </div>
 				      </li>
-				      <li>
+				      <!-- <li>
 				        <div class="item-content">
 				          <div class="item-media"><i class="icon icon-form-name"></i></div>
 				          <div class="item-inner">
@@ -291,46 +288,88 @@
 				          </div>
 				        </div>
 				      </li>
+				       -->
+				      <li>
+				      	<div class="searchbar row" style="margin-left:0.5rem;">
+						    <div class="search-input col-80"> 
+						      <input type="search" id='page_task_info_search' placeholder='手工输入条码-->查询'/>
+						    </div>
+						    <a class="button button-fill button-primary col-20">查询</a>
+					  	</div>
+				      </li>
 				     
 				    </ul>
 				  </div>
 				  
-				  <div class="content-block-title">设备清单:</div>
-				  <div class="list-block">
-				  	<ul id="page_task_info_equip_list">
-				  	  <li>
-				  	    <a href="#page_equip_info" class="item-link item-content">
-					        <div class="item-media"><i class="icon icon-f7"></i></div>
-					        <div class="item-inner">
-					          <div class="item-title">010109-**-1602290023</div>
-							  <div class="item-after">设备小类</div>
-					        </div>
-				        </a>
-				        <a href="javascript:;" class="remove">删除</a>
-				      </li>
-				       <li>
-				  	    <a href="#page_equip_info" class="item-link item-content">
-					        <div class="item-media"><i class="icon icon-f7"></i></div>
-					        <div class="item-inner">
-					          <div class="item-title">010109-**-1602290023</div>
-							  <div class="item-after">设备小类</div>
-					        </div>
-				        </a>
-				        <a href="javascript:;" class="remove">删除</a>
-				      </li>
-				       <li>
-				  	    <a href="#page_equip_info" class="item-link item-content">			  	    
-					        <div class="item-media"><i class="icon icon-f7"></i></div>
-					        <div class="item-inner" >
-					          <div class="item-title">010109-**-1602290023</div>
-							  <div class="item-after">设备小类</div>		  
-					        </div>					        
-				        </a>
-				        <a href="javascript:;" class="remove">删除</a>
-				      </li>
-				    </ul>
+				  <div class="buttons-tab">
+				    <a href="#page_task_info_equiplist_tab" class="tab-link active button">设备清单</a>
+				    <a href="#page_task_info_member_tab" class="tab-link button">成员</a>
 				  </div>
-				  
+				    <div class="tabs">
+				      <div id="page_task_info_equiplist_tab" class="tab active ">
+				      <div class="list-block" >
+				        <ul>
+					  	  <li>
+					  	    <a href="#page_equip_info" class="item-link item-content">
+						        <div class="item-media"><i class="icon icon-f7"></i></div>
+						        <div class="item-inner">
+						          <div class="item-title">010109-**-1602290023</div>
+								  <div class="item-after">设备小类</div>
+						        </div>
+					        </a>
+					        <a href="javascript:;" class="remove">删除</a>
+					      </li>
+					       <li>
+					  	    <a href="#page_equip_info" class="item-link item-content">
+						        <div class="item-media"><i class="icon icon-f7"></i></div>
+						        <div class="item-inner">
+						          <div class="item-title">010109-**-1602290023</div>
+								  <div class="item-after">设备小类</div>
+						        </div>
+					        </a>
+					        <a href="javascript:;" class="remove">删除</a>
+					      </li>
+					       <li>
+					  	    <a href="#page_equip_info" class="item-link item-content">			  	    
+						        <div class="item-media"><i class="icon icon-f7"></i></div>
+						        <div class="item-inner" >
+						          <div class="item-title">010109-**-1602290023</div>
+								  <div class="item-after">设备小类</div>		  
+						        </div>					        
+					        </a>
+					        <a href="javascript:;" class="remove">删除</a>
+					      </li>
+					    </ul>
+					  </div>
+				      </div>
+				      <div id="page_task_info_member_tab" class="tab">
+				        <div class="list-block" >
+					        <ul>
+						  	  <li>
+						  	    <a href="#page_equip_info" class="item-link item-content">
+							        <div class="item-media"><i class="icon icon-f7"></i></div>
+							        <div class="item-inner">
+							          <div class="item-title">张三</div>
+									  <div class="item-after">鄞州作业单位1</div>
+							        </div>
+						        </a>
+						        <a href="javascript:;" class="remove">删除</a>
+						      </li>
+						       <li>
+						  	    <a href="#page_equip_info" class="item-link item-content">
+							        <div class="item-media"><i class="icon icon-f7"></i></div>
+							        <div class="item-inner">
+							          <div class="item-title">李四</div>
+									  <div class="item-after">海曙作业单位1</div>
+							        </div>
+						        </a>
+						        <a href="javascript:;" class="remove">删除</a>
+						      </li>
+						    </ul>
+						 </div>
+				      </div><!-- page_task_info_member_tab -->
+				    </div>
+ 
 				  <div class="content-block">
 				    <div class="row">
 				      <div class="col-50"><a href="#" class="button button-big button-fill button-danger back">返回</a></div>

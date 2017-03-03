@@ -20,4 +20,6 @@ public interface MobileTaskRepository {
 	public List<Map<String,Object>> queryTasknum(@Param("user_id")String user_id);
 	
 	public Pager<TaskVO> queryTaskes(Pager<TaskVO> params);
+	
+	public MobileTaskVO getTask(String id);
 }
