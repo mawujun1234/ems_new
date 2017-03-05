@@ -10,6 +10,6 @@ import com.mawujun.repository.IRepository;
  */
 @Repository
 public interface HitchTypeRepository extends IRepository<HitchType, Integer>{
-
+	
 
 }

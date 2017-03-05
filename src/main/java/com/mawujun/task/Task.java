@@ -54,8 +54,8 @@ public class Task implements IdEntity<String> {
 	
 	
 	private Integer hitchType_id;//故障类型
-	@Column(length=500)
-	private String hitchType;//故障类型
+	//@Column(length=500)
+	//private String hitchType;//故障类型
 	private Integer hitchReasonTpl_id;//故障原因，也用来存放维护内容
 	@Column(length=500)
 	private String hitchReason;//故障原因，也用来存放维护内容
@@ -159,12 +159,6 @@ public class Task implements IdEntity<String> {
 		this.patrolTaskType_id = patrolTaskType_id;
 	}
 
-	public String getHitchType() {
-		return hitchType;
-	}
-	public void setHitchType(String hitchType) {
-		this.hitchType = hitchType;
-	}
 	public String getHitchReason() {
 		return hitchReason;
 	}

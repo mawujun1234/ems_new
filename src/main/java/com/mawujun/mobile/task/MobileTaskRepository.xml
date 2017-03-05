@@ -25,8 +25,33 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		order by b.code asc
     </select>
     
-    <select id="getTask" resultType="com.mawujun.mobile.task.MobileTaskVO" parameterType="map">
-    	
+    <select id="getMobileTaskVO" resultType="com.mawujun.mobile.task.MobileTaskVO" parameterType="map">
+    	select a.id,a.memo,a.type,a.status,a.pole_id,b.code as pole_code,b.longitude as pole_longitude,b.latitude as pole_latitude,b.name as pole_name,b.address as pole_address,a.createDate 
+    	from ems_task a,ems_pole b
+    	where a.pole_id=b.id 
+      and a.id=#{task_id}
+    </select>
+    
+    <select id="getMobileTaskVO_equiplist" resultType="com.mawujun.mobile.task.Equiplist" parameterType="map">
+    	select a.ecode,c.name as subtype_name  from ems_taskequipmentlist a,ems_equipment b,ems_equipmentsubtype c
+		where a.ecode=b.ecode and b.subtype_id=c.id and a.task_id=#{task_id}
+    </select>
+    
+    
+    <resultMap type="com.mawujun.task.HitchTypeVO" id="hitchTypeVOMap">  
+        <id column="id" property="id"/>  
+        <result column="name" property="name"/>  
+        <collection property="hitchReasonTpls" ofType="com.mawujun.task.HitchReasonTpl">  
+            <id column="tpl_id" property="id"/>  
+            <result column="tpl_name" property="name"/>  
+            <result column="tpl_tpl" property="tpl"/>  
+        </collection>         
+    </resultMap>
+    <select id="queryAllHitchtype" resultMap="hitchTypeVOMap">
+    	select a.id,a.name,b.id as tpl_id,b.name as tpl_name,b.tpl tpl_tpl 
+		from ems_hitchtype a,ems_hitchreasontpl b
+		where a.id=b.HITCHTYPE_ID
+		order by a.id,b.id
     </select>
     
 </mapper>

@@ -1,5 +1,7 @@
 package com.mawujun.baseinfo;
 
+import com.mawujun.utils.string.StringUtils;
+
 
 public class EquipmentVO extends Equipment {
 	
@@ -40,6 +42,22 @@ public class EquipmentVO extends Equipment {
 //		}
 //		return null;
 		return this.getStatus()==null?null:this.getStatus().getName();
+	}
+	/**
+	 * 获取所在的位置
+	 * @return
+	 */
+	public String getPosition_in(){
+		if(StringUtils.hasText(store_name)){
+			return store_name;
+		}
+		if(StringUtils.hasText(pole_address)){
+			return pole_address;
+		}
+		if(StringUtils.hasText(workUnit_name)){
+			return workUnit_name;
+		}
+		return "获取不到";
 	}
 	
 	public String getSubtype_name() {

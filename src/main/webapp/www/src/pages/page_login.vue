@@ -88,7 +88,7 @@ export default {
       version:'2.0.0',
       loginname:'yinzhou2',
       password:'123',
-      serverip:'127.0.0.1',
+      serverip:'localhost',
       serverportal:'8085'
     }
   },

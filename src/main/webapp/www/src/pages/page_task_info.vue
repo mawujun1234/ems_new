@@ -1,6 +1,6 @@
 <template>
   <!-- #page_task_info-->
-  		<div class="page page-current" id="page_task_info">
+  		<div class="page page-current" id="page_task_info" >
   			<div id="qrcode_button" class="hi-icon-wrap hi-icon-effect-7">
          			<a href="javascript:void(0);"  id="page_task_info_scanQRCode_btn" class="hi-icon hi-icon-cycle external">扫一扫</a>
   			</div>
@@ -71,6 +71,41 @@
   				          </div>
   				        </div>
   				      </li>
+
+                <li>
+  				        <div class="item-content">
+  				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+  				          <div class="item-inner">
+  				            <div class="item-title label">故障类型</div>
+  				            <div class="item-input">
+  				              <input type="text" id="page_task_info_hitchType_id"  >
+  				            </div>
+  				          </div>
+  				        </div>
+  				      </li>
+                <li>
+  				        <div class="item-content">
+  				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+  				          <div class="item-inner">
+  				            <div class="item-title label">原因模板</div>
+  				            <div class="item-input">
+  				              <input type="text" id="page_task_info_hitchReasonTpl_id"  >
+  				            </div>
+  				          </div>
+  				        </div>
+  				      </li>
+                <li class="align-top">
+  				        <div class="item-content">
+  				          <div class="item-media"><i class="icon icon-form-comment"></i></div>
+  				          <div class="item-inner">
+  				            <div class="item-title label">故障原因</div>
+  				            <div class="item-input">
+  				              <textarea>{{hitchReason}}</textarea>
+  				            </div>
+  				          </div>
+  				        </div>
+  				      </li>
+
   				      <li>
   				      	<div class="searchbar row" style="margin-left:0.5rem;">
   						    <div class="search-input col-80">
@@ -92,7 +127,7 @@
   				      <div class="list-block" >
   				        <ul>
   					  	  <li v-for="equip in equiplist">
-  					  	    <a href="#page_equip_info" class="item-link item-content">
+  					  	    <a href="javascript:void(0);" class="item-link item-content popup-all" :ecode="equip.ecode">
   						        <div class="item-media"><i class="icon icon-f7"></i></div>
   						        <div class="item-inner">
   						          <div class="item-title">{{equip.ecode}}</div>
@@ -129,22 +164,33 @@
   				    </div>
   				  </div>
   			</div>
+
+        <equip_info ref="equip_info"></equip_info>
   		</div>
   		<!--#page_task_info  功能列表 -->
 </template>
 <script>
+
+import equip_info from '../components/equip_info.vue'
+
 export default {
   //name: 'app',
   data () {
     return {
       id:'',
+      type:'',
       memo:'',
       pole_code:'',
       pole_name:'',
       pole_address:'',
+      hitchType_id:'',
+      hitchReason:'',
       equiplist:[],
       members:[]
     }
+  },
+  components:{
+    equip_info
   },
   beforeRouteEnter  (to, from, next) {
     next(vm => {
@@ -154,45 +200,133 @@ export default {
     });
   },
   mounted:function(){
-    /**
-    //扫描的设备的清单，左划，出现删除按钮
-    $("#page_task_info_equiplist_tab li").on("swipeLeft",function(){
-      $(this).siblings().removeClass("swipeLeft");
-      $(this).addClass("swipeLeft");
-    }).on("swipeRight",function(){
-      $(this).removeClass("swipeLeft");
+    var vm=this;
+    $("#page_task_info").on('click','.popup-all', function () {
+      vm.z_index=$("#page_task_info").css("z-index");
+      $("#page_task_info").css("z-index",20000);
+      vm.$refs.equip_info.getEquipinfo($(this).attr('ecode'));
+      $.popup('.popup-equip_info');
     });
 
-    $("#page_task_info_equiplist_tab li").on("dragstart",function(){
-      if($(this).hasClass("swipeLeft")){
-        $(this).removeClass("swipeLeft");
-      } else {
-        $(this).siblings().removeClass("swipeLeft");
-        $(this).addClass("swipeLeft");
-      }
+    $("#page_task_info .popup-equip_info").on("close",function(){
+      $("#page_task_info").css("z-index",vm.z_index);
     });
-    **/
+
+    $.post($.SP+'/mobile/task/queryAllHitchtype.do', {}, function(response){
+      vm.allHitchtype=response.root;
+      vm.inithitch();
+    });
+  },
+  updated:function(){
+    this.initevent();
+    //console.log(1111111);
 
   },
   methods: {
     getTask: function() {
       var vue=this;
       $.showPreloader("正在取数....");
-      $.post($.SP+'/mobile/task/getTask.do', {id:this.id}, function(response){
+      $.post($.SP+'/mobile/task/getMobileTaskVO.do', {id:this.id}, function(response){
         var root=response.root;
         for (var x in root) {
           vue.$data[x]=root[x];
         }
         $.hidePreloader();
+        //initevent();
       });
     },
     back:function(){
       window.appvue.to({ name: 'page_taskes',
         params: {
-          back:true
+          back:true,
+          type:this.type,
         }
       });
-    }
+    },//back
+    initevent:function(){
+      /****/
+      //扫描的设备的清单，左划，出现删除按钮
+      $("#page_task_info_equiplist_tab li").on("swipeLeft",function(){
+        $(this).siblings().removeClass("swipeLeft");
+        $(this).addClass("swipeLeft");
+      }).on("swipeRight",function(){
+        $(this).removeClass("swipeLeft");
+      });
+
+      $("#page_task_info_equiplist_tab li").on("dragstart",function(){
+        if($(this).hasClass("swipeLeft")){
+          $(this).removeClass("swipeLeft");
+        } else {
+          $(this).siblings().removeClass("swipeLeft");
+          $(this).addClass("swipeLeft");
+        }
+      });
+    },//initevent
+    inithitch:function(){
+      var vm=this;
+      var allHitchtype=this.allHitchtype;
+      //var values=[];
+      var displays=[];
+      for(var i=0;i<allHitchtype.length;i++){
+        //values.push(allHitchtype[i].id);
+        displays.push(allHitchtype[i].name);
+      }
+      $("#page_task_info_hitchType_id").picker({
+        toolbarTemplate: '<header class="bar bar-nav">\
+        <button class="button button-link pull-right close-picker">确定</button>\
+        <h1 class="title">故障类型</h1>\
+        </header>',
+        cols: [
+          {
+            textAlign: 'center',
+            values: displays//values
+            //displayValues:displays
+          }
+        ],
+        onClose:function(){
+          //alert($("#page_task_info_hitchType_id").val());
+          //
+          vm.inittpl($("#page_task_info_hitchType_id").val());
+
+        }
+      });
+
+
+    },
+    inittpl:function(hitchType_name){//alert(hitchType_name);
+      var allHitchtype=this.allHitchtype;
+      //var values=[];
+      var displays=[];
+      for(var i=0;i<allHitchtype.length;i++){
+        if(hitchType_name==allHitchtype[i].name){
+          var aaa=allHitchtype[i].hitchReasonTpls;
+          //alert(aaa.length);
+          for(var j=0;j<aaa.length;j++){
+            //values.push(aaa[j].id);
+            displays.push(aaa[j].name);
+          }
+          break;
+        }
+      }
+      console.log(displays);
+
+//$("#page_task_info_hitchReasonTpl_id").picker("destroy");
+      $("#page_task_info_hitchReasonTpl_id").picker({
+        value:displays[0],
+        cols: [
+          {
+            textAlign: 'center',
+            values: displays
+            //displayValues:displays
+          }
+        ],
+        onClose:function(){
+          //alert($("#page_task_info_hitchType_id").val());
+
+        }
+      });
+      //$("#page_task_info_hitchReasonTpl_id").picker('setValue',[displays[0]]);
+    }//inittpl
   }
 }
 </script>

@@ -4,11 +4,15 @@ import java.util.List;
 
 public class MobileTaskVO {
 	private String id;
+	private String type;
 	private String memo;
 	
+	private String pole_id;
 	private String pole_name;
 	private String pole_code;
 	private String pole_address;
+	private String pole_longitude;
+	private String pole_latitude;
 	
 	private List<Equiplist> equiplist;
 	private List<Members> members;
@@ -54,5 +58,29 @@ public class MobileTaskVO {
 	}
 	public void setMembers(List<Members> members) {
 		this.members = members;
+	}
+	public String getPole_id() {
+		return pole_id;
+	}
+	public void setPole_id(String pole_id) {
+		this.pole_id = pole_id;
+	}
+	public String getPole_longitude() {
+		return pole_longitude;
+	}
+	public void setPole_longitude(String pole_longitude) {
+		this.pole_longitude = pole_longitude;
+	}
+	public String getPole_latitude() {
+		return pole_latitude;
+	}
+	public void setPole_latitude(String pole_latitude) {
+		this.pole_latitude = pole_latitude;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

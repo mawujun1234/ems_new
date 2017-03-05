@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.mawujun.task.HitchTypeVO;
 import com.mawujun.task.TaskVO;
 import com.mawujun.utils.page.Pager;
 /**
@@ -21,5 +22,8 @@ public interface MobileTaskRepository {
 	
 	public Pager<TaskVO> queryTaskes(Pager<TaskVO> params);
 	
-	public MobileTaskVO getTask(String id);
+	public MobileTaskVO getMobileTaskVO(@Param("task_id")String id);
+	public List<Equiplist> getMobileTaskVO_equiplist(@Param("task_id")String task_id);
+	
+	public List<HitchTypeVO> queryAllHitchtype();
 }

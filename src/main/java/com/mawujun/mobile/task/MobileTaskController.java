@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mawujun.baseinfo.EquipmentVO;
 import com.mawujun.controller.spring.mvc.ResultModel;
+import com.mawujun.report.EquipmentStatusController;
 import com.mawujun.task.TaskStatus;
 import com.mawujun.task.TaskType;
 import com.mawujun.task.TaskVO;
@@ -15,6 +17,8 @@ import com.mawujun.utils.page.Pager;
 public class MobileTaskController {
 	@Autowired
 	private MobileTaskService mobileTaskService;
+	@Autowired
+	private EquipmentStatusController equipmentStatusController;
 //	@Autowired
 //	private TaskService taskService;
 	
@@ -25,12 +29,30 @@ public class MobileTaskController {
 		return pager;
 	}
 	
-	@RequestMapping("/mobile/task/getTask.do")
+	@RequestMapping("/mobile/task/getMobileTaskVO.do")
 	@ResponseBody
-	public ResultModel getTask(String id){
-		MobileTaskVO vo=mobileTaskService.getTask(id);
+	public ResultModel getMobileTaskVO(String id){
+		MobileTaskVO vo=mobileTaskService.getMobileTaskVO(id);
 		
 		return ResultModel.getInstance().setRoot(vo);
+	}
+	/**
+	 * 获取设备信息
+	 * @param ecode
+	 * @return
+	 */
+	@RequestMapping("/mobile/task/getEquip_info.do")
+	@ResponseBody
+	public ResultModel getEquipInfo(String ecode){
+		EquipmentVO vo= equipmentStatusController.query(ecode);
+		return ResultModel.getInstance().setRoot(vo);
+	}
+	
+	@RequestMapping("/mobile/task/queryAllHitchtype.do")
+	@ResponseBody
+	public ResultModel queryAllHitchtype(){
+		//EquipmentVO vo= equipmentStatusController.query(ecode);
+		return ResultModel.getInstance().setRoot(mobileTaskService.queryAllHitchtype());
 	}
 
 }

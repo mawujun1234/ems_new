@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mawujun.controller.spring.mvc.ResultModel;
+import com.mawujun.baseinfo.EquipmentVO;
 import com.mawujun.permission.ShiroUtils;
+import com.mawujun.task.HitchTypeVO;
 import com.mawujun.task.TaskStatus;
 import com.mawujun.task.TaskType;
 import com.mawujun.task.TaskVO;
@@ -21,6 +22,7 @@ import com.mawujun.utils.page.Pager;
 public class MobileTaskService {
 	@Autowired
 	private MobileTaskRepository mobileTaskRepository;
+
 
 	//@Override
 	public MobileTaskRepository getRepository() {
@@ -46,7 +48,17 @@ public class MobileTaskService {
 		return mobileTaskRepository.queryTaskes(params);
 	}
 	
-	public MobileTaskVO getTask(String id) {
-		return mobileTaskRepository.getTask(id);
+	public MobileTaskVO getMobileTaskVO(String task_id) {
+		MobileTaskVO mobileTaskVO= mobileTaskRepository.getMobileTaskVO(task_id);
+		
+		List<Equiplist> equiplist=mobileTaskRepository.getMobileTaskVO_equiplist(task_id);
+		mobileTaskVO.setEquiplist(equiplist);
+		return mobileTaskVO;
 	}
+	
+
+	public List<HitchTypeVO> queryAllHitchtype(){
+		return mobileTaskRepository.queryAllHitchtype();
+	}
+
 }

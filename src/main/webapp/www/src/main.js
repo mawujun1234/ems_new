@@ -50,7 +50,7 @@ router.push('/page_login');
 
 //application/json;charset=ISO-8859-1
 $.ajaxSettings.dataType='json';
-
+$.SP="";
 $(function(){
   $(document).on('ajaxBeforeSend', function(e, xhr, options){
     xhr.withCredentials = true;
