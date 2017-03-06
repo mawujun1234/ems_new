@@ -729,7 +729,66 @@ Ext.define('Ems.baseinfo.RepaircenterCombo', {
 				me.callParent();
 			}
 		});
-
+//客户的分区
+Ext.define('Ems.baseinfo.CustomerAreaCombo', {
+			extend : 'Ext.form.field.ComboBox',
+			xtype : 'customerareacombo',
+			fieldLabel : '区',
+			labelAlign : 'right',
+			labelWidth : 60,
+			// xtype:'combobox',
+			// afterLabelTextTpl: Ext.required,
+			name : 'parent_id',
+			displayField : 'name',
+			valueField : 'key',
+			allowBlank : true,
+			editable:false,
+			look : true,//获取只读的仓库
+			edit : false,//获取可以编辑操作的仓库，就是可以有权限入库的
+			
+			selFirst:false,
+			showBlank:false,//是否显示“无”的数据
+			autoLoad:true,
+			
+			initComponent : function() {
+				var me = this;
+				var store = Ext.create('Ext.data.Store', {
+							//fields : ['id', 'name'],
+					model:'Ems.baseinfo.IdName',
+					autoLoad:me.autoLoad,
+							proxy : {
+								type : 'ajax',
+								extraParams : {
+									// type : [1, 3],
+									showBlank:me.showBlank,
+									look : me.look,
+									edit : me.edit
+								},
+								url : Ext.ContextPath + "/customer/queryAreaCombo.do",
+								reader : {
+									type : 'json',
+									rootProperty : 'root'
+								}
+							}
+						})
+				me.store = store;
+				if(!me.value && me.selFirst){
+					me.store.on("load",function(myStore){
+						if(myStore.getCount( ) >0){
+							var r=null;
+							if(me.showBlank==true){
+								r=myStore.getAt(1);//第一行是无
+							} else {
+								r=myStore.getAt(0);//第一行是,正确的数据
+							}
+					 		me.select( r );
+						 	me.fireEvent("select", me, r);
+					 	}
+					})
+				}
+				me.callParent();
+			}
+		});
 Ext.define('Ems.baseinfo.CustomerCombo', {
 			extend : 'Ext.form.field.ComboBox',
 			xtype : 'customercombo',

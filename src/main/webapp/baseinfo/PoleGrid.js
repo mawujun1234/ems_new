@@ -15,6 +15,10 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 			}
 		}
 	},
+	selModel: {
+    	selType: 'checkboxmodel',
+    	checkOnly:false
+    },
 	initComponent: function () {
       var me = this;
       me.columns=[
@@ -39,9 +43,9 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 		},
 		{dataIndex:'code',text:'编号',width:80},
       	{dataIndex:'name',text:'点位名称',width:160},
-      	{dataIndex:'poleType_name',text:'点位类型',width:160},
+      	{dataIndex:'poleType_name',text:'点位类型',width:90},
       	{dataIndex:'project_name',text:'所属项目',width:160},
-      	{dataIndex:'province',text:'地址',flex:1,renderer:function(value,metadata ,record){
+      	{dataIndex:'province',text:'地址',width:160,renderer:function(value,metadata ,record){
       		var aaa=value+record.get("city")+record.get("area")+record.get("address");
       		metadata.tdAttr = "data-qtip='" + aaa+ "'";
       		return aaa;
@@ -90,6 +94,7 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 	initAction:function(){
      	var me = this;
      	var actions=[];
+     	var actions1=[];
      	
        var create = new Ext.Action({
 		    text: '新建',
@@ -102,7 +107,7 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 		    iconCls: 'icon-plus'
 		});
 		//me.addAction(create);
-		actions.push(create);
+		actions1.push(create);
 		var update = new Ext.Action({
 		    text: '更新',
 		    itemId:'update',
@@ -114,7 +119,7 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 		    iconCls: 'icon-edit'
 		});
 		//me.addAction(create);
-		actions.push(update);
+		actions1.push(update);
 		
 		var destroy = new Ext.Action({
 		    text: '删除',
@@ -127,7 +132,19 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 		    iconCls: 'icon-trash'
 		});
 		//me.addAction(destroy);
-		actions.push(destroy)
+		actions1.push(destroy)
+		
+		var transform = new Ext.Action({
+		    text: '转移',
+		    itemId:'transform',
+		    hidden:!Permision.canShow('customer_pole_transform'),
+		    handler: function(){
+		    	me.onTransform();    
+		    },
+		    iconCls: 'icon-exchange'
+		});
+		//me.addAction(destroy);
+		actions1.push(transform)
 		
 		var nameORcode=Ext.create('Ext.form.field.Text',{
 			emptyText:'点位名称或编号',
@@ -166,14 +183,24 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 		});
 		actions.push(exportPoles);
 		
-		me.tbar={
-			itemId:'action_toolbar',
-			layout: {
-	               overflowHandler: 'Menu'
-	        },
-			items:actions
-			//,autoScroll:true		
-		};
+//		me.tbar={
+//			itemId:'action_toolbar',
+//			layout: {
+//	               overflowHandler: 'Menu'
+//	        },
+//			items:actions
+//			//,autoScroll:true		
+//		};
+		 me.dockedItems.push({
+		 	xtype: 'toolbar',
+		 	dock: 'top',
+		 	items:actions
+		 });
+		  me.dockedItems.push({
+		 	xtype: 'toolbar',
+		 	dock: 'top',
+		 	items:actions1
+		 });
 
     },
     onCreate:function(){
@@ -207,7 +234,7 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 			items:[form],
 			layout:'fit',
 			closeAction:'destroy',
-			width:350,
+			width:450,
 			height:400,
 			modal:true
 		});
@@ -244,14 +271,14 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 		form.getForm().findField("id").setReadOnly(true);
 		
 		var project_combox=form.getForm().findField("project_id");
-		var project_model= project_combox.getStore().createModel({id:record.get("project_id"),name:record.get("project_name")});
+		var project_model= project_combox.getStore().createModel({key:record.get("project_id"),name:record.get("project_name")});
 		project_combox.setValue(project_model);
 		
 		var win=new Ext.window.Window({
 			items:[form],
 			layout:'fit',
 			closeAction:'destroy',
-			width:300,
+			width:450,
 			height:400,
 			modal:true
 		});
@@ -286,6 +313,54 @@ Ext.define('Ems.baseinfo.PoleGrid',{
 					});
 			}
 		});
+    },
+    onTransform:function(){
+    	var me=this;
+    	var records=me.getSelectionModel().getSelection();
+		if(records==null || records.length==0){
+			Ext.Msg.alert("消息","请先选择点位!");
+			return;
+		}
+		Ext.Msg.confirm("消息","确认转移吗?",function(aa){
+			if(aa=='yes'){
+				//alert(records.length);
+				var pole_ids=[];
+				for(var i=0;i<records.length;i++){
+					//alert(records[i].get("compno"));
+					pole_ids.push(records[i].get("id"));
+				}
+				//var extraParams=me.getStore().getProxy().extraParams;
+				var customer=Ext.create('Ems.baseinfo.CustomerCombo',{
+				
+				});
+				var win=Ext.create('Ext.window.Window',{
+					layout:'form',
+					title:'转移点位',
+					width:280,
+					height:150,
+					modal:true,
+					items:[customer],
+					buttons:[{
+						text:'确认',
+						handler:function(){
+							Ext.Ajax.request({
+						  		url:Ext.ContextPath+'/pole/transform.do',
+						  		params:{
+						  			customer_id:customer.getValue(),
+						  			pole_ids:pole_ids
+						  		},
+						  		success:function(response){
+						  			me.getStore().reload();
+						  			win.close();
+						  		}
+						  	});
+						}
+					}]
+				});
+				win.show();
+				
+	  		}//if(aa=='yes'){
+		})
     },
     onReload:function(){
     	var me=this;

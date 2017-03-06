@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
+import com.mawujun.utils.M;
 import com.mawujun.utils.page.Pager;
 
 
@@ -111,6 +113,16 @@ public class PoleService extends AbstractService<Pole, String>{
 	public void removeWorkunit(String workunit_id,String[] pole_ids) {	
 		for(String pole_id:pole_ids){
 			poleRepository.removeWorkunit(workunit_id, pole_id);
+		}
+	}
+	
+	
+	public  void transform(String customer_id,String[] pole_ids) {
+		if(customer_id==null ||pole_ids ==null || pole_ids.length==0){
+			return;
+		}
+		for(String pole_id:pole_ids){
+			poleRepository.update(Cnd.update().set(M.Pole.customer_id, customer_id).andEquals(M.Pole.id, pole_id));
 		}
 	}
 }
