@@ -27,9 +27,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     
     <select id="getMobileTaskVO" resultType="com.mawujun.mobile.task.MobileTaskVO" parameterType="map">
     	select a.id,a.memo,a.type,a.status,a.pole_id,b.code as pole_code,b.longitude as pole_longitude,b.latitude as pole_latitude,b.name as pole_name,b.address as pole_address,a.createDate 
-    	from ems_task a,ems_pole b
-    	where a.pole_id=b.id 
-      and a.id=#{task_id}
+    	,a.hitchType_id,c.name as hitchType_name,a.hitchReasonTpl_id,d.name as hitchReasonTpl_name,a.hitchReason
+    	,a.handleMethod_id,e.name as handleMethod_name,a.handle_contact
+    	from ems_task a
+    	inner join ems_pole b on a.pole_id=b.id 
+    	inner join ems_hitchtype c on a.hitchtype_id=c.id
+    	inner join ems_hitchreasontpl d on a.hitchReasonTpl_id=d.id
+    	inner join ems_handlemethod e on a.handleMethod_id=e.id
+      	where a.id=#{task_id}
     </select>
     
     <select id="getMobileTaskVO_equiplist" resultType="com.mawujun.mobile.task.Equiplist" parameterType="map">

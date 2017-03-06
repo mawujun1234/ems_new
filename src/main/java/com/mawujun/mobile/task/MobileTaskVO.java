@@ -7,6 +7,14 @@ public class MobileTaskVO {
 	private String type;
 	private String memo;
 	
+	private String hitchType_name;
+	private String hitchReasonTpl_name;
+	private String hitchReason;
+	
+	private String handleMethod_id;
+	private String handleMethod_name;
+	private String handle_contact;
+	
 	private String pole_id;
 	private String pole_name;
 	private String pole_code;
@@ -16,6 +24,11 @@ public class MobileTaskVO {
 	
 	private List<Equiplist> equiplist;
 	private List<Members> members;
+	
+	
+	public String getHandle_contact() {
+		return handle_contact==null?"":handle_contact;
+	}
 	
 	public String getId() {
 		return id;
@@ -82,5 +95,39 @@ public class MobileTaskVO {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getHitchType_name() {
+		return hitchType_name;
+	}
+	public void setHitchType_name(String hitchType_name) {
+		this.hitchType_name = hitchType_name;
+	}
+	public String getHitchReasonTpl_name() {
+		return hitchReasonTpl_name;
+	}
+	public void setHitchReasonTpl_name(String hitchReasonTpl_name) {
+		this.hitchReasonTpl_name = hitchReasonTpl_name;
+	}
+	public String getHitchReason() {
+		return hitchReason;
+	}
+	public void setHitchReason(String hitchReason) {
+		this.hitchReason = hitchReason;
+	}
+	public String getHandleMethod_id() {
+		return handleMethod_id;
+	}
+	public void setHandleMethod_id(String handleMethod_id) {
+		this.handleMethod_id = handleMethod_id;
+	}
+	public String getHandleMethod_name() {
+		return handleMethod_name;
+	}
+	public void setHandleMethod_name(String handleMethod_name) {
+		this.handleMethod_name = handleMethod_name;
+	}
+	
+	public void setHandle_contact(String handle_contact) {
+		this.handle_contact = handle_contact;
 	}
 }

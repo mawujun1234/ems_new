@@ -3,6 +3,7 @@ package com.mawujun.task;
 
 
 public class TaskVO extends Task {
+	private String hitchType_name;
 	
 	//@Transient
 	private String pole_code;
@@ -27,6 +28,12 @@ public class TaskVO extends Task {
 	}
 	public void setPole_code(String pole_code) {
 		this.pole_code = pole_code;
+	}
+	public String getHitchType_name() {
+		return hitchType_name;
+	}
+	public void setHitchType_name(String hitchType_name) {
+		this.hitchType_name = hitchType_name;
 	}
 	
 }

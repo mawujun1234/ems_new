@@ -213,7 +213,7 @@ public class TaskReportController {
 //			isOverTime.setCellValue(task.isOverTime?"超时":"否");
 			
 			Cell hitchType=row.createCell(cellnum++);
-			hitchType.setCellValue(task.getHitchType());
+			hitchType.setCellValue(task.getHitchType_name());
 			
 			Cell hitchReason=row.createCell(cellnum++);
 			hitchReason.setCellValue(task.getHitchReason());

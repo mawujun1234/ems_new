@@ -1332,7 +1332,7 @@ public class TaskService extends AbstractService<Task, String>{
 		Task task=taskRepository.get(task_id);
 		
 		task.setHitchType_id(hitchType_id);
-		task.setHitchType(hitchType);
+		//task.setHitchType(hitchType);
 		task.setHitchReasonTpl_id(hitchReasonTpl_id);
 		task.setHitchReason(hitchReason);
 		task.setHandleMethod_id(handleMethod_id);

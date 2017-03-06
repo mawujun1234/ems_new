@@ -78,7 +78,7 @@
   				          <div class="item-inner">
   				            <div class="item-title label">故障类型</div>
   				            <div class="item-input">
-  				              <input type="text" id="page_task_info_hitchType_id"  >
+  				              <input type="text" id="page_task_info_hitchType_name"  v-model="hitchType_name" >
   				            </div>
   				          </div>
   				        </div>
@@ -89,7 +89,7 @@
   				          <div class="item-inner">
   				            <div class="item-title label">原因模板</div>
   				            <div class="item-input">
-  				              <input type="text" id="page_task_info_hitchReasonTpl_id"  >
+  				              <input type="text" id="page_task_info_hitchReasonTpl_name" v-model="hitchReasonTpl_name" >
   				            </div>
   				          </div>
   				        </div>
@@ -100,7 +100,30 @@
   				          <div class="item-inner">
   				            <div class="item-title label">故障原因</div>
   				            <div class="item-input">
-  				              <textarea>{{hitchReason}}</textarea>
+  				              <textarea v-model="hitchReason" @blur="updateHitchReason"></textarea>
+  				            </div>
+  				          </div>
+  				        </div>
+  				      </li>
+
+                <li>
+  				        <div class="item-content">
+  				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+  				          <div class="item-inner">
+  				            <div class="item-title label">处理方法</div>
+  				            <div class="item-input">
+  				              <input type="text" id="page_task_info_handleMethod_name" v-model="handleMethod_name" >
+  				            </div>
+  				          </div>
+  				        </div>
+  				      </li>
+                <li class="align-top">
+  				        <div class="item-content">
+  				          <div class="item-media"><i class="icon icon-form-comment"></i></div>
+  				          <div class="item-inner">
+  				            <div class="item-title label">处理备注</div>
+  				            <div class="item-input">
+  				              <textarea v-model="handle_contact" @blur="updateHandleContact"></textarea>
   				            </div>
   				          </div>
   				        </div>
@@ -166,13 +189,16 @@
   			</div>
 
         <equip_info ref="equip_info"></equip_info>
+        <hitchtype ref="hitchtype"></hitchtype>
+        <handleMethod ref="handleMethod"></handleMethod>
   		</div>
   		<!--#page_task_info  功能列表 -->
 </template>
 <script>
 
 import equip_info from '../components/equip_info.vue'
-
+import hitchtype from '../components/hitchtype.vue'
+import handleMethod from '../components/handleMethod.vue'
 export default {
   //name: 'app',
   data () {
@@ -184,13 +210,20 @@ export default {
       pole_name:'',
       pole_address:'',
       hitchType_id:'',
+      hitchType_name:'',
+      hitchReasonTpl_id:'',
+      hitchReasonTpl_name:'',
       hitchReason:'',
+      handleMethod_id:'',
+      handleMethod_name:'',
+      handle_contact:'',
       equiplist:[],
       members:[]
+
     }
   },
   components:{
-    equip_info
+    equip_info,hitchtype,handleMethod
   },
   beforeRouteEnter  (to, from, next) {
     next(vm => {
@@ -207,18 +240,64 @@ export default {
       vm.$refs.equip_info.getEquipinfo($(this).attr('ecode'));
       $.popup('.popup-equip_info');
     });
-
     $("#page_task_info .popup-equip_info").on("close",function(){
       $("#page_task_info").css("z-index",vm.z_index);
     });
 
-    $.post($.SP+'/mobile/task/queryAllHitchtype.do', {}, function(response){
-      vm.allHitchtype=response.root;
-      vm.inithitch();
+    //--------------------------------故障模板和故障原因
+    $("#page_task_info_hitchType_name,#page_task_info_hitchReasonTpl_name").click(function(){
+      vm.z_index=$("#page_task_info").css("z-index");
+      $("#page_task_info").css("z-index",20000);
+      $.popup('.popup-hitchtype');
     });
+    $("#page_task_info .popup-hitchtype").on("close",function(){
+      $("#page_task_info").css("z-index",vm.z_index);
+    });
+    vm.$refs.hitchtype.$on('selectHitchtype', function (ht_id,ht_name,tpl_id,tpl_name) {
+      vm.hitchType_id=ht_id;
+      vm.hitchType_name=ht_name;
+      vm.hitchReasonTpl_id=tpl_id;
+      vm.hitchReasonTpl_name=tpl_name;
+      vm.hitchReason=tpl_name;
+      //更新任务的故障类型和故障原因
+      $.post($.SP+'/mobile/task/updateTaskHitchtype.do',
+        {
+          id:vm.id,
+          hitchType_id:ht_id,
+          //hitchType_name:ht_name,
+          hitchReasonTpl_id:tpl_id,
+          hitchReason:tpl_name
+        },function(response){
+
+        });
+    });
+
+    //------------------------------------------处理方法
+    $("#page_task_info_handleMethod_name").click(function(){
+      vm.z_index=$("#page_task_info").css("z-index");
+      $("#page_task_info").css("z-index",20000);
+      $.popup('.popup-handleMethod');
+    });
+    $("#page_task_info .popup-handleMethod").on("close",function(){
+      $("#page_task_info").css("z-index",vm.z_index);
+    });
+    vm.$refs.handleMethod.$on('selectHandleMethod', function (ht_id,ht_name) {
+      vm.handleMethod_id=ht_id;
+      vm.handleMethod_name=ht_name;
+      //更新任务的故障类型和故障原因
+      $.post($.SP+'/mobile/task/updateHandleMethod.do',
+        {
+          id:vm.id,
+          handleMethod_id:ht_id
+        },function(response){
+
+        });
+    });
+
+    this.initevent();
   },
   updated:function(){
-    this.initevent();
+    //this.initevent();
     //console.log(1111111);
 
   },
@@ -228,9 +307,11 @@ export default {
       $.showPreloader("正在取数....");
       $.post($.SP+'/mobile/task/getMobileTaskVO.do', {id:this.id}, function(response){
         var root=response.root;
+        //root.handle_contact='2222';
         for (var x in root) {
           vue.$data[x]=root[x];
         }
+
         $.hidePreloader();
         //initevent();
       });
@@ -246,87 +327,42 @@ export default {
     initevent:function(){
       /****/
       //扫描的设备的清单，左划，出现删除按钮
-      $("#page_task_info_equiplist_tab li").on("swipeLeft",function(){
+      $("#page_task_info_equiplist_tab").on("swipeLeft","li",function(){
         $(this).siblings().removeClass("swipeLeft");
         $(this).addClass("swipeLeft");
-      }).on("swipeRight",function(){
+      }).on("swipeRight","li",function(){
+        $(this).removeClass("swipeLeft");
+      });
+      //鼠标经过的时候,兼容桌面程序
+      $("#page_task_info_equiplist_tab").on("mouseover","li",function(){
+        $(this).siblings().removeClass("swipeLeft");
+        $(this).addClass("swipeLeft");
+      }).on("mouseout","li",function(){
         $(this).removeClass("swipeLeft");
       });
 
-      $("#page_task_info_equiplist_tab li").on("dragstart",function(){
-        if($(this).hasClass("swipeLeft")){
-          $(this).removeClass("swipeLeft");
-        } else {
-          $(this).siblings().removeClass("swipeLeft");
-          $(this).addClass("swipeLeft");
-        }
-      });
     },//initevent
-    inithitch:function(){
+    updateHitchReason:function(){
       var vm=this;
-      var allHitchtype=this.allHitchtype;
-      //var values=[];
-      var displays=[];
-      for(var i=0;i<allHitchtype.length;i++){
-        //values.push(allHitchtype[i].id);
-        displays.push(allHitchtype[i].name);
-      }
-      $("#page_task_info_hitchType_id").picker({
-        toolbarTemplate: '<header class="bar bar-nav">\
-        <button class="button button-link pull-right close-picker">确定</button>\
-        <h1 class="title">故障类型</h1>\
-        </header>',
-        cols: [
-          {
-            textAlign: 'center',
-            values: displays//values
-            //displayValues:displays
-          }
-        ],
-        onClose:function(){
-          //alert($("#page_task_info_hitchType_id").val());
-          //
-          vm.inittpl($("#page_task_info_hitchType_id").val());
+      $.post($.SP+'/mobile/task/updateHitchReason.do',
+        {
+          id:vm.id,
+          hitchReason:vm.hitchReason
+        },function(response){
 
-        }
-      });
-
-
+        });
     },
-    inittpl:function(hitchType_name){//alert(hitchType_name);
-      var allHitchtype=this.allHitchtype;
-      //var values=[];
-      var displays=[];
-      for(var i=0;i<allHitchtype.length;i++){
-        if(hitchType_name==allHitchtype[i].name){
-          var aaa=allHitchtype[i].hitchReasonTpls;
-          //alert(aaa.length);
-          for(var j=0;j<aaa.length;j++){
-            //values.push(aaa[j].id);
-            displays.push(aaa[j].name);
-          }
-          break;
-        }
-      }
-      console.log(displays);
+    updateHandleContact:function(){
+      var vm=this;
+      $.post($.SP+'/mobile/task/updateHandleContact.do',
+        {
+          id:vm.id,
+          handle_contact:vm.handle_contact
+        },function(response){
 
-//$("#page_task_info_hitchReasonTpl_id").picker("destroy");
-      $("#page_task_info_hitchReasonTpl_id").picker({
-        value:displays[0],
-        cols: [
-          {
-            textAlign: 'center',
-            values: displays
-            //displayValues:displays
-          }
-        ],
-        onClose:function(){
-          //alert($("#page_task_info_hitchType_id").val());
+        });
+    }
 
-        }
-      });
-      //$("#page_task_info_hitchReasonTpl_id").picker('setValue',[displays[0]]);
-    }//inittpl
   }
 }
 </script>

@@ -7,8 +7,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.mawujun.report.TaskReportRepository">
 	  <!-- 未修复点位明细报表 -->
     <select id="exportUnrepairPoleReport" resultType="com.mawujun.task.TaskVO" parameterType="map">
-    	select a.*,b.code as pole_code from ems_task a,ems_pole b
-		where a.pole_id=b.id
+    	select a.*,b.code as pole_code,c.name as hitchType_name from ems_task a,ems_pole b,ems_hitchtype c
+		where a.pole_id=b.id and a.hitchType_id=c.id
 			and exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
 				where x.position_id=y.position_id and a.workunit_id=y.org_id and x.user_id=#{user_id} and y.look=1) 
 			and a.type='repair' and a.status!='complete'

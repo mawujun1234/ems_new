@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mawujun.baseinfo.EquipmentVO;
 import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.report.EquipmentStatusController;
+import com.mawujun.task.HandleMethodService;
 import com.mawujun.task.TaskStatus;
 import com.mawujun.task.TaskType;
 import com.mawujun.task.TaskVO;
@@ -19,6 +20,8 @@ public class MobileTaskController {
 	private MobileTaskService mobileTaskService;
 	@Autowired
 	private EquipmentStatusController equipmentStatusController;
+	@Autowired
+	private HandleMethodService handleMethodService;
 //	@Autowired
 //	private TaskService taskService;
 	
@@ -55,4 +58,38 @@ public class MobileTaskController {
 		return ResultModel.getInstance().setRoot(mobileTaskService.queryAllHitchtype());
 	}
 
+	@RequestMapping("/mobile/task/updateTaskHitchtype.do")
+	@ResponseBody
+	public String updateTaskHitchtype(String id,String hitchType_id,String hitchReasonTpl_id,String hitchReason){
+		mobileTaskService.updateTaskHitchtype(id, hitchType_id, hitchReasonTpl_id, hitchReason);
+		return "{\"success\":true}";
+	}
+	
+	@RequestMapping("/mobile/task/queryHandleMethodes.do")
+	@ResponseBody
+	public ResultModel queryHandleMethodes(){
+		
+		return ResultModel.getInstance().setRoot(handleMethodService.queryAll());
+	}
+	
+	@RequestMapping("/mobile/task/updateHandleMethod.do")
+	@ResponseBody
+	public String updateHandleMethod(String id,String handleMethod_id){
+		mobileTaskService.updateHandleMethod(id, handleMethod_id);
+		return "{\"success\":true}";
+	}
+	
+	@RequestMapping("/mobile/task/updateHitchReason.do")
+	@ResponseBody
+	public String updateHitchReason(String id,String hitchReason){
+		mobileTaskService.updateHitchReason(id, hitchReason);
+		return "{\"success\":true}";
+	}
+	
+	@RequestMapping("/mobile/task/updateHandleContact.do")
+	@ResponseBody
+	public String updateHandleContact(String id,String handle_contact){
+		mobileTaskService.updateHandleContact(id, handle_contact);
+		return "{\"success\":true}";
+	}
 }

@@ -136,7 +136,7 @@ public class RepairService extends AbstractService<Repair, String>{
 			
 			if(repair.getTask_id()!=null && !"".equals(repair.getTask_id())){
 				Task task=taskRepository.get(repair.getTask_id());
-				repair.setBroken_memo(task.getHitchType()+"-"+task.getHitchReason());
+				repair.setBroken_memo(task.getHitchReason());
 			}
 			
 			

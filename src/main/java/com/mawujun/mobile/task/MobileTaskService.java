@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mawujun.baseinfo.EquipmentVO;
 import com.mawujun.permission.ShiroUtils;
+import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.task.HitchTypeVO;
+import com.mawujun.task.TaskService;
 import com.mawujun.task.TaskStatus;
 import com.mawujun.task.TaskType;
 import com.mawujun.task.TaskVO;
@@ -22,6 +23,8 @@ import com.mawujun.utils.page.Pager;
 public class MobileTaskService {
 	@Autowired
 	private MobileTaskRepository mobileTaskRepository;
+	@Autowired
+	private TaskService taskService;
 
 
 	//@Override
@@ -59,6 +62,26 @@ public class MobileTaskService {
 
 	public List<HitchTypeVO> queryAllHitchtype(){
 		return mobileTaskRepository.queryAllHitchtype();
+	}
+	
+	public void updateTaskHitchtype(String id,String hitchType_id,String hitchReasonTpl_id,String hitchReason) {
+		taskService.update(Cnd.update().set(M.Task.hitchType_id, hitchType_id)
+				.set(M.Task.hitchReasonTpl_id, hitchReasonTpl_id)
+				.set(M.Task.hitchReason, hitchReason)
+				.andEquals(M.Task.id, id));
+		return;
+	}
+	
+	public void updateHandleMethod(String id,String handleMethod_id) {
+		taskService.update(Cnd.update().set(M.Task.handleMethod_id, handleMethod_id).andEquals(M.Task.id, id));
+	}
+	
+	public void updateHitchReason(String id,String hitchReason){
+		taskService.update(Cnd.update().set(M.Task.hitchReason, hitchReason).andEquals(M.Task.id, id));
+	}
+	
+	public void updateHandleContact(String id,String handle_contact){
+		taskService.update(Cnd.update().set(M.Task.handle_contact, handle_contact).andEquals(M.Task.id, id));
 	}
 
 }

@@ -64,7 +64,7 @@ public class Task implements IdEntity<String> {
 	@Column(length=36)
 	private String handleMethod_id;//处理方法
 	@Column(length=100)
-	private String handle_contact;//相关联系人的号码
+	private String handle_contact;//处理备注信息
 	
 	@Column(length=100)
 	private String patrolTaskType_id;//巡检任务类型，只有巡检任务可用
@@ -232,6 +232,14 @@ public class Task implements IdEntity<String> {
 	public void setHandle_contact(String handle_contact) {
 		this.handle_contact = handle_contact;
 	}
+
+//	public String getHitchType() {
+//		return hitchType;
+//	}
+//
+//	public void setHitchType(String hitchType) {
+//		this.hitchType = hitchType;
+//	}
 	
 	
 
