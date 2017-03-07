@@ -118,7 +118,7 @@ public class PoleService extends AbstractService<Pole, String>{
 	
 	
 	public  void transform(String customer_id,String[] pole_ids) {
-		if(customer_id==null ||pole_ids ==null || pole_ids.length==0){
+		if(customer_id==null || "".equals(customer_id) ||pole_ids ==null || pole_ids.length==0){
 			return;
 		}
 		for(String pole_id:pole_ids){
