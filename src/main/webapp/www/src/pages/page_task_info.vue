@@ -128,16 +128,16 @@
   				          </div>
   				        </div>
   				      </li>
-
+<!--
   				      <li>
   				      	<div class="searchbar row" style="margin-left:0.5rem;">
   						    <div class="search-input col-80">
-  						      <input type="search" id='page_task_info_search' placeholder='手工输入条码-->查询'/>
+  						      <input type="search" id='page_task_info_search' placeholder='手工输入条码查询'/>
   						    </div>
   						    <a class="button button-fill button-primary col-20">查询</a>
   					  	</div>
   				      </li>
-
+-->
   				    </ul>
   				  </div>
 
@@ -150,7 +150,7 @@
   				      <div class="list-block" >
   				        <ul>
   					  	  <li v-for="equip in equiplist">
-  					  	    <a href="javascript:void(0);" class="item-link item-content popup-all" :ecode="equip.ecode">
+  					  	    <a href="javascript:void(0);" class="item-link item-content" @click="show_popup_equip_info" :ecode="equip.ecode">
   						        <div class="item-media"><i class="icon icon-f7"></i></div>
   						        <div class="item-inner">
   						          <div class="item-title">{{equip.ecode}}</div>
@@ -191,6 +191,8 @@
         <equip_info ref="equip_info"></equip_info>
         <hitchtype ref="hitchtype"></hitchtype>
         <handleMethod ref="handleMethod"></handleMethod>
+        <ball_navs ref="ball_navs"></ball_navs>
+        <popup_members ref="popup_members"></popup_members>
   		</div>
   		<!--#page_task_info  功能列表 -->
 </template>
@@ -199,6 +201,9 @@
 import equip_info from '../components/equip_info.vue'
 import hitchtype from '../components/hitchtype.vue'
 import handleMethod from '../components/handleMethod.vue'
+import ball_navs from '../components/ball_navs.vue'
+import popup_members from '../components/popup_members.vue'
+
 export default {
   //name: 'app',
   data () {
@@ -223,7 +228,7 @@ export default {
     }
   },
   components:{
-    equip_info,hitchtype,handleMethod
+    equip_info,hitchtype,handleMethod,ball_navs,popup_members
   },
   beforeRouteEnter  (to, from, next) {
     next(vm => {
@@ -234,12 +239,14 @@ export default {
   },
   mounted:function(){
     var vm=this;
+    /**
     $("#page_task_info").on('click','.popup-all', function () {
       vm.z_index=$("#page_task_info").css("z-index");
       $("#page_task_info").css("z-index",20000);
       vm.$refs.equip_info.getEquipinfo($(this).attr('ecode'));
       $.popup('.popup-equip_info');
     });
+    **/
     $("#page_task_info .popup-equip_info").on("close",function(){
       $("#page_task_info").css("z-index",vm.z_index);
     });
@@ -324,6 +331,13 @@ export default {
         }
       });
     },//back
+    show_popup_equip_info:function(){
+      var vm=this;
+      vm.z_index=$("#page_task_info").css("z-index");
+      $("#page_task_info").css("z-index",20000);
+      vm.$refs.equip_info.getEquipinfo($(this).attr('ecode'));
+      $.popup('.popup-equip_info');
+    },
     initevent:function(){
       /****/
       //扫描的设备的清单，左划，出现删除按钮
