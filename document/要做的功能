@@ -8,9 +8,8 @@ ok在获取页面功能的同时，获取功能页面上各个任务的任务数
    注意要根据任务的类型获取不同类型任务的任务数
 ok对任务模块进行重构
 ok查询规格任务的任务数，在导航进来的时候
+ok客户信息管理里面添加转移功能，并且别忘记添加权限customer_pole_transform,customer_transform
 
-
-客户信息管理里面添加转移功能，并且别忘记添加权限customer_pole_transform,customer_transform
 
 通过对一个悬浮按钮进行点击，点击弹出 编号，增加成员，导航三个功能
 	搬到界面上，放在右下角
