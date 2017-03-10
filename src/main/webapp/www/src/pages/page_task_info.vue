@@ -157,7 +157,7 @@
   								      <div class="item-after">{{equip.subtype_name}}</div>
   						        </div>
   					        </a>
-  					        <a href="javascript:;" class="remove">删除</a>
+  					        <a href="javascript:void(0);" class="remove"  @click="delete_equip_info(equip.ecode)">删除</a>
   					      </li>
   					    </ul>
   					  </div>
@@ -192,7 +192,7 @@
         <hitchtype ref="hitchtype"></hitchtype>
         <handleMethod ref="handleMethod"></handleMethod>
         <ball_navs ref="ball_navs"></ball_navs>
-        <popup_members ref="popup_members"></popup_members>
+        <popup_members ref="popup_members" ></popup_members>
   		</div>
   		<!--#page_task_info  功能列表 -->
 </template>
@@ -292,13 +292,12 @@ export default {
       vm.handleMethod_id=ht_id;
       vm.handleMethod_name=ht_name;
       //更新任务的故障类型和故障原因
-      $.post($.SP+'/mobile/task/updateHandleMethod.do',
-        {
+      $.post($.SP+'/mobile/task/updateHandleMethod.do',{
           id:vm.id,
           handleMethod_id:ht_id
         },function(response){
 
-        });
+      });
     });
 
     this.initevent();
@@ -375,8 +374,16 @@ export default {
         },function(response){
 
         });
-    }
+    },
+    delete_equip_info:function(ecode){
+      $.post($.SP+'/mobile/task/delete_equip_info.do',
+        {
+          ecode:ecode,
+          task_id:vm.id
+        },function(response){
 
+        });
+    }
   }
 }
 </script>

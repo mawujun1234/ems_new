@@ -17,11 +17,11 @@
       <div class="searchbar">
         <div class="search-input">
           <label class="icon icon-search" for="search"></label>
-          <input type="search" id='search' placeholder='输入设备条码...'/>
+          <input type="search" id="page_task_info_ecode_input" placeholder='输入设备条码...'/>
         </div>
       </div>
 
-      <p><a href="javascript:void(0);" class="button button-fill">查询 </a></p>
+      <p><a href="javascript:void(0);" class="button button-fill" @click="scanQrcode">查询 </a></p>
     </div>
   </div>
 </div>
@@ -31,10 +31,11 @@ export default {
   //name: 'app',
   data () {
     return {
-
+      ecode:'11'
     }
   },
   mounted: function mounted() {
+    var vm=this;
     //do something after mounting vue instance
     var ul=$("#ball_navs"),li=$("#ball_navs li"),i=li.length,n=i-1,r=90;
 		ul.click(function(){
@@ -80,7 +81,22 @@ export default {
        $.popup('.popup_members');
     },
     showNavigation:function(){
-      alert("请稍候...");
+      alert("正在开发中...");
+    },
+    scanQrcode:function(){
+      var vm=this;
+      var ecode=$("#page_task_info_ecode_input").val();
+      var parent=vm.$parent;
+      $.post($.SP+'/mobile/task/scanEquip_info.do',{
+          ecode:ecode,
+          task_id:parent.id
+        },function(response){
+
+          if(response.root){
+            parent.equiplist.push(response.root);
+          }
+          $.closeModal(".popup-qrcode-input")
+      });
     }
   }
 }

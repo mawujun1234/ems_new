@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.baseinfo.EquipmentVO;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.task.HitchTypeVO;
@@ -83,5 +84,14 @@ public class MobileTaskService {
 	public void updateHandleContact(String id,String handle_contact){
 		taskService.update(Cnd.update().set(M.Task.handle_contact, handle_contact).andEquals(M.Task.id, id));
 	}
+	
+	public Equiplist scanEquip_info(String ecode,String task_id){
+		Equiplist equiplist= mobileTaskRepository.scanEquip_info(ecode);
+		
+		return equiplist;
+	}
 
+	public void delete_equip_info(String ecode,String task_id) {
+		
+	}
 }

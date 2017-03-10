@@ -16,7 +16,7 @@
             <div class="item-title">{{memb.name}}</div>
             <div class="item-after">
               <button id="btn_hitchtype" class="button pull-right button-success button-fill" @click="selectMember(wk.id,wk.name,memb.id,memb.name)">
-                选择
+                加入
               </button>
             </div>
           </div>

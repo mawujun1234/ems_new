@@ -59,5 +59,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		order by a.id,b.id
     </select>
     
+    <select id="scanEquip_info" resultType="com.mawujun.mobile.task.Equiplist" >
+    	select b.ecode,c.name as subtype_name  from ems_equipment b,ems_equipmentsubtype c
+		where  b.subtype_id=c.id and b.ecode=#{ecode}
+    </select>
 </mapper>
 

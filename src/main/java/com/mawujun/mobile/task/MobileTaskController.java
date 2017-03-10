@@ -40,7 +40,7 @@ public class MobileTaskController {
 		return ResultModel.getInstance().setRoot(vo);
 	}
 	/**
-	 * 获取设备信息
+	 * 获取设备信息,当点开一个设备编号，查看明细的时候
 	 * @param ecode
 	 * @return
 	 */
@@ -50,6 +50,26 @@ public class MobileTaskController {
 		EquipmentVO vo= equipmentStatusController.query(ecode);
 		return ResultModel.getInstance().setRoot(vo);
 	}
+	/**
+	 * 扫描的时候
+	 * @author mawujun qq:16064988 mawujun1234@163.com
+	 * @param ecode 
+	 * @return
+	 */
+	@RequestMapping("/mobile/task/scanEquip_info.do")
+	@ResponseBody
+	public ResultModel scanEquip_info(String ecode,String task_id){
+		Equiplist equiplist=mobileTaskService.scanEquip_info(ecode,task_id);
+		return ResultModel.getInstance().setRoot(equiplist);
+	}
+	
+	@RequestMapping("/mobile/task/delete_equip_info.do")
+	@ResponseBody
+	public String delete_equip_info(String ecode,String task_id){
+		mobileTaskService.delete_equip_info(ecode,task_id);
+		return "{\"success\":true}";
+	}
+	 
 	
 	@RequestMapping("/mobile/task/queryAllHitchtype.do")
 	@ResponseBody

@@ -55,9 +55,9 @@ $(function(){
   $(document).on('ajaxBeforeSend', function(e, xhr, options){
     xhr.withCredentials = true;
   })
-	$(document).on('ajaxSuccess',function(e,xhr,options,response){
-		handlerReturn(response);
-	});
+	//$(document).on('ajaxSuccess',function(e,xhr,options,response){
+		//handlerReturn(response);
+	//});
 	$(document).on('ajaxError',function(e,xhr,options,response){
 		if(xhr.status==503){
 			handlerReturn(JSON.parse(xhr.responseText));
@@ -70,7 +70,7 @@ $(function(){
 	function handlerReturn(response){
 		if(response.success==false){
 				if(response.msg){
-					$.alert(response.msg);
+					alert(response.msg);
 					if(response.errorCode=='nologin'){
 						//$.router.load("#od_loginpage");
 					}
@@ -79,6 +79,8 @@ $(function(){
 					//return;
 				}
 				$.hidePreloader();
-		}
+		} else {
+      $.alert("系统发生异常");
+    }
 	}
 });
