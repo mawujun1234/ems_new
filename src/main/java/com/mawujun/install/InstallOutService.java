@@ -66,7 +66,13 @@ public class InstallOutService extends AbstractService<InstallOut, String>{
 	}
 	
 	public InstallOutListVO getInstallOutListVOByEcode(String ecode,String store_id) {
-		return installOutRepository.getInstallOutListVOByEcode(ecode, store_id);
+		InstallOutListVO equipment= installOutRepository.getInstallOutListVOByEcode(ecode, store_id);
+		if(equipment==null){
+			//equipment=new Equipment();
+			//equipment.setStatus(0);
+			throw new BusinessException("对不起，该条码对应的设备不存在，或者该设备挂在其他仓库中,或者设备状态不对!");
+		}
+		return equipment;
 	}
 
 	/**

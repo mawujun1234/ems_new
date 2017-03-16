@@ -371,72 +371,65 @@ public static final class InstallOutType {
 	public static final String memo="memo";
 	public static final String id="id";
 }
+public static final class AssetClean {
+	public static final String ecode="ecode";
+	public static final String day_key="day_key";
+	public static final String day_have="day_have";
+	public static final String day_used="day_used";
+	public static final String value_original="value_original";
+	public static final String value_old="value_old";
+	public static final String value_net="value_net";
+}
+public static final class Day_sparepart {
+	public static final String daykey="daykey";
+	public static final String store_id="store_id";
+	public static final String prod_id="prod_id";
+	public static final String monthkey="monthkey";
+	public static final String todaynum="todaynum";
+	public static final String yesterdaynum="yesterdaynum";
+	public static final String purchasenum="purchasenum";
+	public static final String oldnum="oldnum";
+	public static final String installoutnum="installoutnum";
+	public static final String repairinnum="repairinnum";
+	public static final String scrapoutnum="scrapoutnum";
+	public static final String repairoutnum="repairoutnum";
+	public static final String borrownum="borrownum";
+	public static final String borrowreturnnum="borrowreturnnum";
+	public static final String createDate="createDate";
+}
+public static final class Equipment_Store_Day {
+	public static final String ecode="ecode";
+	public static final String day_key="day_key";
+	public static final String store_id="store_id";
+	public static final String value_original="value_original";
+	public static final String value_old="value_old";
+	public static final String value_net="value_net";
+}
 public static final class MetaVersion {
 	public static final String clasName="clasName";
 	public static final String version="version";
 }
-public static final class HandleMethod {
-	public static final String name="name";
-	public static final String id="id";
-}
-public static final class HitchReasonTpl {
-	public static final String id="id";
-	public static final String name="name";
-	public static final String tpl="tpl";
-	public static final String hitchType_id="hitchType_id";
-}
-public static final class HitchType {
-	public static final String id="id";
-	public static final String name="name";
-}
-public static final class LockEquipment {
-	public static final String ecode="ecode";
-	public static final String lockType="lockType";
-	public static final String type_id="type_id";
+public static final class Geolocation {
+	public static final String sessionId="sessionId";
+	public static final String uuid="uuid";
+	public static final String loginName="loginName";
+	public static final String longitude="longitude";
+	public static final String latitude="latitude";
+	public static final String altitude="altitude";
+	public static final String radius="radius";
+	public static final String direction="direction";
+	public static final String speed="speed";
+	public static final String distance="distance";
+	public static final String loc_type="loc_type";
+	public static final String loc_time="loc_time";
+	public static final String loc_time_interval="loc_time_interval";
+	public static final String gps_interval="gps_interval";
 	public static final String createDate="createDate";
-}
-public static final class Overtime {
-	public static final String id="id";
-	public static final String read="read";
-	public static final String handling="handling";
-}
-public static final class PatrolTaskType {
-	public static final String name="name";
 	public static final String id="id";
 }
-public static final class Task {
+public static final class GpsConfig {
 	public static final String id="id";
-	public static final String memo="memo";
-	public static final String type="type";
-	public static final String createrType="createrType";
-	public static final String status="status";
-	public static final String pole_id="pole_id";
-	public static final String pole_name="pole_name";
-	public static final String pole_address="pole_address";
-	public static final String workunit_id="workunit_id";
-	public static final String workunit_name="workunit_name";
-	public static final String customer_id="customer_id";
-	public static final String customer_name="customer_name";
-	public static final String hitchDate="hitchDate";
-	public static final String createDate="createDate";
-	public static final String startHandDate="startHandDate";
-	public static final String submitDate="submitDate";
-	public static final String completeDate="completeDate";
-	public static final String hitchType_id="hitchType_id";
-	public static final String hitchType="hitchType";
-	public static final String hitchReasonTpl_id="hitchReasonTpl_id";
-	public static final String hitchReason="hitchReason";
-	public static final String handleMethod_id="handleMethod_id";
-	public static final String handle_contact="handle_contact";
-	public static final String patrolTaskType_id="patrolTaskType_id";
-}
-public static final class TaskEquipmentList {
-	public static final String task_id="task_id";
-	public static final String ecode="ecode";
-	public static final String scanDate="scanDate";
-	public static final String type="type";
-	public static final String installoutType="installoutType";
-	public static final String id="id";
+	public static final String interval="interval";
 }
 public static final class Org {
 	public static final String id="id";
@@ -612,6 +605,7 @@ public static final class Menu {
 	public static final String name="name";
 	public static final String url="url";
 	public static final String leaf="leaf";
+	public static final String ismobile="ismobile";
 	public static final String menuType="menuType";
 	public static final String parent_id="parent_id";
 	public static final String sort="sort";
@@ -634,6 +628,7 @@ public static final class RoleMenu {
 		public static final String name="menu.name";
 		public static final String url="menu.url";
 		public static final String leaf="menu.leaf";
+		public static final String ismobile="menu.ismobile";
 		public static final String menuType="menu.menuType";
 		public static final String parent_id="menu.parent_id";
 		public static final String sort="menu.sort";
@@ -833,5 +828,71 @@ public static final class OrderList {
 	public static final String depreci_day="depreci_day";
 	public static final String printNum="printNum";
 	public static final String id="id";
+}
+public static final class HandleMethod {
+	public static final String name="name";
+	public static final String id="id";
+}
+public static final class HitchReasonTpl {
+	public static final String id="id";
+	public static final String name="name";
+	public static final String tpl="tpl";
+	public static final String hitchType_id="hitchType_id";
+}
+public static final class HitchType {
+	public static final String id="id";
+	public static final String name="name";
+}
+public static final class LockEquipment {
+	public static final String ecode="ecode";
+	public static final String lockType="lockType";
+	public static final String type_id="type_id";
+	public static final String createDate="createDate";
+}
+public static final class Overtime {
+	public static final String id="id";
+	public static final String read="read";
+	public static final String handling="handling";
+}
+public static final class PatrolTaskType {
+	public static final String name="name";
+	public static final String id="id";
+}
+public static final class Task {
+	public static final String id="id";
+	public static final String memo="memo";
+	public static final String type="type";
+	public static final String createrType="createrType";
+	public static final String status="status";
+	public static final String pole_id="pole_id";
+	public static final String pole_name="pole_name";
+	public static final String pole_address="pole_address";
+	public static final String workunit_id="workunit_id";
+	public static final String workunit_name="workunit_name";
+	public static final String customer_id="customer_id";
+	public static final String customer_name="customer_name";
+	public static final String hitchDate="hitchDate";
+	public static final String createDate="createDate";
+	public static final String startHandDate="startHandDate";
+	public static final String submitDate="submitDate";
+	public static final String completeDate="completeDate";
+	public static final String hitchType_id="hitchType_id";
+	public static final String hitchReasonTpl_id="hitchReasonTpl_id";
+	public static final String hitchReason="hitchReason";
+	public static final String handleMethod_id="handleMethod_id";
+	public static final String handle_contact="handle_contact";
+	public static final String patrolTaskType_id="patrolTaskType_id";
+}
+public static final class TaskEquipmentList {
+	public static final String task_id="task_id";
+	public static final String ecode="ecode";
+	public static final String scanDate="scanDate";
+	public static final String type="type";
+	public static final String installoutType="installoutType";
+	public static final String id="id";
+}
+public static final class TaskMember {
+	public static final String task_id="task_id";
+	public static final String user_id="user_id";
 }
 }

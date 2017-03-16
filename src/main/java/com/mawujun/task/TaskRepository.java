@@ -73,4 +73,6 @@ public interface TaskRepository extends IRepository<Task, String>{
 	public int count_repair_task_by_pole_id(@Param("pole_id")String pole_id);
 	
 	public int count_patrolTaskType_id(@Param("patrolTaskType_id")String patrolTaskType_id);
+	
+	public void initTaskMember(@Param("task_id")String task_id);
 }

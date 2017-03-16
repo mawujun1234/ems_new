@@ -1,5 +1,6 @@
 package com.mawujun.mobile.task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MobileTaskVO {
@@ -28,6 +29,12 @@ public class MobileTaskVO {
 	
 	public String getHandle_contact() {
 		return handle_contact==null?"":handle_contact;
+	}
+	public void addMember(Members member) {
+		if(this.members==null){
+			this.members=new ArrayList<Members>();
+		}
+		this.members.add(member);
 	}
 	
 	public String getId() {

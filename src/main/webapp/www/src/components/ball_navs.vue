@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <p><a href="javascript:void(0);" class="button button-fill" @click="scanQrcode">查询 </a></p>
+      <p><a href="javascript:void(0);" class="button button-big button-fill" @click="scanQrcode">确认选择 </a></p>
     </div>
   </div>
 </div>
@@ -31,7 +31,7 @@ export default {
   //name: 'app',
   data () {
     return {
-      ecode:'11'
+      //ecode:'11'
     }
   },
   mounted: function mounted() {
@@ -76,6 +76,8 @@ export default {
     },
     showMembers:function(){
       var vm=this;
+      vm.$parent.$refs.popup_members.queryWorkunites(vm.$parent.id);
+
       vm.z_index=$("#page_task_info").css("z-index");
       $("#page_task_info").css("z-index",20000);
        $.popup('.popup_members');
@@ -95,7 +97,9 @@ export default {
           if(response.root){
             parent.equiplist.push(response.root);
           }
-          $.closeModal(".popup-qrcode-input")
+          $("#page_task_info_ecode_input").val("");
+          $.closeModal(".popup-qrcode-input");
+
       });
     }
   }
@@ -115,7 +119,7 @@ export default {
 	text-align:center;
 	border-color:red;
 	cursor:pointer;
-  z-index:15000;
+  z-index:10000;
 }
 
 #ball_navs>li,#ball_navs:after{

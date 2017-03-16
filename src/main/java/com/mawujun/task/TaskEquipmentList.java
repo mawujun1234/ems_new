@@ -20,6 +20,10 @@ import com.mawujun.repository.idEntity.UUIDEntity;
 @Entity
 @Table(name="ems_taskequipmentlist",uniqueConstraints=@UniqueConstraint(columnNames={"task_id","ecode"}))
 public class TaskEquipmentList extends UUIDEntity {
+	/**
+	 * @author mawujun qq:16064988 mawujun1234@163.com
+	 */
+	private static final long serialVersionUID = 1L;
 	@Column(length=36)
 	private String task_id;
 	@Column(length=36)

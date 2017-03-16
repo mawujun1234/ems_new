@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.mawujun.baseinfo.EquipmentVO;
 import com.mawujun.task.HitchTypeVO;
 import com.mawujun.task.TaskVO;
 import com.mawujun.utils.page.Pager;
@@ -25,8 +24,16 @@ public interface MobileTaskRepository {
 	
 	public MobileTaskVO getMobileTaskVO(@Param("task_id")String id);
 	public List<Equiplist> getMobileTaskVO_equiplist(@Param("task_id")String task_id);
+	public List<Members> getMobileTaskVO_members(@Param("task_id")String task_id);
 	
 	public List<HitchTypeVO> queryAllHitchtype();
 	
 	public Equiplist scanEquip_info(@Param("ecode")String ecode);
+	
+	/**
+	 * 查询作业单位和拥有的人
+	 * @author mawujun qq:16064988 mawujun1234@163.com
+	 * @return
+	 */
+	public List<Workunit> queryMembers(@Param("user_id")String user_id,@Param("task_id")String task_id);
 }

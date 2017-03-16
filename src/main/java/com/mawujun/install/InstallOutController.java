@@ -72,11 +72,11 @@ public class InstallOutController {
 		}
 		
 		InstallOutListVO equipment= installOutStoreService.getInstallOutListVOByEcode(ecode,store_id);
-		if(equipment==null){
-			//equipment=new Equipment();
-			//equipment.setStatus(0);
-			throw new BusinessException("对不起，该条码对应的设备不存在，或者该设备挂在其他仓库中,或者设备状态不对!");
-		}
+//		if(equipment==null){
+//			//equipment=new Equipment();
+//			//equipment.setStatus(0);
+//			throw new BusinessException("对不起，该条码对应的设备不存在，或者该设备挂在其他仓库中,或者设备状态不对!");
+//		}
 		equipment.setInstallOutType_id(installOutType_id);
 		equipment.setInstallOutType_name(installOutType_name);
 		equipment.setInstallOutType_content(installOutType_content);

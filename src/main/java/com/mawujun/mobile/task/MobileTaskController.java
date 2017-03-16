@@ -1,5 +1,7 @@
 package com.mawujun.mobile.task;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -111,5 +113,28 @@ public class MobileTaskController {
 	public String updateHandleContact(String id,String handle_contact){
 		mobileTaskService.updateHandleContact(id, handle_contact);
 		return "{\"success\":true}";
+	}
+	
+	
+	@RequestMapping("/mobile/task/queryMembers.do")
+	@ResponseBody
+	public List<Workunit> queryMembers(String task_id) {
+		return mobileTaskService.queryMembers(task_id);
+		
+	}
+	
+	@RequestMapping("/mobile/task/selectMember.do")
+	@ResponseBody
+	public ResultModel selectMember(String task_id,String user_id) {
+		mobileTaskService.selectMember(task_id, user_id);
+		return ResultModel.getInstance();
+		
+	}
+	@RequestMapping("/mobile/task/deleteMember.do")
+	@ResponseBody
+	public ResultModel deleteMember(String task_id,String user_id) {
+		mobileTaskService.deleteMember(task_id, user_id);
+		return ResultModel.getInstance();
+		
 	}
 }

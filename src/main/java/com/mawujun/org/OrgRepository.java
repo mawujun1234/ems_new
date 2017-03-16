@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.mawujun.mobile.task.Workunit;
 import com.mawujun.repository.IRepository;
 /**
  * @author mawujun qq:16064988 e-mail:mawujun1234@163.com 
@@ -31,4 +32,6 @@ public interface OrgRepository extends IRepository<Org, String>{
 	public List<Org> queryStores4Combo(@Param("look")Boolean look,@Param("edit")Boolean edit,@Param("user_id")String user_id,@Param("orgtype")String orgtype);
 	public List<Org> queryWorkunits4Combo(@Param("look")Boolean look,@Param("edit")Boolean edit,@Param("user_id")String user_id);
 	public List<Org> queryRepaircenter4Combo(@Param("look")Boolean look,@Param("edit")Boolean edit,@Param("user_id")String user_id);
+	
+
 }

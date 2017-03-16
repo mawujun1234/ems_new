@@ -313,5 +313,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <select id="count_patrolTaskType_id" resultType="int" parameterType="map">
     	select count(id) from ems_task where patrolTaskType_id=#{patrolTaskType_id}
     </select>
+    <!-- 新建任务的时候，同时插入任务成员 -->
+    <insert id="initTaskMember">
+    	insert into ems_task_member(task_id,user_id) 
+		select a.id,c.user_id from ems_task a,t_position_org_user c
+		where   a.workunit_id=c.org_id and a.id=#{task_id}
+    </insert>
 </mapper>
 

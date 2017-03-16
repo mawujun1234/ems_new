@@ -68,6 +68,8 @@ public class TaskService extends AbstractService<Task, String>{
 	@Autowired
 	private TaskEquipmentListRepository taskEquipmentListRepository;
 	@Autowired
+	private TaskMemberRepository taskMemberRepository;
+	@Autowired
 	private EquipmentRepository equipmentRepository;
 	@Autowired
 	private EquipmentWorkunitRepository equipmentWorkunitRepository;
@@ -148,6 +150,9 @@ public class TaskService extends AbstractService<Task, String>{
 				poleRepository.update(Cnd.update().set(M.Pole.status, PoleStatus.hitch).andEquals(M.Pole.id, task.getPole_id()));	
 			}
 			
+			//初始化任务成员，从作业单位所拥有的人员上获取
+			taskRepository.initTaskMember(task.getId());
+			
 		}
 	}
 	public void cancel(String id) {
@@ -168,7 +173,13 @@ public class TaskService extends AbstractService<Task, String>{
 			//如果是维修任务，就改回正常的状态
 			poleRepository.update(Cnd.update().set(M.Pole.status, PoleStatus.using).andEquals(M.Pole.id, task.getPole_id()));	
 		}
+		
+		//删除任务上挂的设备，锁定的设备，还有任务成员
+		taskMemberRepository.deleteBatch(Cnd.delete().andEquals(M.TaskMember.task_id, id));
+				
 		this.deleteBatch(Cnd.delete().andEquals(M.Task.id, id));
+		
+		
 	}
 //	/**
 //	 * 管理人员 确认任务单,同时修改设备的状态

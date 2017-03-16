@@ -166,14 +166,14 @@
   				        <div class="list-block" >
   					        <ul>
   						  	  <li v-for="member in members">
-  						  	    <a href="#page_equip_info" class="item-link item-content">
+  						  	    <!--<a href="#page_equip_info" class="item-link item-content">-->
   							        <div class="item-media"><i class="icon icon-f7"></i></div>
   							        <div class="item-inner">
   							          <div class="item-title">{{member.name}}</div>
   									      <div class="item-after">{{member.workunit_name}}</div>
   							        </div>
-  						        </a>
-  						        <a href="javascript:;" class="remove">删除</a>
+  						        <!--</a>-->
+  						        <a href="javascript:void(0);" class="remove" @click="delete_member(member.id)">删除</a>
   						      </li>
   						    </ul>
   						 </div>
@@ -192,7 +192,7 @@
         <hitchtype ref="hitchtype"></hitchtype>
         <handleMethod ref="handleMethod"></handleMethod>
         <ball_navs ref="ball_navs"></ball_navs>
-        <popup_members ref="popup_members" ></popup_members>
+        <popup_members ref="popup_members" v-on:selectMember="select_member"></popup_members>
   		</div>
   		<!--#page_task_info  功能列表 -->
 </template>
@@ -340,14 +340,14 @@ export default {
     initevent:function(){
       /****/
       //扫描的设备的清单，左划，出现删除按钮
-      $("#page_task_info_equiplist_tab").on("swipeLeft","li",function(){
+      $("#page_task_info_equiplist_tab,#page_task_info_members_tab").on("swipeLeft","li",function(){
         $(this).siblings().removeClass("swipeLeft");
         $(this).addClass("swipeLeft");
       }).on("swipeRight","li",function(){
         $(this).removeClass("swipeLeft");
       });
       //鼠标经过的时候,兼容桌面程序
-      $("#page_task_info_equiplist_tab").on("mouseover","li",function(){
+      $("#page_task_info_equiplist_tab,#page_task_info_members_tab").on("mouseover","li",function(){
         $(this).siblings().removeClass("swipeLeft");
         $(this).addClass("swipeLeft");
       }).on("mouseout","li",function(){
@@ -376,14 +376,62 @@ export default {
         });
     },
     delete_equip_info:function(ecode){
-      $.post($.SP+'/mobile/task/delete_equip_info.do',
-        {
-          ecode:ecode,
-          task_id:vm.id
-        },function(response){
+      var r=confirm("确定要删除吗?")
+      if (r==true){
+        var vm=this;
+        $.post($.SP+'/mobile/task/delete_equip_info.do',
+          {
+            ecode:ecode,
+            task_id:vm.id
+          },function(response){
+            //vm.equiplist.push(response.root);
+            var index=-1;
+            for(var i=0;i<vm.equiplist.length;i++) {
+              if(ecode==vm.equiplist[i].ecode){
+                index=i;
+              }
+            }
+            if(index!=-1){
+              vm.equiplist.splice(index,1);
+            }
 
-        });
-    }
+          });
+        }//if (r==true){
+    },
+    select_member:function(wk_id,wk_name,memb_id,memb_name){
+      var vm=this;
+      if(vm.members==null){
+        vm.members=[];
+      }
+      vm.members.push({
+        id:memb_id,
+        name:memb_name,
+        workunit_id:wk_id,
+        workunit_name:wk_name
+      });
+    },
+    delete_member:function(user_id){
+      var r=confirm("确定要删除吗?")
+      if (r==true){
+        var vm=this;
+        $.post($.SP+'/mobile/task/deleteMember.do',
+          {
+            user_id:user_id,
+            task_id:vm.id
+          },function(response){
+            var index=-1;
+            for(var i=0;i<vm.members.length;i++) {
+              if(user_id==vm.members[i].id){
+                index=i;
+              }
+            }
+            if(index!=-1){
+              vm.members.splice(index,1);
+            }
+
+          });
+        }//if (r==true){
+    },
   }
 }
 </script>
@@ -414,7 +462,8 @@ export default {
 	text-align: center;
 	text-decoration:none;
 	margin-right:-2.8rem;
-	border-bottom:1px solid #989898;;
+	border-bottom:1px solid #989898;
+
 }
 #page_task_info .tabs .tab li.swipeLeft {
 	transform:translateX(-3rem);

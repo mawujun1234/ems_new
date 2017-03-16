@@ -25,21 +25,29 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		order by b.code asc
     </select>
     
+    <!-- 用left join 是因为除了维修任务，其他的都是不需要获取这三个数据的-->
     <select id="getMobileTaskVO" resultType="com.mawujun.mobile.task.MobileTaskVO" parameterType="map">
     	select a.id,a.memo,a.type,a.status,a.pole_id,b.code as pole_code,b.longitude as pole_longitude,b.latitude as pole_latitude,b.name as pole_name,b.address as pole_address,a.createDate 
     	,a.hitchType_id,c.name as hitchType_name,a.hitchReasonTpl_id,d.name as hitchReasonTpl_name,a.hitchReason
     	,a.handleMethod_id,e.name as handleMethod_name,a.handle_contact
     	from ems_task a
     	inner join ems_pole b on a.pole_id=b.id 
-    	inner join ems_hitchtype c on a.hitchtype_id=c.id
-    	inner join ems_hitchreasontpl d on a.hitchReasonTpl_id=d.id
-    	inner join ems_handlemethod e on a.handleMethod_id=e.id
+    	left join ems_hitchtype c on a.hitchtype_id=c.id
+    	left join ems_hitchreasontpl d on a.hitchReasonTpl_id=d.id
+    	left join ems_handlemethod e on a.handleMethod_id=e.id
       	where a.id=#{task_id}
     </select>
     
     <select id="getMobileTaskVO_equiplist" resultType="com.mawujun.mobile.task.Equiplist" parameterType="map">
     	select a.ecode,c.name as subtype_name  from ems_taskequipmentlist a,ems_equipment b,ems_equipmentsubtype c
 		where a.ecode=b.ecode and b.subtype_id=c.id and a.task_id=#{task_id}
+    </select>
+    <select id="getMobileTaskVO_members" resultType="com.mawujun.mobile.task.Members" parameterType="map">
+    	select b.id,b.name,d.name as workunit_name
+	    from ems_task_member a,t_user b,t_position_org_user c,t_org d
+	    where a.user_id=b.id and b.id=c.user_id and c.org_id=d.id and d.orgtype='workunit'
+	    and a.task_id=#{task_id}
+	    order by b.id
     </select>
     
     
@@ -62,6 +70,26 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <select id="scanEquip_info" resultType="com.mawujun.mobile.task.Equiplist" >
     	select b.ecode,c.name as subtype_name  from ems_equipment b,ems_equipmentsubtype c
 		where  b.subtype_id=c.id and b.ecode=#{ecode}
+    </select>
+    
+     <!-- 在移动端查询祖业单位和拥有的用户的时候，加了权限过滤，必须授予权限才能访问 -->
+    <resultMap type="com.mawujun.mobile.task.Workunit" id="Workunit">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+
+		<collection property="members" ofType="com.mawujun.permission.User">
+          <id property="id" column="user_id"/>
+          <result property="name" column="user_name"/>
+    	</collection>
+	</resultMap>
+	<!-- 在添加成员的时候，查询可以添加哪些成员，有权限的限制 -->
+    <select id="queryMembers" resultMap="Workunit" >
+    	select a.id,a.name,c.user_id,d.name as user_name 
+		from t_org a,t_position_org_access b,t_position_org_user c,t_user d,t_position_org_user e
+		where a.id=b.org_id and b.org_id=c.org_id and c.user_id=d.id
+		and b.position_id=e.position_id and a.orgType='workunit' and e.user_id=#{user_id}
+		and not exists (select * from ems_task_member memb 
+    		where c.user_id=memb.user_id and memb.task_id=#{task_id}) 
     </select>
 </mapper>
 

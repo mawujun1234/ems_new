@@ -10,7 +10,10 @@ alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_prod_id_orderlist foreign
 alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_subtype_id_orderlist foreign key("SUBTYPE_ID") references "EMS_EQUIPMENTSUBTYPE"("ID");
 alter table "EMSNEW"."EMS_ORDERLIST" add constraint fk_type_id_orderlist foreign key("TYPE_ID") references "EMS_EQUIPMENTTYPE"("ID");
 alter table "EMSNEW"."EMS_INSTORE" add constraint fk_instore_store_id foreign key("STORE_ID") references "T_ORG"("ID");
-
+alter table EMS_TASK_MEMBER add constraint memb_task_id foreign key (TASK_ID)  references ems_task (ID);
+alter table EMS_TASK_MEMBER  add constraint memb_user_id foreign key (USER_ID)  references t_user (ID);
+alter table EMS_TASKEQUIPMENTLIST  add constraint taskequip_TASK_ID foreign key (TASK_ID)  references ems_task (ID);
+alter table EMS_TASKEQUIPMENTLIST  add constraint taskequip_ecode foreign key (ECODE)  references ems_equipment (ECODE);
 
 --等条码和设备信息导入的时候再加这个----已经处理过了
 delete EMS_ORDERLIST a where id in (

@@ -277,6 +277,12 @@ select id,createdate,customer_id,hitchreason,hitchtype,memo,
  --任务明细数据同步
  insert into ems_taskequipmentlist(id,ecode,scandate,task_id,type,installouttype)
  select id,ecode,scandate,task_id,type,installouttype from ems_taskequipmentlist@emslink;
+--任务成员数据初始化，就只归于以前的账号 
+insert into ems_task_member(task_id,user_id,isinit) 
+select distinct a.id,c.user_id ,1 as isinit from ems_task a,t_position_org_user c
+where   a.workunit_id=c.org_id  
+and not exists (select 1 from ems_task_member x where a.id=x.task_id and c.user_id=x.user_id);
+
  --盘点数据同步
  insert into ems_check(id,completedate,completer,createdate,creater,status,task_id)
 select id,completedate,completer,createdate,creater,status,task_id from ems_check@emslink;

@@ -32,17 +32,19 @@ export default {
   //name: 'app',
   data () {
     return {
+      task_id:'',
       workunites:[]
     }
   },
   mounted:function() {
-    this.getHitchtype();
+
   },
   methods:{
-    getHitchtype:function(){
+    queryWorkunites:function(task_id){
       var vm=this;
-      $.post($.SP+'/mobile/task/queryAllHitchtype.do', {}, function(response){
-        vm.allHitchtype=response.root;
+      vm.task_id=task_id;
+      $.post($.SP+'/mobile/task/queryMembers.do', {task_id:task_id}, function(response){
+        vm.workunites=response;
         //vm.inithitch();
       });
     },
@@ -51,9 +53,11 @@ export default {
       //return;
       //var btn_hitchtype=$("#page_task_info  #btn_hitchtype");
       //alert(btn_hitchtype.attr("hitchtype_id"));
-      $.closeModal(".popup_members");
-      this.$emit("selectMember",wk_id,wk_name,memb_id,memb_name);
-
+      var vm=this;
+      $.post($.SP+'/mobile/task/selectMember.do', {task_id:vm.task_id,user_id:memb_id}, function(response){
+        $.closeModal(".popup_members");
+        vm.$emit("selectMember",wk_id,wk_name,memb_id,memb_name);
+      });
     }
   }
 }
