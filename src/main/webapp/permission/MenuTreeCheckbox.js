@@ -52,7 +52,8 @@ Ext.define('Ems.permission.MenuTreeCheckbox', {
 		}
 		me.on("checkchange",function(node, checked){
 				me.menuTreeChecked_node.push(node.get("id"));
-				if(node.isLeaf()){
+				//alert(node.get('leaf'));
+				if(node.get('leaf')){
 					Ext.Ajax.request({
 						url:Ext.ContextPath+"/role/checkMenuNodes.do",
 						params:{

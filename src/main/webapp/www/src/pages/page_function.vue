@@ -29,10 +29,8 @@
           <div class="icon icon-app"></div>
           <p class="function_grid__label">新安装<span v-if="task_newInstall.total_num>0">({{task_newInstall.total_num}})</span></p>
           <span class="badge" v-if="task_newInstall.newTask_num>0">{{task_newInstall.newTask_num}}</span></a>
-      <a class="function_grid" href="#page_message" v-if="mobile_page_function_message">
-            <div class="icon icon-message"></div>
-            <p class="function_grid__label">消息</p>
-          </a>
+
+      <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('search')" v-if="mobile_page_function_task_search"><div class="icon icon-search"></div><p class="function_grid__label">任务查询</p></a>
         <div style="clear: both;"></div>
       </div>
       <div class="content-block-title" style="margin: 10px 0 10px 10px;">其他</div>
@@ -40,6 +38,12 @@
         <a class="function_grid" href="#page_check_store" v-if="mobile_page_function_store_check"><div class="icon icon-code"></div><p class="function_grid__label">仓库盘点</p></a>
         <a class="function_grid" href="#page_equip_info" v-if="mobile_page_function_equip_info"><div class="icon icon-search"></div><p class="function_grid__label">设备信息</p></a>
         <a class="function_grid" href="#page_check_store" v-if="mobile_page_function_equip_have"><div class="icon icon-share"></div><p class="function_grid__label">拥有设备</p></a>
+      </div>
+      <div class="function_row">
+        <a class="function_grid" href="#page_message" v-if="mobile_page_function_message">
+              <div class="icon icon-message"></div>
+              <p class="function_grid__label">消息</p>
+            </a>
       </div>
     </div>
   </div>
@@ -55,6 +59,7 @@ export default {
         mobile_page_function_task_cancel:false,
         mobile_page_function_task_check:false,
         mobile_page_function_task_newInstall:false,
+        mobile_page_function_task_search:false,
         mobile_page_function_message:false,
         mobile_page_function_store_check:false,
         mobile_page_function_equip_info:false,
@@ -113,16 +118,23 @@ export default {
         });
       },
       to_page_taskes:function(type){
-        //alert(this['task_'+type].total_num);
-        window.appvue.to({ name: 'page_taskes',
-          params: {
-            type: type,
-            newTask_num:this['task_'+type].newTask_num,
-            read_num:this['task_'+type].read_num,
-            handling_num:this['task_'+type].handling_num,
-            submited_num:this['task_'+type].submited_num
-          }
-        });
+        if(type=='search'){
+          window.appvue.to({ name: 'page_taskes_search',
+            params: {
+            }
+          });
+        } else {
+          //alert(this['task_'+type].total_num);
+          window.appvue.to({ name: 'page_taskes',
+            params: {
+              type: type,
+              newTask_num:this['task_'+type].newTask_num,
+              read_num:this['task_'+type].read_num,
+              handling_num:this['task_'+type].handling_num,
+              submited_num:this['task_'+type].submited_num
+            }
+          });
+        }
       }
     }
 }

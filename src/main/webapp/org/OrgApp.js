@@ -3,7 +3,7 @@ Ext.require("Ems.org.OrgTree");
 Ext.require("Ems.org.OrgForm");
 Ext.onReady(function(){
 	var tree=Ext.create('Ems.org.OrgTree',{
-		title:'组织维护',
+		title:'组织维护(右键)',
 		width:400,
 		split:true,
 		collapsible : true,
