@@ -72,6 +72,7 @@
   				        </div>
   				      </li>
 
+                <templete v-if="type=='repair'">
                 <li>
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-name"></i></div>
@@ -128,6 +129,7 @@
   				          </div>
   				        </div>
   				      </li>
+                </templete>
 <!--
   				      <li>
   				      	<div class="searchbar row" style="margin-left:0.5rem;">
@@ -150,14 +152,14 @@
   				      <div class="list-block" >
   				        <ul>
   					  	  <li v-for="equip in equiplist">
-  					  	    <a href="javascript:void(0);" class="item-link item-content" @click="show_popup_equip_info" :ecode="equip.ecode">
+  					  	    <a href="javascript:void(0);" class="item-link item-content" @click="show_popup_equip_info(equip.ecode)">
   						        <div class="item-media"><i class="icon icon-f7"></i></div>
   						        <div class="item-inner">
   						          <div class="item-title">{{equip.ecode}}</div>
   								      <div class="item-after">{{equip.subtype_name}}</div>
   						        </div>
   					        </a>
-  					        <a href="javascript:void(0);" class="remove"  @click="delete_equip_info(equip.ecode)">删除</a>
+  					        <a href="javascript:void(0);" v-if="canedit" class="remove"  @click="delete_equip_info(equip.ecode)">删除</a>
   					      </li>
   					    </ul>
   					  </div>
@@ -173,7 +175,7 @@
   									      <div class="item-after">{{member.workunit_name}}</div>
   							        </div>
   						        <!--</a>-->
-  						        <a href="javascript:void(0);" class="remove" @click="delete_member(member.id)">删除</a>
+  						        <a href="javascript:void(0);" v-if="canedit" class="remove" @click="delete_member(member.id)">删除</a>
   						      </li>
   						    </ul>
   						 </div>
@@ -210,6 +212,8 @@ export default {
     return {
       id:'',
       type:'',
+      status:'',
+      canedit:false,
       memo:'',
       pole_code:'',
       pole_name:'',
@@ -252,7 +256,12 @@ export default {
     });
 
     //--------------------------------故障模板和故障原因
-    $("#page_task_info_hitchType_name,#page_task_info_hitchReasonTpl_name").click(function(){
+    //$("#page_task_info_hitchType_name,#page_task_info_hitchReasonTpl_name").click(function(){
+    $("#page_task_info").on('click','#page_task_info_hitchType_name,#page_task_info_hitchReasonTpl_name', function () {
+      //alert(vm.status);
+      if(!vm.canedit){
+        return;
+      }
       vm.z_index=$("#page_task_info").css("z-index");
       $("#page_task_info").css("z-index",20000);
       $.popup('.popup-hitchtype');
@@ -280,7 +289,11 @@ export default {
     });
 
     //------------------------------------------处理方法
-    $("#page_task_info_handleMethod_name").click(function(){
+    //$("#page_task_info_handleMethod_name").click(function(){
+    $("#page_task_info").on('click','#page_task_info_handleMethod_name', function () {
+      if(!vm.canedit){
+        return;
+      }
       vm.z_index=$("#page_task_info").css("z-index");
       $("#page_task_info").css("z-index",20000);
       $.popup('.popup-handleMethod');
@@ -330,27 +343,41 @@ export default {
         }
       });
     },//back
-    show_popup_equip_info:function(){
+    show_popup_equip_info:function(ecode){
       var vm=this;
       vm.z_index=$("#page_task_info").css("z-index");
       $("#page_task_info").css("z-index",20000);
-      vm.$refs.equip_info.getEquipinfo($(this).attr('ecode'));
+      vm.$refs.equip_info.getEquipinfo(ecode);
       $.popup('.popup-equip_info');
     },
     initevent:function(){
+      var vm=this;
       /****/
       //扫描的设备的清单，左划，出现删除按钮
       $("#page_task_info_equiplist_tab,#page_task_info_members_tab").on("swipeLeft","li",function(){
+        if(!vm.canedit){
+          return;
+        }
         $(this).siblings().removeClass("swipeLeft");
         $(this).addClass("swipeLeft");
       }).on("swipeRight","li",function(){
+        if(!vm.canedit){
+          return;
+        }
         $(this).removeClass("swipeLeft");
       });
       //鼠标经过的时候,兼容桌面程序
       $("#page_task_info_equiplist_tab,#page_task_info_members_tab").on("mouseover","li",function(){
+        //alert(vm.canedit);
+        if(!vm.canedit){
+          return;
+        }
         $(this).siblings().removeClass("swipeLeft");
         $(this).addClass("swipeLeft");
       }).on("mouseout","li",function(){
+        if(!vm.canedit){
+          return;
+        }
         $(this).removeClass("swipeLeft");
       });
 

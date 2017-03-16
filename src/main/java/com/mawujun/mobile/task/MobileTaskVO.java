@@ -3,9 +3,12 @@ package com.mawujun.mobile.task;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mawujun.task.TaskStatus;
+
 public class MobileTaskVO {
 	private String id;
 	private String type;
+	private String status;
 	private String memo;
 	
 	private String hitchType_name;
@@ -29,6 +32,13 @@ public class MobileTaskVO {
 	
 	public String getHandle_contact() {
 		return handle_contact==null?"":handle_contact;
+	}
+	public Boolean getCanedit(){
+		if(TaskStatus.complete.toString().equals(status) || TaskStatus.submited.toString().equals(status)) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	public void addMember(Members member) {
 		if(this.members==null){
@@ -136,5 +146,11 @@ public class MobileTaskVO {
 	
 	public void setHandle_contact(String handle_contact) {
 		this.handle_contact = handle_contact;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

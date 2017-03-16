@@ -70,12 +70,22 @@ export default {
   methods:{
     showQRcodeInput:function(){//alert(1);
       var vm=this;
+      var parent=vm.$parent;
+      if(!parent.canedit){
+        $.toast("任务已提交,不准添加！");
+        return;
+      }
       vm.z_index=$("#page_task_info").css("z-index");
       $("#page_task_info").css("z-index",20000);
        $.popup('.popup-qrcode-input');
     },
     showMembers:function(){
       var vm=this;
+      var parent=vm.$parent;
+      if(!parent.canedit){
+        $.toast("任务已提交,不准添加！");
+        return;
+      }
       vm.$parent.$refs.popup_members.queryWorkunites(vm.$parent.id);
 
       vm.z_index=$("#page_task_info").css("z-index");
@@ -87,8 +97,17 @@ export default {
     },
     scanQrcode:function(){
       var vm=this;
-      var ecode=$("#page_task_info_ecode_input").val();
       var parent=vm.$parent;
+      if(!parent.canedit){
+        $.toast("任务已提交,不准添加！");
+        return;
+      }
+      var ecode=$("#page_task_info_ecode_input").val();
+      if(!ecode){
+        $("#page_task_info_ecode_input").trigger('focus');
+        return;
+      }
+
       $.post($.SP+'/mobile/task/scanEquip_info.do',{
           ecode:ecode,
           task_id:parent.id
