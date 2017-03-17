@@ -12,7 +12,7 @@
 
 
   <!-- 这里是页面内容区 -->
-  <div class="content">
+  <div class="content infinite-scroll infinite-scroll-bottom" data-distance="50">
 
     <div class="buttons-tab fixed-tab" data-offset="45">
       <a id="a_page_taskes_newTask" href="#page_taskes_newTask" @click="showTasklist('newTask')" class="tab-link button active ">新任务<span>({{nums.newTask_num}})</span></a>
@@ -54,6 +54,7 @@ export default {
   data () {
     return {
       type:'',
+      status:'',//当前查询的状态
       nums:{
         newTask_num:0,
         read_num:0,
@@ -64,6 +65,17 @@ export default {
   },
   components:{
     newTask_taskes_list,read_taskes_list,handling_taskes_list,submited_taskes_list
+  },
+  mounted: function mounted() {
+    var vm=this;
+    //do something after mounting vue instance
+    $.initScroller();//这个可能只需要运行一次就行了
+    $.initInfiniteScroll("#page_taskes .content");
+    $(document).on('infinite', '#page_taskes .infinite-scroll-bottom',function() {
+        //vm.search(vm.$route.params);
+      //  alert(1);
+      vm.showTasklist(vm.status);
+    });
   },
   beforeRouteEnter  (to, from, next) {
     next(vm => {
@@ -92,7 +104,7 @@ export default {
       });
     },
     showTasklist:function(status){
-
+      this.status=status;
       var child_name=status+"_taskes_list";
       this.$refs[child_name].refreshlist(this.type,status);
       //$.initPullToRefresh(".pull-to-refresh-content");
@@ -139,4 +151,5 @@ export default {
 	font-size: 0.6rem;
 	height: 2rem;
 }
+
 </style>

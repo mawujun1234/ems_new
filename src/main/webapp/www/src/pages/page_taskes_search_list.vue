@@ -28,10 +28,7 @@
               </li>
             </ul>
           </div>
-          <!-- 加载提示符-->
-          <div class="infinite-scroll-preloader">
-              <div class="preloader"></div>
-          </div>
+        
   			</div><!-- content-->
   		</div>
 </template>
@@ -54,7 +51,7 @@ export default {
     //$.detachInfiniteScroll('#page_taskes_search_list .infinite-scroll');
     $.initScroller();//这个可能只需要运行一次就行了
     $.initInfiniteScroll("#page_taskes_search_list .content");
-    $(document).on('infinite', '.infinite-scroll-bottom',function() {
+    $(document).on('infinite', '#page_taskes_search_list .infinite-scroll-bottom',function() {
         vm.search(vm.$route.params);
     });
   },
