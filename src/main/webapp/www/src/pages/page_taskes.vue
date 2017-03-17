@@ -5,7 +5,7 @@
   <header class="bar bar-nav">
     <router-link class="button button-link button-nav pull-left back" to="/page_function"> <span class="icon icon-left"></span>返回
     </router-link>
-    <a class="icon icon-search pull-right" href="#page_search"></a>
+    <a class="icon icon-search pull-right" href="javascript:void(0);" @click="to_page_taskes_search"></a>
     <h1 class="title">任务列表</h1>
   </header>
 
@@ -67,9 +67,9 @@ export default {
   },
   beforeRouteEnter  (to, from, next) {
     next(vm => {
-      if(to.params.back){
-        return;
-      }
+      if(to.params.notback){
+
+
       // 通过 `vm` 访问组件实例
       vm.type=to.params.type;
       vm.nums.newTask_num=to.params.newTask_num;
@@ -80,9 +80,17 @@ export default {
       //刚进来的时候，初始化界面数据
       //vm.showTasklist("newTask");
       $("#a_page_taskes_newTask").trigger('click');
+      }
     });
   },
   methods:{
+    to_page_taskes_search:function(){
+      window.appvue.to({ name: 'page_taskes_search',
+        params: {
+          type:this.type
+        }
+      });
+    },
     showTasklist:function(status){
 
       var child_name=status+"_taskes_list";

@@ -894,5 +894,6 @@ public static final class TaskEquipmentList {
 public static final class TaskMember {
 	public static final String task_id="task_id";
 	public static final String user_id="user_id";
+	public static final String isinit="isinit";
 }
 }

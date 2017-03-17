@@ -2,14 +2,14 @@
   <div class="list-block media-list " >
     <ul>
       <li v-for="task in taskes">
-        <a href="javascript:void(0);" v-on:click="to_page_taskes_info" :task_id="task.id" class="item-link item-content">
+        <a href="javascript:void(0);" v-on:click="to_page_taskes_info(task.id)"  class="item-link item-content">
           <div class="item-inner">
             <div class="item-title-row">
               <div class="item-title">{{task.id}}</div>
               <div class="item-after">{{task.createDate}}</div>
             </div>
             <div class="item-subtitle">{{task.pole_code}}:{{task.pole_name}}</div>
-            <div class="item-text">地址:{{task.pole_address}}</div>
+            <div class="item-text" style="font-size:0.6rem;">地址:{{task.pole_address}}</div>
           </div>
         </a>
       </li>
@@ -33,12 +33,12 @@ export default {
         vm.taskes=response.root;
       });
     },
-    to_page_taskes_info:function(event){
+    to_page_taskes_info:function(task_id){
       //alert(this['task_'+type].total_num);
       // alert(event.target.tagName);//.attr("task_id"))
       // alert($(event.target).closest("a").attr("task_id"));
       //return;
-      var task_id=$(event.target).closest("a").attr("task_id");
+      //var task_id=$(event.target).closest("a").attr("task_id");
       window.appvue.to({ name: 'page_task_info',
         params: {
           task_id:task_id

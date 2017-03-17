@@ -2,6 +2,7 @@ package com.mawujun.mobile.task;
 
 import java.util.List;
 
+import org.apache.shiro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,11 +10,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mawujun.baseinfo.EquipmentVO;
 import com.mawujun.controller.spring.mvc.ResultModel;
+import com.mawujun.exception.BusinessException;
+import com.mawujun.permission.ShiroUtils;
 import com.mawujun.report.EquipmentStatusController;
 import com.mawujun.task.HandleMethodService;
 import com.mawujun.task.TaskStatus;
 import com.mawujun.task.TaskType;
 import com.mawujun.task.TaskVO;
+import com.mawujun.utils.M;
 import com.mawujun.utils.page.Pager;
 
 @Controller
@@ -27,10 +31,43 @@ public class MobileTaskController {
 //	@Autowired
 //	private TaskService taskService;
 	
+	/**
+	 * 从具体的类型的任务进去的时候
+	 * @author mawujun qq:16064988 mawujun1234@163.com
+	 * @param type
+	 * @param status
+	 * @return
+	 */
 	@RequestMapping("/mobile/task/queryTaskes.do")
 	@ResponseBody
-	public Pager<TaskVO> queryTaskes(TaskType type,TaskStatus status){
-		Pager<TaskVO> pager=mobileTaskService.queryTaskes(type, status);
+	public Pager<TaskVO> queryTaskes(TaskType type,TaskStatus status,Integer start,Integer limit){
+		Pager<TaskVO> params=new Pager<TaskVO>();
+		params.addParam(M.Task.type, type.toString());
+		params.addParam(M.Task.status, status.toString());
+		params.addParam("user_id", ShiroUtils.getUserId());
+		params.setStart(start);
+		params.setLimit(limit);
+		Pager<TaskVO> pager=mobileTaskService.queryTaskes(params);
+		return pager;
+	}
+	
+	@RequestMapping("/mobile/task/searchTaskes.do")
+	@ResponseBody
+	public Pager<TaskVO> searchTaskes(String name,String create_date,TaskType type,Integer start,Integer limit){
+		if(!StringUtils.hasText(name) && !StringUtils.hasText(create_date)){
+			throw new BusinessException("名称和日期必须有一个有值!");
+		}
+		Pager<TaskVO> params=new Pager<TaskVO>();
+		params.addParam("name", name);
+		params.addParam(M.Task.createDate, create_date);
+		if(type!=null){
+			params.addParam(M.Task.type, type.toString());
+		}
+		
+		params.addParam("user_id", ShiroUtils.getUserId());
+		params.setStart(start);
+		params.setLimit(limit);
+		Pager<TaskVO> pager=mobileTaskService.searchTaskes(params);
 		return pager;
 	}
 	
@@ -137,4 +174,6 @@ public class MobileTaskController {
 		return ResultModel.getInstance();
 		
 	}
+	
+
 }

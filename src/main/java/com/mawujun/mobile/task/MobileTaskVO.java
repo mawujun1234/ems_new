@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mawujun.task.TaskStatus;
+import com.mawujun.task.TaskType;
 
 public class MobileTaskVO {
 	private String id;
-	private String type;
-	private String status;
+	private TaskType type;
+	private TaskStatus status;
 	private String memo;
 	
 	private String hitchType_name;
@@ -34,7 +35,7 @@ public class MobileTaskVO {
 		return handle_contact==null?"":handle_contact;
 	}
 	public Boolean getCanedit(){
-		if(TaskStatus.complete.toString().equals(status) || TaskStatus.submited.toString().equals(status)) {
+		if(TaskStatus.complete==status || TaskStatus.submited==status) {
 			return false;
 		} else {
 			return true;
@@ -45,6 +46,18 @@ public class MobileTaskVO {
 			this.members=new ArrayList<Members>();
 		}
 		this.members.add(member);
+	}
+	public String getType_name() {
+		if(this.getType()!=null){
+			return this.getType().getName();
+		}
+		return null;
+	}
+	public String getStatus_name() {
+		if(this.getStatus()!=null){
+			return this.getStatus().getName();
+		}
+		return null;
 	}
 	
 	public String getId() {
@@ -107,12 +120,6 @@ public class MobileTaskVO {
 	public void setPole_latitude(String pole_latitude) {
 		this.pole_latitude = pole_latitude;
 	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
 	public String getHitchType_name() {
 		return hitchType_name;
 	}
@@ -147,10 +154,17 @@ public class MobileTaskVO {
 	public void setHandle_contact(String handle_contact) {
 		this.handle_contact = handle_contact;
 	}
-	public String getStatus() {
+	public TaskType getType() {
+		return type;
+	}
+	public void setType(TaskType type) {
+		this.type = type;
+	}
+	public TaskStatus getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(TaskStatus status) {
 		this.status = status;
 	}
+
 }

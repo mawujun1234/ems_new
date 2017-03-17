@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.shiro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -78,12 +79,14 @@ public class MobileTaskService {
 		return mobileTaskRepository.queryTasknum(user_id);
 	}
 	
-	public Pager<TaskVO> queryTaskes(TaskType type,TaskStatus status){
-		Pager<TaskVO> params=new Pager<TaskVO>();
-		params.addParam(M.Task.type, type.toString());
-		params.addParam(M.Task.status, status.toString());
-		params.addParam("user_id", ShiroUtils.getUserId());
+	public Pager<TaskVO> queryTaskes( Pager<TaskVO> params){
+		
 		return mobileTaskRepository.queryTaskes(params);
+	}
+	
+	public Pager<TaskVO> searchTaskes( Pager<TaskVO> params) {
+		
+		return mobileTaskRepository.searchTaskes(params);
 	}
 	
 	public MobileTaskVO getMobileTaskVO(String task_id) {
@@ -282,4 +285,6 @@ public class MobileTaskService {
 		pk.setUser_id(user_id);
 		taskMemberRepository.deleteById(pk);
 	}
+	
+
 }

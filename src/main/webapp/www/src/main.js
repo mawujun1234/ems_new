@@ -10,6 +10,7 @@ import page_function from './pages/page_function.vue'
 import page_taskes from './pages/page_taskes.vue'
 import page_task_info from './pages/page_task_info.vue'
 import page_taskes_search from './pages/page_taskes_search.vue'
+import page_taskes_search_list from './pages/page_taskes_search_list.vue'
 
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
@@ -23,6 +24,7 @@ const routes = [
   { path: '/page_function', component: page_function ,name: 'page_function'},
   { path: '/page_taskes/:type', component: page_taskes,name: 'page_taskes'},
   { path: '/page_taskes_search', component: page_taskes_search,name: 'page_taskes_search'},
+  { path: '/page_taskes_search_list', component: page_taskes_search_list,name: 'page_taskes_search_list'},
   { path: '/page_task_info/:task_id', component: page_task_info ,name: 'page_task_info'}
 ]
 
@@ -38,6 +40,9 @@ const appvue=new Vue({
   methods:{
     to:function(path){
       router.push(path);
+    },
+    back:function(){
+      router.go(-1);
     }
   }
 });

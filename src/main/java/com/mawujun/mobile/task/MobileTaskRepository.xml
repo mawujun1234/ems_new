@@ -25,6 +25,23 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		order by b.code asc
     </select>
     
+    <!-- 搜索任务，只有在这个作业单位下才能搜索到任务，加成员的时候，只要能看到的作业单位都可以加，一般成员（不在这个作业单位下）是看不到任务的-->
+    <select id="searchTaskes" resultType="com.mawujun.task.TaskVO" parameterType="map">
+    	select a.id,a.memo,a.type,a.status,a.pole_id,b.code as pole_code,b.longitude as pole_longitude,b.latitude as pole_latitude,b.name as pole_name,b.address as pole_address,a.createDate 
+    	from ems_task a,ems_pole b,t_position_org_user c
+    	where a.workunit_id=c.org_id and a.pole_id=b.id and c.user_id=#{user_id}
+    	<if test="type!=null and type!=''">
+    		and a.type=#{type}
+    	</if>
+    	<if test="name!=null and name!=''">
+    		and (b.name like '%${name}%' or b.address like '%${name}%')
+    	</if>
+    	<if test="createDate!=null and createDate!=''">
+    		and to_char(a.createDate,'yyyy-mm-dd') =#{createDate}
+    	</if>
+		order by b.code asc,a.createDate desc
+    </select>
+    
     <!-- 用left join 是因为除了维修任务，其他的都是不需要获取这三个数据的-->
     <select id="getMobileTaskVO" resultType="com.mawujun.mobile.task.MobileTaskVO" parameterType="map">
     	select a.id,a.memo,a.type,a.status,a.pole_id,b.code as pole_code,b.longitude as pole_longitude,b.latitude as pole_latitude,b.name as pole_name,b.address as pole_address,a.createDate 

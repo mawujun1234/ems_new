@@ -19,9 +19,20 @@
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-name"></i></div>
   				          <div class="item-inner">
-  				            <div class="item-title label">任务编号</div>
+  				            <div class="item-title label">任务编号:</div>
   				            <div class="item-input">
   				              <input type="text"  disabled="true" v-model="id">
+  				            </div>
+  				          </div>
+  				        </div>
+  				      </li>
+                <li>
+  				        <div class="item-content">
+  				          <div class="item-media"><i class="icon icon-form-name"></i></div>
+  				          <div class="item-inner">
+  				            <div class="item-title label">状态:</div>
+  				            <div class="item-input">
+  				              <input type="text"  disabled="true" v-model="status_name">
   				            </div>
   				          </div>
   				        </div>
@@ -30,7 +41,7 @@
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-name"></i></div>
   				          <div class="item-inner">
-  				            <div class="item-title label">点位编号</div>
+  				            <div class="item-title label">点位编号:</div>
   				            <div class="item-input">
   				              <input type="text"  disabled="true" v-model="pole_code">
   				            </div>
@@ -41,7 +52,7 @@
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-name"></i></div>
   				          <div class="item-inner">
-  				            <div class="item-title label">点位名称</div>
+  				            <div class="item-title label">点位名称:</div>
   				            <div class="item-input">
   				              <input type="text"  disabled="true" v-model="pole_name">
   				            </div>
@@ -52,7 +63,7 @@
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-name"></i></div>
   				          <div class="item-inner">
-  				            <div class="item-title label">点位地址</div>
+  				            <div class="item-title label">点位地址:</div>
   				            <div class="item-input">
   				              <input type="text"  disabled="true" v-model="pole_address">
   				            </div>
@@ -64,7 +75,7 @@
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-comment"></i></div>
   				          <div class="item-inner">
-  				            <div class="item-title label">任务描述</div>
+  				            <div class="item-title label">任务描述:</div>
   				            <div class="item-input">
   				              <textarea>{{memo}}</textarea>
   				            </div>
@@ -72,12 +83,12 @@
   				        </div>
   				      </li>
 
-                <templete v-if="type=='repair'">
+                <template v-if="type=='repair'">
                 <li>
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-name"></i></div>
   				          <div class="item-inner">
-  				            <div class="item-title label">故障类型</div>
+  				            <div class="item-title label">故障类型:</div>
   				            <div class="item-input">
   				              <input type="text" id="page_task_info_hitchType_name"  v-model="hitchType_name" >
   				            </div>
@@ -88,7 +99,7 @@
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-name"></i></div>
   				          <div class="item-inner">
-  				            <div class="item-title label">原因模板</div>
+  				            <div class="item-title label">原因模板:</div>
   				            <div class="item-input">
   				              <input type="text" id="page_task_info_hitchReasonTpl_name" v-model="hitchReasonTpl_name" >
   				            </div>
@@ -99,7 +110,7 @@
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-comment"></i></div>
   				          <div class="item-inner">
-  				            <div class="item-title label">故障原因</div>
+  				            <div class="item-title label">故障原因:</div>
   				            <div class="item-input">
   				              <textarea v-model="hitchReason" @blur="updateHitchReason"></textarea>
   				            </div>
@@ -111,7 +122,7 @@
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-name"></i></div>
   				          <div class="item-inner">
-  				            <div class="item-title label">处理方法</div>
+  				            <div class="item-title label">处理方法:</div>
   				            <div class="item-input">
   				              <input type="text" id="page_task_info_handleMethod_name" v-model="handleMethod_name" >
   				            </div>
@@ -122,14 +133,14 @@
   				        <div class="item-content">
   				          <div class="item-media"><i class="icon icon-form-comment"></i></div>
   				          <div class="item-inner">
-  				            <div class="item-title label">处理备注</div>
+  				            <div class="item-title label">处理备注:</div>
   				            <div class="item-input">
   				              <textarea v-model="handle_contact" @blur="updateHandleContact"></textarea>
   				            </div>
   				          </div>
   				        </div>
   				      </li>
-                </templete>
+                </template>
 <!--
   				      <li>
   				      	<div class="searchbar row" style="margin-left:0.5rem;">
@@ -184,8 +195,8 @@
 
   				  <div class="content-block">
   				    <div class="row">
-  				      <div class="col-50"><a href="#" class="button button-big button-fill button-danger back">返回</a></div>
-  				      <div class="col-50"><a href="#" class="button button-big button-fill button-success">提交</a></div>
+  				      <div class="col-50"><a href="javascript:void(0);" @click="back" class="button button-big button-fill button-danger back">返回</a></div>
+  				      <div class="col-50"><a href="javascript:void(0);" class="button button-big button-fill button-success">提交</a></div>
   				    </div>
   				  </div>
   			</div>
@@ -213,6 +224,7 @@ export default {
       id:'',
       type:'',
       status:'',
+      status_name:'',
       canedit:false,
       memo:'',
       pole_code:'',
@@ -336,12 +348,15 @@ export default {
       });
     },
     back:function(){
+      window.appvue.back();
+      /*
       window.appvue.to({ name: 'page_taskes',
         params: {
           back:true,
           type:this.type,
         }
       });
+      */
     },//back
     show_popup_equip_info:function(ecode){
       var vm=this;

@@ -121,12 +121,14 @@ export default {
         if(type=='search'){
           window.appvue.to({ name: 'page_taskes_search',
             params: {
+              
             }
           });
         } else {
           //alert(this['task_'+type].total_num);
           window.appvue.to({ name: 'page_taskes',
             params: {
+              notback:true,
               type: type,
               newTask_num:this['task_'+type].newTask_num,
               read_num:this['task_'+type].read_num,
