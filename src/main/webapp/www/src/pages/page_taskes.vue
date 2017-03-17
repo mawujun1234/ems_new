@@ -35,7 +35,10 @@
         <submited_taskes_list ref="submited_taskes_list"></submited_taskes_list>
       </div>
     </div>
-
+    <!-- 加载提示符-->
+    <div class="infinite-scroll-preloader taskes-list" style="margin-top:0px;">
+        <div class="preloader"></div>
+    </div>
   </div>
   <!-- 这里是页面内容区 -->
 </div>
@@ -54,6 +57,7 @@ export default {
   data () {
     return {
       type:'',
+      notback:true,
       status:'',//当前查询的状态
       nums:{
         newTask_num:0,
@@ -66,14 +70,16 @@ export default {
   components:{
     newTask_taskes_list,read_taskes_list,handling_taskes_list,submited_taskes_list
   },
-  mounted: function mounted() {
+  mounted: function() {
     var vm=this;
     //do something after mounting vue instance
     $.initScroller();//这个可能只需要运行一次就行了
-    $.initInfiniteScroll("#page_taskes .content");
+
+    //$.initInfiniteScroll("#page_taskes .content");
     $(document).on('infinite', '#page_taskes .infinite-scroll-bottom',function() {
         //vm.search(vm.$route.params);
-      //  alert(1);
+      //alert(111);
+      vm.isinfinite=true;
       vm.showTasklist(vm.status);
     });
   },
@@ -83,7 +89,9 @@ export default {
 
 
       // 通过 `vm` 访问组件实例
+      vm.isinfinite=false;
       vm.type=to.params.type;
+      vm.notback=to.params.notback;
       vm.nums.newTask_num=to.params.newTask_num;
       vm.nums.read_num=to.params.read_num;
       vm.nums.handling_num=to.params.handling_num;
@@ -105,6 +113,7 @@ export default {
     },
     showTasklist:function(status){
       this.status=status;
+
       var child_name=status+"_taskes_list";
       this.$refs[child_name].refreshlist(this.type,status);
       //$.initPullToRefresh(".pull-to-refresh-content");

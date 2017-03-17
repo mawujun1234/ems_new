@@ -28,7 +28,10 @@
               </li>
             </ul>
           </div>
-        
+          <!-- 加载提示符-->
+          <div class="infinite-scroll-preloader search-list">
+              <div class="preloader"></div>
+          </div>
   			</div><!-- content-->
   		</div>
 </template>
@@ -46,11 +49,11 @@ export default {
     }
   },
 
-  mounted: function mounted() {
+  mounted: function() {
     var vm=this;
     //$.detachInfiniteScroll('#page_taskes_search_list .infinite-scroll');
     $.initScroller();//这个可能只需要运行一次就行了
-    $.initInfiniteScroll("#page_taskes_search_list .content");
+
     $(document).on('infinite', '#page_taskes_search_list .infinite-scroll-bottom',function() {
         vm.search(vm.$route.params);
     });
@@ -62,6 +65,8 @@ export default {
         vm.start=0;
         //vm.limit=5;
         vm.taskes=[];
+        $('.infinite-scroll-preloader.search-list').show();
+        $.initInfiniteScroll("#page_taskes_search_list .content");
         vm.search(vm.$route.params);
       }
     })
@@ -90,11 +95,12 @@ export default {
         }
         vm.loading = false;
         vm.start=response.page*response.limit;
-        if(response.page==response.totalPages || vm.start>vm.maxitem){
+        if(response.root.length==0 || response.page==response.totalPages || vm.start>vm.maxitem){
           // 加载完毕，则注销无限加载事件，以防不必要的加载
           $.detachInfiniteScroll($('.infinite-scroll'));
           // 删除加载提示符
-          $('.infinite-scroll-preloader').remove();
+          //$('.infinite-scroll-preloader.search-list').remove();
+          $('.infinite-scroll-preloader.search-list').hide();
           return;
         }
         //容器发生改变,如果是js滚动，需要刷新滚动

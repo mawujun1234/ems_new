@@ -14,10 +14,6 @@
         </a>
       </li>
     </ul>
-    <!-- 加载提示符-->
-    <div class="infinite-scroll-preloader">
-        <div class="preloader"></div>
-    </div>
   </div>
 </template>
 <script>
@@ -40,8 +36,12 @@ export default {
       if (vm.loading) return;
       // 设置flag
       vm.loading = true;
-      if(vm.notback){
+      //alert(vm.$parent.isinfinite);
+      if(!vm.$parent.isinfinite){//alert(1);
         vm.start=0;
+        vm.taskes=[];
+        $('.infinite-scroll-preloader.taskes-list').show();
+        $.initInfiniteScroll("#page_taskes .content");
       }
 
       var params={
@@ -63,11 +63,11 @@ export default {
         }
         vm.loading = false;
         vm.start=response.page*response.limit;
-        if(response.page==response.totalPages || vm.start>vm.maxitem){
+        if(response.root.length==0 || response.page==response.totalPages || vm.start>vm.maxitem){
           // 加载完毕，则注销无限加载事件，以防不必要的加载
-          $.detachInfiniteScroll($('.infinite-scroll'));
+          $.detachInfiniteScroll($('#page_taskes .infinite-scroll'));
           // 删除加载提示符
-          $('.infinite-scroll-preloader').remove();
+          $('.infinite-scroll-preloader.taskes-list').hide();
           return;
         }
         //容器发生改变,如果是js滚动，需要刷新滚动
@@ -85,7 +85,5 @@ export default {
 }
 </script>
 <style>
-.infinite-scroll-preloader {
-        margin-top:20px;
-      }
+
 </style>
