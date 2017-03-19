@@ -108,6 +108,7 @@ export default {
       $.post($.SP+'/mobile/login/login.do', params, function(response){
         $.hidePreloader();
         if(response.success){
+          setTimeout("onlineling()",120000);
           window.appvue.to("/page_function");//.$emit('e_route_page','/page_function');
         }
 

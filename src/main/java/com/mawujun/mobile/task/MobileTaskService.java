@@ -2,11 +2,9 @@ package com.mawujun.mobile.task;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.shiro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,6 +15,7 @@ import com.mawujun.baseinfo.EquipmentWorkunit;
 import com.mawujun.baseinfo.EquipmentWorkunitPK;
 import com.mawujun.baseinfo.EquipmentWorkunitRepository;
 import com.mawujun.baseinfo.EquipmentWorkunitType;
+import com.mawujun.baseinfo.PoleRepository;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.repository.cnd.Cnd;
@@ -59,8 +58,10 @@ public class MobileTaskService {
 	private EquipmentWorkunitRepository equipmentWorkunitRepository;
 	@Autowired
 	private TaskMemberRepository taskMemberRepository;
-//	@Autowired
-//	private OrgRepository orgRepository;
+	@Autowired
+	private PoleRepository poleRepository;
+	
+
 
 
 	//@Override
@@ -96,8 +97,7 @@ public class MobileTaskService {
 		if(equiplist!=null){
 			mobileTaskVO.setEquiplist(equiplist);
 		}
-		
-		
+			
 		List<Members> members=mobileTaskRepository.getMobileTaskVO_members(task_id);
 		if(members!=null){
 			String temp="";
@@ -109,8 +109,7 @@ public class MobileTaskService {
 				}
 			}
 		}
-		
-		
+
 		return mobileTaskVO;
 	}
 	
@@ -286,5 +285,43 @@ public class MobileTaskService {
 		taskMemberRepository.deleteById(pk);
 	}
 	
+	public void submit(String task_id) {
+		Task task=taskRepository.get(task_id);
+		if(task.getStatus()==TaskStatus.submited){
+			throw new BusinessException("任务已经提交,不能再提交!");
+		}
+
+		//如果是取消杆位，提交前进行判断，扫描了的设备数量和杆位上实际具有的数量是否一致
+		//是否是该杆位上的设备，已经在扫描的时候就判断了
+		
+		if(TaskType.cancel==task.getType()){
+			//查找杆位上的数量
+			int pole_eqips=poleRepository.query_count_equipment_in_pole(task.getPole_id());
+			int scan_count=taskRepository.query_count_tasklist_by_task(task_id);
+			//获取这个任务扫描的设备数量
+			if(pole_eqips!=scan_count){
+				throw new BusinessException("该杆位上实际的设备数量为:"+pole_eqips+",但现在只扫描了"+scan_count+"!");
+			}
+			//再添加一个比较，如果
+		} else if(TaskType.repair==task.getType()){
+			//故障类型，故障原因，故障处理方法等必须填写不然不能提交
+			if(task.getHitchType_id()==null){
+				throw new BusinessException("故障类型必须填写！");
+			}
+			if(task.getHitchReasonTpl_id()==null ||task.getHitchReason()==null){
+				throw new BusinessException("故障原因必须填写！");
+			}
+			if(task.getHandleMethod_id()==null){
+				throw new BusinessException("故障处理方法必须填写！");
+			}
+			
+		}
+		
+		
+		//更新任务状态
+		task.setStatus( TaskStatus.submited);
+		task.setSubmitDate(new Date());
+		taskRepository.update(task);
+	}
 
 }

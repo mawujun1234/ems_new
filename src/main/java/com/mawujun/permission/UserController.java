@@ -108,9 +108,9 @@ public class UserController {
 	public String onlineling() {
 		if(!ShiroUtils.isLogon()){
 			//JsonConfigHolder.setSuccessValue(false);
-			return "{success:false}";
+			return "{\"success\":false}";
 		}
-		return "{success:true}";
+		return "{\"success\":true}";
 	}
 //	/**
 //	 * 

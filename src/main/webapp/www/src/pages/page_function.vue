@@ -35,9 +35,9 @@
       </div>
       <div class="content-block-title" style="margin: 10px 0 10px 10px;">其他</div>
       <div class="function_row">
-        <a class="function_grid" href="#page_check_store" v-if="mobile_page_function_store_check"><div class="icon icon-code"></div><p class="function_grid__label">仓库盘点</p></a>
-        <a class="function_grid" href="#page_equip_info" v-if="mobile_page_function_equip_info"><div class="icon icon-search"></div><p class="function_grid__label">设备信息</p></a>
-        <a class="function_grid" href="#page_check_store" v-if="mobile_page_function_equip_have"><div class="icon icon-share"></div><p class="function_grid__label">拥有设备</p></a>
+        <!-- <a class="function_grid" href="#page_check_store" v-if="mobile_page_function_store_check"><div class="icon icon-code"></div><p class="function_grid__label">仓库盘点</p></a>
+        <a class="function_grid" href="javascript:void(0);" @click="scan_qrcode" v-if="mobile_page_function_equip_info"><div class="icon icon-search"></div><p class="function_grid__label">设备信息</p></a>-->
+        <a class="function_grid" href="javascript:void(0);" v-if="mobile_page_function_equip_have"><div class="icon icon-share"></div><p class="function_grid__label">拥有设备</p></a>
       </div>
       <div class="function_row">
         <a class="function_grid" href="#page_message" v-if="mobile_page_function_message">
@@ -212,6 +212,9 @@ export default {
             }
           });
         }
+      },
+      scan_qrcode:function(){//扫描查询某个设备的信息
+
       }
     }
 }

@@ -106,7 +106,7 @@ const appvue=new Vue({
 });
 window.appvue=appvue;
 
-router.push('/page_login');
+
 //window.appvue.$on("e_route_page",function(path){//alert(1);
 //  router.push(path);
 //});
@@ -148,4 +148,14 @@ $(function(){
       $.alert("系统发生异常");
     }
 	}
+
+  window.onlineling=function() {
+    $.post($.SP+'/user/onlineling.do',{},function(response){
+      if(!response.success){
+			   router.push('/page_login');
+			}
+    });
+		setTimeout("onlineling()",120000);
+	}
+
 });

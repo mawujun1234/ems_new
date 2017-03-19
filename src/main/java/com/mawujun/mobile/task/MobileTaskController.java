@@ -195,5 +195,11 @@ public class MobileTaskController {
 		
 	}
 	
-
+	@RequestMapping("/mobile/task/submit.do")
+	@ResponseBody
+	public ResultModel submit(String task_id) {
+		mobileTaskService.submit(task_id);
+		return ResultModel.getInstance();
+		
+	}
 }
