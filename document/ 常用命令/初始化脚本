@@ -14,6 +14,11 @@ alter table EMS_TASK_MEMBER add constraint memb_task_id foreign key (TASK_ID)  r
 alter table EMS_TASK_MEMBER  add constraint memb_user_id foreign key (USER_ID)  references t_user (ID);
 alter table EMS_TASKEQUIPMENTLIST  add constraint taskequip_TASK_ID foreign key (TASK_ID)  references ems_task (ID);
 alter table EMS_TASKEQUIPMENTLIST  add constraint taskequip_ecode foreign key (ECODE)  references ems_equipment (ECODE);
+alter table "EMSNEW"."EMS_TASK" add constraint task_customer_id foreign key("CUSTOMER_ID") references "EMS_CUSTOMER"("ID");
+alter table "EMSNEW"."EMS_TASK" add constraint task_workunit_id foreign key("WORKUNIT_ID") references "T_ORG"("ID");
+alter table "EMSNEW"."EMS_TASK" add constraint task_hitchtype_id foreign key("HITCHTYPE_ID") references "EMS_HITCHTYPE"("ID");
+alter table "EMSNEW"."EMS_TASK" add constraint task_hitchreasontpl_id foreign key("HITCHREASONTPL_ID") references "EMS_HITCHREASONTPL"("ID");
+alter table "EMSNEW"."EMS_TASK" add constraint task_handlemethod_id foreign key("HANDLEMETHOD_ID") references "EMS_HANDLEMETHOD"("ID");
 
 --等条码和设备信息导入的时候再加这个----已经处理过了
 delete EMS_ORDERLIST a where id in (

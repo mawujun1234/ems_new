@@ -11,24 +11,24 @@
       <div class="function_row">
         <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('repair')" v-if="mobile_page_function_task_repair"><div
             class="icon icon-edit"></div>
-          <p class="function_grid__label">维修<span v-if="task_repair.total_num>0">({{task_repair.total_num}})</span></p>
-          <span class="badge" v-if="task_repair.newTask_num>0">{{task_repair.newTask_num}}</span></a>
+          <p class="function_grid__label">维修<span v-if="task_repair_total_num>0">({{task_repair_total_num}})</span></p>
+          <span class="badge" v-if="task_repair_newTask_num>0">{{task_repair_newTask_num}}</span></a>
       <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('patrol')" v-if="mobile_page_function_task_patrol">
         <div class="icon icon-browser"></div>
-          <p class="function_grid__label">巡检<span v-if="task_patrol.total_num>0">({{task_patrol.total_num}})</span></p>
-          <span class="badge" v-if="task_patrol.newTask_num>0">{{task_patrol.newTask_num}}</span></a>
+          <p class="function_grid__label">巡检<span v-if="task_patrol_total_num>0">({{task_patrol_total_num}})</span></p>
+          <span class="badge" v-if="task_patrol_newTask_num>0">{{task_patrol_newTask_num}}</span></a>
       <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('cancel')" v-if="mobile_page_function_task_cancel">
         <div class="icon icon-remove"></div>
-          <p class="function_grid__label">取消<span v-if="task_cancel.total_num>0">({{task_cancel.total_num}})</span></p>
-          <span class="badge" v-if="task_cancel.newTask_num>0">{{task_cancel.newTask_num}}</span></a>
+          <p class="function_grid__label">取消<span v-if="task_cancel_total_num>0">({{task_cancel_total_num}})</span></p>
+          <span class="badge" v-if="task_cancel_newTask_num>0">{{task_cancel_newTask_num}}</span></a>
       <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('check')" v-if="mobile_page_function_task_check">
         <div class="icon icon-code"></div>
-          <p class="function_grid__label">盘点<span v-if="task_check.total_num>0">({{task_check.total_num}})</span></p>
-          <span class="badge" v-if="task_check.newTask_num>0">{{task_check.newTask_num}}</span></a>
+          <p class="function_grid__label">盘点<span v-if="task_check_total_num>0">({{task_check_total_num}})</span></p>
+          <span class="badge" v-if="task_check_newTask_num>0">{{task_check_newTask_num}}</span></a>
       <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('newInstall')" v-if="mobile_page_function_task_newInstall">
           <div class="icon icon-app"></div>
-          <p class="function_grid__label">新安装<span v-if="task_newInstall.total_num>0">({{task_newInstall.total_num}})</span></p>
-          <span class="badge" v-if="task_newInstall.newTask_num>0">{{task_newInstall.newTask_num}}</span></a>
+          <p class="function_grid__label">新安装<span v-if="task_newInstall_total_num>0">({{task_newInstall_total_num}})</span></p>
+          <span class="badge" v-if="task_newInstall_newTask_num>0">{{task_newInstall_newTask_num}}</span></a>
 
       <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('search')" v-if="mobile_page_function_task_search"><div class="icon icon-search"></div><p class="function_grid__label">任务查询</p></a>
         <div style="clear: both;"></div>
@@ -63,8 +63,8 @@ export default {
         mobile_page_function_message:false,
         mobile_page_function_store_check:false,
         mobile_page_function_equip_info:false,
-        mobile_page_function_equip_have:false,
-        task_repair:{
+        mobile_page_function_equip_have:false
+        /*,task_repair:{
           total_num:0,
           newTask_num:0,
           read_num:0,
@@ -98,11 +98,71 @@ export default {
           read_num:0,
           handling_num:0,
           submited_num:0
-        },
+        }*/
       }
     },
     mounted:function(){
       this.queryMobileMenuByUser();
+      this.init_taskes_num();
+    },
+    computed: {
+      task_repair_total_num:function () {
+        const tasktype=this.$store.state.task_repair;
+        let total=0;
+        for (var x in tasktype) {
+          total+=tasktype[x];
+        }
+        return total;
+      },
+      task_repair_newTask_num:function () {
+        return this.$store.state.task_repair.newTask_num
+      },
+      task_patrol_total_num:function () {
+        const tasktype=this.$store.state.task_patrol;
+        var total=0;
+        for (var x in tasktype) {
+          total+=tasktype[x];
+        }
+        return total;
+      },
+      task_patrol_newTask_num:function () {
+        //alert(this.$store.state.task_patrol);
+        return this.$store.state.task_patrol.newTask_num
+      },
+      task_cancel_total_num:function () {
+        const tasktype=this.$store.state.task_cancel;
+        let total=0;
+        for (var x in tasktype) {
+          total+=tasktype[x];
+        }
+        return total;
+      },
+      task_cancel_newTask_num:function () {
+        return this.$store.state.task_cancel.newTask_num
+      },
+      task_check_total_num:function () {
+        const tasktype=this.$store.state.task_check;
+        let total=0;
+        for (var x in tasktype) {
+          total+=tasktype[x];
+        }
+        return total;
+      },
+      task_check_newTask_num:function () {
+        return this.$store.state.task_check.newTask_num
+      },
+
+      task_newInstall_total_num:function () {
+        const tasktype=this.$store.state.task_newInstall;
+        let total=0;
+        for (var x in tasktype) {
+          total+=tasktype[x];
+        }
+        return total;
+      },
+      task_newInstall_newTask_num:function () {
+        return this.$store.state.task_newInstall.newTask_num
+      }
     },
     methods:{
       queryMobileMenuByUser:function(){
@@ -112,28 +172,43 @@ export default {
         $.post($.SP+'/mobile/login/queryMobileMenuByUser.do', {}, function(response){
           var root=response.root;
           for (var x in root) {
+            //alert(x+":"+root[x]);;
             vue.$data[x]=root[x];
           }
           $.hidePreloader();
         });
       },
+      init_taskes_num:function(){
+        var vue=this;
+        //初始化任务的数据，各个任务状态的数量
+        $.post($.SP+'/mobile/task/init_taskes_num.do', {}, function(response){
+          var root=response.root;
+          vue.$store.commit('init_taskes_num', root)
+          //for (var x in root) {
+
+          //}
+
+        });
+
+      },
       to_page_taskes:function(type){
         if(type=='search'){
           window.appvue.to({ name: 'page_taskes_search',
             params: {
-              
+
             }
           });
-        } else {
+        } else {//alert(type);
           //alert(this['task_'+type].total_num);
-          window.appvue.to({ name: 'page_taskes',
+          window.appvue.to({
+            name: 'page_taskes',
             params: {
               notback:true,
-              type: type,
-              newTask_num:this['task_'+type].newTask_num,
-              read_num:this['task_'+type].read_num,
-              handling_num:this['task_'+type].handling_num,
-              submited_num:this['task_'+type].submited_num
+              type: type
+              //newTask_num:this['task_'+type].newTask_num,
+              //read_num:this['task_'+type].read_num,
+              //handling_num:this['task_'+type].handling_num,
+              //submited_num:this['task_'+type].submited_num
             }
           });
         }

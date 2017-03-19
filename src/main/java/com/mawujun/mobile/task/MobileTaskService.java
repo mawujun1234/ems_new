@@ -75,7 +75,7 @@ public class MobileTaskService {
 	 * @param user_id
 	 * @return
 	 */
-	public List<Map<String,Object>> queryTasknum(String user_id){
+	public List<TaskesNum> queryTasknum(String user_id){
 		return mobileTaskRepository.queryTasknum(user_id);
 	}
 	

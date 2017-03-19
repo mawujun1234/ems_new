@@ -29,22 +29,27 @@ ok提交状态不准添加成员和条码
 ok任务查询，根据条件查询符合条件的任务，查询结果在一个单独的界面进行展示，然后跳转到任务界面
 ok具体类型里面的任务，做类型限制，完成的任务也显示出来
 
-测试任务列表无限滚动，任务分页
-	新建各种任务，然后测试滚动，重复进出任务测试，同时测试成员初始化
-分页查询后，会返回任务的总数，同时修改标题上的任务数
-新安装任务的已阅 状态的任务数字显示不正确，实际上是1，但是显示喂0
+ok添加任务列表无限滚动，任务分页
+ok任务数量同步，分页查询后，会返回任务的总数，同时修改标题上的任务数
+
 任务提交功能	
 手机端永远登录，不退出
+设备的红绿显示，如果设备是从点位上拆下来的，就显示为红色。
 
 设备扫描功能,还有导航，拍照等功能，打包的时候
 
-
-
-
-
-任务的数量和新任务的数量，在几个地方如何共享，一个改了，另外一个也改，例子中有的
-	使用状态管理https://vuex.vuejs.org/zh-cn/getting-started.html
-
+在pc端进行任务下发的时候，如果发现某个点位属于两个作业单位的时候怎么选择？
+	
+alter table "EMSNEW"."EMS_TASK" add constraint task_customer_id foreign key("CUSTOMER_ID") references "EMS_CUSTOMER"("ID")
+ems_task增加点位的pole_id的外键约束，有好多任务的外键已经没有了，点位删除了
+	新安装任务的已阅 状态的任务数字显示不正确，实际上是1，但是显示喂0
+ select * from ems_task where --pole_id='2c9085494d321f6c014d4100efd70154'
+    pole_id not in (select id from ems_pole)
+设备信息
+拥有设备
+仓库盘点
+消息
+设置中的修改密码，退出功能，二维码的功能，看www_demo
 
 EquipmentWorkunitPK id = new EquipmentWorkunitPK(ecode, ShiroUtils.getUserId());
 都要改成

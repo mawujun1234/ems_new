@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
 //var $ = require('zepto');
 //开启debug模式
 window.debug=true;
@@ -30,11 +32,67 @@ const routes = [
 
 const router = new VueRouter({
   routes // （缩写）相当于 routes: routes
+});
+
+const store = new Vuex.Store({
+  state: {
+    //count:11,
+    task_repair:{
+      newTask_num:0,
+      read_num:0,
+      handling_num:0,
+      submited_num:0
+    },
+    task_patrol:{
+      //total_num:0,
+      newTask_num:0,
+      read_num:0,
+      handling_num:0,
+      submited_num:0
+    },
+    task_cancel:{
+      //total_num:0,
+      newTask_num:0,
+      read_num:0,
+      handling_num:0,
+      submited_num:0
+    },
+    task_check:{
+      //total_num:0,
+      newTask_num:0,
+      read_num:0,
+      handling_num:0,
+      submited_num:0
+    },
+    task_newInstall:{
+      //total_num:0,
+      newTask_num:0,
+      read_num:0,
+      handling_num:0,
+      submited_num:0
+    }
+  },
+  mutations: {
+    init_taskes_num (state,arry) {
+      for(var i=0;i<arry.length;i++){
+        var tasknum=state["task_"+arry[i].type];
+        for (var x in arry[i]) {
+          if(x!='type' && x!='total_num'){
+            tasknum[x]=arry[i][x];
+          }
+        }
+      }
+    },
+    update_taskes_num (state,obj) {
+      //alert(obj.type+"==="+obj.status+"=="+obj.num);
+      state['task_'+obj.type][obj.status+"_num"]=obj.num;
+    }
+  }
 })
 
 const appvue=new Vue({
   el: '#app',
-
+  store,
   router:router,
   render: h => h(App),
   methods:{

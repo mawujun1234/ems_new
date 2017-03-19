@@ -41,8 +41,8 @@ public class MobileLoginController {
 	
 	@Resource
 	private MenuService menuService;
-	@Autowired
-	private MobileTaskService mobileTaskService;
+	//@Autowired
+	//private MobileTaskService mobileTaskService;
 	
 	@RequestMapping("/mobile/login/login.do")
 	@ResponseBody
@@ -122,16 +122,16 @@ public class MobileLoginController {
 		for(Menu menu:list){
 			root.put(menu.getCode(), true);
 		}
-		List<Map<String,Object>> tasknum=mobileTaskService.queryTasknum(ShiroUtils.getUserId());
-		for(Map<String,Object> map:tasknum){
-			Map<String,Object> num=new HashMap<String,Object>();
-			num.put("total_num",map.get("TOTAL_NUM") );
-			num.put("newTask_num", map.get("NEWTASK_NUM"));
-			num.put("read_num", map.get("READ_NUM"));
-			num.put("handling_num", map.get("HANDLING_NUM"));
-			num.put("submited_num", map.get("SUBMITED_NUM"));
-			root.put("task_"+map.get("TYPE"), num);
-		}
+//		List<Map<String,Object>> tasknum=mobileTaskService.queryTasknum(ShiroUtils.getUserId());
+//		for(Map<String,Object> map:tasknum){
+//			Map<String,Object> num=new HashMap<String,Object>();
+//			num.put("total_num",map.get("TOTAL_NUM") );
+//			num.put("newTask_num", map.get("NEWTASK_NUM"));
+//			num.put("read_num", map.get("READ_NUM"));
+//			num.put("handling_num", map.get("HANDLING_NUM"));
+//			num.put("submited_num", map.get("SUBMITED_NUM"));
+//			root.put("task_"+map.get("TYPE"), num);
+//		}
 		//root.put("mobile_page_function_equip_have", true);
 		return ResultModel.getInstance().setRoot(root);
 	}

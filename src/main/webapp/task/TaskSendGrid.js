@@ -53,7 +53,7 @@ Ext.define('Ems.task.TaskSendGrid',{
 		   }
 		   return record.get("status_name");
 		 }},
-		{dataIndex:'code',text:'编号',width:70},
+		{dataIndex:'code',text:'编号',width:90},
 		{dataIndex:'name',text:'点位名称',width:150,renderer:function(value,metadata ,record){
 			if(record.get("task_num")){
 				 return "<a href='javascript:void(0);'>("+record.get("task_num")+")"+value+"</a>";
@@ -549,7 +549,7 @@ Ext.define('Ems.task.TaskSendGrid',{
 							//填写任务信息
 							var win=Ext.create('Ext.window.Window',{
 								modal:true,
-								width:280,
+								width:350,
 								height:250,
 								title:'批量提交任务',
 								items:[{
@@ -558,6 +558,7 @@ Ext.define('Ems.task.TaskSendGrid',{
 						            itemId: 'hitchDate',
 						            editable:false,
 						            allowBlank: true,
+						            format : "Y-m-d H:i:s",
 						            xtype: 'datetimefield'
 						        },
 								{
@@ -576,7 +577,7 @@ Ext.define('Ems.task.TaskSendGrid',{
 							        readOnly:true,
 							        value:workunit_name,
 							        xtype:'textfield',
-							        allowBlank: false
+							        allowBlank: true
 							    }],
 							    buttons:[{
 							    	text:'取 消',

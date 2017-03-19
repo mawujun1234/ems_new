@@ -15,10 +15,10 @@
   <div class="content infinite-scroll infinite-scroll-bottom" data-distance="50">
 
     <div class="buttons-tab fixed-tab" data-offset="45">
-      <a id="a_page_taskes_newTask" href="#page_taskes_newTask" @click="showTasklist('newTask')" class="tab-link button active ">新任务<span>({{nums.newTask_num}})</span></a>
-      <a href="#page_taskes_read" @click="showTasklist('read')" class="tab-link button">已阅<span>({{nums.read_num}})</span></a>
-      <a href="#page_taskes_handling" @click="showTasklist('handling')" class="tab-link button">处理中<span>({{nums.handling_num}})</span></a>
-      <a href="#page_taskes_submited" @click="showTasklist('submited')" class="tab-link button">已提交<span>({{nums.submited_num}})</span></a>
+      <a id="a_page_taskes_newTask" href="#page_taskes_newTask" @click="showTasklist('newTask',false)" class="tab-link button active ">新任务<span>({{newTask_num}})</span></a>
+      <a href="#page_taskes_read" @click="showTasklist('read',false)" class="tab-link button">已阅<span>({{read_num}})</span></a>
+      <a href="#page_taskes_handling" @click="showTasklist('handling',false)" class="tab-link button">处理中<span>({{handling_num}})</span></a>
+      <a href="#page_taskes_submited" @click="showTasklist('submited',false)" class="tab-link button">已提交<span>({{submited_num}})</span></a>
     </div>
 
     <div class="tabs">
@@ -58,17 +58,43 @@ export default {
     return {
       type:'',
       notback:true,
-      status:'',//当前查询的状态
-      nums:{
-        newTask_num:0,
+      status:''//当前查询的状态
+      /*nums:{
+        ,newTask_num:0,
         read_num:0,
         handling_num:0,
         submited_num:0
-      }
+}*/
     }
   },
   components:{
     newTask_taskes_list,read_taskes_list,handling_taskes_list,submited_taskes_list
+  },
+  computed: {
+    newTask_num:function(){
+      if(!this.type){
+        return 0;
+      }
+      return this.$store.state['task_'+this.type].newTask_num;
+    },
+    read_num:function(){
+      if(!this.type){
+        return 0;
+      }
+      return this.$store.state['task_'+this.type].read_num;
+    },
+    handling_num:function(){
+      if(!this.type){
+        return 0;
+      }
+      return this.$store.state['task_'+this.type].handling_num;
+    },
+    submited_num:function(){
+      if(!this.type){
+        return 0;
+      }
+      return this.$store.state['task_'+this.type].submited_num;
+    }
   },
   mounted: function() {
     var vm=this;
@@ -79,27 +105,27 @@ export default {
     $(document).on('infinite', '#page_taskes .infinite-scroll-bottom',function() {
         //vm.search(vm.$route.params);
       //alert(111);
-      vm.isinfinite=true;
-      vm.showTasklist(vm.status);
+      //vm.isinfinite=true;
+      vm.showTasklist(vm.status,true);
     });
   },
-  beforeRouteEnter  (to, from, next) {
+  beforeRouteEnter (to, from, next) {
     next(vm => {
       if(to.params.notback){
-
-
-      // 通过 `vm` 访问组件实例
-      vm.isinfinite=false;
-      vm.type=to.params.type;
-      vm.notback=to.params.notback;
-      vm.nums.newTask_num=to.params.newTask_num;
-      vm.nums.read_num=to.params.read_num;
-      vm.nums.handling_num=to.params.handling_num;
-      vm.nums.submited_num=to.params.submited_num;
-      //alert("vm.type:"+vm.type);
-      //刚进来的时候，初始化界面数据
-      //vm.showTasklist("newTask");
-      $("#a_page_taskes_newTask").trigger('click');
+        // 通过 `vm` 访问组件实例
+        //vm.isinfinite=false;
+        vm.type=to.params.type;
+        vm.notback=to.params.notback;
+        /*vm.nums.newTask_num=to.params.newTask_num;
+        vm.nums.read_num=to.params.read_num;
+        vm.nums.handling_num=to.params.handling_num;
+        vm.nums.submited_num=to.params.submited_num;
+        */
+        //alert("vm.type:"+vm.type);
+        //刚进来的时候，初始化界面数据
+        //vm.status=newTask;
+        //vm.showTasklist("newTask");
+        $("#a_page_taskes_newTask").trigger('click',"newTask",false);
       }
     });
   },
@@ -111,11 +137,11 @@ export default {
         }
       });
     },
-    showTasklist:function(status){
+    showTasklist:function(status,isinfinite){
       this.status=status;
 
       var child_name=status+"_taskes_list";
-      this.$refs[child_name].refreshlist(this.type,status);
+      this.$refs[child_name].refreshlist(this.type,status,isinfinite);
       //$.initPullToRefresh(".pull-to-refresh-content");
       //alert(1);
       //alert(status);
@@ -123,12 +149,12 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
-      // 对路由变化作出响应...
-      //alert(to.params.type);
+    //'$route' (to, from) {
+      // 对路由变化作出响应...kkkk
+      //alert(to.params.notback);
       //this.type=to.params.type;
     //  queryTaskes('all');
-    }
+    //}
   }
 }
 //alert($);

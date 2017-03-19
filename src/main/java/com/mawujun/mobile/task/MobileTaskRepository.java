@@ -18,7 +18,7 @@ import com.mawujun.utils.page.Pager;
 public interface MobileTaskRepository {
 	
 	
-	public List<Map<String,Object>> queryTasknum(@Param("user_id")String user_id);
+	public List<TaskesNum> queryTasknum(@Param("user_id")String user_id);
 	
 	public Pager<TaskVO> queryTaskes(Pager<TaskVO> params);
 	public Pager<TaskVO> searchTaskes(Pager<TaskVO> params);

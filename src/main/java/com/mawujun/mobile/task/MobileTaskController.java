@@ -30,7 +30,27 @@ public class MobileTaskController {
 	private HandleMethodService handleMethodService;
 //	@Autowired
 //	private TaskService taskService;
-	
+	/**
+	 * 初始化个任务的数量
+	 * @return
+	 */
+	@RequestMapping("/mobile/task/init_taskes_num.do")
+	@ResponseBody
+	public ResultModel init_taskes_num(){
+//		Map<String,Object> root=new HashMap<String,Object>();
+		List<TaskesNum> tasknum=mobileTaskService.queryTasknum(ShiroUtils.getUserId());
+//		for(Map<String,Object> map:tasknum){
+//			Map<String,Object> num=new HashMap<String,Object>();
+//			//num.put("total_num",map.get("TOTAL_NUM") );
+//			num.put("newTask_num", map.get("NEWTASK_NUM"));
+//			num.put("read_num", map.get("READ_NUM"));
+//			num.put("handling_num", map.get("HANDLING_NUM"));
+//			num.put("submited_num", map.get("SUBMITED_NUM"));
+//			root.put("task_"+map.get("TYPE"), tasknum);
+//		}
+		
+		return ResultModel.getInstance().setRoot(tasknum);
+	}
 	/**
 	 * 从具体的类型的任务进去的时候
 	 * @author mawujun qq:16064988 mawujun1234@163.com

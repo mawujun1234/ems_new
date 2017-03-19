@@ -5,7 +5,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
 <mapper namespace="com.mawujun.mobile.task.MobileTaskRepository">
-	<select id="queryTasknum" resultType="map" parameterType="map">
+	<select id="queryTasknum" resultType="com.mawujun.mobile.task.TaskesNum" parameterType="map">
     	select a.type,count(status) total_num
     	,sum(decode(a.status,'newTask',1,0)) newTask_num
     	,sum(decode(a.status,'read',1,0)) read_num

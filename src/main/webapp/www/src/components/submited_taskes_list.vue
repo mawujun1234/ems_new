@@ -29,15 +29,15 @@ export default {
     }
   },
   methods:{
-    refreshlist:function(type,status){
+    refreshlist:function(type,status,isinfinite){
       //window.debug&&console.log("refresh tasklist...");
       const vm=this;
       // 如果正在加载，则退出
       if (vm.loading) return;
       // 设置flag
       vm.loading = true;
-      //alert(vm.$parent.isinfinite);
-      if(!vm.$parent.isinfinite){//alert(1);
+
+      if(!isinfinite){//alert(1);
         vm.start=0;
         vm.taskes=[];
         $('.infinite-scroll-preloader.taskes-list').show();
@@ -61,6 +61,11 @@ export default {
         for(var i=0;i<response.root.length;i++){
           vm.taskes.push(response.root[i]);
         }
+        //修改标签上的数字
+        if(vm.$store.state['task_'+type][status+"_num"]!=response.total){
+          vm.$store.commit("update_taskes_num",{type:type,status:status,num:response.total});//
+        }
+
         vm.loading = false;
         vm.start=response.page*response.limit;
         if(response.root.length==0 || response.page==response.totalPages || vm.start>vm.maxitem){
