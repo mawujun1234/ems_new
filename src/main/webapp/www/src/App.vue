@@ -30,16 +30,7 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      var toDepth =0;
-      var fromDepth =0;
-      if(to.path!="/"){
-        toDepth=to.path.split('/').length;
-      }
-      if(from.path!="/"){
-        fromDepth=from.path.split('/').length;
-      }
-
-      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+      this.transitionName=this.$router.transitionName;
     }
   },
   methods:{

@@ -119,9 +119,11 @@ const appvue=new Vue({
   render: h => h(App),
   methods:{
     to:function(path){
+      router.transitionName='slide-left';
       router.push(path);
     },
     back:function(){
+      router.transitionName='slide-right';
       router.go(-1);
     }
   }

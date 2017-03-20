@@ -3,10 +3,10 @@
 <div class="page page-current" id="page_taskes">
   <!-- 标题栏 -->
   <header class="bar bar-nav">
-    <router-link class="button button-link button-nav pull-left back" to="/page_function"> <span class="icon icon-left"></span>返回
-    </router-link>
+    <a class="button button-link button-nav pull-left" @click="back"> <span class="icon icon-left"></span>返回
+    </a>
     <a class="icon icon-search pull-right" href="javascript:void(0);" @click="to_page_taskes_search"></a>
-    <h1 class="title">任务列表</h1>
+    <h1 class="title">{{type_name}}任务列表</h1>
   </header>
 
 
@@ -57,6 +57,7 @@ export default {
   data () {
     return {
       type:'',
+      type_name:'',
       notback:true,
       status:''//当前查询的状态
       /*nums:{
@@ -114,22 +115,28 @@ export default {
       if(to.params.notback){
         // 通过 `vm` 访问组件实例
         //vm.isinfinite=false;
-        vm.type=to.params.type;
+        let type=to.params.type;
+        vm.type=type;
         vm.notback=to.params.notback;
-        /*vm.nums.newTask_num=to.params.newTask_num;
-        vm.nums.read_num=to.params.read_num;
-        vm.nums.handling_num=to.params.handling_num;
-        vm.nums.submited_num=to.params.submited_num;
-        */
-        //alert("vm.type:"+vm.type);
-        //刚进来的时候，初始化界面数据
-        //vm.status=newTask;
-        //vm.showTasklist("newTask");
+        if(type=='repair'){
+          vm.type_name='维修'
+        } else if(type=='patrol'){
+          vm.type_name='巡检'
+        } else if(type=='cancel'){
+          vm.type_name='取消'
+        } else if(type=='check'){
+          vm.type_name='盘点'
+        } else if(type=='newInstall'){
+          vm.type_name='新安装'
+        }
         $("#a_page_taskes_newTask").trigger('click',"newTask",false);
       }
     });
   },
   methods:{
+    back:function(){
+        window.appvue.back();
+    },
     to_page_taskes_search:function(){
       window.appvue.to({ name: 'page_taskes_search',
         params: {
