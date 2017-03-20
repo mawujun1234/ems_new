@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.mobile.login.MobileLoginRepository">
+	<select id="queryMyinfo" resultType="com.mawujun.mobile.login.Myinfo" parameterType="map">
+    	select a.user_id,c.loginname,c.lastlogintime, b.id as workunit_id,b.name as workunit_name
+		from t_position_org_user a
+		inner join t_org b on a.org_id=b.id
+		inner join t_user c on a.user_id=c.id
+		where a.user_id=#{user_id}
+    </select>
+   
+</mapper>
+

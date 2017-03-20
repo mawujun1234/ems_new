@@ -47,7 +47,7 @@ public class Task implements IdEntity<String> {
 	
 	private Date hitchDate;//故障时间，就是发现故障的时间
 	private Date createDate;//创建时间
-	private Date startHandDate;//开始处理时间，第一次保存的时候
+	private Date startHandDate;//开始处理时间，扫描第一个设备的时间
 	private Date submitDate;//提交时间
 	//private Date approveDate;//管理人员审批时间
 	private Date completeDate;//完成时间

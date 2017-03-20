@@ -162,15 +162,17 @@
   				      <div id="page_task_info_equiplist_tab" class="tab active ">
   				      <div class="list-block" >
   				        <ul>
-  					  	  <li v-for="equip in equiplist">
-  					  	    <a href="javascript:void(0);" class="item-link item-content" @click="show_popup_equip_info(equip.ecode)">
+  					  	  <li v-for="equip in equiplist" :style="equip.install_type=='uninstall'?'color:red':(equip.install_type=='install'?'color:green':'')" class="item-link item-content" @click="show_popup_equip_info(equip.ecode)" >
   						        <div class="item-media"><i class="icon icon-f7"></i></div>
   						        <div class="item-inner">
-  						          <div class="item-title">{{equip.ecode}}</div>
+  						          <div class="item-title">{{equip.ecode}}
+                          <span style="font-size:0.5rem;" v-if="equip.install_type=='uninstall'">(卸)</span>
+                          <span style="font-size:0.5rem;" v-if="equip.install_type=='install'">(装)</span>
+                          <span style="font-size:0.5rem;" v-if="equip.install_type=='patrol'">(扫)</span>
+                        </div>
   								      <div class="item-after">{{equip.subtype_name}}</div>
   						        </div>
-  					        </a>
-  					        <a href="javascript:void(0);" v-if="canedit" class="remove"  @click="delete_equip_info(equip.ecode)">删除</a>
+  					        <a href="javascript:void(0);" v-if="canedit" class="remove"  @click.stop.prevent="delete_equip_info(equip.ecode)">删除</a>
   					      </li>
   					    </ul>
   					  </div>
@@ -178,15 +180,13 @@
   				      <div id="page_task_info_members_tab" class="tab">
   				        <div class="list-block" >
   					        <ul>
-  						  	  <li v-for="member in members">
-  						  	    <!--<a href="#page_equip_info" class="item-link item-content">-->
+  						  	  <li v-for="member in members" class="item-link item-content">
   							        <div class="item-media"><i class="icon icon-f7"></i></div>
   							        <div class="item-inner">
   							          <div class="item-title">{{member.name}}</div>
   									      <div class="item-after">{{member.workunit_name}}</div>
   							        </div>
-  						        <!--</a>-->
-  						        <a href="javascript:void(0);" v-if="canedit" class="remove" @click="delete_member(member.id)">删除</a>
+  						        <a href="javascript:void(0);" v-if="canedit" class="remove" @click.stop.prevent="delete_member(member.id)">删除</a>
   						      </li>
   						    </ul>
   						 </div>
@@ -195,7 +195,7 @@
 
   				  <div class="content-block">
   				    <div class="row" v-if="canedit">
-  				      <div class="col-50"><a href="javascript:void(0);" @click="scan_qrcode" class="button button-big button-fill button-danger">扫一扫</a></div>
+  				      <div class="col-50"><a href="javascript:void(0);" @click="show_qrcode_camare" class="button button-big button-fill button-danger">扫一扫</a></div>
   				      <div class="col-50"><a href="javascript:void(0);" @click="submit" class="button button-big button-fill button-success">提交</a></div>
   				    </div>
   				  </div>
@@ -348,17 +348,49 @@ export default {
     },
     back:function(){
       window.appvue.back();
-      /*
-      window.appvue.to({ name: 'page_taskes',
-        params: {
-          back:true,
-          type:this.type,
-        }
-      });
-      */
     },//back
-    scan_qrcode:function(){//扫描二维码
+    show_qrcode_camare:function(){//扫描二维码
       alert("请在手机上操作");
+    },
+    scan_qrcode:function(ecode){
+      var vm=this;
+      //var parent=vm.$parent;
+      if(!vm.canedit){
+        $.toast("任务已提交,不准添加！");
+        return;
+      }
+
+
+      $.post($.SP+'/mobile/task/scanEquip_info.do',{
+          ecode:ecode,
+          task_id:this.id
+        },function(response){
+
+          if(response.root){
+            vm.equiplist.push(response.root);
+          }
+          //$("#page_task_info_ecode_input").val("");
+          $.closeModal(".popup-qrcode-input");
+          vm.update_install_type(ecode,response.root.install_type);
+      });
+    },
+    update_install_type:function(ecode,install_type){
+      var vm=this;
+      if(install_type=='uninstall' && vm.type=='repair'){
+        //当任务是维修类型，并且扫描返回的设备是卸载的时候，就给出提示，是不是要卸载
+        let r=confirm("是否拆卸该设备？？如果不需要，请点击'取消'");
+        //let install_type=null;
+        if(!r){
+          $.post($.SP+'/mobile/task/update_install_type.do',{
+              ecode:ecode,
+              task_id:vm.id,
+              install_type:'patrol'
+            },function(response){
+              vm.equiplist[vm.equiplist.length-1].install_type='patrol';
+          });
+        }
+      }
+
     },
     submit:function(){
       if(!this.canedit){

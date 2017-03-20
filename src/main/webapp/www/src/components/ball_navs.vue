@@ -98,28 +98,17 @@ export default {
     scanQrcode:function(){
       var vm=this;
       var parent=vm.$parent;
-      if(!parent.canedit){
-        $.toast("任务已提交,不准添加！");
-        return;
-      }
+      // if(!parent.canedit){
+      //   $.toast("任务已提交,不准添加！");
+      //   return;
+      // }
       var ecode=$("#page_task_info_ecode_input").val();
       if(!ecode){
         $("#page_task_info_ecode_input").trigger('focus');
         return;
       }
-
-      $.post($.SP+'/mobile/task/scanEquip_info.do',{
-          ecode:ecode,
-          task_id:parent.id
-        },function(response){
-
-          if(response.root){
-            parent.equiplist.push(response.root);
-          }
-          $("#page_task_info_ecode_input").val("");
-          $.closeModal(".popup-qrcode-input");
-
-      });
+      parent.scan_qrcode(ecode);
+      $("#page_task_info_ecode_input").val("");
     }
   }
 }

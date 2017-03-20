@@ -2,6 +2,7 @@ package com.mawujun.permission;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -91,7 +92,7 @@ public class UserController {
              cookie_username.setPath("/");
              response.addCookie(cookie_username);
              
-             
+             userService.update(Cnd.update().set(M.User.lastlogintime, new Date()).andEquals(M.User.id, ShiroUtils.getUserId()));
              //显示调用这个，来初始化ShiroAuthorizingRealm中的doGetAuthorizationInfo方法，来获取用户可以访问的资源,否则将不会调用doGetAuthorizationInfo
              SecurityUtils.getSubject().hasRole("XXX") ;
              return successUrl;

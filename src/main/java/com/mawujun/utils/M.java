@@ -583,6 +583,7 @@ public static final class PositionOrgUser {
 		public static final String remark="user.remark";
 		public static final String state="user.state";
 		public static final String canNotDel="user.canNotDel";
+		public static final String lastlogintime="user.lastlogintime";
 		public static final String temp_workunit="user.temp_workunit";
 			
 	    /**
@@ -674,6 +675,7 @@ public static final class RoleUser {
 		public static final String remark="user.remark";
 		public static final String state="user.state";
 		public static final String canNotDel="user.canNotDel";
+		public static final String lastlogintime="user.lastlogintime";
 		public static final String temp_workunit="user.temp_workunit";
 			
 	    /**
@@ -712,6 +714,7 @@ public static final class User {
 	public static final String remark="remark";
 	public static final String state="state";
 	public static final String canNotDel="canNotDel";
+	public static final String lastlogintime="lastlogintime";
 	public static final String temp_workunit="temp_workunit";
 }
 public static final class Repair {

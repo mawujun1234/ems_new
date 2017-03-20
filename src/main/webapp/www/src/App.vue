@@ -1,5 +1,14 @@
 <template>
   <div id="app" class="page-group">
+    <nav class="bar bar-tab" id="bottom_bar"
+      style="z-index: 6666; display:none;">
+      <a class="tab-item active" href="javascript:void(0);" @click="to_page_function"
+        id="bottom_bar_page_function"> <span class="icon icon-home"></span>
+        <span class="tab-label">功能</span>
+      </a> <a class="tab-item" href="javascript:void(0);" @click="to_page_setting" id="bottom_bar_page_setting">
+        <span class="icon icon-settings"></span> <span class="tab-label">我的</span>
+      </a>
+    </nav>
     <transition :name="transitionName">
       <keep-alive include="page_taskes">
       <router-view></router-view>
@@ -31,6 +40,24 @@ export default {
       }
 
       this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+    }
+  },
+  methods:{
+    to_page_function:function(){
+      $("#bottom_bar_page_function").addClass("active");
+      $("#bottom_bar_page_setting").removeClass("active");
+      window.appvue.to({ name: 'page_function',
+        params: {
+        }
+      });
+    },
+    to_page_setting:function(){
+      $("#bottom_bar_page_function").removeClass("active");
+      $("#bottom_bar_page_setting").addClass("active");
+      window.appvue.to({ name: 'page_setting',
+        params: {
+        }
+      });
     }
   }
 }

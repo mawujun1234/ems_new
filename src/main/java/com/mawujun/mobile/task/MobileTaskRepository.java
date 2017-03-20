@@ -1,7 +1,6 @@
 package com.mawujun.mobile.task;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -37,4 +36,9 @@ public interface MobileTaskRepository {
 	 * @return
 	 */
 	public List<Workunit> queryMembers(@Param("user_id")String user_id,@Param("task_id")String task_id);
+	
+	
+	
+	public List<WkTypenum> queryType_num(@Param("user_id")String user_id);
+	public List<Typenum> querySubtype_num(@Param("workunit_id")String workunit_id,@Param("type_id")String type_id,@Param("user_id")String user_id);
 }

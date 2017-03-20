@@ -21,7 +21,7 @@ export default {
   data () {
     return {
       start:0,
-      limit:4,
+      limit:8,
       maxitem:80,//最大就只显示80条
       loading:false,
 

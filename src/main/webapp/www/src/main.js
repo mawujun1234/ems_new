@@ -13,6 +13,10 @@ import page_taskes from './pages/page_taskes.vue'
 import page_task_info from './pages/page_task_info.vue'
 import page_taskes_search from './pages/page_taskes_search.vue'
 import page_taskes_search_list from './pages/page_taskes_search_list.vue'
+import page_equip_have from './pages/page_equip_have.vue'
+import page_equip_have_subtype from './pages/page_equip_have_subtype.vue'
+import page_setting from './pages/page_setting.vue'
+import page_update_password from './pages/page_update_password.vue'
 
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
@@ -27,16 +31,31 @@ const routes = [
   { path: '/page_taskes/:type', component: page_taskes,name: 'page_taskes'},
   { path: '/page_taskes_search', component: page_taskes_search,name: 'page_taskes_search'},
   { path: '/page_taskes_search_list', component: page_taskes_search_list,name: 'page_taskes_search_list'},
-  { path: '/page_task_info/:task_id', component: page_task_info ,name: 'page_task_info'}
+  { path: '/page_task_info/:task_id', component: page_task_info ,name: 'page_task_info'},
+  { path: '/page_equip_have', component: page_equip_have,name: 'page_equip_have'},
+  { path: '/page_equip_have_subtype', component: page_equip_have_subtype,name: 'page_equip_have_subtype'},
+  { path: '/page_setting', component: page_setting,name: 'page_setting'},
+  { path: '/page_update_password', component: page_update_password,name: 'page_update_password'}
 ]
 
 const router = new VueRouter({
   routes // （缩写）相当于 routes: routes
 });
+router.afterEach(route => {
+  store.commit("incream_router_len");
+  if(route.path=='/page_function' || route.path=='/page_setting'){
+    $("#bottom_bar").show();
+  } else {
+    $("#bottom_bar").hide();
+  }
+})
 
 const store = new Vuex.Store({
   state: {
     //count:11,
+    router:{
+      len:0
+    },
     task_repair:{
       newTask_num:0,
       read_num:0,
@@ -86,6 +105,9 @@ const store = new Vuex.Store({
     update_taskes_num (state,obj) {
       //alert(obj.type+"==="+obj.status+"=="+obj.num);
       state['task_'+obj.type][obj.status+"_num"]=obj.num;
+    },
+    incream_router_len (state){
+      state.router.len++;
     }
   }
 })

@@ -1,5 +1,7 @@
 package com.mawujun.permission;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -54,6 +56,8 @@ public class User implements IShiroUser{
 	private State state;
 	
 	private Boolean canNotDel=false;
+	
+	private Date lastlogintime;
 	
 	//在同步数据的时候，用来临时存放ems原始表中的作业单位的id，用来把账号同步导职位里面时候用的
 	//等运行稳定后就可以删除了
@@ -152,6 +156,14 @@ public class User implements IShiroUser{
 
 	public void setTemp_workunit(String temp_workunit) {
 		this.temp_workunit = temp_workunit;
+	}
+
+	public Date getLastlogintime() {
+		return lastlogintime;
+	}
+
+	public void setLastlogintime(Date lastlogintime) {
+		this.lastlogintime = lastlogintime;
 	}
 
 

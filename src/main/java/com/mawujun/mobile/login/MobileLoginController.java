@@ -1,5 +1,6 @@
 package com.mawujun.mobile.login;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mawujun.controller.spring.mvc.ResultModel;
-import com.mawujun.mobile.task.MobileTaskService;
 import com.mawujun.permission.Menu;
 import com.mawujun.permission.MenuService;
 import com.mawujun.permission.ShiroUtils;
+import com.mawujun.permission.User;
+import com.mawujun.permission.UserService;
+import com.mawujun.repository.cnd.Cnd;
+import com.mawujun.utils.M;
 
 /**
  * 主要用在移动端的
@@ -41,8 +45,10 @@ public class MobileLoginController {
 	
 	@Resource
 	private MenuService menuService;
-	//@Autowired
-	//private MobileTaskService mobileTaskService;
+	@Resource
+	private UserService userService;
+	@Autowired
+	private MobileLoginService mobileLoginService;
 	
 	@RequestMapping("/mobile/login/login.do")
 	@ResponseBody
@@ -104,6 +110,7 @@ public class MobileLoginController {
 //             waringGps.setLoginTime(new Date());
 //             geolocationController.getWaringGpsMap().put(subject.getSession().getId().toString(), waringGps);
 //             //return ShiroUtils.getAuthenticationInfo();
+			userService.update(Cnd.update().set(M.User.lastlogintime, new Date()).andEquals(M.User.id, ShiroUtils.getUserId()));
              return ResultModel.getInstance().setRoot(ShiroUtils.getAuthenticationInfo());
 //        }  
 		
@@ -138,25 +145,39 @@ public class MobileLoginController {
 	
 	@RequestMapping("/mobile/login/logout.do")
 	@ResponseBody
-	public String logout(){
+	public ResultModel logout(){
 		
 		Subject subject = SecurityUtils.getSubject(); 
 		 //geolocationController.getWaringGpsMap().remove(subject.getSession().getId().toString());
 		subject.logout();
 		
 		
-		return "logout";
+		return ResultModel.getInstance();
 	}
-//	@RequestMapping("/mobile/updatePassword.do")
-//	@ResponseBody
-//	public String updatePassword(String password,String password_repeat){
-//		//取消掉jsonpCallback，然后把www放到同个项目里好了
-//		//JsonConfigHolder.setJsonpCallback(jsonpCallback);
-//		User user=ShiroUtils.getAuthenticationInfo();
-//		String loginName=user.getUsername();
-//		workUnitService.update(Cnd.update().set(M.WorkUnit.password, password).andEquals(M.WorkUnit.loginName, loginName));	
-//		return "{success:true}";
-//	}
+	
+	@RequestMapping("/mobile/login/queryMyinfo.do")
+	@ResponseBody
+	public ResultModel queryMyinfo(){
+		List<Myinfo> list=mobileLoginService.queryMyinfo();
+		return ResultModel.getInstance().setRoot(list);
+	}
+	@RequestMapping("/mobile/login/updatePassword.do")
+	@ResponseBody
+	public ResultModel updatePassword(String old_pwd,String new_pwd){
+		//取消掉jsonpCallback，然后把www放到同个项目里好了
+		//JsonConfigHolder.setJsonpCallback(jsonpCallback);
+		User user=ShiroUtils.getAuthenticationInfo();
+		
+		ResultModel result=ResultModel.getInstance();
+		if(!user.getPwd().equals(old_pwd)){
+			result.setSuccess(false);
+			result.setMsg("旧密码不正确");
+		} else {
+			userService.update(Cnd.update().set(M.User.pwd, new_pwd).andEquals(M.User.id, ShiroUtils.getUserId()));
+		}
+		
+		return result;
+	}
 	
 	
 }

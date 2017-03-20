@@ -56,7 +56,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="getMobileTaskVO_equiplist" resultType="com.mawujun.mobile.task.Equiplist" parameterType="map">
-    	select a.ecode,c.name as subtype_name  from ems_taskequipmentlist a,ems_equipment b,ems_equipmentsubtype c
+    	select a.ecode,a.type as install_type,c.name as subtype_name  from ems_taskequipmentlist a,ems_equipment b,ems_equipmentsubtype c
 		where a.ecode=b.ecode and b.subtype_id=c.id and a.task_id=#{task_id}
     </select>
     <select id="getMobileTaskVO_members" resultType="com.mawujun.mobile.task.Members" parameterType="map">
@@ -68,7 +68,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     </select>
     
     
-    <resultMap type="com.mawujun.task.HitchTypeVO" id="hitchTypeVOMap">  
+    <resultMap type="com.mawujun.task.HitchTypeVO" id="map_hitchTypeVO">  
         <id column="id" property="id"/>  
         <result column="name" property="name"/>  
         <collection property="hitchReasonTpls" ofType="com.mawujun.task.HitchReasonTpl">  
@@ -77,7 +77,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
             <result column="tpl_tpl" property="tpl"/>  
         </collection>         
     </resultMap>
-    <select id="queryAllHitchtype" resultMap="hitchTypeVOMap">
+    <select id="queryAllHitchtype" resultMap="map_hitchTypeVO">
     	select a.id,a.name,b.id as tpl_id,b.name as tpl_name,b.tpl tpl_tpl 
 		from ems_hitchtype a,ems_hitchreasontpl b
 		where a.id=b.HITCHTYPE_ID
@@ -85,8 +85,10 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="scanEquip_info" resultType="com.mawujun.mobile.task.Equiplist" >
-    	select b.ecode,c.name as subtype_name  from ems_equipment b,ems_equipmentsubtype c
-		where  b.subtype_id=c.id and b.ecode=#{ecode}
+    	select b.ecode,c.name as subtype_name  
+    	from ems_equipment b
+    	inner join ems_equipmentsubtype c on b.subtype_id=c.id
+		where  b.ecode=#{ecode}
     </select>
     
      <!-- 在移动端查询祖业单位和拥有的用户的时候，加了权限过滤，必须授予权限才能访问 -->
@@ -107,6 +109,41 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		and b.position_id=e.position_id and a.orgType='workunit' and e.user_id=#{user_id}
 		and not exists (select * from ems_task_member memb 
     		where c.user_id=memb.user_id and memb.task_id=#{task_id}) 
+    </select>
+    
+    
+    <resultMap type="com.mawujun.mobile.task.WkTypenum" id="map_WkTypenum">  
+        <id column="id" property="id"/>  
+        <result column="name" property="name"/>  
+        <collection property="typenums" ofType="com.mawujun.mobile.task.Typenum">  
+            <id column="type_id" property="id"/>  
+            <result column="type_name" property="name"/>  
+            <result column="type_num" property="num"/>  
+        </collection>         
+    </resultMap>
+    <select id="queryType_num" resultMap="map_WkTypenum" parameterType="map">
+		select b.id,b.name,e.id type_id,e.name type_name,count(a.ecode) type_num 
+		from ems_equipment_workunit a
+		inner join t_org b on a.workunit_id=b.id
+		inner join ems_equipment c on a.ecode=c.ecode
+		inner join ems_equipmentsubtype d on c.subtype_id=d.id
+		inner join ems_equipmenttype e on d.parent_id=e.id
+		inner join t_position_org_user f on a.workunit_id=f.org_id
+		where f.user_id=#{user_id}
+		group by b.id,b.name,e.id,e.name
+		order by b.id,e.id
+    </select>
+    <select id="querySubtype_num" resultType="com.mawujun.mobile.task.Typenum" parameterType="map">
+    	select d.id, d.name ,count(a.ecode) num 
+		from ems_equipment_workunit a
+		inner join ems_equipment c on a.ecode=c.ecode
+		inner join ems_equipmentsubtype d on c.subtype_id=d.id
+		inner join t_position_org_user f on a.workunit_id=f.org_id
+		where f.user_id=#{user_id} 
+		and a.workunit_id=#{workunit_id}
+		and d.parent_id=#{type_id}
+		group by d.id,d.name
+		order by d.id
     </select>
 </mapper>
 

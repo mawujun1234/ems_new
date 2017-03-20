@@ -16,6 +16,7 @@ import com.mawujun.baseinfo.EquipmentWorkunitPK;
 import com.mawujun.baseinfo.EquipmentWorkunitRepository;
 import com.mawujun.baseinfo.EquipmentWorkunitType;
 import com.mawujun.baseinfo.PoleRepository;
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.repository.cnd.Cnd;
@@ -108,6 +109,12 @@ public class MobileTaskService {
 					temp=member.getId();
 				}
 			}
+		}
+		
+		//如果任务状态为 新任务，则把任务状态改成已阅
+		if(mobileTaskVO.getStatus()==TaskStatus.newTask){
+			taskRepository.update(Cnd.update().set(M.Task.status, TaskStatus.read.toString())
+					.andEquals(M.Task.id, task_id));
 		}
 
 		return mobileTaskVO;
@@ -214,8 +221,13 @@ public class MobileTaskService {
 		}
 
 
-		// 更新设备状态为处理中
-		taskRepository.update_to_handling_status(task_id);
+		// 更新设备状态为处理中,只记录设备第一次扫描的时间，也就是设备还是处在新任务或者已阅状态的时候
+		//同时更新startHandDate时间
+		if(task.getStatus()==TaskStatus.newTask || task.getStatus()==TaskStatus.read){
+			taskRepository.update_to_handling_status(task_id);
+		}
+		
+		
 
 		TaskEquipmentList list = new TaskEquipmentList();
 		list.setEcode(ecode);
@@ -245,8 +257,15 @@ public class MobileTaskService {
 		// vo.setBrand_name(equipmentProd.getBrand_name());
 
 		Equiplist equiplist = mobileTaskRepository.scanEquip_info(ecode);
+		equiplist.setInstall_type(taskListTypeEnum);
 
 		return equiplist;
+	}
+	
+	public void update_install_type(String ecode,String task_id,String install_type){
+		taskEquipmentListRepository.update(Cnd.update().set(M.TaskEquipmentList.type, TaskListTypeEnum.valueOf(install_type))
+				.andEquals(M.TaskEquipmentList.task_id, task_id)
+				.andEquals(M.TaskEquipmentList.ecode, ecode));
 	}
 
 	public void delete_equip_info(String ecode,String task_id) {
@@ -315,6 +334,12 @@ public class MobileTaskService {
 				throw new BusinessException("故障处理方法必须填写！");
 			}
 			
+//			//如果没有设备扫描过，就提出报警，必须扫描一个才可以
+//			int scan_count=taskRepository.query_count_tasklist_by_task(task_id);
+//			if(scan_count==0){
+//				throw new BusinessException("请扫描一个设备再提交！");
+//			}
+			
 		}
 		
 		
@@ -322,6 +347,17 @@ public class MobileTaskService {
 		task.setStatus( TaskStatus.submited);
 		task.setSubmitDate(new Date());
 		taskRepository.update(task);
+	}
+	
+	
+	
+	
+	
+	public List<WkTypenum> queryType_num(){
+		return mobileTaskRepository.queryType_num(ShiroUtils.getUserId());
+	}
+	public List<Typenum> querySubtype_num(String workunit_id,String type_id){
+		return mobileTaskRepository.querySubtype_num( workunit_id, type_id,ShiroUtils.getUserId());
 	}
 
 }

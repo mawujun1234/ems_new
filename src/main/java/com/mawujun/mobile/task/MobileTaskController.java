@@ -122,6 +122,13 @@ public class MobileTaskController {
 		return ResultModel.getInstance().setRoot(equiplist);
 	}
 	
+	@RequestMapping("/mobile/task/update_install_type.do")
+	@ResponseBody
+	public ResultModel update_install_type(String ecode,String task_id,String install_type){
+		mobileTaskService.update_install_type(ecode,task_id,install_type);
+		return ResultModel.getInstance();
+	}
+	
 	@RequestMapping("/mobile/task/delete_equip_info.do")
 	@ResponseBody
 	public String delete_equip_info(String ecode,String task_id){
@@ -201,5 +208,21 @@ public class MobileTaskController {
 		mobileTaskService.submit(task_id);
 		return ResultModel.getInstance();
 		
+	}
+	
+	
+	@RequestMapping("/mobile/task/queryType_num.do")
+	@ResponseBody
+	public ResultModel queryType_num(){
+		List<WkTypenum> vo=mobileTaskService.queryType_num();
+		
+		return ResultModel.getInstance().setRoot(vo);
+	}
+	@RequestMapping("/mobile/task/querySubtype_num.do")
+	@ResponseBody
+	public ResultModel querySubtype_num(String workunit_id,String type_id){
+		List<Typenum> vo=mobileTaskService.querySubtype_num(workunit_id,type_id);
+		
+		return ResultModel.getInstance().setRoot(vo);
 	}
 }

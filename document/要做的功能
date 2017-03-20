@@ -1,10 +1,10 @@
 ok菜单管理中增加移动端的菜单
 ok用户登录的时候获取移动端的菜单权限
-ok通过vue控制菜单的动态显示和生成
+ok移动端菜单的动态显示和生成
 ok菜单数据同步，把移动端的菜单通过insert sql拷贝出来
 ok用户登录成功后，跳转到功能页面
-okvue跨域访问和跨域访问之后的会话一致的问题
-ok在获取页面功能的同时，获取功能页面上各个任务的任务数，在组件的生命周期mounted的时候,并且添加到badge上（红色提示数字）
+ok移动端跨域访问和跨域访问之后的会话一致的问题
+ok在获取页面功能的同时，获取功能页面上各个任务的任务数
    注意要根据任务的类型获取不同类型任务的任务数
 ok对任务模块进行重构
 ok查询规格任务的任务数，在导航进来的时候
@@ -33,25 +33,40 @@ ok添加任务列表无限滚动，任务分页
 ok任务数量同步，分页查询后，会返回任务的总数，同时修改标题上的任务数
 
 ok任务提交功能	
-ok手机端永远登录，不退出
-设备的红绿显示，如果设备是从点位上拆下来的，就显示为红色。
-当新任务阅读过后，更新任务的状态为已阅
-当扫描过后，更新任务状态为处理中
+ok手机端持续登录，不自动退出
+ok作业单位拥有设备统计功能
+ok添加我的功能
+ok我的中从属于多个作业单位
+ok移动端修改密码
+ok移动端退出
+ok设备的红绿显示，如果设备是从点位上拆下来的，就显示为红色,安装显示为绿色，扫描显示为黑色
+ok当新任务阅读过后，更新任务的状态为已阅
+ok当扫描过后，更新任务状态为处理中，同时更新任务开始处理时间
+
+
+
+删除的点位恢复，不然任务看不到了
+点位删除的时候，判断有没有任务关联他，设置为失效
+客户删除的时候，当存在任务管理的时候，设置为失效
 
 设备扫描功能,还有导航，拍照等功能，打包的时候
 
 在pc端进行任务下发的时候，如果发现某个点位属于两个作业单位的时候怎么选择？
 	
-alter table "EMSNEW"."EMS_TASK" add constraint task_customer_id foreign key("CUSTOMER_ID") references "EMS_CUSTOMER"("ID")
+
 ems_task增加点位的pole_id的外键约束，有好多任务的外键已经没有了，点位删除了
+注意要几率到初始化脚本中
 	新安装任务的已阅 状态的任务数字显示不正确，实际上是1，但是显示喂0
  select * from ems_task where --pole_id='2c9085494d321f6c014d4100efd70154'
     pole_id not in (select id from ems_pole)
 
-拥有设备
 
 
-设置中的修改密码，退出功能，二维码的功能，看www_demo
+设备领用的时候，要指定领用的人，因为一个作业单位中会有多个人员了
+某个点位属于多个作业单位的时候，发送任务时发送给哪个作业单位进行选择
+
+
+
 
 EquipmentWorkunitPK id = new EquipmentWorkunitPK(ecode, ShiroUtils.getUserId());
 都要改成
@@ -64,12 +79,14 @@ Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobil
 Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('185fcc10-0d29-4d26-b754-36418e09f94c','mobile_page_function_store_check','element','仓库盘点','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
 Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('8760c2d9-81f2-49a0-a494-da8ded5647ed','mobile_page_function_equip_info','element','设备信息','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
 
-
-
+“我的”中生成二维码的功能
 websocket支持度测试
 
 从例子中看如何引入zepto和css的，并尝试测试引入
 尝试复杂页面组件化，降低页面的复杂度。
 	http://cn.vuejs.org/v2/guide/components.html#编写可复用组件
+	
+	
+一个职员最好只放在一个作业单位下面，可以选择成员的时候，通过权限进行选择
 	
 	
