@@ -17,6 +17,7 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/ems_new/target/classes"/>
-        <property name="context-root" value="ROOT"/>
+        <property name="context-root" value="dev"/>
+        <property name="component.exclusion.patterns" value="www_demo/**,www/node_modules/**,www/src/**,www/*.js,www/*.json"/>
     </wb-module>
 </project-modules>
