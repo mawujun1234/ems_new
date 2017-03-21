@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.exception.BusinessException;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
+import com.mawujun.task.TaskRepository;
 import com.mawujun.utils.M;
 
 
@@ -26,6 +28,11 @@ public class CustomerService extends AbstractService<Customer, String>{
 
 	@Autowired
 	private CustomerRepository customerRepository;
+	@Autowired
+	private TaskRepository taskRepository;
+	@Autowired
+	private PoleService poleService;
+	
 	private static HashMap<String,Customer> customers_cache=new HashMap<String,Customer>();
 	@Override
 	public Customer get(String id) {
@@ -44,8 +51,8 @@ public class CustomerService extends AbstractService<Customer, String>{
 		return customerRepository;
 	}
 
-	public List<CustomerVO> queryChildren(String parent_id,String name) {
-		return customerRepository.queryChildren(parent_id,name,ShiroUtils.getUserId());
+	public List<CustomerVO> queryChildren(String parent_id,String name,String includeInvalid) {
+		return customerRepository.queryChildren(parent_id,name,includeInvalid,ShiroUtils.getUserId());
 	}
 	
 	public List<Customer> queryCombo(String name) {
@@ -61,5 +68,23 @@ public class CustomerService extends AbstractService<Customer, String>{
 		for(String customer_id:customer_ids){
 			customerRepository.update(Cnd.update().set(M.Customer.parent_id, parent_id).andEquals(M.Customer.id, customer_id));
 		}
+	}
+	@Override
+	public void delete(Customer customer) {
+		int count=taskRepository.queryCount(Cnd.count(M.Task.id).andEquals(M.Task.customer_id, customer.getId()));
+		if(count>0){
+			//throw new BusinessException("不能删除,有任务关联，请发送点位取消任务!");
+			customer.setStatus(false);
+			this.update(customer);
+		} else {
+			count=poleService.queryCount(Cnd.count(M.Pole.id).andEquals(M.Pole.customer_id, customer.getId()));
+			if(count>0){
+				customer.setStatus(false);
+				this.update(customer);
+			} else {
+				this.getRepository().delete(customer);
+			}
+		}
+		
 	}
 }

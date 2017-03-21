@@ -1,0 +1,15 @@
+   2017.03.21 发现很多任务的点位被删除了，，因为没有外键关联，导致查看任务的时候，数据统计不正确
+   
+    --查找发现很多任务的点位被删除了
+    select * from ems.ems_task where  pole_id not in (select id from ems.ems_pole)
+    --首先备份
+    create table ems.ems_task_0321 as select * from ems.ems_task;
+    --删除没有点位的任务
+    delete ems.ems_task a where pole_id not in (select id from ems.ems_pole)
+    and not exists (select 1 from ems.ems_taskequipmentlist b where a.id=b.task_id)
+    --恢复有数据的点位，只有一个点位需要恢复了
+    insert into emsnew.ems_pole(id,address,customer_id,latitude,longitude,name,status,area,city,province,code,poletype,project_id) values ('2c9085494d4c5635014d55115f740000','永乐桥边（桃江村南边）','2c9085494d321f6c014d32a1c2be002c','29.792906024363','121.57330547045','永乐桥边（桃江村南边）','using','鄞州区','宁波市','浙江省','231001','pole','753d6b4b-00df-4949-a050-d2e3ebd1ba2a')
+    --建立到pole的外键
+    alter table EMS.EMS_TASK  add constraint task_pole_id foreign key (POLE_ID)  references ems.ems_pole (ID);
+    
+    

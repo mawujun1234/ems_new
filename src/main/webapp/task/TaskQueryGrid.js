@@ -45,18 +45,19 @@ Ext.define('Ems.task.TaskQueryGrid',{
 		{dataIndex:'type_name',text:'任务类型',width:80},
 		{dataIndex:'pole_code',text:'点位编号',width:80},
 		{dataIndex:'pole_name',text:'点位名称',width:180},
-		{dataIndex:'pole_address',text:'地址',width:260},
+		{dataIndex:'workunit_name',text:'作业单位',width:160},
 		{dataIndex:'hitchType',text:'故障类型'},
 		{dataIndex:'hitchReason',text:'故障原因',width:150},
 		{dataIndex:'createDate',text:'创建时间',width:150},
 		{dataIndex:'submitDate',text:'提交时间',width:150},
 		{dataIndex:'completeDate',text:'完成时间',width:150},
-		{dataIndex:'workunit_name',text:'作业单位',width:160},
+		
 		{dataIndex:'customer_name',text:'所属客户',width:150},
 		{dataIndex:'memo',text:'任务描述',width:180,renderer:function(value,metadata,record){
 			metadata.tdAttr = "data-qtip='" + value+ "'";
 		    return value;
-		}}
+		}},
+		{dataIndex:'pole_address',text:'地址',width:260}
       ];
 
 	  me.store=Ext.create('Ext.data.Store',{

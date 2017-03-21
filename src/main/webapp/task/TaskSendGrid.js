@@ -2,7 +2,7 @@ Ext.require('Ems.task.TaskForm');
 Ext.define('Ems.task.TaskSendGrid',{
 	extend:'Ext.grid.Panel',
 	requires: [
-	     'Ems.baseinfo.Pole'
+	     'Ems.task.TaskPole'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -60,20 +60,21 @@ Ext.define('Ems.task.TaskSendGrid',{
 			}
 			return value;
 		}},
+		{dataIndex:'workunit_name',text:'作业单位'},
 		{dataIndex:'province',text:'地址',flex:1,renderer:function(value,metadata ,record){
       		var aaa=value+record.get("city")+record.get("area")+record.get("address");
       		metadata.tdAttr = "data-qtip='" + aaa+ "'";
       		return aaa;
       	}},
 		//{dataIndex:'area_name',text:'所属片区'},
-		{dataIndex:'workunit_name',text:'作业单位'},
+		
 		{dataIndex:'customer_name',text:'所属客户'}
       ];
       
 	  me.store=Ext.create('Ext.data.Store',{
 			autoSync:false,
 			pageSize:me.pageSize,
-			model: 'Ems.baseinfo.Pole',
+			model: 'Ems.task.TaskPole',
 			autoLoad:true,
 			proxy:{
 				type:'ajax',
@@ -175,41 +176,6 @@ Ext.define('Ems.task.TaskSendGrid',{
 	    });
 	    
 
-	    
-//	    var workunit_combox=Ext.create('Ext.form.field.ComboBox',{
-//	        fieldLabel: '作业单位',
-//	        labelAlign:'right',
-//            labelWidth:60,
-//            //width:250,
-//	        //xtype:'combobox',
-//	        //afterLabelTextTpl: Ext.required,
-//	        name: 'workunit_id',
-//		    displayField: 'name',
-//		    valueField: 'id',
-//		    //queryParam: 'name',
-//    		//queryMode: 'remote',
-//    		//triggerAction: 'query',
-////    		minChars:-1,
-////		    trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
-////		    trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',//'form-search-trigger',
-////			onTrigger1Click : function(){
-////			    var me = this;
-////			    me.setValue('');
-////			},
-//	        //allowBlank: false,
-//	        store:Ext.create('Ext.data.Store', {
-//		    	fields: ['id', 'name'],
-//			    proxy:{
-//			    	type:'ajax',
-//			    	//extraParams:{type:1,edit:true},
-//			    	url:Ext.ContextPath+"/workUnit/queryCombo.do",
-//			    	reader:{
-//			    		type:'json',
-//			    		root:'root'
-//			    	}
-//			    }
-//		   })
-//	    });
 		var workunit_combox= Ext.create('Ems.baseinfo.WorkunitCombo', {
 			edit:true,
 			showBlank:true,

@@ -19,6 +19,14 @@ alter table "EMSNEW"."EMS_TASK" add constraint task_workunit_id foreign key("WOR
 alter table "EMSNEW"."EMS_TASK" add constraint task_hitchtype_id foreign key("HITCHTYPE_ID") references "EMS_HITCHTYPE"("ID");
 alter table "EMSNEW"."EMS_TASK" add constraint task_hitchreasontpl_id foreign key("HITCHREASONTPL_ID") references "EMS_HITCHREASONTPL"("ID");
 alter table "EMSNEW"."EMS_TASK" add constraint task_handlemethod_id foreign key("HANDLEMETHOD_ID") references "EMS_HANDLEMETHOD"("ID");
+alter table EMSNEW.EMS_TASK  add constraint task_pole_id foreign key (POLE_ID)  references EMSNEW.ems_pole (ID);
+alter table EMS_POLE add constraint pole_project_id foreign key (PROJECT_ID)  references ems_project (ID);
+alter table EMS_CUSTOMER add constraint CUSTOMER_PARENT_ID foreign key (PARENT_ID) references ems_customer (ID);
+
+
+alter table EMS_TASK modify customer_id not null;
+alter table EMS_TASK modify pole_id not null;
+alter table EMS_TASK modify workunit_id not null;
 
 --等条码和设备信息导入的时候再加这个----已经处理过了
 delete EMS_ORDERLIST a where id in (

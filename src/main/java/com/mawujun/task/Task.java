@@ -28,17 +28,17 @@ public class Task implements IdEntity<String> {
 	@Column(length=15)
 	private TaskStatus status;//任务状态，submited状态的任务就算完成了，因为取消了任务确认的过程
 	
-	@Column(length=36)
+	@Column(length=36,nullable=false)
 	private String pole_id;
 	@Column(length=50)
 	private String pole_name;
 	@Column(length=100)
 	private String pole_address;
-	@Column(length=36)
+	@Column(length=36,nullable=false)
 	private String workunit_id;
 	@Column(length=50)
 	private String workunit_name;
-	@Column(length=36)
+	@Column(length=36,nullable=false)
 	private String customer_id;
 	@Column(length=50)
 	private String customer_name;

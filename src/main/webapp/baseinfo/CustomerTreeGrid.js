@@ -70,6 +70,9 @@ Ext.define('Ems.baseinfo.CustomerTreeGrid',{
                 proxy: {
                     type: 'ajax',
                     method:'POST',
+                    extraParams:{
+			    		includeInvalid:false
+			    	},
                     url: Ext.ContextPath+'/customer/query.do'
                 },
                 root: {
@@ -166,17 +169,34 @@ Ext.define('Ems.baseinfo.CustomerTreeGrid',{
 		    },
 		    iconCls: 'icon-refresh'
 		});
-		//me.addAction(reload);
-		actions.push(reload);
+		//actions.push(reload);
 
-		me.tbar={
-			itemId:'action_toolbar',
-			layout: {
-	               overflowHandler: 'Menu'
-	        },
-			items:actions
-			//,autoScroll:true		
-		};
+//		me.tbar={
+//			itemId:'action_toolbar',
+//			layout: {
+//	               overflowHandler: 'Menu'
+//	        },
+//			items:actions
+//			//,autoScroll:true		
+//		};
+		me.dockedItems=[];
+		me.dockedItems.push({
+		 	xtype: 'toolbar',
+		 	dock: 'top',
+		 	items:actions
+		 });
+		var checkbox=Ext.create('Ext.form.field.Checkbox',{
+			fieldLabel:'包括失效',
+			labelAlign:'right',
+			labelWidth:60,
+			width:90
+		});
+		me.checkbox=checkbox;
+		me.dockedItems.push({
+		 	xtype: 'toolbar',
+		 	dock: 'top',
+		 	items:[checkbox,reload]
+		 });
 
     },
     onCreate:function(){
@@ -336,6 +356,9 @@ Ext.define('Ems.baseinfo.CustomerTreeGrid',{
     },
     onReload:function(){
     	var me=this;
+    	me.getStore().getProxy().extraParams={
+    		includeInvalid:me.checkbox.getValue()
+    	}
     	me.getStore().reload();	
 //    	var parent=node||me.getSelectionModel( ).getLastSelected( );
 //		if(parent){

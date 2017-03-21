@@ -55,12 +55,12 @@ public class CustomerController {
 
 	@RequestMapping("/customer/query.do")
 	@ResponseBody
-	public List<CustomerVO> query(String node) {	
+	public List<CustomerVO> query(String node,String includeInvalid) {	
 		List<CustomerVO> customeres=null;
 		if("root".equals(node)){
-			customeres=customerService.queryChildren(null,null);
+			customeres=customerService.queryChildren(null,null,includeInvalid);
 		} else {
-			customeres=customerService.queryChildren(node,null);
+			customeres=customerService.queryChildren(node,null,includeInvalid);
 		}
 		
 		//JsonConfigHolder.setAutoWrap(false);
@@ -77,13 +77,13 @@ public class CustomerController {
 	public List<CustomerVO> query4combo(String parent_id,String name) {	
 		List<CustomerVO> customeres=null;
 		if(!StringUtils.hasText(parent_id)){
-			customeres=customerService.queryChildren(null,null);
+			customeres=customerService.queryChildren(null,null,"false");
 		} else {
 			if(StringUtils.hasText(name)){
 				name="%"+name+"%";
 			}
 			//改成按用户可以访问的作业单位的所蜀的顾客进行过滤
-			customeres=customerService.queryChildren(parent_id,name);
+			customeres=customerService.queryChildren(parent_id,name,"false");
 		}
 		
 		//JsonConfigHolder.setAutoWrap(false);
@@ -155,9 +155,7 @@ public class CustomerController {
 	@RequestMapping("/customer/destroy.do")
 	@ResponseBody
 	public Customer destroy(Customer customer) {
-		//customerService.delete(customer);
-		customer.setStatus(false);
-		customerService.update(customer);
+		customerService.delete(customer);
 		return customer;
 	}
 	

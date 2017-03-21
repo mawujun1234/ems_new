@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mawujun.exception.BusinessException;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
+import com.mawujun.task.TaskRepository;
 import com.mawujun.utils.M;
 import com.mawujun.utils.page.Pager;
 
@@ -25,6 +27,8 @@ public class PoleService extends AbstractService<Pole, String>{
 
 	@Autowired
 	private PoleRepository poleRepository;
+	@Autowired
+	private TaskRepository taskRepository;
 	//@Autowired
 	//private MapService mapService;
 	
@@ -71,6 +75,15 @@ public class PoleService extends AbstractService<Pole, String>{
 		this.getRepository().update(entity);
 	}
 	
+	@Override
+	public void delete(Pole pole) {
+		//判断点位是否已经被任务所关联了
+		int count=taskRepository.queryCount(Cnd.count(M.Task.id).andEquals(M.Task.pole_id, pole.getId()));
+		if(count>0){
+			throw new BusinessException("不能删除,有任务关联，请发送点位取消任务!");
+		}
+		this.getRepository().delete(pole);
+	}
 	@Override
 	public PoleRepository getRepository() {
 		return poleRepository;

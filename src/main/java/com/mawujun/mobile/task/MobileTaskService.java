@@ -306,7 +306,7 @@ public class MobileTaskService {
 	
 	public void submit(String task_id) {
 		Task task=taskRepository.get(task_id);
-		if(task.getStatus()==TaskStatus.submited){
+		if(task.getStatus()==TaskStatus.submited || task.getStatus()==TaskStatus.complete){
 			throw new BusinessException("任务已经提交,不能再提交!");
 		}
 

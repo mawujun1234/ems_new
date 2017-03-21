@@ -125,12 +125,12 @@ public class PoleController {
 		return "{success:true}";
 	}
 	
-	@RequestMapping("/pole/deleteById.do")
-	@ResponseBody
-	public String deleteById(String id) {
-		poleService.deleteById(id);
-		return id;
-	}
+//	@RequestMapping("/pole/deleteById.do")
+//	@ResponseBody
+//	public String deleteById(String id) {
+//		poleService.deleteById(id);
+//		return id;
+//	}
 	
 	@RequestMapping("/pole/destroy.do")
 	@ResponseBody
