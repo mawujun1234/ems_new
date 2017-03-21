@@ -27,7 +27,7 @@
 			<properties>
 				<profiles.active>dev</profiles.active>
 				<log4j2.level>debug</log4j2.level>
-				<finalName>ROOT</finalName>
+				<finalName>dev</finalName>
 				<jdbc.dbType>oracle</jdbc.dbType>
 				<jdbc.driver>oracle.jdbc.driver.OracleDriver</jdbc.driver>
 				<jdbc.url>jdbc:oracle:thin:@localhost:1521:emsnew</jdbc.url>
@@ -47,7 +47,7 @@
 			<properties>
 				<profiles.active>dev_mac</profiles.active>
 				<log4j2.level>debug</log4j2.level>
-				<finalName>ROOT</finalName>
+				<finalName>dev</finalName>
 				<jdbc.dbType>oracle</jdbc.dbType>
 				<jdbc.driver>oracle.jdbc.driver.OracleDriver</jdbc.driver>
 				<jdbc.url>jdbc:oracle:thin:@10.211.55.6:1521:emsnew</jdbc.url>
@@ -67,13 +67,13 @@
 			<properties>
 				<profiles.active>prod</profiles.active>
 				<log4j2.level>info</log4j2.level>
-				<finalName>od</finalName>
+				<finalName>ROOT</finalName>
 				<jdbc.dbType>oracle</jdbc.dbType>
 				<jdbc.driver>oracle.jdbc.driver.OracleDriver</jdbc.driver>
-				<jdbc.url>jdbc:oracle:thin:@192.168.188.1291:1521:xxb</jdbc.url>
-				<jdbc.username>OD</jdbc.username>
-				<jdbc.password>OrD007YK</jdbc.password>
-				<hibernate.hbm2ddl.auto>none</hibernate.hbm2ddl.auto>
+				<jdbc.url>jdbc:oracle:thin:@localhost:1521:emsnew</jdbc.url>
+				<jdbc.username>emsnew</jdbc.username>
+				<jdbc.password>emsneworacle</jdbc.password>
+				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
 			</properties>
 		</profile>
 

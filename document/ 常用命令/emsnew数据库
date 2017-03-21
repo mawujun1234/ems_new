@@ -1,0 +1,10 @@
+-----------------------测试库
+drop user emsnew cascade;
+create user emsnew identified by emsnew;
+grant dba,connect,resource to emsnew;
+
+
+-----------------------正式库
+drop user emsnew cascade;
+create user emsnew identified by emsneworacle;
+grant dba,connect,resource to emsnew;
