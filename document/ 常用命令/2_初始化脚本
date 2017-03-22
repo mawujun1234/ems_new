@@ -28,16 +28,7 @@ alter table EMS_TASK modify customer_id not null;
 alter table EMS_TASK modify pole_id not null;
 alter table EMS_TASK modify workunit_id not null;
 
---等条码和设备信息导入的时候再加这个----已经处理过了
-delete EMS_ORDERLIST a where id in (
-   select id from EMS_ORDERLIST where prod_id not in(
-    select id from EMS_EQUIPMENTPROD 
-   )
-) and not exists (
-  select 1 from ems_barcode b where a.id=b.orderlist_id
-) and not exists (
-  select 1 from ems_equipment b where a.id=b.orderlist_id
-)
+
 
 
 
@@ -181,10 +172,10 @@ Insert into EMSNEW.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','e35d2b7f-58c2-
 Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','106fd89d-2361-4ceb-bf2b-40569fd54f55');
 Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','11f4e3ad-2ab7-43e9-aa9a-bbe043a7b7d4');
 Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','34e5176a-ed69-4925-8cdf-5c59ab3ea279');
-Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','631f0441-5953-49c7-b116-8c4176da5214');
+--Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','631f0441-5953-49c7-b116-8c4176da5214');
 Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','65674cb5-ed3d-45f0-8444-e84d86062dcb');
 Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','79860906-1af1-469d-bb0a-774fffe51b5b');
-Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','8760c2d9-81f2-49a0-a494-da8ded5647ed');
+--Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','8760c2d9-81f2-49a0-a494-da8ded5647ed');
 Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','8d99f2c4-2c64-4157-aa72-82987d720df7');
 Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','c1495530-308e-45c2-9247-9963867bf302');
 Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','d02ffc51-55d0-4bcd-b40e-a2b80a0814a9');
@@ -202,9 +193,12 @@ Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK,canNotDel) values ('workunitg
 Insert into EMSNEW.T_POSITION_TYPE (ID,NAME,REMARK,canNotDel) values ('employee','职员',null,1);
 
 --添加外键约束
-alter table "EMSNEW"."T_POSITION" add constraint positition_type_id foreign key("POSITIONTYPE_ID") references "T_POSITION_TYPE"("ID")
+alter table "EMSNEW"."T_POSITION" add constraint positition_type_id foreign key("POSITIONTYPE_ID") references "T_POSITION_TYPE"("ID");
 --唯一键约束
-alter table "EMSNEW"."T_ORG_ORG" add constraint uk_child_report_code_dim unique("CHILD_REPORTCODE","DIM") 
+alter table "EMSNEW"."T_ORG_ORG" add constraint uk_child_report_code_dim unique("CHILD_REPORTCODE","DIM"); 
+
+
+
 --创建组织单元基础纬度的物化视图
 create materialized view log on t_org with rowid;
 create materialized view log on t_org_org with rowid;

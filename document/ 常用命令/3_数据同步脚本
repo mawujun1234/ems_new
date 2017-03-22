@@ -319,3 +319,16 @@ from report_equipment_store_day@emslink;
 --gps上传时间间隔,如果已经存在就删除然后再同步
 insert into ems_gpsconfig(id,interval)
 select id,interval from ems_gpsconfig@emslink;
+
+
+
+--等条码和设备信息导入的时候再加这个----已经处理过了
+delete EMS_ORDERLIST a where id in (
+   select id from EMS_ORDERLIST where prod_id not in(
+    select id from EMS_EQUIPMENTPROD 
+   )
+) and not exists (
+  select 1 from ems_barcode b where a.id=b.orderlist_id
+) and not exists (
+  select 1 from ems_equipment b where a.id=b.orderlist_id
+)

@@ -14,7 +14,7 @@ Ext.define('Ems.main.MainViewModel', {
 				// 同步调用取得系统参数
 				Ext.Ajax.request({
 					url : Ext.ContextPath+'/menu/queryByUser.do',
-					async : false, // 同步
+					async : true, // 同步
 					success : function(response) {
 						var text = response.responseText;
 								// 将字段串转换成本地变量
