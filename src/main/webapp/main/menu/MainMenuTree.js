@@ -26,10 +26,26 @@ Ext.define('Ems.main.menu.MainMenuTree', {
 							}
 						});
 				var vm = this.up('app-main').getViewModel()
-				var menus = vm.get('systemMenu');
+				//var menus = vm.get('systemMenu');
 				var root = this.store.getRootNode();
+				//root.appendChild(menus);
 				
-				root.appendChild(menus);
+				Ext.Ajax.request({
+					url : Ext.ContextPath+'/menu/queryByUser.do',
+					async : true, // 同步
+					success : function(response) {
+						var text = response.responseText;
+								// 将字段串转换成本地变量
+						var applicationInfo = Ext.decode(text, true);
+								// 把从后台传过来的参数加入到data中去
+						//Ext.apply(me.data.systemMenu, applicationInfo.systemMenu);
+						//Ext.apply(me.data.user, applicationInfo.user);
+						root.appendChild(applicationInfo.systemMenu);
+						//vm.data.user.loginName='aaa';
+						vm.set("user",applicationInfo.user);
+					}
+				});
+				
 //				for (var i in menus) {
 //					var menugroup = menus[i];
 //					var menuitem = root.appendChild({
