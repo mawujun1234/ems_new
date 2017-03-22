@@ -117,7 +117,7 @@ export default {
 #ball_navs{
 	position:fixed;
 	right:1.5rem;
-	bottom:4.5rem;
+	bottom:7.5rem;
 	width:2.2rem;
 	height:2.2rem;
 	line-height:2.2rem;

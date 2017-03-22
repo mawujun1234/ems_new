@@ -11,7 +11,7 @@
   				<h1 class="title">任务信息</h1>
   			</header>
   			<!-- 这里是页面内容区 -->
-  			<div class="content">
+  			<div class="content" :style="canedit?'margin-bottom:3rem;':''">
   				<div class="list-block" style="margin-top:0px;">
   				    <ul>
   				      <!-- Text inputs -->
@@ -193,14 +193,14 @@
   				      </div><!-- page_task_info_member_tab -->
   				    </div>
 
-  				  <div class="content-block">
-  				    <div class="row" v-if="canedit">
-  				      <div class="col-50"><a href="javascript:void(0);" @click="show_qrcode_camare" class="button button-big button-fill button-danger">扫一扫</a></div>
-  				      <div class="col-50"><a href="javascript:void(0);" @click="submit" class="button button-big button-fill button-success">提交</a></div>
-  				    </div>
-  				  </div>
-  			</div>
 
+  			</div>
+        <div v-if="canedit" style="position:fixed;bottom:10px;left:0px;right:20px;width:90%;z-index:666;margin:0 auto;">
+          <div class="row" >
+            <div class="col-50"><a href="javascript:void(0);" @click="show_qrcode_camare" class="button button-big button-fill button-danger">扫一扫</a></div>
+            <div class="col-50"><a href="javascript:void(0);" @click="submit" class="button button-big button-fill button-success">提交</a></div>
+          </div>
+        </div>
         <equip_info ref="equip_info"></equip_info>
         <hitchtype ref="hitchtype"></hitchtype>
         <handleMethod ref="handleMethod"></handleMethod>
@@ -399,7 +399,10 @@ export default {
       var vue=this;
       $.showPreloader("正在提交....");
       $.post($.SP+'/mobile/task/submit.do', {task_id:this.id}, function(response){
-        var root=response.root;
+        //var root=response.root;
+        if(response.success){
+          window.appvue.back();
+        }
 
         $.hidePreloader();
       });

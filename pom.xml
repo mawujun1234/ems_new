@@ -58,9 +58,24 @@
 				<reble.web-resources.dir>E:\eclipse\workspace\ems_new\target\m2e-wtp\web-resources</reble.web-resources.dir>
 				<reble.webapp.dir>E:\eclipse\workspace\ems_new\src\main\webapp</reble.webapp.dir>
 			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<profiles.active>test</profiles.active>
+				<log4j2.level>debug</log4j2.level>
+				<finalName>test</finalName>
+				<jdbc.dbType>oracle</jdbc.dbType>
+				<jdbc.driver>oracle.jdbc.driver.OracleDriver</jdbc.driver>
+				<jdbc.url>jdbc:oracle:thin:@172.16.5.201:1521:emsnew</jdbc.url>
+				<jdbc.username>emsnew</jdbc.username>
+				<jdbc.password>emsnew</jdbc.password>
+				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+				<reble.classes.dir>E:\eclipse\workspace\ems_new\target\classes</reble.classes.dir>
+				<reble.web-resources.dir>E:\eclipse\workspace\ems_new\target\m2e-wtp\web-resources</reble.web-resources.dir>
+				<reble.webapp.dir>E:\eclipse\workspace\ems_new\src\main\webapp</reble.webapp.dir>
+			</properties>
+
 		</profile>
 		<profile>
 			<id>prod</id>
@@ -74,6 +89,9 @@
 				<jdbc.username>emsnew</jdbc.username>
 				<jdbc.password>emsneworacle</jdbc.password>
 				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+				<reble.classes.dir>E:\eclipse\workspace\ems_new\target\classes</reble.classes.dir>
+				<reble.web-resources.dir>E:\eclipse\workspace\ems_new\target\m2e-wtp\web-resources</reble.web-resources.dir>
+				<reble.webapp.dir>E:\eclipse\workspace\ems_new\src\main\webapp</reble.webapp.dir>
 			</properties>
 		</profile>
 

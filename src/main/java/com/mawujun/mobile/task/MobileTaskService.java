@@ -309,14 +309,20 @@ public class MobileTaskService {
 		if(task.getStatus()==TaskStatus.submited || task.getStatus()==TaskStatus.complete){
 			throw new BusinessException("任务已经提交,不能再提交!");
 		}
+		
+		//判断是否扫描过设备，任何任务只要是没有烧苗过设备就不准提交
+		int scan_count=taskRepository.query_count_tasklist_by_task(task_id);
+		if(scan_count==0){
+			throw new BusinessException("请先扫描设备，然后再提交！");
+		}
+		
 
 		//如果是取消杆位，提交前进行判断，扫描了的设备数量和杆位上实际具有的数量是否一致
 		//是否是该杆位上的设备，已经在扫描的时候就判断了
-		
 		if(TaskType.cancel==task.getType()){
 			//查找杆位上的数量
 			int pole_eqips=poleRepository.query_count_equipment_in_pole(task.getPole_id());
-			int scan_count=taskRepository.query_count_tasklist_by_task(task_id);
+			
 			//获取这个任务扫描的设备数量
 			if(pole_eqips!=scan_count){
 				throw new BusinessException("该杆位上实际的设备数量为:"+pole_eqips+",但现在只扫描了"+scan_count+"!");

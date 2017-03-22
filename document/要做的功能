@@ -48,25 +48,24 @@ ok客户删除的时候，当存在任务的时候，设置为失效,否则强�
 ok点位隶属于多个作业单位，下发任务修改，同个点位可以看到多行
 ok点位隶属于多个作业单位，任务查询修改
 
+任务明细界面固定，fixed扫描和确认在底部
 
-ok系统打包
-      不打包www下的npm中的组件
       
 3.22 目标事情：功能文档整理，zookeeper完成
 
 
 在测试库安装新版的系统
-	新建测试数据库
-	新建当前数据备份库，创建用户，同步数据
+	ok新建测试数据库
+	ok新建当前数据备份库，创建用户，同步数据
 		create user ems identified by ems;
-		grant dba,connect,resource to ems;
-		
+		grant dba,connect,resource to ems;		
 		imp ems/ems@ems   file=D:\BaiduNetdiskDownload\201703210605.dmp fromuser=ems touser=ems
-	发布系统
-	同步数据，根据同步次序进行同步
+	ok发布系统,测试表结构初始化
+	同步数据，按迁移步骤进行迁移
 	测试
 android studio使用书籍查看
-cordova环境安装
+cordova环境搭建
+	emsnew_mobile项目搭建
   签名
   要哪些插件
   白名单插件
