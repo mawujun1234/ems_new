@@ -88,8 +88,33 @@ export default {
       version:'2.0.0',
       loginname:'yinzhou2',
       password:'123',
-      serverip:'localhost',
-      serverportal:'8085'
+      serverip:'',
+      serverportal:''
+    }
+  },
+  mounted: function mounted() {
+    //如果是通过浏览器进来就直接获取浏览器的地址和端口
+    if(location.hostname=="localhost"){
+      this.serverip="localhost";
+      this.serverportal="8085";
+      window.debug=true;
+    } else {
+      var u = navigator.userAgent;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      if(!isAndroid && !isiOS){
+        this.serverip=location.hostname;
+        this.serverportal=location.port;
+      } else {
+        //正式环境
+        this.serverip="122.227.163.82";
+        this.serverportal="8080";
+      }
+    }
+    $.SP="http://"+this.serverip+""+this.serverportal;
+    if(this.serverportal=='9090'){
+      //测试库
+      $.SP+="/test";
     }
   },
   methods:{
@@ -101,6 +126,10 @@ export default {
         password:this.password
       };
       $.SP="http://"+this.serverip+":"+this.serverportal;
+      if(this.serverportal=='9090'){
+        //测试库
+        $.SP+="/test";
+      }
       //alert($.SP);
 
        //return;
@@ -110,6 +139,8 @@ export default {
         if(response.success){
           setTimeout("onlineling()",120000);
           window.appvue.to("/page_function");//.$emit('e_route_page','/page_function');
+        } else {
+          $.toast(response.msg);
         }
 
       });

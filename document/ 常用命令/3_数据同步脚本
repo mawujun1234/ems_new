@@ -1,12 +1,17 @@
 01020W，030212 在品名中的品牌是中文
 
 
+0：在正式库上创建emsread，只有只读权限
+create user emsread identified by emsread;
+grant connect to emsread;
+SELECT 'grant select on EMS.'|| table_name ||' to emsread;' from dba_tables where owner='EMS';
+然后拷贝这些sql进行执行
 
 1:创建dblink
-create public database link emslink connect to ems identified by ems
+create private database link emslink connect to emsread identified by emsread
 　　 using '(DESCRIPTION =
 (ADDRESS_LIST =
-(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
+(ADDRESS = (PROTOCOL = TCP)(HOST = 172.16.5.202)(PORT = 1521))
 )
 (CONNECT_DATA =
 (SERVICE_NAME =ems)
@@ -16,282 +21,288 @@ create public database link emslink connect to ems identified by ems
 2:仓库数据同步
 在执行同步前，必须先删除物化视图和物化视图的日志表，这样才不会和dblink冲突
 日志表手工进行删除 
-DROP MATERIALIZED VIEW T_ORG_BASE;
-DROP MATERIALIZED VIEW LOG ON t_org;
-DROP MATERIALIZED VIEW LOG ON t_org_org;
+--DROP MATERIALIZED VIEW T_ORG_BASE;
+--DROP MATERIALIZED VIEW LOG ON t_org;
+--DROP MATERIALIZED VIEW LOG ON t_org_org;
 --建立仓库文件夹专门存放仓库的数据
 INSERT INTO "EMSNEW"."T_ORG" (ID, NAME, ORGTYPE, SORT, STATE) VALUES ('storegroup', '仓库组', 'department', '0', 'valid');
-INSERT INTO "EMSNEW"."T_ORG_ORG" (DIM, PARENT_ID, CHILD_ID) VALUES ('base', 'root', 'storegroup');
 INSERT INTO "EMSNEW"."T_ORG" (ID, NAME, ORGTYPE, SORT, STATE) VALUES ('workunitgroup', '作业单位组', 'department', '0', 'valid');
-INSERT INTO "EMSNEW"."T_ORG_ORG" (DIM, PARENT_ID, CHILD_ID) VALUES ('base', 'root', 'workunitgroup');
+insert into "EMSNEW".t_org_org (DIM, CHILD_REPORTCODE, CHILD_REPORTLEVEL, PARENT_REPORTCODE, PARENT_REPORTLEVEL, PARENT_ID, CHILD_ID)
+values ('base', '0000-0000', 2, '0000', 1, 'root', 'storegroup');
+insert into "EMSNEW".t_org_org (DIM, CHILD_REPORTCODE, CHILD_REPORTLEVEL, PARENT_REPORTCODE, PARENT_REPORTLEVEL, PARENT_ID, CHILD_ID)
+values ('base', '0000-0001', 2, '0000', 1, 'root', 'workunitgroup');
 
 --插入t_org,同步仓库数据
-insert into t_org(id,code,name,name_short,orgtype,sort,state) 
-select id,null,name,null,decode(type,1,'store_build',2,'repair_centre',3,'store_prepare','department'),0,'valid' from ems_store@emslink;
+insert into "EMSNEW".t_org(id,code,name,name_short,orgtype,sort,state) 
+select id,null,name,null,decode(type,1,'store_build',2,'repair_centre',3,'store_prepare','department'),0,'valid' from ems.ems_store@emslink;
 --插入t_org,同步作业单位数据
-insert into t_org(id,code,name,name_short,orgtype,sort,state) 
-select id,null,name,null,'workunit',0,'valid' from ems_workunit@emslink;
+insert into "EMSNEW".t_org(id,code,name,name_short,orgtype,sort,state) 
+select id,null,name,null,'workunit',0,'valid' from ems.ems_workunit@emslink;
 --插入t_org_org
 insert into emsnew.t_org_org(dim,parent_id,child_id)
-select 'base','storegroup',id from ems_store@emslink;
+select 'base','storegroup',id from ems.ems_store@emslink;
 insert into emsnew.t_org_org(dim,parent_id,child_id)
-select 'base','workunitgroup',id from ems_workunit@emslink;
+select 'base','workunitgroup',id from ems.ems_workunit@emslink;
+
+--为仓库和作业单位添加职位
+insert into emsnew.t_position(id,name,org_id,positionType_id) 
+select sys_guid(),'仓管'，id,'employee' from ems.ems_store@emslink where type in (1,3);
+insert into emsnew.t_position(id,name,org_id,positionType_id) 
+select sys_guid(),'维修成员'，id,'employee' from ems.ems_store@emslink where type in (2);
+insert into emsnew.t_position(id,name,org_id,positionType_id) 
+select sys_guid(),'小组成员'，id,'workunitgroup' from ems.ems_workunit@emslink;
+--把仓库和作业单位的人员导过来
 
 --report_code重新生成功能
-	http://localhost:8085/org/initReportCode.do
---为仓库和作业单位添加职位
-insert into t_position(id,name,org_id,positionType_id) 
-select sys_guid(),'仓管'，id,'employee' from ems_store@emslink where type in (1,3);
-insert into t_position(id,name,org_id,positionType_id) 
-select sys_guid(),'维修成员'，id,'employee' from ems_store@emslink where type in (2);;
-insert into t_position(id,name,org_id,positionType_id) 
-select sys_guid(),'小组成员'，id,'workunitgroup' from ems_workunit@emslink;
---把仓库和作业单位的人员导过来
+	http://172.16.5.202:9090/test/org/initReportCode.do
+--唯一键约束,等组织节点数据全部倒过来后，添加这个约束
+alter table "EMSNEW"."T_ORG_ORG" add constraint uk_child_report_code_dim unique("CHILD_REPORTCODE","DIM"); 
 
 //--------------------------------===========================================================
 --同步用户数据
-insert into t_user(id,loginname,name,pwd,cannotdel,phone,state)
-select id,username,name,password,0,phone,decode(status,'N','invalid','valid') from sys_user@emslink
+insert into emsnew.t_user(id,loginname,name,pwd,cannotdel,phone,state)
+select id,username,name,password,0,phone,decode(status,'N','invalid','valid') from ems.sys_user@emslink
 where username!='admin' and name is NOT NULL;
 
 --把作业单位的账号密码提取出来，作为用户
-insert into t_user(id,loginname,name,pwd,cannotdel,phone,state，temp_workunit)
-select sys_guid(),loginname,name,password,0,null,'valid',id from ems_workunit@emslink
+insert into emsnew.t_user(id,loginname,name,pwd,cannotdel,phone,state，temp_workunit)
+select sys_guid(),loginname,name,password,0,null,'valid',id from ems.ems_workunit@emslink;
 --同时插入到作业单位组织单元下面的职位中
-insert into t_position_org_user(user_id,position_id,org_id)
+insert into emsnew.t_position_org_user(user_id,position_id,org_id)
 select b.id,a.id,a.org_id from t_position a,t_user b
 where a.org_id=b.temp_workunit and a.positiontype_id='workunitgroup';
 
 
 --菜单数据同步
 --插入菜单数据和界面元素
-insert into t_menu(id,code,menutype,name,parent_id,url,leaf)
-select id,null,'menu',text,parentid,link,decode(leaf,'Y',1,0) from sys_navigation@emslink
+insert into emsnew.t_menu(id,code,menutype,name,parent_id,url,leaf)
+select id,null,'menu',text,parentid,link,decode(leaf,'Y',1,0) from ems.sys_navigation@emslink
 where id!='ba44722c-adb9-4136-b460-12ef480419c9' or parentid!='ba44722c-adb9-4136-b460-12ef480419c9'
 union all
-select id,code,'element',text,navigation_id,null,1 from sys_uielement@emslink;
+select id,code,'element',text,navigation_id,null,1 from ems.sys_uielement@emslink;
 
 --更新leaf，如果有子元素，leaf就改为0
-update t_menu a set leaf=(select decode(count(*),0,1,0) from t_menu b where a.id=b.parent_id);
-update t_menu set url='/baseinfo/EquipmentTypeQueryApp.jsp' where url='/baseinfo/query/EquipmentTypeQueryApp.jsp';
+update emsnew.t_menu a set leaf=(select decode(count(*),0,1,0) from t_menu b where a.id=b.parent_id);
+update emsnew.t_menu set url='/baseinfo/EquipmentTypeQueryApp.jsp' where url='/baseinfo/query/EquipmentTypeQueryApp.jsp';
 
 
 --角色数据同步
-insert into t_role(id,name,roletype)
-select id,text,'role' from sys_funrole@emslink;
+insert into emsnew.t_role(id,name,roletype)
+select id,text,'role' from ems.sys_funrole@emslink;
 
 --角色可访问的菜单数据同步
 --排除系统管理的菜单数据还有是排除错误的数据
-insert into t_role_menu(role_id,menu_id)
-select funrole_id,navigation_id from sys_navigation_funrole@emslink
+insert into emsnew.t_role_menu(role_id,menu_id)
+select funrole_id,navigation_id from ems.sys_navigation_funrole@emslink
 where navigation_id!='ba44722c-adb9-4136-b460-12ef480419c9' 
-    and navigation_id not in (select id from sys_navigation@emslink where parentid='ba44722c-adb9-4136-b460-12ef480419c9')
-    and navigation_id  in (select id from sys_navigation@emslink)
+    and navigation_id not in (select id from ems.sys_navigation@emslink where parentid='ba44722c-adb9-4136-b460-12ef480419c9')
+    and navigation_id  in (select id from ems.sys_navigation@emslink)
 union all
-select funrole_id,uielement_id from sys_uielement_funrole@emslink;
+select funrole_id,uielement_id from ems.sys_uielement_funrole@emslink;
 
 --同时插入已有菜单的父元素，因为现在是整个菜单树都授权
-insert into t_role_menu(role_id,menu_id)
-select distinct funrole_id,b.parentid from sys_navigation_funrole@emslink a,sys_navigation@emslink b
+insert into emsnew.t_role_menu(role_id,menu_id)
+select distinct funrole_id,b.parentid from ems.sys_navigation_funrole@emslink a,ems.sys_navigation@emslink b
 where a.navigation_id=b.id and a.navigation_id!='ba44722c-adb9-4136-b460-12ef480419c9' 
-    and a.navigation_id not in (select id from sys_navigation@emslink where parentid='ba44722c-adb9-4136-b460-12ef480419c9')
-    and a.navigation_id  in (select id from sys_navigation@emslink);
+    and a.navigation_id not in (select id from ems.sys_navigation@emslink where parentid='ba44722c-adb9-4136-b460-12ef480419c9')
+    and a.navigation_id  in (select id from ems.sys_navigation@emslink);
     
 --用户角色对照关系同步
-insert into t_role_user(user_id,role_id)
-select distinct user_id,funrole_id from sys_funrole_user@emslink where user_id!='admin'
+insert into emsnew.t_role_user(user_id,role_id)
+select distinct user_id,funrole_id from ems.sys_funrole_user@emslink where user_id!='admin'
 and user_id  in (select id from t_user)
 and funrole_id  in (select id from t_role);
 
 
 --把把作业单位中的用户授权（移动端功能）到角色（作业单位）中,用于控制移动端的权限
-insert  into t_role_user(user_id,role_id)
+insert  into emsnew.t_role_user(user_id,role_id)
 select a.user_id, 'c2977910-8a4f-49a7-a04e-01d7dc3198c2' from t_position_org_user a,t_org b
 where a.org_id=b.id and b.orgtype='workunit';
 
 ------------删除废弃的菜单
 --删除已经应用库房管理的角色关联
-DELETE t_role_menu where menu_id='2d512aa7-9fa4-4e0c-ae51-2258e476b89e';
+DELETE emsnew.t_role_menu where menu_id='2d512aa7-9fa4-4e0c-ae51-2258e476b89e';
 --删除库房管理菜单
-DELETE T_MENU WHERE id='2d512aa7-9fa4-4e0c-ae51-2258e476b89e';
+DELETE emsnew.T_MENU WHERE id='2d512aa7-9fa4-4e0c-ae51-2258e476b89e';
 --删除作业单位的界面元素
-DELETE t_role_menu where menu_id='9a4359ea-8050-4f71-b433-e31f19284294';
-DELETE t_role_menu where menu_id in (select id from T_MENU where PARENT_ID='9a4359ea-8050-4f71-b433-e31f19284294');
-DELETE T_MENU WHERE pARENT_ID='9a4359ea-8050-4f71-b433-e31f19284294';
-DELETE T_MENU WHERE ID='9a4359ea-8050-4f71-b433-e31f19284294';
+DELETE emsnew.t_role_menu where menu_id='9a4359ea-8050-4f71-b433-e31f19284294';
+DELETE emsnew.t_role_menu where menu_id in (select id from T_MENU where PARENT_ID='9a4359ea-8050-4f71-b433-e31f19284294');
+DELETE emsnew.T_MENU WHERE pARENT_ID='9a4359ea-8050-4f71-b433-e31f19284294';
+DELETE emsnew.T_MENU WHERE ID='9a4359ea-8050-4f71-b433-e31f19284294';
 --把ismobile数据补回去
-update t_menu set ismobile=0 where ismobile!=1;
+update emsnew.t_menu set ismobile=0 where ismobile!=1;
 
 ----------------===========================================================
 --设备类型数据同步
-insert into ems_equipmenttype(id,name,parent_id,status,memo)
-select id,name,parent_id,decode(status,'Y',1,0),memo from ems_equipmenttype@emslink;
+insert into emsnew.ems_equipmenttype(id,name,parent_id,status,memo)
+select id,name,parent_id,decode(status,'Y',1,0),memo from ems.ems_equipmenttype@emslink;
 --小类
-insert into ems_equipmentsubtype(id,name,parent_id,status,memo)
-select id,name,parent_id,decode(status,'Y',1,0),memo from ems_equipmentsubtype@emslink;
---品名
-insert into ems_equipmentprod(id,name,unit,status,spec,brand_id,style,memo,subtype_id,quality_month,lock_style,depreci_year)
-select id,name,unit,decode(status,'Y',1,0),spec,brand_id,style,memo,subtype_id,quality_month,decode(lock_style,'Y',1,0),depreci_year from ems_equipmentprod@emslink;
+insert into emsnew.ems_equipmentsubtype(id,name,parent_id,status,memo)
+select id,name,parent_id,decode(status,'Y',1,0),memo from ems.ems_equipmentsubtype@emslink;
 --品牌数据同步
-insert into ems_brand(id,name,status)
-select id,name,decode(status,'Y',1,0) from ems_brand@emslink;
+insert into emsnew.ems_brand(id,name,status)
+select id,name,decode(status,'Y',1,0) from ems.ems_brand@emslink;
 --供应商数据同步
-insert into ems_supplier(id,name,sname,status,website,memo)
-select id,name,sname,decode(status,'Y',1,0),website,memo from ems_supplier@emslink;
-insert into ems_supplier_contact(id,address,contact,email,fax,mobile,phone,position,postcode,supplier_id)
-select id,address,contact,email,fax,mobile,phone,position,postcode,supplier_id from ems_supplier_contact@emslink;
+insert into emsnew.ems_supplier(id,name,sname,status,website,memo)
+select id,name,sname,decode(status,'Y',1,0),website,memo from ems.ems_supplier@emslink;
+insert into emsnew.ems_supplier_contact(id,address,contact,email,fax,mobile,phone,position,postcode,supplier_id)
+select id,address,contact,email,fax,mobile,phone,position,postcode,supplier_id from ems.ems_supplier_contact@emslink;
+--品名
+insert into emsnew.ems_equipmentprod(id,name,unit,status,spec,brand_id,style,memo,subtype_id,quality_month,lock_style,depreci_year)
+select id,name,unit,decode(status,'Y',1,0),spec,brand_id,style,memo,subtype_id,quality_month,decode(lock_style,'Y',1,0),depreci_year from ems.ems_equipmentprod@emslink;
+
 
 --客户信息数据同步
-insert into ems_customer(id,name,parent_id,status,type,memo)
-select id,name,parent_id,decode(status,'Y',1,0),type,memo from ems_customer@emslink;
-insert into ems_customer_contact(id,address,contact,email,fax,mobile,phone,position,postcode,customer_id)
-select id,address,contact,email,fax,mobile,phone,position,postcode,customer_id from ems_customer_contact@emslink;
+insert into emsnew.ems_customer(id,name,parent_id,status,type,memo)
+select id,name,parent_id,decode(status,'Y',1,0),type,memo from ems.ems_customer@emslink;
+insert into emsnew.ems_customer_contact(id,address,contact,email,fax,mobile,phone,position,postcode,customer_id)
+select id,address,contact,email,fax,mobile,phone,position,postcode,customer_id from ems.ems_customer_contact@emslink;
 
 --项目数据同步
-insert into ems_project(id,name,sname,status,memo)
-select id,name,sname,decode(status,'Y',1,0),memo from ems_project@emslink;
+insert into emsnew.ems_project(id,name,sname,status,memo)
+select id,name,sname,decode(status,'Y',1,0),memo from ems.ems_project@emslink;
 
 --客户的点位数据同步
-insert into ems_pole(id,address,area,city,code,customer_id,latitude,latitude_orgin,lnglatistrans,longitude,longitude_orgin,name,poletype,project_id,province,status,workunit_id_old)
-select id,address,area,city,code,customer_id,latitude,latitude_orgin,decode(lnglatistrans,'Y',1,0),longitude,longitude_orgin,name,poletype,project_id,province,status,workunit_id from ems_pole@emslink;
+insert into emsnew.ems_pole(id,address,area,city,code,customer_id,latitude,latitude_orgin,lnglatistrans,longitude,longitude_orgin,name,poletype,project_id,province,status,workunit_id_old)
+select id,address,area,city,code,customer_id,latitude,latitude_orgin,decode(lnglatistrans,'Y',1,0),longitude,longitude_orgin,name,poletype,project_id,province,status,workunit_id from ems.ems_pole@emslink;
 --插入到中间表,一对一变成多对多
-insert into ems_pole_workunit(workunit_id,pole_id)
-select distinct workunit_id,id from ems_pole@emslink;
+insert into emsnew.ems_pole_workunit(workunit_id,pole_id)
+select distinct workunit_id,id from ems.ems_pole@emslink where workunit_id is not null;
 
 --------------------------------=============================================
 --订单数据同步
-insert into ems_Order(id,orderNo,store_id,orderDate,operater,status,project_id,createDate,supplier_id,orderType)
-select id,orderNo,store_id,orderDate,operater,status,project_id,createDate,supplier_id,orderType from ems_Order@emslink;
+insert into emsnew.ems_Order(id,orderNo,store_id,orderDate,operater,status,project_id,createDate,supplier_id,orderType)
+select id,orderNo,store_id,orderDate,operater,status,project_id,createDate,supplier_id,orderType from ems.ems_Order@emslink;
 
-insert into ems_Orderlist(id,order_id,type_id,subtype_id,prod_id,brand_id,unitPrice,quality_month,orderNum,totalNum,depreci_year,depreci_month,depreci_day)
-select id,order_id,type_id,subtype_id,prod_id,brand_id,unitPrice,quality_month,orderNum,totalNum,depreci_year,depreci_month,depreci_day from ems_Orderlist@emslink;
+insert into emsnew.ems_Orderlist(id,order_id,type_id,subtype_id,prod_id,brand_id,unitPrice,quality_month,orderNum,totalNum,depreci_year,depreci_month,depreci_day)
+select id,order_id,type_id,subtype_id,prod_id,brand_id,unitPrice,quality_month,orderNum,totalNum,depreci_year,depreci_month,depreci_day from ems.ems_Orderlist@emslink;
 
 --条码数据导入
-insert into EMS_BARCODE(ecode,orderlist_id,ymd,type_id,subtype_id,prod_id,brand_id,supplier_id,store_id,isnew,randomStr,createDate,status)
+insert into emsnew.EMS_BARCODE(ecode,orderlist_id,ymd,type_id,subtype_id,prod_id,brand_id,supplier_id,store_id,isnew,randomStr,createDate,status)
 select ecode,orderlist_id,ymd,type_id,subtype_id,prod_id,brand_id,supplier_id,store_id,decode(isnew,'Y',1,0),randomStr,createDate,status 
-from EMS_BARCODE@emslink;
+from ems.EMS_BARCODE@emslink;
 insert into EMS_BARCODE_maxnum(id,subtype_id,prod_id,brand_id,supplier_id,ymd,num)
-select id,subtype_id,prod_id,brand_id,supplier_id,ymd,num from EMS_BARCODE_maxnum@emslink;
+select id,subtype_id,prod_id,brand_id,supplier_id,ymd,num from ems.EMS_BARCODE_maxnum@emslink;
 
 --同步入库单数据
-insert into ems_instore(id,memo,store_id,operatedate,operater)
-select id,memo,store_id,operatedate,operater from ems_instore@emslink;
-insert into ems_instorelist(id,ecode,instore_id,orderlist_id,isnew)
-select id,ecode,instore_id,orderlist_id,decode(isnew,'Y',1,0) from ems_instorelist@emslink;
+insert into emsnew.ems_instore(id,memo,store_id,operatedate,operater)
+select id,memo,store_id,operatedate,operater from ems.ems_instore@emslink;
+insert into emsnew.ems_instorelist(id,ecode,instore_id,orderlist_id,isnew)
+select id,ecode,instore_id,orderlist_id,decode(isnew,'Y',1,0) from ems.ems_instorelist@emslink;
 
 --设备数据同步ems_equipment
-insert into EMS_EQUIPMENT(ecode,brand_id,isnew,memo,prod_id,style,subtype_id,supplier_id,status,fisdata,last_install_date,orderlist_id,last_installin_id,
+insert into emsnew.EMS_EQUIPMENT(ecode,brand_id,isnew,memo,prod_id,style,subtype_id,supplier_id,status,fisdata,last_install_date,orderlist_id,last_installin_id,
 last_task_id,last_workunit_id,place,currt_task_id,last_borrow_id,last_pole_id,first_install_date,value_net,value_original
 )
 select ecode,brand_id,decode(isnew,'Y',1,0) isnew,memo,prod_id,style,subtype_id,supplier_id,status,fisdata,last_install_date,orderlist_id,last_installin_id,
 last_task_id,last_workunit_id,place,currt_task_id,last_borrow_id,last_pole_id,first_install_date,value_net,value_original
-from EMS_EQUIPMENT@emslink;
+from ems.EMS_EQUIPMENT@emslink;
 --设备所在位置数据同步
-insert into ems_equipment_pole(ecode,pole_id,from_id,indate,num,type,type_id)
-select ecode,pole_id,from_id,indate,num,type,type_id from ems_equipment_pole@emslink;
-insert into ems_equipment_repair(ecode,repair_id,from_id,indate,num,type,type_id)
-select ecode,repair_id,from_id,indate,num,type,type_id from ems_equipment_repair@emslink;
-insert into ems_equipment_store(ecode,store_id,from_id,indate,num,type,type_id)
-select ecode,store_id,from_id,indate,num,type,type_id from ems_equipment_store@emslink;
-insert into ems_equipment_workunit(ecode,workunit_id,from_id,indate,num,type,type_id,project_id)
-select ecode,workunit_id,from_id,indate,num,type,type_id,project_id from ems_equipment_workunit@emslink;
+insert into emsnew.ems_equipment_pole(ecode,pole_id,from_id,indate,num,type,type_id)
+select ecode,pole_id,from_id,indate,num,type,type_id from ems.ems_equipment_pole@emslink;
+insert into emsnew.ems_equipment_repair(ecode,repair_id,from_id,indate,num,type,type_id)
+select ecode,repair_id,from_id,indate,num,type,type_id from ems.ems_equipment_repair@emslink;
+insert into emsnew.ems_equipment_store(ecode,store_id,from_id,indate,num,type,type_id)
+select ecode,store_id,from_id,indate,num,type,type_id from ems.ems_equipment_store@emslink;
+insert into emsnew.ems_equipment_workunit(ecode,workunit_id,from_id,indate,num,type,type_id,project_id)
+select ecode,workunit_id,from_id,indate,num,type,type_id,project_id from ems.ems_equipment_workunit@emslink;
 --设备生命周期复制
-insert into ems_equipmentcycle(ecode,id,OPERATEDATE,OPERATETYPE,OPERATER_ID,OPERATER_IPADDR,OPERATER_NAME,SOURCE_ID,SOURCE_NAME,TARGETTYPE,TARGET_ID,TARGET_NAME,TYPE_ID )
-select ecode,id,OPERATEDATE,OPERATETYPE,OPERATER_ID,OPERATER_IPADDR,OPERATER_NAME,SOURCE_ID,SOURCE_NAME,TARGETTYPE,TARGET_ID,TARGET_NAME,TYPE_ID from ems_equipmentcycle@emslink;
+insert into emsnew.ems_equipmentcycle(ecode,id,OPERATEDATE,OPERATETYPE,OPERATER_ID,OPERATER_IPADDR,OPERATER_NAME,SOURCE_ID,SOURCE_NAME,TARGETTYPE,TARGET_ID,TARGET_NAME,TYPE_ID )
+select ecode,id,OPERATEDATE,OPERATETYPE,OPERATER_ID,OPERATER_IPADDR,OPERATER_NAME,SOURCE_ID,SOURCE_NAME,TARGETTYPE,TARGET_ID,TARGET_NAME,TYPE_ID from ems.ems_equipmentcycle@emslink;
 --被锁定设备的数据同步
-insert into ems_lockequipment(ecode,createdate,locktype,type_id)
-select ecode,createdate,locktype,type_id from ems_lockequipment@emslink;
+insert into emsnew.ems_lockequipment(ecode,createdate,locktype,type_id)
+select ecode,createdate,locktype,type_id from ems.ems_lockequipment@emslink;
 
 
 
 //===================================================================================================借用领用
 --领用类型维护
-insert into ems_installouttype(id,memo,name)
-select id,memo,name from ems_installouttype@emslink;
+insert into emsnew.ems_installouttype(id,memo,name)
+select id,memo,name from ems.ems_installouttype@emslink;
 --领用数据同步
-insert into ems_installout(id,memo,operatedate,operater,requestnum,store_id,workunit_id,project_id,status)
+insert into emsnew.ems_installout(id,memo,operatedate,operater,requestnum,store_id,workunit_id,project_id,status)
 select id,memo,operatedate,operater,requestnum,store_id,workunit_id,project_id,status 
-from ems_installout@emslink;
-insert into ems_installoutlist(id,ecode,installout_id,installouttype_id,installoutlisttype,isnew,installouttype_content,returndate,isreturn,pole_id,memo)
+from ems.ems_installout@emslink;
+insert into emsnew.ems_installoutlist(id,ecode,installout_id,installouttype_id,installoutlisttype,isnew,installouttype_content,returndate,isreturn,pole_id,memo)
 select id,ecode,installout_id,installouttype_id,installoutlisttype,decode(isnew,'Y',1,0) isnew,installouttype_content,returndate,decode(isreturn,'Y',1,0) isreturn,pole_id,memo
-from ems_installoutlist@emslink;
+from ems.ems_installoutlist@emslink;
 --借用数据同步
-insert into ems_borrow(id,memo,operatedate,operater,project_id,store_id,workunit_id,status)
-select id,memo,operatedate,operater,project_id,store_id,workunit_id,status from ems_borrow@emslink;
-insert into ems_borrowlist(id,borrow_id,ecode,isreturn, memo,returndate,borrowlisttype,isnew,pole_id,installOutType_id,installOutType_content)
-select id,borrow_id,ecode,decode(isreturn,'Y',1,0) isreturn, memo,returndate,borrowlisttype,decode(isnew,'Y',1,0) isnew,pole_id,installOutType_id,installOutType_content from ems_borrowlist@emslink;
+insert into emsnew.ems_borrow(id,memo,operatedate,operater,project_id,store_id,workunit_id,status)
+select id,memo,operatedate,operater,project_id,store_id,workunit_id,status from ems.ems_borrow@emslink;
+insert into emsnew.ems_borrowlist(id,borrow_id,ecode,isreturn, memo,returndate,borrowlisttype,isnew,pole_id,installOutType_id,installOutType_content)
+select id,borrow_id,ecode,decode(isreturn,'Y',1,0) isreturn, memo,returndate,borrowlisttype,decode(isnew,'Y',1,0) isnew,pole_id,installOutType_id,installOutType_content from ems.ems_borrowlist@emslink;
 --领用返库数据同步
-insert into ems_installin(id,memo,operatedate,operater,store_id,workunit_id,type)
-select id,memo,operatedate,operater,store_id,workunit_id,type from ems_installin@emslink;
-insert into ems_installinlist(id,ecode,installin_id,isbad,installout_id,installinlisttype,isnew,project_id)
-select id,ecode,installin_id,decode(isbad,'Y',1,0) isbad,installout_id,installinlisttype,decode(isnew,'Y',1,0) isnew,project_id from ems_installinlist@emslink;
+insert into emsnew.ems_installin(id,memo,operatedate,operater,store_id,workunit_id,type)
+select id,memo,operatedate,operater,store_id,workunit_id,type from ems.ems_installin@emslink;
+insert into emsnew.ems_installinlist(id,ecode,installin_id,isbad,installout_id,installinlisttype,isnew,project_id)
+select id,ecode,installin_id,decode(isbad,'Y',1,0) isbad,installout_id,installinlisttype,decode(isnew,'Y',1,0) isnew,project_id from ems.ems_installinlist@emslink;
 --借转领数据同步
-insert into ems_B2INotify(id,borrow_id,createdate,ecode,ishandled,pole_id,store_id,task_id,workunit_id)
-select id,borrow_id,createdate,ecode,ishandled,pole_id,store_id,task_id,workunit_id from ems_B2INotify@emslink;
+insert into emsnew.ems_B2INotify(id,borrow_id,createdate,ecode,ishandled,pole_id,store_id,task_id,workunit_id)
+select id,borrow_id,createdate,ecode,ishandled,pole_id,store_id,task_id,workunit_id from ems.ems_B2INotify@emslink;
 --调拨单数据同步
-insert into ems_adjust(id,adjusttype,adjust_id_borrow,memo,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,str_out_id,str_out_oper_id,project_id,returnstatus)
-select id,adjusttype,adjust_id_borrow,memo,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,str_out_id,str_out_oper_id,project_id,returnstatus from  ems_adjust@emslink;
-insert into ems_adjustlist(id,adjustliststatus,adjust_id,ecode,ecode_returnback,indate,isnew,isreturn,adjustlist_id_returnback)
-select id,adjustliststatus,adjust_id,ecode,ecode_returnback,indate,decode(isnew,'Y',1,0) isnew,decode(isreturn,'Y',1,0) isreturn,adjustlist_id_returnback from  ems_adjustlist@emslink;
+insert into emsnew.ems_adjust(id,adjusttype,adjust_id_borrow,memo,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,str_out_id,str_out_oper_id,project_id,returnstatus)
+select id,adjusttype,adjust_id_borrow,memo,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,str_out_id,str_out_oper_id,project_id,returnstatus from  ems.ems_adjust@emslink;
+insert into emsnew.ems_adjustlist(id,adjustliststatus,adjust_id,ecode,ecode_returnback,indate,isnew,isreturn,adjustlist_id_returnback)
+select id,adjustliststatus,adjust_id,ecode,ecode_returnback,indate,decode(isnew,'Y',1,0) isnew,decode(isreturn,'Y',1,0) isreturn,adjustlist_id_returnback from  ems.ems_adjustlist@emslink;
 
 //================================================================================维修中心
 --同步报废单数据
-insert into ems_scrap(id,ecode,operatedate,operater,reason,repair_id,residual,scrpreqdate,scrpreqoper,rpa_id,store_id,status)
-select id,ecode,operatedate,operater,reason,repair_id,residual,scrpreqdate,scrpreqoper,rpa_id,store_id,status from ems_scrap@emslink;
+insert into emsnew.ems_scrap(id,ecode,operatedate,operater,reason,repair_id,residual,scrpreqdate,scrpreqoper,rpa_id,store_id,status)
+select id,ecode,operatedate,operater,reason,repair_id,residual,scrpreqdate,scrpreqoper,rpa_id,store_id,status from ems.ems_scrap@emslink;
 --把名字改成为id
-update ems_scrap set operater='5b27c0c2-7d4b-4918-8161-2e2dfd9e1574' where operater='干辰';
+update emsnew.ems_scrap set operater='5b27c0c2-7d4b-4918-8161-2e2dfd9e1574' where operater='干辰';
 --同步维修单数据
-insert into ems_repair(id,ecode,rpa_id,rpa_in_date,rpa_in_oper_id,rpa_out_date,rpa_out_oper_id,rpa_type,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,
+insert into emsnew.ems_repair(id,ecode,rpa_id,rpa_in_date,rpa_in_oper_id,rpa_out_date,rpa_out_oper_id,rpa_type,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,
 str_out_id,str_out_oper_id,broken_memo,broken_reson,memo,installin_id,repair_date,rpa_user_id,workunit_id,task_id,scrapdate,prod_id,handler_method,receive_date,repairfactory,send_date,sendno,
 depreci_day,depreci_month,depreci_year)
 select id,ecode,rpa_id,rpa_in_date,rpa_in_oper_id,rpa_out_date,rpa_out_oper_id,rpa_type,status,str_in_date,str_in_id,str_in_oper_id,str_out_date,
 str_out_id,str_out_oper_id,broken_memo,broken_reson,memo,installin_id,repair_date,rpa_user_id,workunit_id,task_id,scrapdate,prod_id,handler_method,receive_date,repairfactory,send_date,sendno,
-depreci_day,depreci_month,depreci_year  from ems_repair@emslink;
+depreci_day,depreci_month,depreci_year  from ems.ems_repair@emslink;
 
 //=============================================================================任务
 --巡检任务类型数据同步
-insert into ems_patroltasktype(id,name) 
-select id,name from ems_patroltasktype@emslink;
+insert into emsnew.ems_patroltasktype(id,name) 
+select id,name from ems.ems_patroltasktype@emslink;
 --故障处理方法数据同步
-insert into ems_handlemethod(id,name) 
-select id,name from ems_handlemethod@emslink;
+insert into emsnew.ems_handlemethod(id,name) 
+select id,name from ems.ems_handlemethod@emslink;
 --超时数据同步
-insert into ems_overtime(id,HANDLING,read) 
-select id,HANDLING,read from ems_overtime@emslink;
+insert into emsnew.ems_overtime(id,HANDLING,read) 
+select id,HANDLING,read from ems.ems_overtime@emslink;
 --
-insert into ems_metaversion(clasname,version) 
-select clasname,version from ems_metaversion@emslink;
+insert into emsnew.ems_metaversion(clasname,version) 
+select clasname,version from ems.ems_metaversion@emslink;
 --故障类型数据同步
-insert into ems_hitchtype(id,name) 
-select id,name from ems_hitchtype@emslink;
+insert into emsnew.ems_hitchtype(id,name) 
+select id,name from ems.ems_hitchtype@emslink;
 --故障原因模板
-insert into ems_hitchreasontpl(id,name,tpl,hitchtype_id) 
-select id,name,tpl,hitchtype_id from ems_hitchreasontpl@emslink;
+insert into emsnew.ems_hitchreasontpl(id,name,tpl,hitchtype_id) 
+select id,name,tpl,hitchtype_id from ems.ems_hitchreasontpl@emslink;
 --任务数据同步
-insert into ems_task(id,createdate,customer_id,hitchreason,hitchtype,memo,
+insert into emsnew.ems_task(id,createdate,customer_id,hitchreason,memo,
  pole_id,starthanddate,status,submitdate,type,workunit_id,customer_name,pole_address,pole_name,workunit_name
  ,hitchreasontpl_id,hitchtype_id,creatertype,hitchdate,completedate,handlemethod_id,handle_contact,patroltasktype_id)
-select id,createdate,customer_id,hitchreason,hitchtype,memo,
+select id,createdate,customer_id,hitchreason,memo,
  pole_id,starthanddate,status,submitdate,type,workunit_id,customer_name,pole_address,pole_name,workunit_name
- ,hitchreasontpl_id,hitchtype_id,creatertype,hitchdate,completedate,handlemethod_id,handle_contact,patroltasktype_id from ems_task@emslink;
+ ,hitchreasontpl_id,hitchtype_id,creatertype,hitchdate,completedate,handlemethod_id,handle_contact,patroltasktype_id from ems.ems_task@emslink;
  --任务明细数据同步
- insert into ems_taskequipmentlist(id,ecode,scandate,task_id,type,installouttype)
- select id,ecode,scandate,task_id,type,installouttype from ems_taskequipmentlist@emslink;
+ insert into emsnew.ems_taskequipmentlist(id,ecode,scandate,task_id,type,installouttype)
+ select id,ecode,scandate,task_id,type,installouttype from ems.ems_taskequipmentlist@emslink;
 --任务成员数据初始化，就只归于以前的账号 
-insert into ems_task_member(task_id,user_id,isinit) 
+insert into emsnew.ems_task_member(task_id,user_id,isinit) 
 select distinct a.id,c.user_id ,1 as isinit from ems_task a,t_position_org_user c
 where   a.workunit_id=c.org_id  
 and not exists (select 1 from ems_task_member x where a.id=x.task_id and c.user_id=x.user_id);
 
  --盘点数据同步
- insert into ems_check(id,completedate,completer,createdate,creater,status,task_id)
-select id,completedate,completer,createdate,creater,status,task_id from ems_check@emslink;
+ insert into emsnew.ems_check(id,completedate,completer,createdate,creater,status,task_id)
+select id,completedate,completer,createdate,creater,status,task_id from ems.ems_check@emslink;
 --盘点单明细数据
-insert into ems_checklist(check_id,ecode)
-select check_id,ecode from ems_checklist@emslink;
+insert into emsnew.ems_checklist(check_id,ecode)
+select check_id,ecode from ems.ems_checklist@emslink;
 --调整单同步
-insert into ems_trim( id,check_id,createdate,creater,ecode,orginal_id,orginal_type,target_id,target_type,trimtype)
-select id,check_id,createdate,creater,ecode,orginal_id,orginal_type,target_id,target_type,trimtype from ems_trim@emslink;
+insert into emsnew.ems_trim( id,check_id,createdate,creater,ecode,orginal_id,orginal_type,target_id,target_type,trimtype)
+select id,check_id,createdate,creater,ecode,orginal_id,orginal_type,target_id,target_type,trimtype from ems.ems_trim@emslink;
 
  
  //=========================================================================
@@ -300,35 +311,35 @@ select id,check_id,createdate,creater,ecode,orginal_id,orginal_type,target_id,ta
  proc_day_sparepart
  proc_day_sparepart_all
  -- 设备残值表
- insert into report_assetclean(day_key,ecode,day_have,day_used,value_net,value_old,value_original) 
- select day_key,ecode,day_have,day_used,value_net,value_old,value_original from report_assetclean@emslink;
+ insert into emsnew.report_assetclean(day_key,ecode,day_have,day_used,value_net,value_old,value_original) 
+ select day_key,ecode,day_have,day_used,value_net,value_old,value_original from ems.report_assetclean@emslink;
  --
- insert into report_day_sparepart(daykey,prod_id,store_id,createdate,
+ insert into emsnew.report_day_sparepart(daykey,prod_id,store_id,createdate,
 installoutnum,oldnum,purchasenum,repairinnum,repairoutnum,scrapoutnum
 ,borrownum,borrowreturnnum,monthkey,todaynum,yesterdaynum)
 select daykey,prod_id,store_id,createdate,
 installoutnum,oldnum,purchasenum,repairinnum,repairoutnum,scrapoutnum
 ,borrownum,borrowreturnnum,monthkey,todaynum,yesterdaynum
- from report_day_sparepart@emslink;
+ from ems.report_day_sparepart@emslink;
  --每日仓库库存情况
- insert into report_equipment_store_day(day_key,ecode,store_id,value_net,value_old,value_original)
+ insert into emsnew.report_equipment_store_day(day_key,ecode,store_id,value_net,value_old,value_original)
 select day_key,ecode,store_id,value_net,value_old,value_original 
-from report_equipment_store_day@emslink;
+from ems.report_equipment_store_day@emslink;
 
 //=====================================================================
 --gps上传时间间隔,如果已经存在就删除然后再同步
-insert into ems_gpsconfig(id,interval)
-select id,interval from ems_gpsconfig@emslink;
+insert into emsnew.ems_gpsconfig(id,interval)
+select id,interval from ems.ems_gpsconfig@emslink;
 
 
 
 --等条码和设备信息导入的时候再加这个----已经处理过了
-delete EMS_ORDERLIST a where id in (
-   select id from EMS_ORDERLIST where prod_id not in(
-    select id from EMS_EQUIPMENTPROD 
+delete emsnew.EMS_ORDERLIST a where id in (
+   select id from emsnew.EMS_ORDERLIST where prod_id not in(
+    select id from emsnew.EMS_EQUIPMENTPROD 
    )
 ) and not exists (
-  select 1 from ems_barcode b where a.id=b.orderlist_id
+  select 1 from emsnew.ems_barcode b where a.id=b.orderlist_id
 ) and not exists (
-  select 1 from ems_equipment b where a.id=b.orderlist_id
+  select 1 from emsnew.ems_equipment b where a.id=b.orderlist_id
 )

@@ -32,11 +32,11 @@ Ext.define('Ems.main.menu.MainMenuTree', {
 				
 				Ext.Ajax.request({
 					url : Ext.ContextPath+'/menu/queryByUser.do',
-					async : true, // 同步
+					
 					success : function(response) {
 						var text = response.responseText;
 								// 将字段串转换成本地变量
-						var applicationInfo = Ext.decode(text, true);
+						var applicationInfo = Ext.decode(text);
 								// 把从后台传过来的参数加入到data中去
 						//Ext.apply(me.data.systemMenu, applicationInfo.systemMenu);
 						//Ext.apply(me.data.user, applicationInfo.user);

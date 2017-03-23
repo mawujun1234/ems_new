@@ -1,6 +1,7 @@
 
-
-
+下面这两条看看能不能提取出，通用的规则：
+	仓库人员导入，仓库的可访问仓库，可访问作业单位，可访问维修中心
+	其他人员新建角色，并且设置数据权限
       
 3.22 目标事情：功能文档整理，zookeeper完成
 
@@ -12,8 +13,8 @@
 		grant dba,connect,resource to ems;		
 		imp ems/ems@ems   file=D:\BaiduNetdiskDownload\201703210605.dmp fromuser=ems touser=ems
 	ok发布系统,测试表结构初始化
-	同步数据，按迁移步骤进行迁移
-	测试
+	ok同步数据，按迁移步骤进行迁移
+	ok测试
 android studio使用书籍查看
 cordova环境搭建
 	emsnew_mobile项目搭建

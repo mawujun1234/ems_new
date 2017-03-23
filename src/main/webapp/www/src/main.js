@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 //var $ = require('zepto');
 //开启debug模式
-window.debug=true;
+window.debug=false;
 Vue.config.debug = window.debug;
 
 import page_login from './pages/page_login.vue'

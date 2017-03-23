@@ -258,6 +258,13 @@
 				<!-- 是否替换资源中的属性 -->
 				<filtering>false</filtering>
 			</resource>
+			<resource>
+				<directory>src/main/webapp/www</directory>
+				<includes>
+					<include>index.html</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
 		</resources>
 
 		<plugins>
