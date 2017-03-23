@@ -39,7 +39,7 @@ gps上传，存储在其mongdb数据库中
 	设备信息，点击直接弹出扫描窗口，扫描完后就弹出设备的详细信息
 	Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('631f0441-5953-49c7-b116-8c4176da5214','mobile_page_function_message','element','消息','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
 	Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('185fcc10-0d29-4d26-b754-36418e09f94c','mobile_page_function_store_check','element','仓库盘点','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
-	Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('8760c2d9-81f2-49a0-a494-da8ded5647ed','mobile_page_function_equip_info','element','设备信息','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
+	--Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('8760c2d9-81f2-49a0-a494-da8ded5647ed','mobile_page_function_equip_info','element','设备信息','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);
 
 	Insert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','631f0441-5953-49c7-b116-8c4176da5214');
 	nsert into T_ROLE_MENU (ROLE_ID,MENU_ID) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','8760c2d9-81f2-49a0-a494-da8ded5647ed');
