@@ -1,7 +1,9 @@
+
 Ext.define('Ems.permission.UserGrid',{
 	extend:'Ext.grid.Panel',
 	requires: [
-	     'Ems.permission.User'
+	     'Ems.permission.User',
+	     'Ems.permission.UserTabpanel'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -128,6 +130,13 @@ Ext.define('Ems.permission.UserGrid',{
 					grid.getStore().reload();
 				},
 				iconCls: 'icon-refresh'
+			},{
+				text: '查看权限',
+				handler: function(btn){
+					var grid=btn.up("grid");
+					grid.showPermission();
+				},
+				iconCls: ' icon-question-sign'
 			}]
 		});
 
@@ -137,7 +146,8 @@ Ext.define('Ems.permission.UserGrid',{
 	onCreate:function(){
     	var me=this;
 		var child=Ext.create('Ems.permission.User',{
-			canNotDel:false
+			canNotDel:false,
+			state:'valid'
 		});
 		child.set("id",null);
 		
@@ -190,7 +200,7 @@ Ext.define('Ems.permission.UserGrid',{
     	var node=me.getSelectionModel( ).getLastSelected( );
 
 		if(!node){
-		    Ext.Msg.alert("消息","请先选择一行数据");	
+		    Ext.Msg.alert("消息","请先选择一个用户");	
 			return;
 		}
 		var parent=node.parentNode;
@@ -206,5 +216,27 @@ Ext.define('Ems.permission.UserGrid',{
 				});
 			}
 		});
+    },
+    showPermission:function(){
+    	var me=this;
+    	var me=this;
+    	var record=me.getSelectionModel( ).getLastSelected( );
+
+		if(!record){
+		    Ext.Msg.alert("消息","请先选择一个用户");	
+			return;
+		}
+    	
+    	var userTabpanel=Ext.create('Ems.permission.UserTabpanel',{
+    		user_id:record.get("id")
+    	});
+    	var win=Ext.create('Ext.Window',{
+    		layout:'fit',
+    		title:'查看用户拥有的权限(右边可以关闭窗口)----'+record.get("name"),
+    		modal:true,
+    		maximized:true,
+    		items:[userTabpanel]
+    	});
+    	win.show();
     }
 });

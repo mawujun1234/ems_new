@@ -35,5 +35,7 @@ public interface UserRepository extends IRepository<User, String>{
 	  * @return
 	  */
 	 public int check_edit_store_permission(@Param("user_id")String user_id,@Param("store_id")String store_id);
+	 
+	 public List<RoleVO> queryRoleByUser(@Param("user_id")String user_id);
 
 }

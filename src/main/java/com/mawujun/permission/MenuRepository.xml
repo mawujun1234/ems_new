@@ -34,7 +34,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     <!-- 在登录后，获取某个用户可访问的菜单-->
     <select id="queryByUser" resultType="com.mawujun.permission.MenuVO" parameterType="map">
     	select a.* from t_menu a , t_role_user b,t_role_menu c
-    	where a.menuType='menu' and b.role_id=c.role_id  and c.menu_id=a.id 
+    	where a.menuType='menu' and b.role_id=c.role_id  and c.menu_id=a.id and a.ismobile=0
     	<if test="parent_id==null">
     		and a.parent_id is null
     	</if>

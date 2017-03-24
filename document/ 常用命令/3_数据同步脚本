@@ -8,7 +8,8 @@ SELECT 'grant select on EMS.'|| table_name ||' to emsread;' from dba_tables wher
 然后拷贝这些sql进行执行
 
 1:创建dblink
-create private database link emslink connect to emsread identified by emsread
+drop public database link EMSLINK;
+create public database link emslink connect to emsread identified by emsread
 　　 using '(DESCRIPTION =
 (ADDRESS_LIST =
 (ADDRESS = (PROTOCOL = TCP)(HOST = 172.16.5.202)(PORT = 1521))
@@ -84,7 +85,8 @@ select id,code,'element',text,navigation_id,null,1 from ems.sys_uielement@emslin
 --更新leaf，如果有子元素，leaf就改为0
 update emsnew.t_menu a set leaf=(select decode(count(*),0,1,0) from t_menu b where a.id=b.parent_id);
 update emsnew.t_menu set url='/baseinfo/EquipmentTypeQueryApp.jsp' where url='/baseinfo/query/EquipmentTypeQueryApp.jsp';
-
+--不是移动端的菜单，设置为ismobile=0
+update emsnew.t_menu set ismobile=0 where ismobile is null;
 
 --角色数据同步
 insert into emsnew.t_role(id,name,roletype)
@@ -330,6 +332,99 @@ from ems.report_equipment_store_day@emslink;
 --gps上传时间间隔,如果已经存在就删除然后再同步
 insert into emsnew.ems_gpsconfig(id,interval)
 select id,interval from ems.ems_gpsconfig@emslink;
+
+
+//====================================================================================
+--为仓管职位加上人员
+begin
+for aa in (
+     select * from emsnew.t_position b,(
+      --获取用户拥有编辑权限的的仓库
+      select store_id,user_id from ems.sys_userstore@emslink where edit='Y'
+             --指定获取“仓库管理”这个角色下的用户
+       and user_id in (select user_id from ems.sys_funrole_user@emslink where funrole_id='59f5b1e3-cc65-4546-b9e9-5fc11b7b5d64'
+      and user_id!='admin')
+      ) c
+      where b.org_id=c.store_id and b.name='仓管'
+ )
+LOOP
+    --插入t_position_org_user
+    insert into emsnew.t_position_org_user(user_id,position_id,org_id)
+    values(aa.user_id,aa.id,aa.org_id);
+END LOOP;
+--dbms_output.put_line('平均工资:'||v_avgsal);
+end;
+
+
+--为仓管职位添加数据权限，所有仓库都是只读，自己所在的仓库可编辑
+--维修中心也是可访问
+begin
+  for aa in (
+    select * from emsnew.t_position a where name='仓管' 
+  )
+  loop
+    for bb in (
+        select * from emsnew.t_position a where name='仓管' 
+     )
+     loop
+        
+        if aa.org_id=bb.org_id then
+          insert into emsnew.t_position_org_access(edit,look,position_id,org_id)
+          values (1,1,aa.id,bb.org_id);
+        else
+          insert into emsnew.t_position_org_access(edit,look,position_id,org_id)
+          values (0,1,aa.id,bb.org_id);
+        end if;
+     end loop;
+  end loop;
+end;
+---新建维修中心
+INSERT INTO "EMSNEW"."T_ORG" (ID, NAME, ORGTYPE, SORT, STATE) VALUES ('repair_center', '维修中心', 'department', '0', 'valid');
+insert into "EMSNEW".t_org_org (DIM, CHILD_REPORTCODE, CHILD_REPORTLEVEL, PARENT_REPORTCODE, PARENT_REPORTLEVEL, PARENT_ID, CHILD_ID)
+values ('base', '0000-0002', 2, '0000', 1, 'root', 'repair_center');
+--把鄞州维修移到维修组下面
+update "EMSNEW".t_org_org set parent_id='repair_center' where child_id='2c9085494d1dba52014d21aeb25a0005';
+update emsnew.t_position set name='维修人员'  where org_id='2c9085494d1dba52014d21aeb25a0005' and name='仓管';
+--新建维护主管职位
+insert into t_position(id,name,org_id,positiontype_id)
+values(sys_guid(),'维修主管','repair_center','employee');
+--新建审计部，财务部，商务部
+INSERT INTO "EMSNEW"."T_ORG" (ID, NAME, ORGTYPE, SORT, STATE) VALUES ('audit_department', '审计部', 'department', '0', 'valid');
+insert into "EMSNEW".t_org_org (DIM, CHILD_REPORTCODE, CHILD_REPORTLEVEL, PARENT_REPORTCODE, PARENT_REPORTLEVEL, PARENT_ID, CHILD_ID)
+values ('base', '0000-0003', 2, '0000', 1, 'root', 'audit_department');
+INSERT INTO "EMSNEW"."T_ORG" (ID, NAME, ORGTYPE, SORT, STATE) VALUES ('financial_department', '财务部', 'department', '0', 'valid');
+insert into "EMSNEW".t_org_org (DIM, CHILD_REPORTCODE, CHILD_REPORTLEVEL, PARENT_REPORTCODE, PARENT_REPORTLEVEL, PARENT_ID, CHILD_ID)
+values ('base', '0000-0004', 2, '0000', 1, 'root', 'financial_department');
+INSERT INTO "EMSNEW"."T_ORG" (ID, NAME, ORGTYPE, SORT, STATE) VALUES ('commerce_department', '商务部', 'department', '0', 'valid');
+insert into "EMSNEW".t_org_org (DIM, CHILD_REPORTCODE, CHILD_REPORTLEVEL, PARENT_REPORTCODE, PARENT_REPORTLEVEL, PARENT_ID, CHILD_ID)
+values ('base', '0000-0005', 2, '0000', 1, 'root', 'commerce_department');
+--新建审计部，财务部，商务部的职员
+insert into emsnew.t_position(id,name,org_id,positiontype_id)
+values(sys_guid(),'职员','audit_department','employee');
+insert into emsnew.t_position(id,name,org_id,positiontype_id)
+values(sys_guid(),'职员','financial_department','employee');
+insert into emsnew.t_position(id,name,org_id,positiontype_id)
+values(sys_guid(),'职员','commerce_department','employee');
+
+仓库可以看到的作业单位需要手工配置，
+审计部，商务部，财务部的职员的人员和数据权限都还要手工添加
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

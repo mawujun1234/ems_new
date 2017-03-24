@@ -1,7 +1,10 @@
 package com.mawujun.permission;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import com.mawujun.org.PositionRepository;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
 import com.mawujun.utils.M;
+import com.mawujun.utils.bean.BeanUtils;
 import com.mawujun.utils.page.Pager;
 
 /**
@@ -129,5 +133,35 @@ public class UserService extends AbstractService<User, String> {
 	
 	public void deleteUserByLoginName(String loginName) {
 		userRepository.deleteUserByLoginName(loginName);
+	}
+	
+	public List<RoleVO> queryRoleByUser(String user_id) {
+		List<RoleVO> result=new ArrayList<RoleVO>();
+		Map<String,RoleVO> parentTemp=new HashMap<String,RoleVO>();
+		
+		List<RoleVO> roles=userRepository.queryRoleByUser(user_id);
+		for(RoleVO role:roles){
+			recursionRoleParent(role,result,parentTemp);
+		}
+		return result;
+	}
+	
+	private void recursionRoleParent(RoleVO child,List<RoleVO> result,Map<String,RoleVO> parentTemp){
+		if(child.getParent_id()!=null){
+			RoleVO parentVO=null;
+			if(parentTemp.get(child.getParent_id())!=null){
+				parentVO=parentTemp.get(child.getParent_id());
+			} else {
+				Role parent=roleRepository.get(child.getParent_id());
+				parentVO=BeanUtils.copyOrCast(parent, RoleVO.class);
+				parentTemp.put(parentVO.getId(), parentVO);
+			}
+
+			parentVO.addChild(child);
+			recursionRoleParent(parentVO,result,parentTemp);
+		} else {
+			result.add(child);
+		}
+		
 	}
 }

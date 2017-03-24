@@ -386,6 +386,12 @@ public class UserController {
 	}
 	
 
+	@RequestMapping("/user/queryRoleByUser.do")
+	@ResponseBody
+	public List<RoleVO> queryRoleByUser(String user_id) {
+		
+		return userService.queryRoleByUser(user_id);
+	}
 	
 	
 }

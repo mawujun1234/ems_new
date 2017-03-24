@@ -100,5 +100,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		select count(1) from t_position_org_user a,t_position_org_access b 
 		where a.position_id=b.position_id and a.user_id=#{user_id} and b.org_id=#{store_id} and b.edit=1
 	</select>
+	
+	
+	<select id="queryRoleByUser" resultType="com.mawujun.permission.RoleVO" parameterType="string">
+    	select a.* from t_role a ,t_role_user b
+		where a.id=b.role_id and b.user_id=#{user_id}
+    </select> 
 </mapper>
 

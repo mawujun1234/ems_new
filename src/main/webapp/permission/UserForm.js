@@ -71,6 +71,7 @@ Ext.define('Ems.permission.UserForm',{
 	    {
 	        fieldLabel: 'state',
 	        name: 'state',
+	        value:'valid',
 	        xtype:'hiddenfield'
 	    }
 	    ,{
