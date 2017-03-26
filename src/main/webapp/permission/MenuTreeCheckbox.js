@@ -17,7 +17,7 @@ Ext.define('Ems.permission.MenuTreeCheckbox', {
 			root: {
 			    expanded: true,
 			    //checked:false,
-			    name:"选择菜单"
+			    name:"可访问的菜单"
 			},
 			proxy:{
 				type: 'ajax',

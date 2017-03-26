@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.mawujun.org.NodeVO;
 import com.mawujun.repository.IRepository;
 import com.mawujun.utils.page.Pager;
 /**
@@ -37,5 +38,7 @@ public interface UserRepository extends IRepository<User, String>{
 	 public int check_edit_store_permission(@Param("user_id")String user_id,@Param("store_id")String store_id);
 	 
 	 public List<RoleVO> queryRoleByUser(@Param("user_id")String user_id);
+	 public List<MenuVO> queryMenuByUser(@Param("user_id")String user_id);
+	 public List<NodeVO> queryOrgPositionByUser(@Param("user_id")String user_id);
 
 }

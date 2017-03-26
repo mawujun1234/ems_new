@@ -3,6 +3,9 @@ package com.mawujun.org;
 public class OrgVO extends Org {
 	private String parent_id;
 	private Dim dim;
+	
+ 
+	
 	public String getParent_id() {
 		return parent_id;
 	}

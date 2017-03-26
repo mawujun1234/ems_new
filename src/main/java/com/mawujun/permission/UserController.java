@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mawujun.org.NodeVO;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.utils.M;
 import com.mawujun.utils.page.Pager;
@@ -40,6 +41,8 @@ public class UserController {
 
 	@Resource
 	private UserService userService;
+	@Resource
+	private MenuService menuService;
 //	@Resource
 //	private OrdService ordService;
 
@@ -393,5 +396,17 @@ public class UserController {
 		return userService.queryRoleByUser(user_id);
 	}
 	
+	@RequestMapping("/user/queryMenuByUser.do")
+	@ResponseBody
+	public List<MenuVO> queryMenuByUser(String user_id) {
+		
+		return menuService.queryByUser(null, user_id);
+	}
+	@RequestMapping("/user/queryOrgPositionByUser.do")
+	@ResponseBody
+	public List<NodeVO> queryOrgPositionByUser(String user_id) {
+		
+		return userService.queryOrgPositionByUser( user_id);
+	}
 	
 }

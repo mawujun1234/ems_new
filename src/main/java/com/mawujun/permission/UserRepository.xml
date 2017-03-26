@@ -106,5 +106,10 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	select a.* from t_role a ,t_role_user b
 		where a.id=b.role_id and b.user_id=#{user_id}
     </select> 
+    <select id="queryOrgPositionByUser" resultType="com.mawujun.org.NodeVO" parameterType="string">
+    	select a.* from t_role a ,t_role_user b
+		where a.id=b.role_id and b.user_id=#{user_id}
+    </select>
+
 </mapper>
 

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mawujun.exception.BusinessException;
+import com.mawujun.org.NodeVO;
 import com.mawujun.org.OrgRepository;
 import com.mawujun.org.PositionOrgUser;
 import com.mawujun.org.PositionOrgUserRepository;
@@ -163,5 +164,14 @@ public class UserService extends AbstractService<User, String> {
 			result.add(child);
 		}
 		
+	}
+	
+	
+	public List<MenuVO> queryMenuByUser(String user_id) {
+		return userRepository.queryMenuByUser(user_id);
+	}
+	
+	public List<NodeVO> queryOrgPositionByUser(String user_id) {
+		return userRepository.queryOrgPositionByUser(user_id);
 	}
 }
