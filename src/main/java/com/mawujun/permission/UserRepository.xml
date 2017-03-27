@@ -106,10 +106,35 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	select a.* from t_role a ,t_role_user b
 		where a.id=b.role_id and b.user_id=#{user_id}
     </select> 
-    <select id="queryOrgPositionByUser" resultType="com.mawujun.org.NodeVO" parameterType="string">
-    	select a.* from t_role a ,t_role_user b
-		where a.id=b.role_id and b.user_id=#{user_id}
+    <select id="queryOrgPositionByUser" resultType="com.mawujun.org.PositionVO" parameterType="string">
+    	select b.* from t_position_org_user a,t_position b
+		where a.position_id=b.id and a.user_id=#{user_id}
     </select>
-
+	<select id="queryStoreByUser" resultType="com.mawujun.org.PositionOrgAccessVO" parameterType="string">
+    	select  max(a.look) look,max(a.edit) edit,b.id as org_id,b.code as org_code,b.name as org_name 
+       from T_POSITION_ORG_ACCESS a 
+       inner join t_position_org_user c on a.position_id=c.position_id and c.user_id=#{user_id} 
+       right join T_ORG b on a.org_id=b.id
+       
+       where   b.ORGTYPE in ('store_build','store_prepare')
+       group by b.id,b.code,b.name
+    </select>
+    <select id="queryWorkunitByUser" resultType="com.mawujun.org.PositionOrgAccessVO" parameterType="string">
+    	select  max(a.look) look,max(a.edit) edit,b.id as org_id,b.code as org_code,b.name as org_name 
+       from T_POSITION_ORG_ACCESS a 
+       inner join t_position_org_user c on a.position_id=c.position_id and c.user_id=#{user_id}
+       right join T_ORG b on a.org_id=b.id
+       
+       where  b.ORGTYPE='workunit'
+       group by b.id,b.code,b.name
+    </select>
+    <select id="queryRepair_centreByUser" resultType="com.mawujun.org.PositionOrgAccessVO" parameterType="string">
+    	select  max(a.look) look,max(a.edit) edit,b.id as org_id,b.code as org_code,b.name as org_name 
+       from T_POSITION_ORG_ACCESS a 
+       inner join t_position_org_user c on a.position_id=c.position_id and c.user_id=#{user_id}
+       right join T_ORG b on a.org_id=b.id
+       where b.ORGTYPE='repair_centre'
+       group by b.id,b.code,b.name
+    </select>
 </mapper>
 

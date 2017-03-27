@@ -26,7 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mawujun.org.NodeVO;
+import com.mawujun.org.PositionOrgAccessVO;
+import com.mawujun.org.PositionVO;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.utils.M;
 import com.mawujun.utils.page.Pager;
@@ -404,9 +405,28 @@ public class UserController {
 	}
 	@RequestMapping("/user/queryOrgPositionByUser.do")
 	@ResponseBody
-	public List<NodeVO> queryOrgPositionByUser(String user_id) {
+	public List<PositionVO> queryOrgPositionByUser(String user_id) {
 		
 		return userService.queryOrgPositionByUser( user_id);
+	}
+	@RequestMapping("/user/queryStoreByUser.do")
+	@ResponseBody
+	public List<PositionOrgAccessVO> queryStoreByUser(String user_id) {
+		
+		return userService.queryStoreByUser( user_id);
+	}
+	@RequestMapping("/user/queryWorkunitByUser.do")
+	@ResponseBody
+	public List<PositionOrgAccessVO> queryWorkunitByUser(String user_id) {
+		
+		return userService.queryWorkunitByUser( user_id);
+	}
+	
+	@RequestMapping("/user/queryRepair_centreByUser.do")
+	@ResponseBody
+	public List<PositionOrgAccessVO> queryRepair_centreByUser(String user_id) {
+		
+		return userService.queryRepair_centreByUser( user_id);
 	}
 	
 }

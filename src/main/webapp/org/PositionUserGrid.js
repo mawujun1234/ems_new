@@ -2,7 +2,8 @@ Ext.define('Ems.org.PositionUserGrid',{
 	extend:'Ext.grid.Panel',
 	requires: [
 	     'Ems.permission.User',
-	     'Ems.permission.UserForm'
+	     'Ems.permission.UserForm',
+	     'Ems.permission.UserTabpanel'
 	],
 	columnLines :true,
 	stripeRows:true,
@@ -142,6 +143,13 @@ Ext.define('Ems.org.PositionUserGrid',{
 					grid.getStore().reload();
 				},
 				iconCls: 'icon-refresh'
+			},{
+				text: '查看权限',
+				handler: function(btn){
+					var grid=btn.up("grid");
+					grid.showPermission();
+				},
+				iconCls: ' icon-question-sign'
 			}]
 		});
 	  
@@ -278,5 +286,27 @@ Ext.define('Ems.org.PositionUserGrid',{
 				});
 			}
 		});
+    },
+    showPermission:function(){
+    	var me=this;
+    	var me=this;
+    	var record=me.getSelectionModel( ).getLastSelected( );
+
+		if(!record){
+		    Ext.Msg.alert("消息","请先选择一个用户");	
+			return;
+		}
+    	
+    	var userTabpanel=Ext.create('Ems.permission.UserTabpanel',{
+    		user_id:record.get("id")
+    	});
+    	var win=Ext.create('Ext.Window',{
+    		layout:'fit',
+    		title:'查看用户拥有的权限(右边可以关闭窗口)----'+record.get("name"),
+    		modal:true,
+    		maximized:true,
+    		items:[userTabpanel]
+    	});
+    	win.show();
     }
 });

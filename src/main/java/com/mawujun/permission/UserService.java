@@ -13,11 +13,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mawujun.exception.BusinessException;
-import com.mawujun.org.NodeVO;
+import com.mawujun.org.Org;
 import com.mawujun.org.OrgRepository;
+import com.mawujun.org.OrgVO;
+import com.mawujun.org.PositionOrgAccessVO;
 import com.mawujun.org.PositionOrgUser;
 import com.mawujun.org.PositionOrgUserRepository;
 import com.mawujun.org.PositionRepository;
+import com.mawujun.org.PositionVO;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
 import com.mawujun.utils.M;
@@ -171,7 +174,33 @@ public class UserService extends AbstractService<User, String> {
 		return userRepository.queryMenuByUser(user_id);
 	}
 	
-	public List<NodeVO> queryOrgPositionByUser(String user_id) {
-		return userRepository.queryOrgPositionByUser(user_id);
+	public List<PositionVO> queryOrgPositionByUser(String user_id) {
+		List<PositionVO> list= userRepository.queryOrgPositionByUser(user_id);
+		for(PositionVO vo:list){
+			String org_id=vo.getOrg_id();
+			while(org_id!=null){
+				if("root".equals(org_id)){
+					Org org=orgRepository.get(org_id);
+					vo.setOrg_all_name(org.getName()+">"+vo.getOrg_all_name());
+					org_id=null;
+				} else {
+					OrgVO org=orgRepository.getBaseOrg(org_id);
+					vo.setOrg_all_name(org.getName()+">"+vo.getOrg_all_name());
+					org_id=org.getParent_id();
+				}
+				
+			}
+		}
+		return list;
+	}
+	
+	public List<PositionOrgAccessVO> queryStoreByUser(String user_id) {
+		return userRepository.queryStoreByUser(user_id);
+	}
+	public List<PositionOrgAccessVO> queryWorkunitByUser(String user_id) {
+		return userRepository.queryWorkunitByUser(user_id);
+	}
+	public List<PositionOrgAccessVO> queryRepair_centreByUser(String user_id) {
+		return userRepository.queryRepair_centreByUser(user_id);
 	}
 }

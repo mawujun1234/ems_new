@@ -7,6 +7,10 @@ Ext.define('Ems.permission.UserTabpanel',{
       
       me.createRoleTab();
       me.createMenuTab();
+      me.createOrgPositionTab();
+      me.createStoreTab("/user/queryStoreByUser.do","可访问仓库");
+      me.createStoreTab("/user/queryWorkunitByUser.do","可访问作业单位");
+      me.createStoreTab("/user/queryRepair_centreByUser.do","可访问维修中心");
       
       me.callParent();
      },
@@ -67,7 +71,7 @@ Ext.define('Ems.permission.UserTabpanel',{
 			},
 			proxy:{
 				type: 'ajax',
-				extraParams:{expanded:false},
+				extraParams:{expanded:false,user_id:me.user_id},
 				url:Ext.ContextPath+"/user/queryMenuByUser.do"
 			}
 		});
@@ -86,33 +90,94 @@ Ext.define('Ems.permission.UserTabpanel',{
      },
      createOrgPositionTab:function(){
      	var me=this;
-     	var store = Ext.create('Ext.data.TreeStore', {
+     	var store = Ext.create('Ext.data.Store', {
      		autoLoad:true,
 	       	nodeParam :'parent_id',//传递到后台的数据，默认是node
-	       	//model:'Ems.permission.Menu',
-	       	fields:['id','name'],
-			root: {
-			    expanded: true,
-			    //checked:false,
-			    name:"宁波东望"
-			},
+	       	fields:['name','org_all_name'],
 			proxy:{
 				type: 'ajax',
-				extraParams:{expanded:false},
-				url:Ext.ContextPath+"/user/queryOrgPositionByUser.do"
+				extraParams:{user_id:me.user_id},
+				url:Ext.ContextPath+"/user/queryOrgPositionByUser.do",
+				reader:{
+					type:'json'
+					///rootProperty:'root',
+					//successProperty:'success',
+					//totalProperty:'total'		
+				}
 			}
 		});
 		
 		
-		var tree=Ext.create('Ext.tree.Panel', {
+		var grid=Ext.create('Ext.grid.Panel', {
 		    title: '所属职位',
-		    displayField:'name',
 		    store: store,
-		    rootVisible: true
+		    columnLines :true,
+			stripeRows:true,
+			columns:[
+		      	{xtype: 'rownumberer'},
+				{dataIndex:'name',header:'职位'
+		        },
+				{dataIndex:'org_all_name',header:'所属组织单元',flex:1
+		        }
+		      ]
 		});
 
 		
-		me.items.push(tree);
+		me.items.push(grid);
+     
+     },
+     createStoreTab:function(url,title){
+     	var me=this;
+     	var store = Ext.create('Ext.data.Store', {
+     		autoLoad:true,
+	       	nodeParam :'parent_id',//传递到后台的数据，默认是node
+	       	fields:['org_code','org_name','look','edit'],
+			proxy:{
+				type: 'ajax',
+				extraParams:{user_id:me.user_id},
+				url:Ext.ContextPath+url,
+				reader:{
+					type:'json'
+					///rootProperty:'root',
+					//successProperty:'success',
+					//totalProperty:'total'		
+				}
+			}
+		});
+		
+		
+		var grid=Ext.create('Ext.grid.Panel', {
+		    title: title,
+		    store: store,
+		    columnLines :true,
+			stripeRows:true,
+			columns:[
+		      	{xtype: 'rownumberer'},
+				{dataIndex:'org_code',header:'编码'
+		        },
+				{dataIndex:'org_name',header:'名称',width:200
+		        },
+		        { xtype: 'checkcolumn', text: '查看', dataIndex: 'look' ,editable:false
+		        	,listeners:{
+						checkchange:function(checkcolumn, rowIndex, checked){
+							alert("只读，修改无效!");
+							return false;
+						}
+		        	}
+		        },
+		        { xtype: 'checkcolumn', text: '编辑/操作', dataIndex: 'edit',
+		        	listeners:{
+						checkchange:function(checkcolumn, rowIndex, checked){
+							alert("只读，修改无效!");
+							return false;
+						}
+		        	}
+		        }
+		      ]
+		});
+
+		
+		me.items.push(grid);
      
      }
 })

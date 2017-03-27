@@ -163,45 +163,45 @@ public class OrgController {
 		return list;
 	}
 
-	/**
-	 * 查询某个职位可以访问的组织单元
-	 * @author mawujun qq:16064988 mawujun1234@163.com
-	 * @param parent_id
-	 * @param dim
-	 * @return
-	 */
-	@RequestMapping("/org/queryOrgAccess.do")
-	@ResponseBody
-	public List<NodeVO> queryOrgAccess(String parent_id,Dim dim,String position_id) {
-		if(position_id==null){
-			return new ArrayList<NodeVO>();
-		}
-		if(dim==null){
-			dim=Dim.base;
-		}
-
-		//Cnd cnd=Cnd.select().andEquals(M.OrgOrg, "root".equals(parent_id)?null:parent_id);
-		List<NodeVO> orges=orgService.queryOrgAccess(parent_id,dim,position_id);
-		return orges;
-	}
-	
-	@RequestMapping("/org/checkOrgNodes.do")
-	@ResponseBody
-	public void checkNodes(Dim dim,String position_id,String orgno,String orgty,Boolean checked,String parent_orgnos[]) {
-//		//System.out.println(MenuType.menu);
-//		//Cnd cnd=Cnd.select().andEquals(M.Menu.parent_id, "root".equals(parent_id)?null:parent_id));
-//		if("root".equals(parent_id)){
-//			parent_id=null;
+//	/**
+//	 * 查询某个职位可以访问的组织单元
+//	 * @author mawujun qq:16064988 mawujun1234@163.com
+//	 * @param parent_id
+//	 * @param dim
+//	 * @return
+//	 */
+//	@RequestMapping("/org/queryOrgAccess.do")
+//	@ResponseBody
+//	public List<NodeVO> queryOrgAccess(String parent_id,Dim dim,String position_id) {
+//		if(position_id==null){
+//			return new ArrayList<NodeVO>();
 //		}
-//		List<MenuVO> menues=menuService.query_checkbox(null);
-//		return menues;
-		if(dim==null){
-			dim=Dim.base;
-		}
-		
-		orgService.checkNodes(dim, position_id, orgno, orgty, checked, parent_orgnos);
-		return;
-	}
+//		if(dim==null){
+//			dim=Dim.base;
+//		}
+//
+//		//Cnd cnd=Cnd.select().andEquals(M.OrgOrg, "root".equals(parent_id)?null:parent_id);
+//		List<NodeVO> orges=orgService.queryOrgAccess(parent_id,dim,position_id);
+//		return orges;
+//	}
+//	
+//	@RequestMapping("/org/checkOrgNodes.do")
+//	@ResponseBody
+//	public void checkNodes(Dim dim,String position_id,String orgno,String orgty,Boolean checked,String parent_orgnos[]) {
+////		//System.out.println(MenuType.menu);
+////		//Cnd cnd=Cnd.select().andEquals(M.Menu.parent_id, "root".equals(parent_id)?null:parent_id));
+////		if("root".equals(parent_id)){
+////			parent_id=null;
+////		}
+////		List<MenuVO> menues=menuService.query_checkbox(null);
+////		return menues;
+//		if(dim==null){
+//			dim=Dim.base;
+//		}
+//		
+//		orgService.checkNodes(dim, position_id, orgno, orgty, checked, parent_orgnos);
+//		return;
+//	}
 
 //	@RequestMapping("/org/queryAll.do")
 //	@ResponseBody

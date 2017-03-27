@@ -5,7 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.mawujun.org.NodeVO;
+import com.mawujun.org.PositionOrgAccessVO;
+import com.mawujun.org.PositionVO;
 import com.mawujun.repository.IRepository;
 import com.mawujun.utils.page.Pager;
 /**
@@ -39,6 +40,8 @@ public interface UserRepository extends IRepository<User, String>{
 	 
 	 public List<RoleVO> queryRoleByUser(@Param("user_id")String user_id);
 	 public List<MenuVO> queryMenuByUser(@Param("user_id")String user_id);
-	 public List<NodeVO> queryOrgPositionByUser(@Param("user_id")String user_id);
-
+	 public List<PositionVO> queryOrgPositionByUser(@Param("user_id")String user_id);
+	 public List<PositionOrgAccessVO> queryStoreByUser(@Param("user_id")String user_id);
+	 public List<PositionOrgAccessVO> queryWorkunitByUser(@Param("user_id")String user_id);
+	 public List<PositionOrgAccessVO> queryRepair_centreByUser(@Param("user_id")String user_id);
 }

@@ -5,6 +5,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 <!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
 <mapper namespace="com.mawujun.org.OrgRepository">
+	<!-- 获取基本维度中的组织节点 -->
+	<select id="getBaseOrg" resultType="com.mawujun.org.OrgVO" parameterType="map">
+		select distinct a.*,b.parent_id from t_org a,t_org_org b
+    	where a.id=b.child_id
+    	and a.id=#{id}
+    	and b.dim='base'
+	</select>
+	
 	<!-- -->
     <select id="queryNodeVO" resultType="com.mawujun.org.NodeVO" parameterType="map">
     	select a.id,a.name,a.id as org_id,'' as remark,a.orgtype as type,b.parent_id from t_org a,t_org_org b
@@ -40,20 +48,20 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	order by orgso
 	</select>
 -->	
-	<!-- 查询本节点的所有父节点-->
+	<!-- 查询本节点的所有父节点
 	<select id="queryParent" resultType="com.mawujun.org.Org" parameterType="map">
 		select distinct a.* from t_org a,t_org_org b
     	where a.orgno=b.parent_no  and a.orgst='KQ'
     	and b.child_no=#{child_no}
     	and b.dim=#{dim}
-	</select>
-	<!--查询本节点的所有子节点 -->
+	</select>-->
+	<!--查询本节点的所有子节点
 	<select id="queryChildren" resultType="com.mawujun.org.Org" parameterType="map">
 		select distinct a.* from t_org a,t_org_org b
     	where a.orgno=b.child_no  and a.orgst='KQ'
     	and b.parent_no=#{parent_no}
     	and b.dim=#{dim}
-	</select>
+	</select> -->
 	
 	<!-- 查询本节点的所有父节点
 	<select id="queryOrgByOrgty" resultType="com.mawujun.org.Org" parameterType="map">
@@ -63,14 +71,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	and b.dim=#{dim}
     	and a.orgty=#{orgty}
 	</select>-->
-	<!-- 插入这个职位可以访问的组织单元-->
+	<!-- 插入这个职位可以访问的组织单元
 	<insert id="insert_positionorgaccess">
 		insert into t_position_org_access(position_id,orgno) values(#{position_id},#{orgno})
 	</insert>
 	<insert id="delete_positionorgaccess">
 		delete t_position_org_access where position_id=#{position_id} and orgno=#{orgno}
-	</insert>
-	<!-- 查询某个职位可以访问的组织单元 -->
+	</insert>-->
+	<!-- 查询某个职位可以访问的组织单元 
 	<select id="queryOrgAccess" resultType="com.mawujun.org.NodeVO" parameterType="map">
 		select X.*,decode(y.orgno,null,0,1) checked from (
     	select a.orgno as id,orgnm as name,a.orgno,'' as remark,a.orgty as type from t_org a,t_org_org b
@@ -78,7 +86,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	and b.parent_no=#{parent_no}
     	and b.dim=#{dim} and a.orgst='KQ'
     	) x left join t_position_org_access y on x.orgno=y.orgno and y.position_id=#{position_id}
-    </select> 
+    </select> -->
 
 	<select id="queryStores4Combo" resultType="com.mawujun.org.Org" parameterType="map" >
     	select a.* from t_org a,t_position_org_access b,t_position_org_user c 

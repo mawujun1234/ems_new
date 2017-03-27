@@ -3,12 +3,13 @@ Ext.define('Ems.permission.RoleUserGrid',{
 	requires: [
 	     'Ems.permission.User',
 	     'Ems.permission.UserForm',
-	     'Ems.org.SelPositionUserWindow'
+	     'Ems.org.SelPositionUserWindow',
+	     'Ems.permission.UserTabpanel'
 	],
 	columnLines :true,
 	stripeRows:true,
 	viewConfig:{
-		enableTextSelection:true,
+		enableTextSelection:true
 	},
 	initComponent: function () {
       var me = this;
@@ -147,6 +148,13 @@ Ext.define('Ems.permission.RoleUserGrid',{
 					grid.getStore().reload();
 				},
 				iconCls: 'icon-refresh'
+			},{
+				text: '查看权限',
+				handler: function(btn){
+					var grid=btn.up("grid");
+					grid.showPermission();
+				},
+				iconCls: ' icon-question-sign'
 			}]
 		});
 	  
@@ -283,5 +291,27 @@ Ext.define('Ems.permission.RoleUserGrid',{
 				
 			}
 		});
+    },
+    showPermission:function(){
+    	var me=this;
+    	var me=this;
+    	var record=me.getSelectionModel( ).getLastSelected( );
+
+		if(!record){
+		    Ext.Msg.alert("消息","请先选择一个用户");	
+			return;
+		}
+    	
+    	var userTabpanel=Ext.create('Ems.permission.UserTabpanel',{
+    		user_id:record.get("id")
+    	});
+    	var win=Ext.create('Ext.Window',{
+    		layout:'fit',
+    		title:'查看用户拥有的权限(右边可以关闭窗口)----'+record.get("name"),
+    		modal:true,
+    		maximized:true,
+    		items:[userTabpanel]
+    	});
+    	win.show();
     }
 });
