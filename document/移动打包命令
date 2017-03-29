@@ -1,0 +1,5 @@
+然后执行，生成android-release.apk的安装文件：
+cordova run android –release --buildConfig build.json
+
+到生成的目录中就可以得到这个apk了：
+E:\eclipse\workspace\ems_new_mobile\platforms\android\build\outputs\apk

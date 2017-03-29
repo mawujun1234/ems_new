@@ -59,6 +59,7 @@
 export default {
   data () {
     return {
+      user_id:'',
       workunites:[]
     }
   },
@@ -67,6 +68,7 @@ export default {
     let vm=this;
     $.post($.SP+'/mobile/login/queryMyinfo.do',{},function(response){
       vm.workunites=response.root;
+      vm.user_id=response.user_id;
     });
   },
   methods: {
@@ -77,7 +79,18 @@ export default {
       });
     },
     to_qrcode:function(){
-      $.toast("开发中...");
+      if(!$.isMobile()){
+          $.toast("请在手机上操作");
+          return;
+      }
+
+      cordova.plugins.barcodeScanner.encode(cordova.plugins.barcodeScanner.Encode.TEXT_TYPE, "member:"+this.user_id, function(success) {
+            alert("encode success: " + success);
+          }, function(fail) {
+            alert("encoding failed: " + fail);
+          }
+        );
+      return;
     },
     logout:function(){
       let vm=this;

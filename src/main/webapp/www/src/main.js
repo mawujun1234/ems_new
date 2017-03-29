@@ -1,5 +1,5 @@
+//import "babel-polyfill";
 import Vue from 'vue'
-import App from './App.vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 //var $ = require('zepto');
@@ -7,6 +7,7 @@ Vue.use(Vuex)
 window.debug=false;
 Vue.config.debug = window.debug;
 
+import App from './App.vue'
 import page_login from './pages/page_login.vue'
 import page_function from './pages/page_function.vue'
 import page_taskes from './pages/page_taskes.vue'
@@ -25,7 +26,7 @@ import remutils from './assets/remutils'
 
 
 const routes = [
-  { path: '/', component: page_login },
+  //{ path: '/', component: page_login },
   { path: '/page_login', component: page_login,name: 'page_login' },
   { path: '/page_function', component: page_function ,name: 'page_function'},
   { path: '/page_taskes/:type', component: page_taskes,name: 'page_taskes'},
@@ -117,6 +118,11 @@ const appvue=new Vue({
   store,
   router:router,
   render: h => h(App),
+  mounted: function mounted() {
+    //do something after mounting vue instance
+    //alert(1);
+    this.to("page_login");
+  },
   methods:{
     to:function(path){
       router.transitionName='slide-left';
@@ -181,5 +187,15 @@ $(function(){
     });
 		setTimeout("onlineling()",120000);
 	}
+
+  $.isMobile=function(){
+    var userAgentInfo = navigator.userAgent;
+    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+    var flag = false;
+    for (var v = 0; v < Agents.length; v++) {
+      if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = true; break; }
+    }
+    return flag;  
+  }
 
 });

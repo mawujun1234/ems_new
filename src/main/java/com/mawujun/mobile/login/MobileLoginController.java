@@ -158,8 +158,12 @@ public class MobileLoginController {
 	@RequestMapping("/mobile/login/queryMyinfo.do")
 	@ResponseBody
 	public ResultModel queryMyinfo(){
-		List<Myinfo> list=mobileLoginService.queryMyinfo();
-		return ResultModel.getInstance().setRoot(list);
+		String user_id=ShiroUtils.getUserId();
+		List<Myinfo> list=mobileLoginService.queryMyinfo(user_id);
+		ResultModel aa= ResultModel.getInstance().setRoot(list);
+		
+		aa.put("user_id", user_id);
+		return aa;
 	}
 	@RequestMapping("/mobile/login/updatePassword.do")
 	@ResponseBody

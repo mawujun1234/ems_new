@@ -15,8 +15,8 @@ public class MobileLoginService {
 	@Autowired
 	private MobileLoginRepository mobileLoginRepository;
 	
-	public List<Myinfo> queryMyinfo() {
-		return mobileLoginRepository.queryMyinfo(ShiroUtils.getUserId());
+	public List<Myinfo> queryMyinfo(String user_id) {
+		return mobileLoginRepository.queryMyinfo(user_id);
 	}
 
 }

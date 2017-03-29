@@ -59,6 +59,20 @@
             </div>
           </div>
         </li>
+        <li>
+          <div class="item-content">
+            <div class="item-media"><i class="icon icon-form-toggle"></i></div>
+            <div class="item-inner">
+              <div class="item-title label">正式库</div>
+              <div class="item-input">
+                <label class="label-switch">
+                  <input type="checkbox" v-model="isprod" @click="changeIsprod">
+                  <div class="checkbox"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
     <div class="content-block">
@@ -89,20 +103,23 @@ export default {
       loginname:'yinzhou2',
       password:'123',
       serverip:'',
-      serverportal:''
+      serverportal:'',
+      ctx:'',
+      isprod:true
     }
   },
   mounted: function mounted() {
-    //如果是通过浏览器进来就直接获取浏览器的地址和端口
+    //初始化服务器地址
+    //通过网页进行开发的时候，npm
     if(location.hostname=="localhost"){
       this.serverip="localhost";
       this.serverportal="8085";
       window.debug=true;
     } else {
-      var u = navigator.userAgent;
-      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-      if(!isAndroid && !isiOS){
+      //var u = navigator.userAgent;
+      //var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    //  var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      if(!$.isMobile()){//通过网页进行访问
         this.serverip=location.hostname;
         this.serverportal=location.port;
       } else {
@@ -110,14 +127,24 @@ export default {
         this.serverip="122.227.163.82";
         this.serverportal="8080";
       }
+
     }
-    $.SP="http://"+this.serverip+""+this.serverportal;
-    if(this.serverportal=='9090'){
-      //测试库
-      $.SP+="/test";
-    }
+
+
   },
   methods:{
+    changeIsprod:function(){
+      if(!this.isprod){
+        this.serverip="122.227.163.82";
+        this.serverportal="9090";
+        this.ctx="/test"
+      } else {
+        this.serverip="122.227.163.82";
+        this.serverportal="8080";
+        this.ctx=""
+      }
+      //$.SP="http://"+this.serverip+""+this.serverportal+this.ctx;
+    },
     login:function(){
       //page_function
       //alert(this.loginname+"===="+this.password);
@@ -125,14 +152,8 @@ export default {
         loginname: this.loginname,
         password:this.password
       };
-      $.SP="http://"+this.serverip+":"+this.serverportal;
-      if(this.serverportal=='9090'){
-        //测试库
-        $.SP+="/test";
-      }
-      //alert($.SP);
+      $.SP="http://"+this.serverip+""+this.serverportal+this.ctx;
 
-       //return;
       $.showPreloader("正在登陆....");
       $.post($.SP+'/mobile/login/login.do', params, function(response){
         $.hidePreloader();

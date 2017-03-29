@@ -1,39 +1,20 @@
-
-ok所属角色
-ok可访问的菜单
-ok所属职位
-ok仓库权限
-ok作业单位权限
-ok维修中心权限
-
-
-
-在测试库安装新版的系统
-	ok新建测试数据库
-	ok新建当前数据备份库，创建用户，同步数据
-		create user ems identified by ems;
-		grant dba,connect,resource to ems;		
-		imp ems/ems@ems   file=D:\BaiduNetdiskDownload\201703210605.dmp fromuser=ems touser=ems
-	ok发布系统,测试表结构初始化
-	ok同步数据，按迁移步骤进行迁移
-	ok测试
-android studio使用书籍查看
-cordova环境搭建
-	emsnew_mobile项目搭建
-  签名
-  要哪些插件
-  白名单插件
- 
+ok区分正式版本，测试版本
+图标显示不正常
+android退回按钮，调用back
+启动页面
 设备扫描功能
-导航
-gps上传，存储在其mongdb数据库中
-  websocket支持度测试
+我的”中生成二维码的功能,生成的二维码格式为：member:user_id
+扫一扫添加成员：member:user_id
+
 拍照等功能
 点位相册功能
 相册浏览功能
-“我的”中生成二维码的功能,生成的二维码格式为：member:user_id
-扫一扫添加成员
-登录界面，扫一扫登录功能。member:user_id
+消息通知
+
+
+导航
+gps上传，存储在其mongdb数据库中
+  websocket支持度测试
 人脸识别登录,pc端也可以实现人脸识别登录
 
 
