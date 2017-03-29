@@ -3,3 +3,13 @@ cordova run android –release --buildConfig build.json
 
 到生成的目录中就可以得到这个apk了：
 E:\eclipse\workspace\ems_new_mobile\platforms\android\build\outputs\apk
+
+
+
+---mac系统
+对vue的源代码进行编译
+npm run build 
+把编译好后的代码拷贝到android的www目录下
+cp -R /Users/mawujun/git/ems_new/src/main/webapp/www/dist /Users/mawujun/git/ems_new_mobile/www
+打包或在模拟器中运行
+cordova emulate android   cordova run android
