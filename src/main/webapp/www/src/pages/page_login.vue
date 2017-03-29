@@ -78,10 +78,10 @@
     <div class="content-block">
       <div class="row">
         <div class="col-50">
-          <a href="#" class="button button-big button-fill button-danger">退出</a>
+          <a href="javascript:void(0);" class="button button-big button-fill button-danger">退出</a>
         </div>
         <div class="col-50">
-          <a href="#" @click="login" id="page_login_login_btn"  class="button button-big button-fill button-success">登录</a>
+          <a href="javascript:void(0);" @click="login" id="page_login_login_btn"  class="button button-big button-fill button-success">登录</a>
         </div>
       </div>
     </div>
@@ -102,8 +102,8 @@ export default {
       version:'2.0.0',
       loginname:'yinzhou2',
       password:'123',
-      serverip:'',
-      serverportal:'',
+      serverip:'172.16.3.45',
+      serverportal:'8085',
       ctx:'',
       isprod:true
     }
@@ -116,10 +116,10 @@ export default {
       this.serverportal="8085";
       window.debug=true;
     } else {
-      //var u = navigator.userAgent;
-      //var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-    //  var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-      if(!$.isMobile()){//通过网页进行访问
+      var u = navigator.userAgent;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      if(!isAndroid && !isiOS){//通过网页进行访问
         this.serverip=location.hostname;
         this.serverportal=location.port;
       } else {
@@ -130,7 +130,7 @@ export default {
 
     }
 
-
+      $.SP="http://"+this.serverip+":"+this.serverportal+this.ctx;
   },
   methods:{
     changeIsprod:function(){
@@ -143,7 +143,6 @@ export default {
         this.serverportal="8080";
         this.ctx=""
       }
-      //$.SP="http://"+this.serverip+""+this.serverportal+this.ctx;
     },
     login:function(){
       //page_function
@@ -152,14 +151,15 @@ export default {
         loginname: this.loginname,
         password:this.password
       };
-      $.SP="http://"+this.serverip+""+this.serverportal+this.ctx;
+      $.SP="http://"+this.serverip+":"+this.serverportal+this.ctx;
 
       $.showPreloader("正在登陆....");
       $.post($.SP+'/mobile/login/login.do', params, function(response){
         $.hidePreloader();
         if(response.success){
+          //window.appvue.to("/page_function");//.$emit('e_route_page','/page_function');
           setTimeout("onlineling()",120000);
-          window.appvue.to("/page_function");//.$emit('e_route_page','/page_function');
+          window.appvue.to({name:"page_function"});
         } else {
           $.toast(response.msg);
         }

@@ -156,7 +156,9 @@ $(function(){
 	$(document).on('ajaxError',function(e,xhr,options,response){
 		if(xhr.status==503){
 			handlerReturn(JSON.parse(xhr.responseText));
-		} else {
+		} else if(xhr.status==0){
+      $.alert("请求超时，检查地址，端口!");
+    } else {
 			//handlerReturn(response);
       $.alert(xhr.status+"：非正常请求，请联系管理员！");
 		}
@@ -195,7 +197,29 @@ $(function(){
     for (var v = 0; v < Agents.length; v++) {
       if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = true; break; }
     }
-    return flag;  
+    return flag;
   }
 
 });
+
+document.addEventListener('deviceready', function(){
+  document.addEventListener("backbutton", onBackKeyDown, false);
+  function onBackKeyDown() {
+    // Handle the back button
+    //alert(window.location.href);
+    var page_id=window.location.href.split("#/")[1];
+
+    if (page_id.indexOf("page_login")==-1
+      && page_id.indexOf("page_function")==-1
+      && page_id.indexOf("page_setting")==-1 ) {
+        window.appvue.back();
+    } else {
+        var r=confirm("确定要退出?");
+        if (r==true){
+          alert("你要退出");
+        } else {
+          alert("不退出");
+        }
+    }
+  }
+}, false);
