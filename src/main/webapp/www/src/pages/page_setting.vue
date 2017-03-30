@@ -10,7 +10,7 @@
       <div class="list-block media-list" style="margin-top:1rem;">
           <ul>
             <li class="item-link item-content" v-for="workunit in workunites">
-                <div class="item-media"><span class="icon icon-me" style="width:3rem;font-size:2rem;"></span></div>
+                <div class="item-media"><span class="icon icon-card" style="width:3rem;font-size:2rem;"></span></div>
                 <div class="item-inner">
                   <div class="item-title-row">
                     <div class="item-title">{{workunit.loginname}}</div>

@@ -187,6 +187,13 @@ public static final class Pole {
 	public static final String status="status";
 	public static final String id="id";
 }
+public static final class PolePhoto {
+	public static final String pole_id="pole_id";
+	public static final String base64="base64";
+	public static final String url="url";
+	public static final String user_id="user_id";
+	public static final String id="id";
+}
 public static final class PoleWorkunit {
 	 /**
 	 * 返回关联对象的属性，，以对象关联的方式(a.b这种形式)，只有一些基本属性，层级不再往下了

@@ -18,6 +18,7 @@ import page_equip_have from './pages/page_equip_have.vue'
 import page_equip_have_subtype from './pages/page_equip_have_subtype.vue'
 import page_setting from './pages/page_setting.vue'
 import page_update_password from './pages/page_update_password.vue'
+import page_show_photo from './pages/page_show_photo.vue'
 
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
@@ -36,7 +37,8 @@ const routes = [
   { path: '/page_equip_have', component: page_equip_have,name: 'page_equip_have'},
   { path: '/page_equip_have_subtype', component: page_equip_have_subtype,name: 'page_equip_have_subtype'},
   { path: '/page_setting', component: page_setting,name: 'page_setting'},
-  { path: '/page_update_password', component: page_update_password,name: 'page_update_password'}
+  { path: '/page_update_password', component: page_update_password,name: 'page_update_password'},
+  { path: '/page_show_photo', component: page_show_photo,name: 'page_show_photo'}
 ]
 
 const router = new VueRouter({

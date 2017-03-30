@@ -9,6 +9,7 @@
   				<a class="button button-link button-nav pull-left back" href="javascript:void(0);"  @click="back"> <span class="icon icon-left"></span>返回
   				</a>
   				<h1 class="title">任务信息</h1>
+          <a class="button button-link button-nav pull-right" href="javascript:void(0);"  @click="showPhoto">相册</a>
   			</header>
   			<!-- 这里是页面内容区 -->
   			<div class="content" :style="canedit?'margin-bottom:3rem;':''">
@@ -351,6 +352,9 @@ export default {
     back:function(){
       window.appvue.back();
     },//back
+    showPhoto:function(){//显示相册，拍照
+      window.appvue.to("/page_show_photo");
+    },
     show_qrcode_camare:function(){//扫描二维码
       if(!$.isMobile()){
           $.toast("请在手机上操作");

@@ -10,7 +10,7 @@
       </a>
     </nav>
     <transition :name="transitionName">
-      <keep-alive include="page_taskes">
+      <keep-alive include="page_taskes,page_task_info">
       <router-view></router-view>
       </keep-alive>
     </transition>
