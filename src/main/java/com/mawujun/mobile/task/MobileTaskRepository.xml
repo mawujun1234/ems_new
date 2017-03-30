@@ -110,6 +110,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		and not exists (select * from ems_task_member memb 
     		where c.user_id=memb.user_id and memb.task_id=#{task_id}) 
     </select>
+    <select id="getMembers" resultType="com.mawujun.mobile.task.Members" >
+    	select a.id ,a.name,c.id as workunit_id,c.name as workunit_name 
+		from t_user a
+		inner join t_position_org_user b on a.id=b.user_id
+		inner join t_org c on b.org_id=c.id
+		where a.id=#{user_id} and c.orgtype='workunit'
+    </select>
     
     
     <resultMap type="com.mawujun.mobile.task.WkTypenum" id="map_WkTypenum">  

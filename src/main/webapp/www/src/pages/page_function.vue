@@ -6,7 +6,7 @@
       <h1 class="title">功能列表</h1>
     </header>
     <!-- 这里是页面内容区 -->
-    <div class="content">
+    <div class="content" style="margin-bottom:3rem;">
       <div class="content-block-title" style="margin: 10px 0 10px 10px;">任务</div>
       <div class="function_row">
         <a class="function_grid" href="javascript:void(0);" @click="to_page_taskes('repair')" v-if="mobile_page_function_task_repair"><div

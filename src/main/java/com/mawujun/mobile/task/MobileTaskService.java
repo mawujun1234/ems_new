@@ -291,11 +291,21 @@ public class MobileTaskService {
 		return mobileTaskRepository.queryMembers(ShiroUtils.getUserId(),task_id);
 	}
 	
-	public void selectMember(String task_id,String user_id) {
+	public Members addMember(String task_id,String user_id) {
+		// 返回成员信息，如果一个成员属于多个作业单位，则只返回第一个
+		List<Members> taskMemberVOes = mobileTaskRepository.getMembers(user_id);
+		if (taskMemberVOes == null || taskMemberVOes.size() == 0) {
+			throw new BusinessException("该人员不属于任何作业单位，不能添加");
+		}
+				
 		TaskMember member=new TaskMember();
 		member.setTask_id(task_id);
 		member.setUser_id(user_id);
 		taskMemberRepository.create(member);
+		
+		
+		return taskMemberVOes.get(0);
+		
 	}
 	public void deleteMember(String task_id,String user_id) {
 		TaskMember.PK pk=new TaskMember.PK();

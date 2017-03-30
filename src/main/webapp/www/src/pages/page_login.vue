@@ -78,7 +78,7 @@
     <div class="content-block">
       <div class="row">
         <div class="col-50">
-          <a href="javascript:void(0);" class="button button-big button-fill button-danger">退出</a>
+          <a href="javascript:void(0);" @click="logout" class="button button-big button-fill button-danger">退出</a>
         </div>
         <div class="col-50">
           <a href="javascript:void(0);" @click="login" id="page_login_login_btn"  class="button button-big button-fill button-success">登录</a>
@@ -123,9 +123,9 @@ export default {
         this.serverip=location.hostname;
         this.serverportal=location.port;
       } else {
-        //正式环境
-        this.serverip="122.227.163.82";
-        this.serverportal="8080";
+        //正式环境等测试差不多的时候，把注释去掉
+        //this.serverip="122.227.163.82";
+        //this.serverportal="8080";
       }
 
     }
@@ -165,6 +165,12 @@ export default {
         }
 
       });
+    },
+    logout:function(){
+      //if(navigator){
+      //  navigator.app.exitApp();
+    //  }
+      window.exitApp();
     }
   }
 }

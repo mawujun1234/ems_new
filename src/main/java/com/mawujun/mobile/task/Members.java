@@ -3,6 +3,7 @@ package com.mawujun.mobile.task;
 public class Members {
 	private String id;//用户id
 	private String name;//用户名字
+	private String workunit_id;//作业单位名字
 	private String workunit_name;//作业单位名字
 	
 	public String getId() {
@@ -22,6 +23,12 @@ public class Members {
 	}
 	public void setWorkunit_name(String workunit_name) {
 		this.workunit_name = workunit_name;
+	}
+	public String getWorkunit_id() {
+		return workunit_id;
+	}
+	public void setWorkunit_id(String workunit_id) {
+		this.workunit_id = workunit_id;
 	}
 
 }

@@ -78,6 +78,7 @@ export default {
       vm.z_index=$("#page_task_info").css("z-index");
       $("#page_task_info").css("z-index",20000);
        $.popup('.popup-qrcode-input');
+       window.popup_class='.popup-qrcode-input';
     },
     showMembers:function(){
       var vm=this;
@@ -91,6 +92,7 @@ export default {
       vm.z_index=$("#page_task_info").css("z-index");
       $("#page_task_info").css("z-index",20000);
        $.popup('.popup_members');
+       window.popup_class='.popup_members';
     },
     showNavigation:function(){
       alert("正在开发中...");

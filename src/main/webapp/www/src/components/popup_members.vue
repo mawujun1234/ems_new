@@ -49,15 +49,13 @@ export default {
       });
     },
     selectMember:function(wk_id,wk_name,memb_id,memb_name){
-      //alert(ht_id);
-      //return;
-      //var btn_hitchtype=$("#page_task_info  #btn_hitchtype");
-      //alert(btn_hitchtype.attr("hitchtype_id"));
       var vm=this;
-      $.post($.SP+'/mobile/task/selectMember.do', {task_id:vm.task_id,user_id:memb_id}, function(response){
-        $.closeModal(".popup_members");
-        vm.$emit("selectMember",wk_id,wk_name,memb_id,memb_name);
-      });
+      vm.$emit("selectMember",memb_id);
+
+      // $.post($.SP+'/mobile/task/selectMember.do', {task_id:vm.task_id,user_id:memb_id}, function(response){
+      //   $.closeModal(".popup_members");
+      //   vm.$emit("selectMember",wk_id,wk_name,memb_id,memb_name);
+      // });
     }
   }
 }

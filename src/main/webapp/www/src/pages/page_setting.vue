@@ -1,12 +1,12 @@
 <template>
   <!-- #page_setting 设置界面 -->
-  <div class="page page-current" id="page_setting">
+  <div class="page page-current" id="page_setting" >
     <!-- 标题栏 -->
     <header class="bar bar-nav">
       <h1 class="title">我的</h1>
     </header>
     <!-- 这里是页面内容区 -->
-    <div class="content">
+    <div class="content" style="margin-bottom:2.5rem;">
       <div class="list-block media-list" style="margin-top:1rem;">
           <ul>
             <li class="item-link item-content" v-for="workunit in workunites">
@@ -85,7 +85,7 @@ export default {
       }
 
       cordova.plugins.barcodeScanner.encode(cordova.plugins.barcodeScanner.Encode.TEXT_TYPE, "member:"+this.user_id, function(success) {
-            alert("encode success: " + success);
+            //alert("encode success: " + success);
           }, function(fail) {
             alert("encoding failed: " + fail);
           }
@@ -96,8 +96,9 @@ export default {
       let vm=this;
       $.post($.SP+'/mobile/login/logout.do',{},function(response){
         if(response.success){
-          var index=vm.$store.state.router.len
-          window.appvue.$router.go(-index)
+          //var index=vm.$store.state.router.len
+          //window.appvue.$router.go(-index)
+          window.exitApp();
         }
       });
     }

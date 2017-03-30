@@ -187,11 +187,11 @@ public class MobileTaskController {
 		
 	}
 	
-	@RequestMapping("/mobile/task/selectMember.do")
+	@RequestMapping("/mobile/task/addMember.do")
 	@ResponseBody
-	public ResultModel selectMember(String task_id,String user_id) {
-		mobileTaskService.selectMember(task_id, user_id);
-		return ResultModel.getInstance();
+	public ResultModel addMember(String task_id,String user_id) {
+		Members taskMemberVO=mobileTaskService.addMember(task_id, user_id);
+		return ResultModel.getInstance().setRoot(taskMemberVO);
 		
 	}
 	@RequestMapping("/mobile/task/deleteMember.do")

@@ -207,6 +207,12 @@ document.addEventListener('deviceready', function(){
   function onBackKeyDown() {
     // Handle the back button
     //alert(window.location.href);
+    //如果有popup打开，就关闭
+    if(window.popup_class){
+      $.closeModal();
+      window.popup_class=null;
+      return;
+    }
     var page_id=window.location.href.split("#/")[1];
 
     if (page_id.indexOf("page_login")==-1
@@ -214,12 +220,16 @@ document.addEventListener('deviceready', function(){
       && page_id.indexOf("page_setting")==-1 ) {
         window.appvue.back();
     } else {
-        var r=confirm("确定要退出?");
-        if (r==true){
-          alert("你要退出");
-        } else {
-          alert("不退出");
+      window.exitApp();
+    }
+  }
+  window.exitApp=function(){
+    if(navigator){
+      navigator.notification.confirm("确定要退出?",function(buttonindex){
+        if(buttonindex==1){
+           navigator.app.exitApp();
         }
+      },"退出",["确定","取消"]);
     }
   }
 }, false);

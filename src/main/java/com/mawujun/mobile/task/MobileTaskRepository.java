@@ -36,6 +36,7 @@ public interface MobileTaskRepository {
 	 * @return
 	 */
 	public List<Workunit> queryMembers(@Param("user_id")String user_id,@Param("task_id")String task_id);
+	public List<Members> getMembers(@Param("user_id")String user_id);
 	
 	
 	

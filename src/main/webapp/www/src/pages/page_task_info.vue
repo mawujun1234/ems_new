@@ -205,7 +205,7 @@
         <hitchtype ref="hitchtype"></hitchtype>
         <handleMethod ref="handleMethod"></handleMethod>
         <ball_navs ref="ball_navs"></ball_navs>
-        <popup_members ref="popup_members" v-on:selectMember="select_member"></popup_members>
+        <popup_members ref="popup_members" v-on:selectMember="add_member"></popup_members>
   		</div>
   		<!--#page_task_info  功能列表 -->
 </template>
@@ -276,6 +276,7 @@ export default {
       vm.z_index=$("#page_task_info").css("z-index");
       $("#page_task_info").css("z-index",20000);
       $.popup('.popup-hitchtype');
+      window.popup_class='.popup-hitchtype';
     });
     $("#page_task_info .popup-hitchtype").on("close",function(){
       $("#page_task_info").css("z-index",vm.z_index);
@@ -308,6 +309,7 @@ export default {
       vm.z_index=$("#page_task_info").css("z-index");
       $("#page_task_info").css("z-index",20000);
       $.popup('.popup-handleMethod');
+      window.popup_class='.popup-handleMethod';
     });
     $("#page_task_info .popup-handleMethod").on("close",function(){
       $("#page_task_info").css("z-index",vm.z_index);
@@ -354,16 +356,25 @@ export default {
           $.toast("请在手机上操作");
           return;
       }
+      let vm=this;
 
       cordova.plugins.barcodeScanner.scan(
         function (result) {
-            alert("We got a barcode\n" +
-                  "Result: " + result.text + "\n" +
-                  "Format: " + result.format + "\n" +
-                  "Cancelled: " + result.cancelled);
+          if(result.cancelled){
+            return;
+          }
+          if(result.text.indexOf("member:")==-1){
+            vm.scan_qrcode(result.text);
+          } else {
+            vm.add_member(result.text.substr(7));
+          }
+            // alert("We got a barcode\n" +
+            //       "Result: " + result.text + "\n" +
+            //       "Format: " + result.format + "\n" +
+            //       "Cancelled: " + result.cancelled);
         },
         function (error) {
-            alert("Scanning failed: " + error);
+            alert("扫描失败: " + error);
         },
         {
             preferFrontCamera : false, // iOS and Android
@@ -440,6 +451,7 @@ export default {
       $("#page_task_info").css("z-index",20000);
       vm.$refs.equip_info.getEquipinfo(ecode);
       $.popup('.popup-equip_info');
+      window.popup_class='.popup-equip_info';
     },
     initevent:function(){
       var vm=this;
@@ -457,6 +469,8 @@ export default {
         }
         $(this).removeClass("swipeLeft");
       });
+
+      if(!$.isMobile()){
       //鼠标经过的时候,兼容桌面程序
       $("#page_task_info_equiplist_tab,#page_task_info_members_tab").on("mouseover","li",function(){
         //alert(vm.canedit);
@@ -471,6 +485,7 @@ export default {
         }
         $(this).removeClass("swipeLeft");
       });
+      }
 
     },//initevent
     updateHitchReason:function(){
@@ -516,16 +531,37 @@ export default {
           });
         }//if (r==true){
     },
-    select_member:function(wk_id,wk_name,memb_id,memb_name){
+    // add_member:function(wk_id,wk_name,memb_id,memb_name){
+    //   var vm=this;
+    //   $.post($.SP+'/mobile/task/selectMember.do', {task_id:vm.task_id,user_id:memb_id}, function(response){
+    //     $.closeModal(".popup_members");
+    //     //vm.$emit("selectMember",wk_id,wk_name,memb_id,memb_name);
+    //     if(vm.members==null){
+    //       vm.members=[];
+    //     }
+    //     vm.members.push({
+    //       id:memb_id,
+    //       name:memb_name,
+    //       workunit_id:wk_id,
+    //       workunit_name:wk_name
+    //     });
+    //   });
+    // },
+    add_member:function(memb_id){
       var vm=this;
-      if(vm.members==null){
-        vm.members=[];
-      }
-      vm.members.push({
-        id:memb_id,
-        name:memb_name,
-        workunit_id:wk_id,
-        workunit_name:wk_name
+      $.post($.SP+'/mobile/task/addMember.do', {task_id:vm.id,user_id:memb_id}, function(response){
+        $.closeModal(".popup_members");
+        if(vm.members==null){
+          vm.members=[];
+        }
+        var root=response.root;
+        vm.members.push({
+          id:memb_id,
+          name:root.name,
+          workunit_id:root.workunit_id,
+          workunit_name:root.workunit_name
+        });
+
       });
     },
     delete_member:function(user_id){
