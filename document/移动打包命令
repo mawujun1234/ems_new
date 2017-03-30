@@ -7,7 +7,9 @@ E:\eclipse\workspace\ems_new_mobile\platforms\android\build\outputs\apk
 
 
 ---mac系统
+cd /Users/mawujun/git/ems_new_mobile/
 对vue的源代码进行编译
+cd /Users/mawujun/git/ems_new/src/main/webapp/www
 npm run build 
 把编译好后的代码拷贝到android的www目录下
 cp -R /Users/mawujun/git/ems_new/src/main/webapp/www/dist /Users/mawujun/git/ems_new_mobile/www

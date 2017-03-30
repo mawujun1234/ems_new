@@ -8,12 +8,11 @@
   <div class="content" >
     <ul class="box">
       <!--
-      <li class="item" style="background-image:url(http://static.runoob.com/images/demo/demo3.jpg);background-repeat:no-repeat;">
+      <li class="item" style="background-image:url(http://static.runoob.com/images/demo/demo3.jpg);">
         照片
       </li>
     -->
-      <li class="item" v-for="(elem,index) in pole_photos">
-        <img :src="elem.url" style="max-width: 100%;">
+      <li class="item" v-for="(elem,index) in pole_photos" :style="'background-image:url('+elem.url+');'">
         <div class="close" @click="photo_remove(index)">X<div>
       </li>
 
@@ -58,14 +57,17 @@ export default {
             //$.alert("你选择了“卖出“");
             var cameraOptions = {
                 quality : 50,
-                destinationType : Camera.DestinationType.FILE_URI,//Camera.DestinationType.DATA_URL,
+                destinationType : Camera.DestinationType.FILE_URI,
+                //destinationType:Camera.DestinationType.DATA_URL,
                 sourceType : Camera.PictureSourceType.CAMERA,
                 allowEdit : true,
                 encodingType : Camera.EncodingType.JPEG,
-                targetWdith : 100,
-                targetHeight : 100,
+                mediaType: Camera.MediaType.PICTURE,
+                correctOrientation: true,
+                //targetWdith : 300,
+                //targetHeight : 300,
                 //popoverOptions : CameraPopoverOptions,
-                saveToPhotoAlbum : true
+                saveToPhotoAlbum : false
             };
             navigator.camera.getPicture(function(imageData){
               alert(imageData);
@@ -74,7 +76,7 @@ export default {
               //image.src = "data:image/jpeg;base64," + imageData;
 
             }, function(){
-              //alert("拍照失败");
+              alert("拍照失败"+error);
             }, cameraOptions);
 
           }
@@ -84,12 +86,14 @@ export default {
           onClick: function() {
             var cameraOptions = {
                 quality : 50,
-                destinationType : Camera.DestinationType.FILE_URI,//Camera.DestinationType.DATA_URL,
+                destinationType : Camera.DestinationType.FILE_URI,
+                //destinationType:Camera.DestinationType.DATA_URL,
                 sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
                 allowEdit : true,
                 encodingType : Camera.EncodingType.JPEG,
-                targetWdith : 100,
-                targetHeight : 100,
+                correctOrientation: true,
+                //targetWdith : 100,
+                //targetHeight : 100,
                 //popoverOptions : CameraPopoverOptions,
                 saveToPhotoAlbum : false
             };
@@ -133,8 +137,9 @@ export default {
   margin:0.2rem 0.2rem 0.2rem 0.2rem ;
   text-align: center;
   position:relative;
-  background-size:contain;
+  background-size:100% auto;
   border:1px solid rgba(144,144,144,0.2);
+  background-repeat:no-repeat;
 }
 .box .item .close{
   position: absolute;
