@@ -228,6 +228,7 @@ export default {
       status_name:'',
       canedit:false,
       memo:'',
+      pole_id:'',
       pole_code:'',
       pole_name:'',
       pole_address:'',
@@ -353,7 +354,7 @@ export default {
       window.appvue.back();
     },//back
     showPhoto:function(){//显示相册，拍照
-      window.appvue.to("/page_show_photo");
+      window.appvue.to({ name: 'page_pole_photo', params: { pole_id: this.pole_id }});
     },
     show_qrcode_camare:function(){//扫描二维码
       if(!$.isMobile()){

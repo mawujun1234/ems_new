@@ -5,6 +5,14 @@ cordova run android –release --buildConfig build.json
 E:\eclipse\workspace\ems_new_mobile\platforms\android\build\outputs\apk
 
 
+window
+cd E:\eclipse\workspace\ems_new\src\main\webapp\www
+npm run build /dev
+xcopy dist E:\eclipse\workspace\ems_new_mobile\www\dist /s /f /h /y
+
+cd E:\eclipse\workspace\ems_new_mobile
+cordova emulate android
+
 
 ---mac系统
 cd /Users/mawujun/git/ems_new_mobile/

@@ -1,18 +1,19 @@
 package com.mawujun.baseinfo;
 import java.util.List;
-import java.util.UUID;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.mawujun.controller.spring.mvc.ResultModel;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.utils.M;
-
-
-import com.mawujun.baseinfo.PolePhoto;
-import com.mawujun.baseinfo.PolePhotoService;
 /**
  * @author mawujun qq:16064988 e-mail:mawujun1234@163.com 
  * @version 1.0
@@ -54,33 +55,45 @@ public class PolePhotoController {
 //		return polePhotoService.get(id);
 //	}
 //	
-	@RequestMapping("/polePhoto/create.do")
+	@RequestMapping("/polePhoto/queryByPole.do")
 	@ResponseBody
-	public PolePhoto create(@RequestBody PolePhoto polePhoto) {
-		polePhotoService.create(polePhoto);
-		return polePhoto;
+	public List<PolePhoto> queryByPole(String pole_id) {	
+		List<PolePhoto> polePhotoes=polePhotoService.queryByPole(pole_id);
+		return polePhotoes;
+	}
+	@RequestMapping("/polePhoto/upload.do")
+	@ResponseBody
+	public ResultModel upload(HttpServletRequest request,@RequestParam("file") CommonsMultipartFile file,String pole_id,String id) {
+		String realpath=request.getServletContext().getRealPath("/");
+		try {
+			polePhotoService.upload(realpath, file, pole_id,id);
+		} catch(Exception e){
+			return ResultModel.getInstance().setSuccess(false).setMsg(e.getMessage());
+		}
+		
+		return ResultModel.getInstance();
 	}
 	
-	@RequestMapping("/polePhoto/update.do")
-	@ResponseBody
-	public  PolePhoto update(@RequestBody PolePhoto polePhoto) {
-		polePhotoService.update(polePhoto);
-		return polePhoto;
-	}
-	
-//	@RequestMapping("/polePhoto/deleteById.do")
+//	@RequestMapping("/polePhoto/update.do")
 //	@ResponseBody
-//	public String deleteById(String id) {
-//		polePhotoService.deleteById(id);
-//		return id;
+//	public  PolePhoto update(@RequestBody PolePhoto polePhoto) {
+//		polePhotoService.update(polePhoto);
+//		return polePhoto;
 //	}
 	
-	@RequestMapping("/polePhoto/destroy.do")
+	@RequestMapping("/polePhoto/deleteById.do")
 	@ResponseBody
-	public PolePhoto destroy(@RequestBody PolePhoto polePhoto) {
-		polePhotoService.delete(polePhoto);
-		return polePhoto;
+	public String deleteById(String id) {
+		polePhotoService.deleteBatch(Cnd.delete().andEquals(M.PolePhoto.id, id));
+		return id;
 	}
+	
+//	@RequestMapping("/polePhoto/destroy.do")
+//	@ResponseBody
+//	public PolePhoto destroy(@RequestBody PolePhoto polePhoto) {
+//		polePhotoService.delete(polePhoto);
+//		return polePhoto;
+//	}
 	
 	
 }

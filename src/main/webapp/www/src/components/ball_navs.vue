@@ -1,6 +1,6 @@
 <template>
 <div>
-  <ul id="ball_navs" data-open="收起" data-close="展开">
+  <ul id="ball_navs" data-open="展开" data-close="收起">
     <li @click="showNavigation">导航</li>
     <li @click="showMembers">成员</li>
     <li @click="showQRcodeInput">条码</li>
@@ -145,23 +145,22 @@ export default {
 }
 
 #ball_navs>li{
+  z-index:9000;
 	transition:all .6s;
 	-webkit-transition:all .6s;
 	-moz-transition:.6s;
 }
 
 #ball_navs:after{
-	content:attr(data-close);
-	z-index:1;
+  z-index:10000;
+	content:attr(data-open);
 	border-radius:50%;
 	-webkit-border-radius:50%;
 }
 
 #ball_navs.active:after{
-	content:attr(data-open);
+  z-index:10000;
+	content:attr(data-close);
 }
-#ball_navs a{
 
-
-}
 </style>
