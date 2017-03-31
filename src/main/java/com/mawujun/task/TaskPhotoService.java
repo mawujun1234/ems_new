@@ -1,24 +1,31 @@
-package com.mawujun.baseinfo;
+package com.mawujun.task;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+
+
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.mawujun.baseinfo.PolePhoto;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.repository.cnd.Cnd;
 import com.mawujun.service.AbstractService;
-import com.mawujun.utils.DateUtils;
+
+
+import com.mawujun.task.TaskPhoto;
+import com.mawujun.task.TaskPhotoRepository;
 import com.mawujun.utils.M;
 import com.mawujun.utils.file.ThumbUtils;
-
 
 
 /**
@@ -28,34 +35,37 @@ import com.mawujun.utils.file.ThumbUtils;
  */
 @Service
 @Transactional(propagation=Propagation.REQUIRED)
-public class PolePhotoService extends AbstractService<PolePhoto, String>{
+public class TaskPhotoService extends AbstractService<TaskPhoto, String>{
 
 	@Autowired
-	private PolePhotoRepository polePhotoRepository;
+	private TaskPhotoRepository taskPhotoRepository;
 	
 	@Override
-	public PolePhotoRepository getRepository() {
-		return polePhotoRepository;
+	public TaskPhotoRepository getRepository() {
+		return taskPhotoRepository;
+	}
+	public List<TaskPhoto> queryByTask(String task_id) {
+		return taskPhotoRepository.query(Cnd.select().andEquals(M.TaskPhoto.task_id, task_id));
 	}
 	
-	private static String pole_photos_ctx="pole_photos";
-	private static String pole_photos_thumb="thumb";
-	public String upload(String realpath,CommonsMultipartFile uploadfile,String pole_id,String id) {
+	private static String task_photos_ctx="task_photos";
+	private static String task_photos_thumb="thumb";
+	public String upload(String realpath,CommonsMultipartFile uploadfile,String task_id,String id) {
 
-		String dirpath=realpath+pole_photos_ctx;
+		String dirpath=realpath+task_photos_ctx;
 		File dir=new File(dirpath);
 		if(!dir.exists()){
 			dir.mkdirs();
 		}
-		PolePhoto polePhoto=new PolePhoto();
+		TaskPhoto polePhoto=new TaskPhoto();
 		//String id=DateUtils.format4Id();
 		polePhoto.setId(id);
 		polePhoto.setUser_id(ShiroUtils.getUserId());
 		polePhoto.setUploadDate(new Date());
-		polePhoto.setPole_id(pole_id);
+		polePhoto.setTask_id(task_id);
 		String filenmae=uploadfile.getFileItem().getName();
 		filenmae=id+filenmae.substring(filenmae.lastIndexOf("."));
-		polePhoto.setUrl("/"+pole_photos_ctx+"/"+filenmae);
+		polePhoto.setUrl("/"+task_photos_ctx+"/"+filenmae);
 		//
 		
 		//System.out.println(uploadfile.getOriginalFilename());
@@ -66,7 +76,7 @@ public class PolePhotoService extends AbstractService<PolePhoto, String>{
 		
 		String thumb_url=store_photo(dirpath,filenmae,uploadfile);
 		polePhoto.setThumb_url(thumb_url);
-		polePhotoRepository.create(polePhoto);
+		taskPhotoRepository.create(polePhoto);
 		return id;
 	}
 	
@@ -81,7 +91,7 @@ public class PolePhotoService extends AbstractService<PolePhoto, String>{
 		}
 		
 		//生成缩略图
-		String thumb_dirpath=dirpath+File.separator+pole_photos_thumb;
+		String thumb_dirpath=dirpath+File.separator+task_photos_thumb;
 		File dir=new File(thumb_dirpath);
 		if(!dir.exists()){
 			dir.mkdirs();
@@ -94,13 +104,8 @@ public class PolePhotoService extends AbstractService<PolePhoto, String>{
 			e.printStackTrace();
 			throw new BusinessException("生成缩略图失败!");
 		}
-		return "/"+pole_photos_ctx+"/"+pole_photos_thumb+"/"+filenmae;
+		return "/"+task_photos_ctx+"/"+task_photos_thumb+"/"+filenmae;
 		
-	}
-	
-	
-	public List<PolePhoto> queryByPole(String pole_id) {
-		return polePhotoRepository.query(Cnd.select().andEquals(M.PolePhoto.pole_id, pole_id));
 	}
 
 }

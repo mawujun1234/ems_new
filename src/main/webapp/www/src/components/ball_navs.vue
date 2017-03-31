@@ -1,6 +1,7 @@
 <template>
 <div>
   <ul id="ball_navs" data-open="展开" data-close="收起">
+    <li @click="showTaskPhoto">点照</li>
     <li @click="showNavigation">导航</li>
     <li @click="showMembers">成员</li>
     <li @click="showQRcodeInput">条码</li>
@@ -37,7 +38,7 @@ export default {
   mounted: function mounted() {
     var vm=this;
     //do something after mounting vue instance
-    var ul=$("#ball_navs"),li=$("#ball_navs li"),i=li.length,n=i-1,r=90;
+    var ul=$("#ball_navs"),li=$("#ball_navs li"),i=li.length,n=i-1,r=120;
 		ul.click(function(){
 			$(this).toggleClass('active');
 
@@ -96,6 +97,9 @@ export default {
     },
     showNavigation:function(){
       alert("正在开发中...");
+    },
+    showTaskPhoto:function(){
+      window.appvue.to({ name: 'page_pole_photo', params: { pole_id: this.$parent.pole_id ,type:'pole'}});
     },
     scanQrcode:function(){
       var vm=this;

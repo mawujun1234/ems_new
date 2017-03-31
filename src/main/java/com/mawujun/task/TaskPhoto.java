@@ -1,4 +1,4 @@
-package com.mawujun.baseinfo;
+package com.mawujun.task;
 
 import java.util.Date;
 
@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.mawujun.baseinfo.IPhoto;
+
 @Entity
-@Table(name="ems_pole_photo")
-public class PolePhoto implements IPhoto{
+@Table(name="ems_task_photo")
+public class TaskPhoto implements IPhoto{
 	
 	/**
 	 * @author mawujun qq:16064988 mawujun1234@163.com
@@ -19,7 +21,7 @@ public class PolePhoto implements IPhoto{
 	private String id;//20170101121212
 	
 	@Column(length=36)
-	private String pole_id;
+	private String task_id;
 	@Column(length=200)
 	private String thumb_url;//可以用来存放缩略图
 	@Column(length=200)
@@ -28,14 +30,6 @@ public class PolePhoto implements IPhoto{
 	private String user_id;//拍照者
 	
 	private Date uploadDate;
-
-	public String getPole_id() {
-		return pole_id;
-	}
-
-	public void setPole_id(String pole_id) {
-		this.pole_id = pole_id;
-	}
 
 	public String getUrl() {
 		return url;
@@ -79,6 +73,14 @@ public class PolePhoto implements IPhoto{
 
 	public void setThumb_url(String thumb_url) {
 		this.thumb_url = thumb_url;
+	}
+
+	public String getTask_id() {
+		return task_id;
+	}
+
+	public void setTask_id(String task_id) {
+		this.task_id = task_id;
 	}
 
 

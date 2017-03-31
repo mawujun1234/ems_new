@@ -28,15 +28,25 @@
 export default {
   data () {
     return {
+      title:'相册',
       pole_photos:[]
     }
   },
   beforeRouteEnter:function (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      let pole_id=vm.$route.params.pole_id
+      var params={
+        pole_id:vm.$route.params.pole_id,
+        task_id:vm.$route.params.task_id,
+        type:vm.$route.params.type
+      }
+      if(params.type=='task'){
+        vm.title="任务照片";
+      } else if(params.type=='pole'){
+        vm.title="点位相册";
+      }
       $.showPreloader("正在取数....");
-      $.post($.SP+'/polePhoto/queryByPole.do', {pole_id:pole_id}, function(response){
+      $.post($.SP+'/mobile/photo/query.do',params, function(response){
           //var root=response.root;
           //root.handle_contact='2222';
           var arry=[];
@@ -59,7 +69,7 @@ export default {
     photo_remove:function(index,id){
       var photo=this.pole_photos.splice(index,1)[0];
 
-      $.post($.SP+'/polePhoto/deleteById.do', {id:photo.id}, function(response){
+      $.post($.SP+'/mobile/photo/deleteById.do', {id:photo.id,type:this.$route.params.type}, function(response){
 
       });
     },
@@ -151,7 +161,6 @@ export default {
       } else {
         fileURL = fileEntry.toURL();
       }
-      let pole_id=this.$route.params.pole_id;
 
       var options = new FileUploadOptions();
       options.fileKey="file";
@@ -161,7 +170,9 @@ export default {
       //var headers={'headerParam':'headerValue'};
       //options.headers = headers;
       var params = {};
-      params.pole_id = pole_id;
+      params.pole_id = this.$route.params.pole_id;
+      params.task_id = this.$route.params.task_id;
+      params.type = this.$route.params.type;
       params.id = vm.getId();
       options.params = params;
       //先添加上去
@@ -170,7 +181,7 @@ export default {
 
       var ft = new FileTransfer();
 
-      ft.upload(fileURL, encodeURI($.SP+"/polePhoto/upload.do"), function(fileUploadResult){
+      ft.upload(fileURL, encodeURI($.SP+"/mobile/photo/upload.do"), function(fileUploadResult){
         //alert(fileUploadResult.responseCode);
         //alert(fileUploadResult.response);
         var obj=JSON.parse(fileUploadResult.response);

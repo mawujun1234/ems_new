@@ -188,11 +188,12 @@ public static final class Pole {
 	public static final String id="id";
 }
 public static final class PolePhoto {
+	public static final String id="id";
 	public static final String pole_id="pole_id";
-	public static final String base64="base64";
+	public static final String thumb_url="thumb_url";
 	public static final String url="url";
 	public static final String user_id="user_id";
-	public static final String id="id";
+	public static final String uploadDate="uploadDate";
 }
 public static final class PoleWorkunit {
 	 /**
@@ -905,5 +906,13 @@ public static final class TaskMember {
 	public static final String task_id="task_id";
 	public static final String user_id="user_id";
 	public static final String isinit="isinit";
+}
+public static final class TaskPhoto {
+	public static final String id="id";
+	public static final String task_id="task_id";
+	public static final String thumb_url="thumb_url";
+	public static final String url="url";
+	public static final String user_id="user_id";
+	public static final String uploadDate="uploadDate";
 }
 }
