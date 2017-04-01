@@ -9,32 +9,30 @@ ok我的”中生成二维码的功能,生成的二维码格式为：member:user
 ok扫一扫添加成员：member:user_id
 
 
-点位相册和任务照片测试，看看有没有混，数据是不是对的
 
-点位相册功能
-	拍照等功能，拍照
-	相册浏览功能，从已经有的照片中选择
-	图片上传到服务器
-	图片压缩，缩略图制作功能，或者是直接压缩到比较小的
-	图片浏览，是浏览缩略图
-	图片删除
-消息通知，当有新任务到的时候，发送消息，在状态栏，写到开发任务中
-https://issues.apache.org/jira/browse/CB-8740
+
+
+
 
 导航
 	百度地图插件
+	http://lbsyun.baidu.com/index.php?title=android-navsdk/guide/introduction
+	
+	
 gps上传，存储在其mongdb数据库中
   websocket支持度测试
+  http://lbsyun.baidu.com/index.php?title=android-locsdk
   
 放开代码中自动填写服务器地址的代码
-  
   
 订单导出功能，并且添加权限
 
 点击“展开”的时候，展开按钮看不见了，有时候又能看见
 
 
-
+消息通知，当有新任务到的时候，发送消息，在状态栏，写到开发任务中
+	https://issues.apache.org/jira/browse/CB-8740
+	http://blog.csdn.net/vipzjyno1/article/details/25248021/
 
 仓库盘点，设备信息和消息这两个功能，放到最后，等正式功能上线后再做
 	设备信息，点击直接弹出扫描窗口，扫描完后就弹出设备的详细信息

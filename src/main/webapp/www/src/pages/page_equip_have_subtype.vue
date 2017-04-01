@@ -38,12 +38,13 @@ export default {
       window.appvue.back();
     },
     querytype_num:function(){
+      $.showPreloader("正在查询....");
       let vm=this;
-
       let params=vm.$route.params;
       vm.type_name=params.type_name;
       $.post($.SP+'/mobile/task/querySubtype_num.do',params,function(response){
         vm.typenums=response.root;
+        $.hidePreloader();
       });
     }
   }

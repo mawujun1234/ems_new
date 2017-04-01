@@ -9,7 +9,7 @@
   				<a class="button button-link button-nav pull-left back" href="javascript:void(0);"  @click="back"> <span class="icon icon-left"></span>返回
   				</a>
   				<h1 class="title">任务信息</h1>
-          <a class="button button-link button-nav pull-right" href="javascript:void(0);"  @click="showPhoto">拍照</a>
+          <a class="button button-link button-nav pull-right" href="javascript:void(0);"  @click="showPhoto">照片</a>
   			</header>
   			<!-- 这里是页面内容区 -->
   			<div class="content" :style="canedit?'margin-bottom:3rem;':''">

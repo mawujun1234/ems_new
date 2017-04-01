@@ -63,8 +63,10 @@ export default {
     },
     querytype_num:function(){
       let vm=this;
+      $.showPreloader("正在查询....");
       $.post($.SP+'/mobile/task/queryType_num.do',{},function(response){
         vm.workunites=response.root;
+        $.hidePreloader();
         //alert(response.root[0].id);
         //$("#a_"+response.root[0].id).trigger('click');
       });

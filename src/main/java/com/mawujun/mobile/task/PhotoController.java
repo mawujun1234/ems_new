@@ -54,7 +54,7 @@ public class PhotoController {
 		try {
 			if("pole".equals(type)){
 				polePhotoService.upload(realpath, file, pole_id,id);
-			} else if("task".equals(task_id)){
+			} else if("task".equals(type)){
 				taskPhotoService.upload(realpath, file, task_id,id);
 			}
 			
@@ -68,11 +68,13 @@ public class PhotoController {
 	
 	@RequestMapping("/mobile/photo/deleteById.do")
 	@ResponseBody
-	public String deleteById(String id,String type) {
+	public String deleteById(HttpServletRequest request,String id,String type) {
+		String realpath=request.getServletContext().getRealPath("/");
 		if("pole".equals(type)){
-			polePhotoService.deleteBatch(Cnd.delete().andEquals(M.PolePhoto.id, id));
+			//polePhotoService.deleteBatch(Cnd.delete().andEquals(M.PolePhoto.id, id));
+			polePhotoService.deleteById(id, realpath);
 		} else if("task".equals(type)){
-			taskPhotoService.deleteBatch(Cnd.delete().andEquals(M.TaskPhoto.id, id));
+			taskPhotoService.deleteById(id, realpath);
 		}
 		
 		return id;

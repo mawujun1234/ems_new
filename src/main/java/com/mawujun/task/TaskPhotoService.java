@@ -107,5 +107,16 @@ public class TaskPhotoService extends AbstractService<TaskPhoto, String>{
 		return "/"+task_photos_ctx+"/"+task_photos_thumb+"/"+filenmae;
 		
 	}
+	
+	public void deleteById(String id,String realpath){
+		TaskPhoto polePhoto=taskPhotoRepository.get(id);
+		taskPhotoRepository.delete(polePhoto);
+		
+		//删除图片
+		FileUtils.deleteQuietly(new File(realpath+polePhoto.getThumb_url()));
+		FileUtils.deleteQuietly(new File(realpath+polePhoto.getUrl()));
+		
+		
+	}
 
 }

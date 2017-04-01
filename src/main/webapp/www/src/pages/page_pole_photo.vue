@@ -3,7 +3,7 @@
   <header class="bar bar-nav">
     <a class="button button-link button-nav pull-left back" href="javascript:void(0);"  @click="back"> <span class="icon icon-left"></span>返回
     </a>
-    <h1 class="title">点位照片</h1>
+    <h1 class="title">{{title}}</h1>
   </header>
   <div class="content" >
     <ul class="box">

@@ -103,4 +103,15 @@ public class PolePhotoService extends AbstractService<PolePhoto, String>{
 		return polePhotoRepository.query(Cnd.select().andEquals(M.PolePhoto.pole_id, pole_id));
 	}
 
+	
+	public void deleteById(String id,String realpath){
+		PolePhoto polePhoto=polePhotoRepository.get(id);
+		polePhotoRepository.delete(polePhoto);
+		
+		//删除图片
+		FileUtils.deleteQuietly(new File(realpath+polePhoto.getThumb_url()));
+		FileUtils.deleteQuietly(new File(realpath+polePhoto.getUrl()));
+		
+		
+	}
 }

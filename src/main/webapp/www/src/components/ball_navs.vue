@@ -38,7 +38,7 @@ export default {
   mounted: function mounted() {
     var vm=this;
     //do something after mounting vue instance
-    var ul=$("#ball_navs"),li=$("#ball_navs li"),i=li.length,n=i-1,r=120;
+    var ul=$("#ball_navs"),li=$("#ball_navs li"),i=li.length,n=i-1,r=110;
 		ul.click(function(){
 			$(this).toggleClass('active');
 
