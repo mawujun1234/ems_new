@@ -8,10 +8,10 @@ ok设备扫描功能
 ok我的”中生成二维码的功能,生成的二维码格式为：member:user_id，
 ok扫一扫添加成员：member:user_id
 
+ok cordova 检查更新
 
 
-
-cordova 检查更新
+底部版本信息不被托上去
 
 
 导航

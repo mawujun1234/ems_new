@@ -234,4 +234,22 @@ document.addEventListener('deviceready', function(){
       },"退出",["确定","取消"]);
     }
   }
+
+
+  checkAppUpdate();
 }, false);
+
+function checkAppUpdate(){//alert(0);
+  var updateUrl = "http://172.16.3.45:8085/www/version.xml";
+  window.AppUpdate.checkAppUpdate(function(){
+    //成功
+    //alert(1);
+  },function(error){
+    //失败
+    //alert("失败");
+    //alert(JSON.parse(error));
+    //alert(error.code+":"+error.msg);
+    alert(JSON.stringify(error));
+
+  },updateUrl);
+}

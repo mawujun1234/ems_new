@@ -1,0 +1,7 @@
+<update>
+	<version>20000</version>
+	<name>2.0.1</name>
+	<!-- 使用#@# 表示换行-->
+	<message></message>
+	<url>http://172.16.3.45:8085/www/android_20001.apk</url>
+</update>

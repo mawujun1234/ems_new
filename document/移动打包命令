@@ -1,5 +1,12 @@
 然后执行，生成android-release.apk的安装文件：
 cordova run android –release --buildConfig build.json
+cordova build android -release  也可以自动的打包成release
+生成目录：E:\eclipse\workspace\ems_new_mobile\platforms\android\build\outputs\apk
+要修改的地方包括：
+	1：E:\eclipse\workspace\ems_new_mobile\config.xml中的版本信息。
+	2：E:\eclipse\workspace\ems_new\src\main\webapp\www\version.xml中的版本信息
+	3：E:\eclipse\workspace\ems_new\src\main\webapp\www\index.html中底部的版本信息
+
 
 到生成的目录中就可以得到这个apk了：
 E:\eclipse\workspace\ems_new_mobile\platforms\android\build\outputs\apk
@@ -12,6 +19,15 @@ xcopy dist E:\eclipse\workspace\ems_new_mobile\www\dist /s /f /h /y
 
 cd E:\eclipse\workspace\ems_new_mobile
 cordova emulate android
+
+
+--自动更新插件
+cordova plugin rm cordova-plugin-app-update
+cordova plugin add E:\eclipse\workspace\cordova_plugin_6.x\app_update
+
+cd e:\eclipse\workspace\cordova_plugin_6.x
+git push
+git pull
 
 
 ---mac系统
