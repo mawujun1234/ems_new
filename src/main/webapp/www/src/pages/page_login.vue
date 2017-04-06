@@ -86,7 +86,7 @@
       </div>
     </div>
   </div>
-  <div class="bottom">
+  <div class="bottom_version">
     @2014 宁波东望智能系统工程有限公司
     <br/>
     版本:{{version}}
@@ -109,6 +109,11 @@ export default {
     }
   },
   mounted: function mounted() {
+    $("#page_login input[type=text],input[type=password]").focus(function(){
+      $("#page_login .bottom_version").hide();
+    }).blur(function(){
+      $("#page_login .bottom_version").show();
+    });
     //初始化服务器地址
     //通过网页进行开发的时候，npm
     if(location.hostname=="localhost"){
@@ -179,7 +184,7 @@ export default {
 </script>
 
 <style>
-.bottom {
+.bottom_version {
   position:absolute;
   bottom:0px;
   font-size:13px;

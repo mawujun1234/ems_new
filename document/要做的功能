@@ -9,12 +9,14 @@ ok我的”中生成二维码的功能,生成的二维码格式为：member:user
 ok扫一扫添加成员：member:user_id
 
 ok cordova 检查更新
-
-
-底部版本信息不被托上去
-	如果真不行，当获取焦点的时候，就隐藏，失去焦点的时候就显示
-	http://www.cnblogs.com/yexiaochai/p/3561939.html
-	测试下底部导航是不是也是，会往上移的，如果是这样，就使用获取焦点隐藏，失去焦点显示的方案
+ok底部版本信息不被托上去
+	测试下底部导航是不是也是，会往上移的，如果是这样，就使用获取焦点隐藏，失去焦点显示的方案,就使用这个方案了
+	
+	
+	http://blog.csdn.net/asuncat/article/details/52084466
+	
+	http://blog.csdn.net/u014079773/article/details/51602344
+	http://blog.csdn.net/get_set/article/details/53246538
 
 
 导航
