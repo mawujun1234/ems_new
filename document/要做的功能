@@ -13,10 +13,7 @@ ok底部版本信息不被托上去
 	测试下底部导航是不是也是，会往上移的，如果是这样，就使用获取焦点隐藏，失去焦点显示的方案,就使用这个方案了
 	
 	
-	http://blog.csdn.net/asuncat/article/details/52084466
-	
-	http://blog.csdn.net/u014079773/article/details/51602344
-	http://blog.csdn.net/get_set/article/details/53246538
+
 
 
 导航
