@@ -221,7 +221,7 @@ Ext.define('Ems.store.OrderGrid',{
 			hidden:me.onlyRead,
 			items:[{
 			text: '确认',
-			
+			hidden:!Permision.canShow('order_editover'),
 			iconCls:'icon-cog',
 			handler: function(btn){
 				Ext.Msg.confirm("提醒","确认后,该订单将不可再修改!",function(btn){
@@ -247,6 +247,7 @@ Ext.define('Ems.store.OrderGrid',{
 		  },{
 			text: '修改',
 			iconCls: 'icon-edit',
+			hidden:!Permision.canShow('order_update'),
 			handler: function(btn){
 				var record=me.getSelectionModel().getLastSelected();
 				if(record.get("status")=='editover'){
@@ -259,6 +260,7 @@ Ext.define('Ems.store.OrderGrid',{
 		  },{
 			text: '删除',
 			iconCls: 'icon-trash',
+			hidden:!Permision.canShow('order_delete'),
 			handler: function(btn){
 				Ext.Msg.confirm("提醒","确认要删除吗?",function(btn){
 					if(btn=='yes'){
@@ -281,6 +283,7 @@ Ext.define('Ems.store.OrderGrid',{
 			}
 		  },{
 			text: '强制退回',
+			hidden:!Permision.canShow('order_force_back'),
 			//iconCls: 'form-delete-button',
 			iconCls:'icon-reply',
 			handler: function(btn){
@@ -303,6 +306,16 @@ Ext.define('Ems.store.OrderGrid',{
 					
 					}
 				});
+			}
+		  },{
+			text: '导出',
+			//iconCls: 'form-delete-button',
+			hidden:!Permision.canShow('order_download'),
+			iconCls:'icon-download-alt',
+			handler: function(btn){
+				var params=me.store.getProxy().extraParams;
+				var pp=Ext.Object.toQueryString(params);
+				window.open(Ext.ContextPath+"/order/download.do?"+pp, "_blank");
 			}
 		  }]
 		}]

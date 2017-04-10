@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.mawujun.baseinfo.EquipmentVO;
+import com.mawujun.controller.spring.mvc.MapParams;
 import com.mawujun.repository.IRepository;
 import com.mawujun.utils.page.Pager;
 import com.mawujun.utils.page.Params;
@@ -20,6 +21,7 @@ public interface OrderRepository extends IRepository<Order, String>{
 
 	public Pager<Order> queryMain(Pager<Order> page);
 	public List<OrderListVO> queryList(@Param("order_id")String order_id);
+	public List<Map<String,Object>> download(Map<String,Object> params);
 	
 	
 	public List<Order> queryUncompleteOrderno(@Param("user_id")String user_id,@Param("orderNo")String orderNo,@Param("project_id")String project_id);

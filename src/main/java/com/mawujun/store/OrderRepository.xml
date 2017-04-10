@@ -85,7 +85,53 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     
     
     
-    
+    <select id="download" resultType="map" parameterType="map">
+    	select a.orderno,c.name STORE_NAME,decode(a.status,'edit','编辑中','已确认') as status
+		,d.name as project_name ,f.name as operater,e.name as supplier_name
+		,decode(a.orderType,'old_equipment','旧品订单','新品订单') as orderType
+		,a.orderDate ,h.name as subtype_name,g.name as prod_name,i.name as brand_name 
+		,g.style prod_style,g.quality_month ,g.spec as prod_spec,g.unit as prod_unit 
+		,b.ordernum,b.unitPrice
+		,TO_CHAR(A.CREATEDATE,'YYYY-mm-dd') CREATEDATE
+		from 
+		ems_order a 
+		inner join ems_orderlist b on a.id=b.order_id
+		inner join t_org c on a.store_id=c.id
+		inner join ems_project d on a.project_id=d.id
+		inner join ems_supplier e on a.supplier_id=e.id
+		inner join t_user f on a.operater=f.id
+		inner join ems_equipmentprod g on b.prod_id=g.id
+		inner join ems_equipmentsubtype h on b.subtype_id=h.id
+		inner join ems_brand i on g.brand_id=i.id
+		where
+		 exists (select 1 from T_POSITION_ORG_USER x,T_POSITION_ORG_ACCESS y
+				where x.position_id=y.position_id and a.store_id=y.org_id and x.user_id=#{user_id} and y.look=1)
+    		<if test="store_id!=null and store_id!=''">
+    			and a.store_id=#{store_id}
+    		</if>
+    		<if test="date_start!=null and  date_start!=''">
+    			and to_char(a.orderDate,'yyyy-mm-dd') &gt;=#{date_start}
+    		</if>
+    		<if test="date_end!=null and date_end!=''">
+    			and to_char(a.orderDate,'yyyy-mm-dd') &lt;=#{date_end}
+    		</if>
+    		<if test="orderNo!=null and orderNo!=''">
+    			and a.orderNo like #{orderNo}
+    		</if>
+    		<if test="project_id!=null and project_id!=''">
+	    		and a.project_id = #{project_id}
+	    	</if>
+	    	<if test="supplier_id!=null and supplier_id!=''">
+	    		and a.supplier_id = #{supplier_id}
+	    	</if>
+	    	<if test="status!=null and status!=''">
+	    		and a.status = #{status}
+	    	</if>
+	    	<if test="orderType!=null and orderType!=''">
+	    		and a.orderType = #{orderType}
+	    	</if>
+		order by a.orderDate,a.orderno
+    </select>
     
     
     <!-- 

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mawujun.baseinfo.EquipmentProd;
 import com.mawujun.baseinfo.EquipmentProdRepository;
 import com.mawujun.baseinfo.EquipmentVO;
+import com.mawujun.controller.spring.mvc.MapParams;
 import com.mawujun.exception.BusinessException;
 import com.mawujun.permission.ShiroUtils;
 import com.mawujun.repository.cnd.Cnd;
@@ -81,6 +82,10 @@ public class OrderService extends AbstractService<Order, String> {
 	public  List<OrderListVO> queryList(String order_id) {	
 		
 		return orderRepository.queryList(order_id);
+	}
+	
+	public List<Map<String,Object>> download(MapParams params) {
+		return orderRepository.download(params.getParams());
 	}
 	
 	public List<OrderListVO> queryList4Barcode(Params params) {	

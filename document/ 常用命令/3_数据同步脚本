@@ -134,6 +134,30 @@ DELETE emsnew.T_MENU WHERE ID='9a4359ea-8050-4f71-b433-e31f19284294';
 --把ismobile数据补回去
 update emsnew.t_menu set ismobile=0 where ismobile!=1;
 
+--插入订单权限数据
+insert into t_menu (ID, CODE, LEAF, MENUTYPE, NAME, PARENT_ID, REMARK, SORT, URL, ISMOBILE)
+values ('d0e43374-7b82-477c-8f40-36c3b821d144', 'order_editover', 1, 'element', '订单确认', 'e25d2f00-41f8-488f-9d97-7c88fb909a7e', null, 0, null, 0);
+insert into t_menu (ID, CODE, LEAF, MENUTYPE, NAME, PARENT_ID, REMARK, SORT, URL, ISMOBILE)
+values ('dfeee54a-3858-4426-95b0-86ab50a62445', 'order_update', 1, 'element', '订单修改', 'e25d2f00-41f8-488f-9d97-7c88fb909a7e', null, 0, null, 0);
+insert into t_menu (ID, CODE, LEAF, MENUTYPE, NAME, PARENT_ID, REMARK, SORT, URL, ISMOBILE)
+values ('5786747b-eaac-4ac1-ae6c-b0b6694a87c8', 'order_delete', 1, 'element', '订单删除', 'e25d2f00-41f8-488f-9d97-7c88fb909a7e', null, 0, null, 0);
+insert into t_menu (ID, CODE, LEAF, MENUTYPE, NAME, PARENT_ID, REMARK, SORT, URL, ISMOBILE)
+values ('41a1a83f-cd13-498a-ad91-b1c7cf067b3f', 'order_force_back', 1, 'element', '订单强制退货', 'e25d2f00-41f8-488f-9d97-7c88fb909a7e', null, 0, null, 0);
+insert into t_menu (ID, CODE, LEAF, MENUTYPE, NAME, PARENT_ID, REMARK, SORT, URL, ISMOBILE)
+values ('e63f268d-e242-4c6f-8967-6fdc0ef9858b', 'order_download', 1, 'element', '订单导出', 'e25d2f00-41f8-488f-9d97-7c88fb909a7e', null, 0, null, 0);
+--商务角色 插入 订单的新建的权限数据
+insert into t_role_menu(role_id,menu_id)
+values('c5dfd9cc-5f3e-448a-91c4-45a8d27106bb','d0e43374-7b82-477c-8f40-36c3b821d144');
+insert into t_role_menu(role_id,menu_id)
+values('c5dfd9cc-5f3e-448a-91c4-45a8d27106bb','dfeee54a-3858-4426-95b0-86ab50a62445');
+insert into t_role_menu(role_id,menu_id)
+values('c5dfd9cc-5f3e-448a-91c4-45a8d27106bb','5786747b-eaac-4ac1-ae6c-b0b6694a87c8');
+insert into t_role_menu(role_id,menu_id)
+values('c5dfd9cc-5f3e-448a-91c4-45a8d27106bb','41a1a83f-cd13-498a-ad91-b1c7cf067b3f');
+insert into t_role_menu(role_id,menu_id)
+values('c5dfd9cc-5f3e-448a-91c4-45a8d27106bb','e63f268d-e242-4c6f-8967-6fdc0ef9858b');
+
+
 ----------------===========================================================
 --设备类型数据同步
 insert into emsnew.ems_equipmenttype(id,name,parent_id,status,memo)
