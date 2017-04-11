@@ -235,6 +235,12 @@ document.addEventListener('deviceready', function(){
     }
   }
 
+window.BaiduNavi.navi(function(){
+  alert("成功");
+},function(error){
+  alert("失败");
+},"1111");
+
 
   checkAppUpdate();
 }, false);

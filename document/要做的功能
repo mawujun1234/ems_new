@@ -20,12 +20,17 @@ ok订单导出功能，并且添加权限
 	百度地图插件
 	http://lbsyun.baidu.com/index.php?title=android-navsdk/guide/introduction
 	
+1：首先是测试navi的官方demo
+2：然后编写cordova插件，并且整合到项目中
+	
 	
 gps上传，存储在其mongdb数据库中
   websocket支持度测试
   http://lbsyun.baidu.com/index.php?title=android-locsdk
   
 放开代码中自动填写服务器地址的代码
+
+设备价值自动计算，而不是预先存储，这样数据量太大
   
 
 
