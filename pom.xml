@@ -16,7 +16,7 @@
 		<leon.version>1.0-SNAPSHOT</leon.version>
 
 		<druid.version>1.0.20</druid.version>
-		<oracle.version>11.2</oracle.version>
+		<oracle.version>11.2.0.4</oracle.version>
 		<poi.version>3.12</poi.version>
 		<echcahe.version>2.10.3</echcahe.version>
 	</properties>
