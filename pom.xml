@@ -204,12 +204,12 @@
 	 	<artifactId>olap4j</artifactId>
 	 	<version>1.2.0</version>
 	 </dependency>
-	 <!--  <dependency>
+	 <!-- <dependency>
 	 	<groupId>org.olap4j</groupId>
 	 	<artifactId>olap4j-tck</artifactId>
 	 	<version>1.1.0</version>
 	 </dependency>
-	 <dependency>
+	  <dependency>
 	 	<groupId>org.olap4j</groupId>
 	 	<artifactId>olap4j-xmla</artifactId>
 	 	<version>1.1.0</version>
@@ -236,8 +236,12 @@
 	    <artifactId>java-property-utils</artifactId>
 	    <version>1.10</version>
 	</dependency>
-	
-	
+<!-- olap4j这个和上面的olap4j注释掉可能有关系，注释掉后，启动就报错，说缺少这个包 -->	
+<dependency>
+	<groupId>xml-apis</groupId>
+	<artifactId>xml-apis</artifactId>
+	<version>1.4.01</version>
+</dependency>
 	
 	</dependencies>
 	<build>
