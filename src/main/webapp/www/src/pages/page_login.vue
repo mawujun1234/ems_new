@@ -150,6 +150,12 @@ export default {
       }
     },
     login:function(){
+      window.BaiduNavi.navi(function(){
+        alert("成功");
+      },function(error){
+        alert("失败");
+      },"1111");
+      return;
       //page_function
       //alert(this.loginname+"===="+this.password);
       var params={
