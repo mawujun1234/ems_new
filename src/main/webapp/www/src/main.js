@@ -226,6 +226,7 @@ document.addEventListener('deviceready', function(){
     }
   }
   window.exitApp=function(){
+
     if(navigator){
       navigator.notification.confirm("确定要退出?",function(buttonindex){
         if(buttonindex==1){
@@ -250,7 +251,8 @@ function checkAppUpdate(){//alert(0);
     //alert("失败");
     //alert(JSON.parse(error));
     //alert(error.code+":"+error.msg);
-    alert(JSON.stringify(error));
+    //navigator.notification.alert("版本检查失败："+error.code+","+error.msg,function(){},"警告","继续");
+    $.toast("版本检查失败!");
 
   },updateUrl);
 }

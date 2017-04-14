@@ -151,10 +151,10 @@ export default {
     },
     login:function(){
       window.BaiduNavi.navi(function(){
-        alert("成功");
+        //alert("成功");
       },function(error){
-        alert("失败");
-      },"1111");
+        alert(error.msg);
+      },["116.40386525193937", "39.915160800132085"]);
       return;
       //page_function
       //alert(this.loginname+"===="+this.password);
