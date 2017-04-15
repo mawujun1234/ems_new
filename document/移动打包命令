@@ -14,20 +14,28 @@ E:\eclipse\workspace\ems_new_mobile\platforms\android\build\outputs\apk
 
 window
 cd E:\eclipse\workspace\ems_new\src\main\webapp\www
-npm run build /dev
+npm run build  npm run dev
 xcopy dist E:\eclipse\workspace\ems_new_mobile\www\dist /s /f /h /y
 
 cd E:\eclipse\workspace\ems_new_mobile
 cordova emulate android
 
 
---自动更新插件
-cordova plugin rm cordova-plugin-app-update
-cordova plugin add E:\eclipse\workspace\cordova_plugin_6.x\app_update
-
 cd e:\eclipse\workspace\cordova_plugin_6.x
 git push
 git pull
+
+
+--自己的华硕电脑
+cd D:\mawujun\workspace\ems_new_mobile
+git pull
+cd D:\mawujun\workspace\cordova_plugin_6.x
+git pull
+
+
+cd D:\mawujun\workspace\ems_new\src\main\webapp\www
+npm run build      npm run dev
+
 
 
 ---mac系统
@@ -65,4 +73,6 @@ cordova plugin add cordova-plugin-file
 cordova plugin add cordova-plugin-dialogs
 cordova plugin add cordova-plugin-camera
 cordova plugin add E:\eclipse\workspace\cordova_plugin_6.x\baidu_navi
+cordova plugin add D:\mawujun\workspace\cordova_plugin_6.x\baidu_navi
 cordova plugin add E:\eclipse\workspace\cordova_plugin_6.x\app_update
+cordova plugin add D:\mawujun\workspace\cordova_plugin_6.x\app_update
