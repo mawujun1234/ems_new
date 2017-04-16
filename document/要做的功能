@@ -21,6 +21,7 @@ ok订单导出功能，并且添加权限
 	定位和导航中的定位分开好了，定位就启动一个新的定位，然后发送数据到后台
 	
 	先测试会不会一直获取到定位信息
+	还要测试当定位开启之后，地图还能不能正确的获取数据
 ok导航没有声音
 	http://lbsyun.baidu.com/index.php?title=android-navsdk/guide/voice
 ok设置成默认不走高速
