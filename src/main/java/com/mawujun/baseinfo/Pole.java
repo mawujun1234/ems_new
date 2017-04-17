@@ -33,13 +33,13 @@ public class Pole extends UUIDEntity {
 	public PoleType poleType;
 	
 	@Column(length=25)
-	private String longitude;//经度
+	private String longitude;//百度经度
 	@Column(length=25)
-	private String latitude;//纬度
+	private String latitude;//百度纬度
 	@Column(length=25)
-	private String longitude_orgin;//经度,原始的导过来的经纬度
+	private String longitude_orgin;//经度,原始的导过来的经纬度，gps
 	@Column(length=25)
-	private String latitude_orgin;//纬度,原始的导过来的经纬度
+	private String latitude_orgin;//纬度,原始的导过来的经纬度，gps
 	//@org.hibernate.annotations.Type(type="yes_no")
 	private Boolean lngLatIsTrans=false;//经纬度是否已经转换过了
 	

@@ -150,12 +150,7 @@ export default {
       }
     },
     login:function(){
-      window.BaiduNavi.navi(function(){
-        //alert("成功");
-      },function(error){
-        alert(error.msg);
-      },["116.40386525193937", "39.915160800132085"]);
-      return;
+      var vm=this;
       //page_function
       //alert(this.loginname+"===="+this.password);
       var params={
@@ -165,9 +160,10 @@ export default {
       $.SP="http://"+this.serverip+":"+this.serverportal+this.ctx;
 
       $.showPreloader("正在登陆....");
-      $.post($.SP+'/mobile/login/login.do', params, function(response){
+        $.post($.SP+'/mobile/login/login.do', params, function(response){
         $.hidePreloader();
         if(response.success){
+          vm.loc();
           //window.appvue.to("/page_function");//.$emit('e_route_page','/page_function');
           setTimeout("onlineling()",120000);
           window.appvue.to({name:"page_function"});
@@ -182,6 +178,16 @@ export default {
       //  navigator.app.exitApp();
     //  }
       window.exitApp();
+    },
+    loc:function(){//启动定位功能
+      if(window.BaiduNavi){
+        window.BaiduNavi.loc(function(){
+          //alert("成功");
+        },function(error){
+          alert(error);
+        },[]);
+      }
+
     }
   }
 }

@@ -95,8 +95,17 @@ export default {
        $.popup('.popup_members');
        window.popup_class='.popup_members';
     },
-    showNavigation:function(){
-      alert("正在开发中...");
+    showNavigation:function(){//导航
+      if(window.BaiduNavi){
+        window.BaiduNavi.navi(function(){
+          //alert("成功");
+        },function(error){
+          alert(error.msg);
+        },[this.$parent.pole_longitude,this.$parent.pole_latitude]);//["116.40386525193937", "39.915160800132085"]
+      } else {
+        alert("请在手机上操作!");
+      }
+
     },
     showTaskPhoto:function(){
       window.appvue.to({ name: 'page_pole_photo', params: { pole_id: this.$parent.pole_id ,type:'pole'}});

@@ -44,7 +44,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     
     <!-- 用left join 是因为除了维修任务，其他的都是不需要获取这三个数据的-->
     <select id="getMobileTaskVO" resultType="com.mawujun.mobile.task.MobileTaskVO" parameterType="map">
-    	select a.id,a.memo,a.type,a.status,a.pole_id,b.code as pole_code,b.longitude as pole_longitude,b.latitude as pole_latitude,b.name as pole_name,b.address as pole_address,a.createDate 
+    	select a.id,a.memo,a.type,a.status,a.pole_id,b.code as pole_code,b.longitude_orgin as pole_longitude,b.latitude_orgin as pole_latitude,b.name as pole_name,b.address as pole_address,a.createDate 
     	,a.hitchType_id,c.name as hitchType_name,a.hitchReasonTpl_id,d.name as hitchReasonTpl_name,a.hitchReason
     	,a.handleMethod_id,e.name as handleMethod_name,a.handle_contact
     	from ems_task a

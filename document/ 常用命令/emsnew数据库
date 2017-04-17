@@ -1,3 +1,7 @@
+exp system/system@emsnew file=d:\daochu0417.dmp owner=(emsnew)
+imp emsnew/emsnew@emsnew   file=d:\daochu0417.dmp full=Y
+
+
 -----------------------测试库
 drop user emsnew cascade;
 create user emsnew identified by emsnew;

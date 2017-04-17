@@ -240,6 +240,8 @@ export default {
       handleMethod_id:'',
       handleMethod_name:'',
       handle_contact:'',
+      pole_longitude:'',
+      pole_latitude:'',
       equiplist:[],
       members:[]
     }
