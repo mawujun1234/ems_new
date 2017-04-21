@@ -163,6 +163,9 @@ export default {
         $.post($.SP+'/mobile/login/login.do', params, function(response){
         $.hidePreloader();
         if(response.success){
+
+          window.login_user=response.root;
+          window.login_user.session_id=response.session_id
           vm.loc();
           //window.appvue.to("/page_function");//.$emit('e_route_page','/page_function');
           setTimeout("onlineling()",120000);
@@ -180,12 +183,20 @@ export default {
       window.exitApp();
     },
     loc:function(){//启动定位功能
+      var vm=this;
       if(window.BaiduNavi){
         window.BaiduNavi.loc(function(){
           //alert("成功");
         },function(error){
           alert(error);
-        },[]);
+        },[{
+          user_id:window.login_user.id,
+          login_name:window.login_user.loginName,
+          session_id:window.login_user.session_id,
+          uuid:device.uuid,
+          gps_host:vm.serverip,
+          gps_port:"9091"
+        }]);
       }
 
     }

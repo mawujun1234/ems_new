@@ -14,8 +14,9 @@ E:\eclipse\workspace\ems_new_mobile\platforms\android\build\outputs\apk
 
 window
 cd E:\eclipse\workspace\ems_new\src\main\webapp\www
-npm run build  npm run dev
+npm run build  
 xcopy dist E:\eclipse\workspace\ems_new_mobile\www\dist /s /f /h /y
+npm run dev
 
 cd E:\eclipse\workspace\ems_new_mobile
 cordova emulate android
@@ -53,6 +54,7 @@ cordova emulate android   cordova run android
 
 
 cordova plugin rm phonegap-plugin-barcodescanner
+cordova plugin rm cordova-plugin-device
 cordova plugin rm cordova-plugin-whitelist
 cordova plugin rm cordova-plugin-splashscreen
 cordova plugin rm cordova-plugin-file-transfer
@@ -66,6 +68,7 @@ cordova plugin rm cordova-plugin-app-update
 
 
 cordova plugin add phonegap-plugin-barcodescanner
+cordova plugin add cordova-plugin-device
 cordova plugin add cordova-plugin-whitelist
 cordova plugin add cordova-plugin-splashscreen
 cordova plugin add cordova-plugin-file-transfer

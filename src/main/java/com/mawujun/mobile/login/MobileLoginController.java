@@ -111,7 +111,11 @@ public class MobileLoginController {
 //             geolocationController.getWaringGpsMap().put(subject.getSession().getId().toString(), waringGps);
 //             //return ShiroUtils.getAuthenticationInfo();
 			userService.update(Cnd.update().set(M.User.lastlogintime, new Date()).andEquals(M.User.id, ShiroUtils.getUserId()));
-            return ResultModel.getInstance().setRoot(ShiroUtils.getAuthenticationInfo());
+			
+			ResultModel resultModel=ResultModel.getInstance();
+			resultModel.addAttribute("session_id", request.getSession().getId());
+			resultModel.setRoot(ShiroUtils.getAuthenticationInfo());
+            return resultModel;
 //        }  
 		
 	}

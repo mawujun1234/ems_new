@@ -17,36 +17,32 @@ ok设置成默认不走高速
 ok整合到导航按钮上
 ok在上传经纬度的时候，同时要转换成gps的经纬度，同时存一份
 
-移动端通过socket上传gps数据
-pc端使用netty接收gps数据，并且把数据存储到mongdb数据库中
+ok移动端通过socket上传gps数据
+okpc端使用netty接收gps数据，数据暂时存在oracle中，等以后再转存到mongdb的数据库中
+ok计算两个坐标之间的距离
 黑屏关闭网络连接等问题,等
 	在退出的时候，不会发送gps数据了，好像是真的退出了
-	在退出程序的时候，同时退出这个service，还没有做
+	在退出程序的时候，同时退出这个service，好像也自动退出了
 	
-离线地图下载
-增加一个模拟导航的按钮，使用模拟导航
-
-
-
-计算两个坐标之间的距离	
+在备份数据的时候，不备份gps数据
+也不备份当前库存等数据，因为这些都是可以根据流水单据算出来的（这个要确认下）
 	
-gps上传，存储在其mongdb数据库中
-  websocket支持度测试
-  http://lbsyun.baidu.com/index.php?title=android-locsdk
   
 放开代码中自动填写服务器地址的代码
 
 设备价值自动计算，而不是预先存储，这样数据量太大
-  
+gps数据好像还没有同步
 
 
 点击“展开”的时候，展开按钮看不见了，有时候又能看见
 
 
 消息通知，当有新任务到的时候，发送消息，在状态栏，写到开发任务中
+	http://www.cnblogs.com/chaoxiyouda/p/5432216.html
 	https://issues.apache.org/jira/browse/CB-8740
 	http://blog.csdn.net/vipzjyno1/article/details/25248021/
-
+离线地图下载
+增加一个模拟导航的按钮，使用模拟导航
 仓库盘点，设备信息和消息这两个功能，放到最后，等正式功能上线后再做
 	设备信息，点击直接弹出扫描窗口，扫描完后就弹出设备的详细信息
 	Insert into T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF,ismobile) values ('631f0441-5953-49c7-b116-8c4176da5214','mobile_page_function_message','element','消息','106fd89d-2361-4ceb-bf2b-40569fd54f55',null,0,null,1,1);

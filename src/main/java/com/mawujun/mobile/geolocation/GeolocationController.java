@@ -29,75 +29,36 @@ public class GeolocationController {
 	
 	private Map<String,WaringGps> waringGpsMap=new HashMap<String,WaringGps>();
 	
+
 //	@RequestMapping("/geolocation/mobile/upload.do")
-//	public String upload(String longitude,String latitude,String uuid,String loginName,String sessionId) {
-//		//地理信息没有上报
-//		//System.out.println(longitude);
-//		//System.out.println(latitude);
-//		//System.out.println(uuid);
-//		//System.out.println(loginName);
+//	public String upload(Geolocation geolocation) {
+//		//如果是很么值都没有就表示是心跳反应
+//		if(geolocation==null || geolocation.getLatitude()==null || geolocation.getLongitude()==null){
+//			return "{success:true}";
+//		}
+//		//System.out.println(ff.format(new Date())+"-----"+geolocation.getSessionId());
 //		
-//		logger.info("==========================================================================");
-//		logger.info("经度:{},维度:{},uuid:{},loginname:{}",longitude,latitude,uuid,loginName);
+//		//logger.info("==========================================================================");
+//		//logger.info("经度:{},维度:{},uuid:{},loginname:{}",longitude,latitude,uuid,loginName);
 //		
-//		if(uuid==null && loginName==null){
+//		if(geolocation.getUuid()==null && geolocation.getLoginName()==null){
 //			return "failure";
 //		}
 //		
 //		
-//		Geolocation geolocation=new Geolocation();
+//
 //		geolocation.setCreateDate(new Date());
-//		geolocation.setLatitude(latitude);
-//		geolocation.setLongitude(longitude);
-//		geolocation.setLoginName(loginName);
-//		geolocation.setUuid(uuid);
-//		geolocation.setSessionId(sessionId);
-//		geolocation.setCreateDate(new Date());
+//		
 //		
 //		geolocationService.create(geolocation);
 //		
-//		
-//		//updateGpsUploadTime(SecurityUtils.getSubject().getSession().getId().toString(),longitude,latitude);
-//		//SecurityUtils.getSubject().getSession().getId();
-//		updateGpsUploadTime(sessionId,longitude,latitude);
+//		SecurityUtils.getSubject().getSession().getId();
+//		//updateGpsUploadTime(geolocation.getSessionId(),geolocation.getLongitude(),geolocation.getLatitude(),geolocation.getLoc_time());
+//		updateGpsUploadTime(geolocation);
 //		return "{success:true}";
 //	}
-	//SimpleDateFormat ff=new SimpleDateFormat("HH:mm:ss");
-	@RequestMapping("/geolocation/mobile/upload.do")
-	public String upload(Geolocation geolocation) {
-		//如果是很么值都没有就表示是心跳反应
-		if(geolocation==null || geolocation.getLatitude()==null || geolocation.getLongitude()==null){
-			return "{success:true}";
-		}
-		//System.out.println(ff.format(new Date())+"-----"+geolocation.getSessionId());
-		
-		//logger.info("==========================================================================");
-		//logger.info("经度:{},维度:{},uuid:{},loginname:{}",longitude,latitude,uuid,loginName);
-		
-		if(geolocation.getUuid()==null && geolocation.getLoginName()==null){
-			return "failure";
-		}
-		
-		
+	
 
-		geolocation.setCreateDate(new Date());
-		
-		
-		geolocationService.create(geolocation);
-		
-		SecurityUtils.getSubject().getSession().getId();
-		//updateGpsUploadTime(geolocation.getSessionId(),geolocation.getLongitude(),geolocation.getLatitude(),geolocation.getLoc_time());
-		updateGpsUploadTime(geolocation);
-		return "{success:true}";
-	}
-	
-	
-//	@RequestMapping("/geolocation/mobile/heartbeat.do")
-//	public String heartbeat(String sessionId) {
-//		
-//		//SecurityUtils.getSubject().getSession().getId();
-//		return "{success:true}";
-//	}
 	
 	/**
 	 * 更新某个作业单位最近一次gps上传信息
