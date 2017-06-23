@@ -87,12 +87,12 @@ public class MenuController {
 		return result;
 	}
 
-	@RequestMapping("/menu/queryAll.do")
-	@ResponseBody
-	public List<Menu> queryAll() {	
-		List<Menu> menues=menuService.queryAll();
-		return menues;
-	}
+//	@RequestMapping("/menu/queryAll.do")
+//	@ResponseBody
+//	public List<MenuVO> queryAll() {	
+//		//List<Menu> menues=menuService.queryAll();
+//		return menues;
+//	}
 	
 
 	@RequestMapping("/menu/load.do")
