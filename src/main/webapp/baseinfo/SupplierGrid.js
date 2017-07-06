@@ -37,7 +37,7 @@ Ext.define('Ems.baseinfo.SupplierGrid',{
 			autoLoad:true,
 			proxy: {
             	type: 'ajax',
-	            method:'POST',
+	            actionMethods: { read: 'POST' },
 	            reader:{
 					type:'json',
 					rootProperty:'root',
@@ -57,12 +57,17 @@ Ext.define('Ems.baseinfo.SupplierGrid',{
 //	  }];
 	  
 	  me.tbar=	[{
+		    emptyText : '名称',
+		    itemId:'name',
+		    xtype:'textfield'
+		},{
 			text: '刷新',
 			itemId:'reload',
 			disabled:me.disabledAction,
 			handler: function(btn){
 				var grid=btn.up("grid");
-				grid.getStore().reload();
+				var name=btn.previousSibling ("#name").getValue();
+				grid.getStore().reload({params:{name:name}});
 			},
 			iconCls: 'icon-refresh'
 		}]

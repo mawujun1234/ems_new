@@ -195,7 +195,7 @@ Ext.define('Ems.baseinfo.EquipmentProdForm',{
 	  
 	  var saveButton=Ext.create('Ext.button.Button',{
             text: '保存',
-            iconCls:'form-save-button',
+            iconCls:'icon-save',
             handler: function(btn) {
             	var form=this.up('form');
             	//alert(form.getForm().isValid());
