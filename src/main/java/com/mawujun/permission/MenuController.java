@@ -38,7 +38,7 @@ public class MenuController {
 	public List<Menu> query(String parent_id,MenuType menuType) {
 		//System.out.println(MenuType.menu);
 		Cnd cnd=Cnd.select().andEquals(M.Menu.parent_id, "root".equals(parent_id)?null:parent_id)
-				.andEquals(M.Menu.menuType, menuType==null?MenuType.menu:menuType).asc(M.Menu.sort);
+				.andEquals(M.Menu.menuType, menuType==null?MenuType.menu:menuType).asc(M.Menu.sort).asc(M.Menu.name);
 		List<Menu> menues=menuService.query(cnd);
 		return menues;
 	}

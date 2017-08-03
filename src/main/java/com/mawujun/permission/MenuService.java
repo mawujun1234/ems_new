@@ -73,7 +73,7 @@ public class MenuService extends AbstractService<Menu, String>{
 	}
 	@Transactional(readOnly=true)
 	public List<RoleMenu> query_checked_node(String role_id) {
-		return roleMenuRepository.query(Cnd.select().andEquals(M.RoleMenu.role.id, role_id));
+		return roleMenuRepository.query(Cnd.select().andEquals(M.RoleMenu.role.id, role_id).asc(M.Menu.sort).asc(M.Menu.name));
 	}
 	/**
 	 * 获取某个用户的菜单,只获取菜单元素，不获取界面元素

@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.mawujun.generator.model.FieldDefine;
+import com.mawujun.annotation.FieldDefine;
 import com.mawujun.utils.Assert;
 import com.mawujun.utils.help.ReportCodeHelper;
 

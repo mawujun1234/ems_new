@@ -158,7 +158,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mawujun</groupId>
-			<artifactId>leon-util</artifactId>
+			<artifactId>leon-utils</artifactId>
 			<version>${leon.version}</version>
 		</dependency>
 		<dependency>
