@@ -364,7 +364,7 @@ Ext.onReady(function() {
 				itemId : 'quality_month_field',
 				fieldLabel : '质保(月)',
 				name : 'quality_month',
-				minValue : 1,
+				minValue : 0,
 				labelWidth : 60,
 				allowBlank : false,
 				labelAlign : 'right',
@@ -570,7 +570,7 @@ Ext.onReady(function() {
 
 	function addEquip() {
 		if (orderType.getValue() == "old_equipment"
-				&& !(depreci_year.getValue() || depreci_month.getValue() || depreci_month
+				&& !(depreci_year.getValue() || depreci_month.getValue() || depreci_day
 						.getValue())) {
 			alert("请填写还可使用年数!");
 			return;
