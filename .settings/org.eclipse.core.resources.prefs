@@ -4,4 +4,5 @@ encoding//src/main/resources=UTF-8
 encoding//src/main/webapp/www=UTF-8
 encoding//src/main/webapp/www/dist/index.css=UTF-8
 encoding//src/main/webapp/www_demo/index.css=UTF-8
+encoding//src/test/java=UTF-8
 encoding/<project>=UTF-8

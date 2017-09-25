@@ -1,3 +1,4 @@
+移动端升级要做的事情：
 然后执行，生成android-release.apk的安装文件：
 cordova run android –release --buildConfig build.json
 cordova build android -release  也可以自动的打包成release
@@ -12,7 +13,7 @@ cordova build android -release  也可以自动的打包成release
 E:\eclipse\workspace\ems_new_mobile\platforms\android\build\outputs\apk
 
 
-window
+window-移动端代码同步
 cd E:\eclipse\workspace\ems_new\src\main\webapp\www
 npm run build  
 xcopy dist E:\eclipse\workspace\ems_new_mobile\www\dist /s /f /h /y
@@ -39,7 +40,7 @@ npm run build      npm run dev
 
 
 
----mac系统
+---mac系统，--移动端程序打包安装
 cd /Users/mawujun/git/ems_new_mobile/
 对vue的源代码进行编译
 cd /Users/mawujun/git/ems_new/src/main/webapp/www
