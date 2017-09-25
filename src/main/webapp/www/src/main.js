@@ -147,6 +147,7 @@ window.appvue=appvue;
 
 //application/json;charset=ISO-8859-1
 $.ajaxSettings.dataType='json';
+$.ajaxSettings.timeout =6000000;
 $.SP="";
 $(function(){
   $(document).on('ajaxBeforeSend', function(e, xhr, options){
@@ -159,6 +160,7 @@ $(function(){
 		if(xhr.status==503){
 			handlerReturn(JSON.parse(xhr.responseText));
 		} else if(xhr.status==0){
+      //alert(e);
       $.alert("请求超时，检查地址，端口!");
     } else {
 			//handlerReturn(response);

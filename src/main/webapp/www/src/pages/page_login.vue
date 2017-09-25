@@ -136,6 +136,7 @@ export default {
     }
 
       $.SP="http://"+this.serverip+":"+this.serverportal+this.ctx;
+
   },
   methods:{
     changeIsprod:function(){
@@ -159,9 +160,12 @@ export default {
       };
       $.SP="http://"+this.serverip+":"+this.serverportal+this.ctx;
 
+
       $.showPreloader("正在登陆....");
+      //  alert($.SP);
         $.post($.SP+'/mobile/login/login.do', params, function(response){
         $.hidePreloader();
+
         if(response.success){
 
           window.login_user=response.root;

@@ -169,6 +169,7 @@ export default {
         $.showPreloader("正在加载数据....");
         var vue=this;
         //$.SP="http://127.0.0.1:8085";
+        
         $.post($.SP+'/mobile/login/queryMobileMenuByUser.do', {}, function(response){
           var root=response.root;
           for (var x in root) {
