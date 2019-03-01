@@ -44,7 +44,7 @@ Ext.define('Ems.main.MainViewModel', {
 
 				// 系统信息
 				system : {
-					name : '宁波东望固定资产管理及生产调度系统',
+					name : '宁波xx固定资产管理及生产调度系统',
 					version : '2.0.0',
 					iconUrl : ''
 				},
@@ -62,7 +62,7 @@ Ext.define('Ems.main.MainViewModel', {
 					phonenumber : 'xxxx----',
 					qq : '16064988',
 					email : '16064988@qq.com',
-					copyright : '宁波东望'
+					copyright : '宁波xx'
 				},
 
 				menuType : {

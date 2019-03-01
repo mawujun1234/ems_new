@@ -12,7 +12,7 @@ drop public database link EMSLINK;
 create public database link emslink connect to emsread identified by emsread
 　　 using '(DESCRIPTION =
 (ADDRESS_LIST =
-(ADDRESS = (PROTOCOL = TCP)(HOST = 172.16.5.202)(PORT = 1521))
+(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
 )
 (CONNECT_DATA =
 (SERVICE_NAME =ems)
@@ -55,7 +55,7 @@ select sys_guid(),'小组成员'，id,'workunitgroup' from ems.ems_workunit@emsl
 --把仓库和作业单位的人员导过来
 
 --report_code重新生成功能
-	http://172.16.5.202:9090/test/org/initReportCode.do
+--	http://172.16.5.202:9090/test/org/initReportCode.do
 --唯一键约束,等组织节点数据全部倒过来后，添加这个约束
 alter table "EMSNEW"."T_ORG_ORG" add constraint uk_child_report_code_dim unique("CHILD_REPORTCODE","DIM"); 
 
@@ -114,6 +114,10 @@ insert into emsnew.t_role_user(user_id,role_id)
 select distinct user_id,funrole_id from ems.sys_funrole_user@emslink where user_id!='admin'
 and user_id  in (select id from t_user)
 and funrole_id  in (select id from t_role);
+
+--同步管理员的数据
+insert into emsnew.t_role_menu(role_id,menu_id)
+select 'admin',id from t_menu where id not in (select menu_id from t_role_menu where role_id='admin')
 
 
 --把把作业单位中的用户授权（移动端功能）到角色（作业单位）中,用于控制移动端的权限
