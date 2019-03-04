@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta charset="UTF-8">
-	<title>宁波xx智能系统有限公司</title>
+	<title>智能运维</title>
 
 	<%@include file="../common/init.jsp" %>
 	
@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body style="background-image: url(bg.jpg);background-position:center;background-repeat:no-repeat;background-attachment:fixed;">
   <div id="title">
-   <h1 id="h1">宁波市xx智能系统工程有限公司</h1>
+   <h1 id="h1">智能运维系统工程有限公司</h1>
    <h2 id="h2">固定资产管理及生产调度系统</h2>
    <div>
   </body>
